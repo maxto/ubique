@@ -8,7 +8,7 @@ function loader() {
 	ubique.eps = 2.2204460492503130808472633361816E-16;
 
 	// load all functions from LIB folder
-	libfolder = ['datatypes','elemop','elmath','linalgebra','matarrs'];
+	libfolder = ['datatypes','elemop','elmath','linalgebra','matarrs','statsrnd'];
 
 	for (var i = 0;i < libfolder.length;i++) {
 		require('fs').readdirSync(__dirname + '/lib/' + libfolder[i] + '/').forEach(function(file) {

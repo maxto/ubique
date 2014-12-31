@@ -1,44 +1,31 @@
-UBIQUE
-======
+UBIQUE 0.0.2
+============
 
-Ubique is a powerful and extended math library written in pure Javascript for Nodejs. It's a Matlab-like environment, with a lot of functionalities for numerical calculation applied to numbers, arrays and matrices.
+Ubique is a powerful and extended math library for Javascript and Node.js. It supports arrays, vectors and matrices, providing functionalities in a MATLAB®-like style.
 
-The basic structure has been built on several js-files, mimicking functions used by Matlab.
-
-
-Description
-===========
+Easy to use, no dependencies.
 
 
-How To Use
-==========
+Project Summary
+===============
+
+The project aims to create an environment for mathematical and statistical analysis in Javascript and Node.js, featuring typical MATLAB® matrix and array manipulation. A very large collection of functions in underdevelopment for:
+
+- array creation and concatenation, indexing, sorting and reshaping
+- elementary operations
+- elementary math
+- linear algebra
+- statistics
+
+The library is a good starting point to convert MATLAB® users to Javascript and Node.js, building new scalable client-server scientific applications.
 
 
-Credits
+License
 =======
 
-The MIT License (MIT)
+The <a href="https://github.com/maxto/ubique/blob/master/LICENSE"> MIT </a> License
 
-Copyright (c) 2015 Max Todaro
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-
+Copyright® 2014 Max Todaro
 
 
 
