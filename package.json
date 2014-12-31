@@ -1,0 +1,21 @@
+{
+  "name": "ubique",
+  "description": "Ubique is a powerful and extended math library written in pure Javascript for Nodejs. It's a Matlab-like environment, with a lot of functionalities for numerical calculation applied to numbers, arrays and matrices.",
+  "main": "ubique.js",
+  "scripts": {
+    "test": "node_modules/.bin/mocha --ui tdd --recursive"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/maxto/ubique"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/maxto/ubique/issues"
+  },
+  "homepage": "https://github.com/maxto/ubique",
+  "devDependencies": {
+    "mocha": "^2.1.0"
+  }
+}
