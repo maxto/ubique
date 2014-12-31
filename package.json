@@ -1,0 +1,30 @@
+{
+  "name": "ubique",
+  "version": "0.0.2",
+  "description": "Ubique is a powerful and extended math library for Javascript and Node.js. It supports arrays, vectors and matrices, providing functionalities in a MATLAB®-like style.",
+  "author": "Max Todaro <m.todaro.ge@gmail.com> (https://github.com/maxto)",
+  "homepage": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/maxto/ubique.git"
+  },
+  "keywords": [
+    "math",
+    "mathematic",
+    "matrix",
+    "arithmetic",
+    "number",
+    "statistic",
+    "equation",
+    "function",
+    "algebra",
+    "matlab"
+  ],
+  "engines": {
+    "node": ">= 0.6.0"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/maxto/ubique/issues"
+  }
+}
