@@ -1,14 +1,23 @@
 # History
 
+### 0.0.21 - 20150102
+
+- Added TEST folder
+- Added _interpol_ folder with `interp1` function
+- Added _regressmod_ folder with `linearreg` function
+- Added in _statrnd_ `hurst`,`iqr`,`kurtosis`,`moment`,`prctile`,`quantile`,`quartile`,`skewness`,`xkurtosis`
+
 ### 0.0.2 - 20141231
 
-- Add LICENSE,HISTORY
-- Add `islogical`,`exp`,`log`,`sqrt`,`histc`,`mad`,`range`,`std`,`variance`,`zscore`
+- Added LICENSE,HISTORY
+- Added in _datatypes_ `islogical`
+- Added in _elmath_ `exp`,`log`,`sqrt`
+- Added in _statrnd_ `histc`,`mad`,`range`,`std`,`variance`,`zscore`
 - Bugfix
 
 ### 0.0.1 - 20141224
 
-First commit with more 100 functions in the categories:
+First commit with more than 100 functions in the following categories:
 
 - Arithmetic Operations
 - Array Creation and Concatenation
