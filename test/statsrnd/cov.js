@@ -1,5 +1,7 @@
 var assert = require('assert');
 var ubique = require('../../ubique');
+var arrayTestUtils = {};
+require('../util/arrayTestUtils')(arrayTestUtils);
 
 suite('matarrs', function () {
 	console.log('\nTesting matarrs/matrix ...');
@@ -11,11 +13,11 @@ suite('matarrs', function () {
 		var f = [[3, 2], [5, 2]];
 		var l = [[1, 1, -1], [1, -2, 3], [2, 3, 1]];
 
-		assert.equal(ubique.cov(c), 2.333333333333333);
-		assert.deepEqual(ubique.cov(c, d)[[2.33333, -3.83333], [-3.83333, 7.26333]]);
-		assert.deepEqual(ubique.cov(c, d, 0), [[1.5555555555555554, -2.5555555555555554], [-2.5555555555555554, 4.8422222222222215]]);
-		assert.deepEqual(ubique.cov(e, f), [[10.916666666666666, 2], [2, 2]]);
-		assert.deepEqual(ubique.cov(l), [[0.3333333333333333, 1.1666666666666665, 0], [1.1666666666666665, 6.333333333333334, -3], [0, -3, 4]]);
+		assert.equal(ubique.cov(c).toFixed(6), 2.333333);
+		assert.deepEqual(arrayTestUtils.arrayDim2ToFixed6(ubique.cov(c, d)), [[2.333333, -3.833333], [-3.833333, 7.263333]]);
+		assert.deepEqual(arrayTestUtils.arrayDim2ToFixed6(ubique.cov(c, d, 0)), [[1.555556, -2.555556], [-2.555556, 4.842222]]);
+		assert.deepEqual(arrayTestUtils.arrayDim2ToFixed6(ubique.cov(e, f)), [[10.916667, 2], [2, 2]]);
+		assert.deepEqual(arrayTestUtils.arrayDim2ToFixed6(ubique.cov(l)), [[0.333333, 1.166667, 0], [1.166667, 6.333333, -3], [0, -3, 4]]);
 
 		done();
 	});
