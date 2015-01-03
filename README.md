@@ -1,4 +1,4 @@
-UBIQUE 0.0.2
+UBIQUE 0.0.3
 ============
 
 Ubique is a powerful and extended math library for Javascript and Node.js. It supports arrays, vectors and matrices, providing functionalities in a MATLAB®-like style.
@@ -38,12 +38,37 @@ Use it as follows:
 // load ubique
 var ubique = require('ubique');
 
-// Matrix multiply X. * Y
+// Arithmetic
 
 var a = [[5,6,5],[7,8,-1]];
 var b = [[-1,3,-1],[4,5,9]];
+var l = [[1,1,-1],[1,-2,3],[2,3,1]];
+
+// X + Y
+
+ubique.plus(a,b);  // [[4, 9, 4], [11, 13, 8]]
+
+// X - Y
+
+ubique.minus(a,b);  // [[6, 3, 6], [3, 3, -10]]
+
+// X. * Y (element-wise multiplication)
 
 ubique.times(a,b);  // [[-5, 18, -5], [28, 40, -9]]
+
+// X * Y (matrix multiplication)
+
+ubique.mtimes(a,ubique.transpose(b)); // [[8, 95], [18, 59]]
+
+// X. / Y (element-wise right array division)
+
+ubique.rdivide(a,b); // [[-5, 2, -5], [1.75, 1.6, -0.111111]]
+
+// X / Y (right matrix division)
+
+ubique.mrdivide(a,l); 
+
+// [[-0.769231, 0.538462, 2.61538], [3.38462, 0.230769, 1.69231]]
 
 ```
 
