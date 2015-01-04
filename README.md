@@ -1,4 +1,4 @@
-UBIQUE 0.0.3
+UBIQUE 0.0.4
 ============
 
 Ubique is a powerful and extended math library for Javascript and Node.js. It supports arrays, vectors and matrices, providing functionalities in a MATLAB®-like style.
