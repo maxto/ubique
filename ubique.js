@@ -26,7 +26,7 @@ function loader() {
 	ubique.maxval = Number.MAX_VALUE;
 
 	// load all functions from LIB folder
-	libfolder = ['datatypes','elemop','elmath','linalgebra','matarrs','statsrnd','interpol','regressmod'];
+	libfolder = ['datatypes','elemop','elmath','linalgebra','matarrs','statsrnd','interpol','regressmod','findat'];
 
 	for (var i = 0;i < libfolder.length;i++) {
 		require('fs').readdirSync(__dirname + '/lib/' + libfolder[i] + '/').forEach(function(file) {

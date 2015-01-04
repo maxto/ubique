@@ -1,8 +1,16 @@
 # History
 
+### 0.0.4 - 20150104
+
+- Added _findat_ folder with `tick2ret`,`ret2tick`
+- Added in _statrnd_ `jbtest`,`pdist`
+- Added in _test\util_ `arrayTestUtils`
+- Added some test functions
+- Bugfix 
+
 ### 0.0.3 - 20150103
 
-- Added TEST folder
+- Added _test_ folder
 - Added _interpol_ folder with `interp1` function
 - Added _regressmod_ folder with `linearreg` function
 - Added in _statrnd_ `hurst`,`iqr`,`kurtosis`,`moment`,`prctile`,`quantile`,`quartile`,`skewness`,`xkurtosis`
