@@ -1,5 +1,10 @@
 # History
 
+### 0.0.5 - xxxxxxxx
+
+- Added _contdistrib_ with normpdf,normcdf,normiv
+- Bugfixes
+
 ### 0.0.4 - 20150104
 
 - Added _findat_ folder with `tick2ret`,`ret2tick`
