@@ -1,51 +1,56 @@
-UBIQUE 0.0.4
-============
+# UBIQUE
 
-Ubique is a powerful and extended math library for Javascript and Node.js. It supports arrays, vectors and matrices, providing functionalities in a MATLAB®-like style.
+Ubique is a mathematical and statistical library for Javascript and Node.js. It supports arrays, vectors and matrices, providing a lot of MATLAB®-like functionalities.
+It includes a toolkit of functions for quantitative analysis and advanced statistics.
 
 Easy to use, no dependencies.
 
-Project Summary
-===============
+## Project Summary
 
-The project aims to create an environment for mathematical and statistical analysis in Javascript and Node.js, featuring typical MATLAB® matrix and array manipulation. It includes methods for:
+The project aims to create an environment for mathematical and statistical analysis in Javascript and Node.js, alternative to MATLAB®, for scientific client-server applications.
 
-- array creation and concatenation, indexing, sorting and reshaping
-- elementary operations
-- elementary math
-- linear algebra
-- statistics
-- interpolation and regression analysis
-- probability distribution
-- financial data analysis
+Main categories and some features:
+
+- Matrices and Arrays: matrix creation and concatenation, indexing, sorting and reshaping
+- Data Types: array and vector functions, is-state
+- Elementary Operations: sum, subtract, multiply, divide arrays and matrices 
+- Elementary Math: errof function, exponent and logarithm, signum and absolute value
+- Linear Algebra: determinant, inverse matrix, linear solver, LU-decomposition
+- Descriptive Statistics: mean,standard deviation, kurtosis, skewness, percentile, zscore
+- Probability Distributions: normal pdf and cdf, inverse, distribution test
+- Interpolation and Regression Analysis
+- Quantitative Analysis: 
 
 View change [History](HISTORY.md) 
 
-Install
-=======
+## Install
 
 Install the library using [npm](https://www.npmjs.org/package/ubique)
 
 ```
 npm install ubique
-
 ```
 
-Ubique for MATLAB® users
-========================
+## Test
 
-Ubique has been created to do quantitative and mathematical computing in Javascript and Node.js, to build  client-server applications, mimicking some functionalities and coding style of MATLAB®.
+To perform a test execute:
+
+```
+npm test
+```
+
+## Ubique for MATLAB® users
 
 In Ubique __number__ is a number with dimension __1x1__, __array__ is a column vector __Nx1__, __array of array__ is a matrix __MxN__.
 
-In Ubique the matrix calculus is __column-major order__ as in MATLAB® (but the storage follows the native javascript row-major order).
+For some functions applied to matrices, the calculus follows a __column-major order__ as in MATLAB® (but the storage is always the native javascript row-major order).
 
-MATLAB uses 1-based indexing, first element in array is array(1), the last one is array(length(array)).
+MATLAB® uses 1-based indexing, first element in array is array(1), the last one is array(length(array)).
 Ubique uses 0-based indexing, first element in array is array[0], the last one is array[array.length - 1].
 
-__Comparative programming__
+__Comparative code__
 
-|MATLAB| UBIQUE | notes|
+|MATLAB®| ubique.| description|
 |----- |--------|------|
 | a = [5,6,5;7,8,-1];
 | b = [-1,3,-1;4,5,9];
@@ -57,25 +62,11 @@ __Comparative programming__
 | 1:0.1:10 | colon(1,10,0.1) | Create vectors
 |
 
+## Contributors
 
-Test
-====
+- [@QuantumInformation](https://github.com/QuantumInformation)
 
-To perform a test execute:
-
-```
-npm test
-```
-
-Contributors
-============
-
-Thanks to:
-
-- [Nikos-QuantumInformation](https://github.com/QuantumInformation)
-
-License
-=======
+## Credits
 
 The [MIT license](LICENSE.md)
 

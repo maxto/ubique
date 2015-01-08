@@ -20,25 +20,13 @@ function loader() {
 
 	var ubique = {};
 
-	// set CONSTANTS
+	// set some CONSTANTS
 	ubique.inf = Number.POSITIVE_INFINITY;
 	ubique.eps = 2.2204460492503130808472633361816E-16;
 	ubique.maxval = Number.MAX_VALUE;
 
 	// load all functions from LIB folder
-	libfolder = [
-								'datatypes',
-								'elemop',
-								'elmath',
-								'linalgebra',
-								'matarrs',
-								'statsrnd',
-								'interpol',
-								'regressmod',
-								'findat',
-								'contdistrib'
-							];
-
+	libfolder = ['datatype','elemop','elmath','linalgebra','matarrs','probdistr','quants','reglin','stats'];
 	for (var i = 0;i < libfolder.length;i++) {
 		require('fs').readdirSync(__dirname + '/lib/' + libfolder[i] + '/').forEach(function(file) {
 			require(__dirname + '/lib/' + libfolder[i] + '/' + file)(ubique);
