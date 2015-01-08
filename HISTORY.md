@@ -2,7 +2,7 @@
 
 ### 0.0.5 - xxxxxxxx
 
-- Added _contdistrib_ with normpdf,normcdf,normiv
+- Added _contdistrib_ with `normpdf`,`normcdf`,`normiv`
 - Bugfixes
 
 ### 0.0.4 - 20150104
