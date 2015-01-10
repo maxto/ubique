@@ -1,11 +1,12 @@
 {
-  "author": "Max Todaro <m.todaro.ge@gmail.com> (https://github.com/maxto)",
   "name": "ubique",
   "version": "0.0.4",
-  "description": "Ubique is a powerful and extended math library for Javascript and Node.js. It supports arrays, vectors and matrices, providing functionalities in a MATLAB®-like style.",
+  "author": "Max Todaro <m.todaro.ge@gmail.com> (https://github.com/maxto)",
+  "description": "Ubique is a mathematical and statistical library for Javascript and Node.js. It supports arrays, vectors and matrices, providing a lot of MATLAB®-like functionalities. It includes a toolkit of functions for quantitative analysis and advanced statistics.",
   "main": "ubique.js",
   "contributors" : [
-  "Nikos (https://github.com/QuantumInformation)"],
+  "Nikos (https://github.com/QuantumInformation)"
+  ],
   "homepage": "https://github.com/maxto/ubique",
   "repository": {
     "type": "git",
@@ -13,17 +14,23 @@
   },
   "keywords": [
     "math",
-    "mathematic",
+    "mathematics",
     "matrix",
+    "vector",
     "arithmetic",
-    "number",
-    "statistic",
+    "numbers",
+    "statistics",
     "equation",
-    "function",
+    "functions",
     "algebra",
     "matlab",
     "regression",
-    "interpolation"
+    "interpolation",
+    "finance",
+    "quants",
+    "quantitative",
+    "scientific",
+    "analysis"
   ],
   "scripts": {
     "test": "node_modules/.bin/mocha --ui tdd --recursive"
