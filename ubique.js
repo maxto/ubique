@@ -16,9 +16,9 @@
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
  */
-function loader() {
+ function loader() {
 
-	var ubique = {};
+ 	var ubique = {};
 
 	// set some CONSTANTS
 	ubique.inf = Number.POSITIVE_INFINITY;
@@ -26,9 +26,11 @@ function loader() {
 	ubique.maxval = Number.MAX_VALUE;
 
 	// load all functions from LIB folder
-	libfolder = ['datatype','elemop','elmath','linalgebra','matarrs','probdistr','quants','reglin','stats'];
+	var libfolder = ['datatype','elemop','elmath','linalgebra','matarrs','probdistr','quants','reglin','stats'];
+	var fs = require('fs');
+	
 	for (var i = 0;i < libfolder.length;i++) {
-		require('fs').readdirSync(__dirname + '/lib/' + libfolder[i] + '/').forEach(function(file) {
+		fs.readdirSync(__dirname + '/lib/' + libfolder[i] + '/').forEach(function(file) {
 			require(__dirname + '/lib/' + libfolder[i] + '/' + file)(ubique);
 		});
 
