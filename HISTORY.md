@@ -1,9 +1,10 @@
 # History
 
-### 0.0.5 - xxxxxxxx
+### 0.0.5 - 20150114
 
 - Added _contdistrib_ with `normpdf`,`normcdf`,`normiv`
-- Bugfixes
+- Rebuild main structure with auto-compile for ubique constructor
+- Added webpack for browser bundle in ./dist folder
 
 ### 0.0.4 - 20150104
 

@@ -1,8 +1,8 @@
 var webpack = require('webpack');
 
-var compiler = webpack({
+var wpcompile = webpack({
   cache: true,
-  entry: './ubique',
+  entry: './index.js',
   output: {
     library: 'ubique',
     libraryTarget: 'umd',
@@ -11,9 +11,9 @@ var compiler = webpack({
   }
 });
 
-compiler.run(function(err,stats) {
+wpcompile.run(function(err,stats) {
   if (err) {
     console.log(err);
   }
-  console.log('built ubique');
+  console.log('done!');
 });
