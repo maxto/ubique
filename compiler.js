@@ -39,7 +39,7 @@
 
 	return fs.writeFile(fullpath,code,function(err) {
 		if (err) throw err;
-		console.log('ubique.js compiled!')
+		console.log('done!')
 	});
 };
 
