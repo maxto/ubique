@@ -63,7 +63,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * name: ubique
 	 * version: 0.0.5
-	 * update date: 2015-01-13
+	 * update date: 2015-01-14
 	 * 
 	 * author: Max Todaro <m.todaro.ge@gmail.com> (https://github.com/maxto)
 	 * homepage: https://github.com/maxto/ubique

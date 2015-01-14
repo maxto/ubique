@@ -1,7 +1,7 @@
 {
   "name": "ubique",
   "version": "0.0.5",
-  "date":"2015-01-14",
+  "date": "2015-01-14",
   "author": "Max Todaro <m.todaro.ge@gmail.com> (https://github.com/maxto)",
   "description": "Mathematical and quantitative methods in Javascript and Node.js.",
   "main": "ubique.js",
@@ -34,13 +34,17 @@
     "analysis"
   ],
   "scripts": {
+    "build": "gulp",
     "test": "mocha --ui tdd --recursive"
   },
   "engines": {
     "node": ">= 0.6.0"
   },
   "devDependencies": {
+    "gulp": "^3.8.10",
+    "gulp-util": "^3.0.2",
     "mocha": "^2.1.0",
+    "uglify-js": "^2.4.16",
     "webpack": "^1.4.15"
   },
   "license": "MIT",

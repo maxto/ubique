@@ -39,9 +39,8 @@
 
 	return fs.writeFile(fullpath,code,function(err) {
 		if (err) throw err;
-		console.log('done!')
+		console.log('Compiled costructor done!');
 	});
 };
 
-// RUN
-compiler();
+module.exports = compiler;

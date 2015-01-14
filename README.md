@@ -1,9 +1,11 @@
-# UBIQUE
+# Ubique
 
-Ubique is a mathematical and statistical library for Javascript and Node.js. It supports arrays, vectors and matrices, providing MATLAB®-like functionalities.
-It includes a toolkit of functions for quantitative analysis and advanced statistics.
+Mathematical and Quantitative methods for Javascript and Node.js.
 
-Easy to use, no dependencies. 
+It supports arrays, vectors and matrices, providing MATLAB®-like functionalities.
+It includes a toolkit of functions for quantitative analysis and advanced statistics. 
+
+Easy to use, no dependencies, 100% Javascript in Node.js and in the Browser.
 
 ## Project Summary
 
@@ -25,29 +27,51 @@ View change [History](HISTORY.md)
 
 ## Install
 
-Cloning the repository from [Github](https://github.com/maxto/ubique)
+- Cloning repo from [Github](https://github.com/)
 
 ```
 git clone git://github.com/maxto/ubique.git
+
+cd ubique
 ```
 
-Installing the library from [Npm](https://www.npmjs.org/package/ubique)
+Download the project dependencies:
+
+```
+npm install
+```
+
+To update main class constructor ubique.js, bundled and minified versions in `./dist` folder:
+
+```
+npm build
+```
+
+- Using [Npm](https://www.npmjs.org)
 
 ```
 npm install ubique
 ```
-## Browser
 
-Ubique can be used in the browser with bundled version in `./dist` folder.
+- Using [Bower](http://bower.io/)
+
+
+```
+bower install ubique
+```
+
+## Browser Bundle
+
+Ubique can be used in the browser with bundled and minified version in `./dist` folder.
 
 Example:
 
-```
+```html
 <!DOCTYPE html>
 <html>
 <head>
 	<title>Ubique</title>
-	<script src="../dist/ubique.js" type="text/javascript"></script>
+	<script src="../dist/ubique-min.js" type="text/javascript"></script>
 	<p>
 		Ubique Test
 	</p>
