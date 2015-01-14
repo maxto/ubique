@@ -54,7 +54,7 @@ Example:
 </head>
 <body>
 	<script>
-		document.write('mean([-1,3,9] = ' + ubique.mean([-1,3,9])); // 2
+		document.write('mean([-1,3,2,4] = ' + ubique.mean([-1,3,2,4])); // 2
 	</script>
 </body>
 </html>
