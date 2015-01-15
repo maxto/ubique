@@ -1,10 +1,17 @@
 # History
 
+### 0.0.6 - 20150115
+
+- Added Install methods: Git, Npm, Bower.
+- Added minified version in `.dist` folder
+- Added `gulpfile.js` for bundle, minify via `npm run build' and
+  watch via `npm run watch`
+
 ### 0.0.5 - 20150114
 
 - Added _contdistrib_ with `normpdf`,`normcdf`,`normiv`
 - Rebuild main structure with auto-compile for ubique constructor
-- Added webpack for browser bundle in ./dist folder
+- Added webpack for browser bundle in `./dist` folder
 
 ### 0.0.4 - 20150104
 
