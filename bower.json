@@ -1,0 +1,20 @@
+{
+  "name": "ubique",
+  "main": "./dist/ubique.min.js",
+  "version": "0.0.6",
+  "authors": [
+    "Massimiliano Todaro <m.todaro.ge@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    ".gitignore"
+    "node_modules",
+    "bower_components",
+    "compiler.js",
+    "package.json",
+    "gulpfile.js",
+    "test",
+    "tests"
+  ]
+}

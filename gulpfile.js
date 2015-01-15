@@ -40,10 +40,15 @@ gulp.task('bundle',function (cb) {
 
 gulp.task('minify', ['bundle'], function () {
 
-  fs.writeFileSync(DEST + '/' + LIB + '.min.js',uglify.minify([FULLFILE],null).code);
+	fs.writeFileSync(DEST + '/' + LIB + '.min.js',uglify.minify([FULLFILE],null).code);
 
-  gutil.log('Minified done!')
+	gutil.log('Minified done!')
 });
 
+gulp.task('watch',['bundle','minify'], function() {
+	gulp.watch(['index.js','lib/**/*.js'],['bundle','minify']);
+});
+
+// default
 gulp.task('default',['bundle','minify']);
 

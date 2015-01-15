@@ -1,5 +1,5 @@
 var assert = require('assert');
-var ubique = require('../../ubique');
+var ubique = require('../../index.js');
 var arrayTestUtils = {};
 require('../util/arrayTestUtils')(arrayTestUtils);
 

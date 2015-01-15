@@ -1,11 +1,11 @@
 # Ubique
 
-Mathematical and Quantitative methods for Javascript and Node.js.
+Mathematical and Quantitative Methods for Javascript and Node.js.
 
-It supports arrays, vectors and matrices, providing MATLAB®-like functionalities.
+Ubique supports arrays, vectors and matrices, providing MATLAB®-like functionalities.
 It includes a toolkit of functions for quantitative analysis and advanced statistics. 
 
-Easy to use, no dependencies, 100% Javascript in Node.js and in the Browser.
+Easy to use, no dependencies. Runs both in Node.js and in the Browser.
 
 ## Project Summary
 
@@ -44,7 +44,7 @@ npm install
 To update main class constructor ubique.js, bundled and minified versions in `./dist` folder:
 
 ```
-npm build
+npm run build
 ```
 
 - Using [Npm](https://www.npmjs.org)
@@ -71,14 +71,14 @@ Example:
 <html>
 <head>
 	<title>Ubique</title>
-	<script src="../dist/ubique-min.js" type="text/javascript"></script>
+	<script src="../dist/ubique.min.js" type="text/javascript"></script>
 	<p>
 		Ubique Test
 	</p>
 </head>
 <body>
 	<script>
-		document.write('mean([-1,3,2,4] = ' + ubique.mean([-1,3,2,4])); // 2
+		document.write('mean([-1,3,2,4]) = ' + ubique.mean([-1,3,2,4])); // 2
 	</script>
 </body>
 </html>
