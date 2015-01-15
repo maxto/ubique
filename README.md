@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/maxto/ubique.svg?branch=master)](https://travis-ci.org/maxto/ubique)
+
 # Ubique
 
 Mathematical and Quantitative Methods for Javascript and Node.js.
