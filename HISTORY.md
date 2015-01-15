@@ -4,8 +4,7 @@
 
 - Added Install methods: Git, Npm, Bower.
 - Added minified version in `.dist` folder
-- Added `gulpfile.js` for bundle, minify via `npm run build' and
-  watch via `npm run watch`
+- Added `gulpfile.js` for bundle, minify `npm run build` and watch  `npm run watch`
 
 ### 0.0.5 - 20150114
 
