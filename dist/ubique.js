@@ -3166,17 +3166,39 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @description Last index in array or matrix. Indexing is in the range [0...N-1]
 	 *  
 	 * @param  {array|matrix} x values
-	 * @return {array}   
+	 * @param  {number} dim	(only for matrix) -1: rows and columns, 0: rows, 1: column (def: -1)
+	 * @return {number|array}   
 	 * 
 	 * @example
-	 * ubique.end([5,6,3]); // [2, 0]
+	 * ubique.end([5,6,3]); // 2
 	 * ubique.end([[4,5,0],[-1,2,-3]]); // [1, 2]
+	 * ubique.end([[4,5,0],[-1,2,-3]],0); // 1
 	 */
-	 $u.end = function(x) {
+	 $u.end = function(x,dim) {
 	 	if (arguments.length === 0) {
 	 		throw new Error('not enough input arguments');
 	 	}
-	 	return [$u.nrows(x) - 1,$u.ncols(x) - 1];
+	 	if (arguments.length === 1) {
+	 		dim = -1;
+	 	}
+	 	if ($u.isnumber(x)) {
+	 		return x;
+	 	} else 
+	 	if ($u.isarray(x)) {
+	 		return x.length - 1;
+	 	} else
+	 	if ($u.ismatrix(x)) {
+	 		if (!$u.isinteger(dim) || (dim < -1 || dim > 1)) {
+	 			throw new Error('dimension must be -1,0,1');
+	 		}
+	 		var idx = [$u.nrows(x) - 1,$u.ncols(x) - 1];
+	 		if (dim === -1) {
+	 			return idx;
+	 		} else {
+	 			return idx[dim];
+	 		}
+	 	} else 
+	 	throw new Error('unkown input arguments'); 	
 	 }
 
 	}
@@ -4448,16 +4470,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	  *
 	  * ubique.subset(c,1); // 6
 	  * ubique.subset(c,[1,2]); // [6, 3]
+	  * ubique.subset(c,ubique.end(c)); 3
 	  * ubique.subset(a,0,1); // [[6]]
 	  * ubique.subset(a,[0,1],[1,2]); // [[6, 5], [8, -1]]
 	  */
 	  $u.subset = function(m,r,c) {
 	    if (arguments.length === 0) {
 	      throw new Error('not enough input arguments');
-	    } else 
+	    }
+	    if (arguments.length > 3) {
+	      throw new Error('too many input arguments');
+	    }
 	    if (arguments.length === 1) {
 	      return m;
-	    } else
+	    } 
 	    if (arguments.length === 2) {
 	      if ($u.isnumber(m)) {
 	        return m;
@@ -4465,40 +4491,39 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if ($u.isarray(m)) {
 	        if ($u.isnumber(r)) {
 	          return m[r];
-	        } else 
-	        return r.map(function(val) {return m[val];})
-	      }
-	    } else 
-	    if (arguments.length === 3) {
-	     if ($u.ismatrix(m)) {
-	       if ($u.isnumber(r)) {
-	        r = [r];
-	      }
-	      if ($u.isnumber(c)) {
-	        c = [c];
-	      }
-	      if (r.length  === 1 && c.length === 1) {
-	        out = [[0]];
-	      } else {
-	        out = $u.zeros(r.length,c.length);
-	      }
-	      for (var i = 0;i < r.length;i++) {
-	        var tmp = r[i];
-	        for (var j = 0;j < c.length;j++) {
-	          out[i][j] = m[tmp][c[j]];
+	        } else {
+	          return r.map(function(val) {return m[val];});
 	        }
 	      }
-	      return $u.squeeze(out);
-	    } else {
-	      throw new Error('input must be a matrix');
 	    }
-	  } else {
-	    throw new Error('too many input arguments');
+	    if (arguments.length === 3) {
+	      if ($u.ismatrix(m)) {
+	        if ($u.isnumber(r)) {
+	          r = [r];
+	        }
+	        if ($u.isnumber(c)) {
+	          c = [c];
+	        }
+	        if (r.length  === 1 && c.length === 1) {
+	          out = [[0]];
+	        } else {
+	          out = $u.zeros(r.length,c.length);
+	        }
+	        for (var i = 0;i < r.length;i++) {
+	          var tmp = r[i];
+	          for (var j = 0;j < c.length;j++) {
+	            out[i][j] = m[tmp][c[j]];
+	          }
+	        }
+	        return $u.squeeze(out);
+	      } else {
+	        throw new Error('input must be a matrix');
+	      }
+	    }
 	  }
-
 	}
 
-	}
+
 
 /***/ },
 /* 96 */
