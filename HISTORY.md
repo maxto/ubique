@@ -3,7 +3,8 @@
 ### 0.0.7 - in progress...
 
 - Update README file with comparative MATLAB® vs ubique
-- Modified `end` method
+- Modified `end`, `mldivide`, `mrdivide`, `flipud`, `fliprl`
+- Renamed `flip` in `flipdim`
 
 ### 0.0.6 - 20150115
 

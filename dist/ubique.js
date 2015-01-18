@@ -1395,7 +1395,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	      return $u.mtimes($u.inv(y),x);
 	    } else {
-	      throw new Error('unknown input arguments');
+	      throw new Error('first argument must be square');
 	    }
 	  }
 
@@ -1526,7 +1526,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	      return $u.mtimes(x,$u.inv(y));
 	    } else {
-	      throw new Error('unknown input arguments');
+	      throw new Error('second argument must be square');
 	    }
 	  }
 
@@ -3387,7 +3387,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	 module.exports = function($u) {
 	/**
-	 * @method flip
+	 * @method flipdim
 	 * @summary Flip order of elements in array or matrix
 	 * @description Flip order of elements in array or matrix
 	 * 
@@ -3399,12 +3399,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var a = [[5,6,5],[7,8,-1]];
 	 * var c = [5,6,3];
 	 * 
-	 * ubique.flip(c); // [3, 6, 5]
-	 * ubique.flip(c,0); // [5, 6, 3]
-	 * ubique.flip(a); // [[7, 8, -1], [5, 6, 5]]
-	 * ubique.flip(a,0); // [[5, 6, 5], [-1, 8, 7]]
+	 * ubique.flipdim(c); // [3, 6, 5]
+	 * ubique.flipdim(c,1); // [5, 6, 3]
+	 * ubique.flipdim(a); // [[7, 8, -1], [5, 6, 5]]
+	 * ubique.flipdim(a,1); // [[5, 6, 5], [-1, 8, 7]]
 	 */
-	 $u.flip = function(x,dim) {
+	 $u.flipdim = function(x,dim) {
 	  if (arguments.length === 0) {
 	    throw new Error('not enough input arguments');
 	  }
@@ -3416,13 +3416,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  } else 
 	  if ($u.isarray(x)) {
 	    if (dim === 1) {
-	      return x.reverse();
+	      return x
 	    } else {
-	      return x;
+	      return x.reverse();
 	    }
 	  } else 
 	  if ($u.ismatrix(x)) {
-	    return $u.vectorfun(x,function(val){return val.reverse();},dim);
+	    return $u.vectorfun(x,function(val){return val.reverse();},1 - dim);
 	  } else {
 	    throw new Error('unknown input arguments');
 	  }
@@ -3453,7 +3453,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 	if (arguments.length === 0) {
 	 		throw new Error('not enough input arguments');
 	 	}
-	 	return $u.flip(x,0);
+	 	return $u.flipdim(x,1);
 	 }
 
 	}
@@ -3482,7 +3482,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 		if (arguments.length === 0) {
 	 		throw new Error('not enough input arguments');
 	 	}
-	 	return $u.flip(x,1);
+	 	return $u.flipdim(x,0);
 	 }
 
 	}
