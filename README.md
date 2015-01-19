@@ -1,8 +1,7 @@
+# Ubique
 [![Travis Build Status](https://travis-ci.org/maxto/ubique.svg?style=flat)](https://travis-ci.org/maxto/ubique)
 [![NPM version](http://img.shields.io/npm/v/ubique.svg?style=flat)](https://www.npmjs.com/package/ubique)
 [![Bower](https://img.shields.io/bower/v/bootstrap.svg?style=flat)](http://bower.io/search/?q=ubique)
-
-# Ubique
 
 Mathematical and Quantitative Methods for Javascript and Node.js.
 
@@ -118,7 +117,7 @@ __Indexing__
 MATLAB® uses 1-based indexing, first element in array is `array(1)`, the last one is `array(length(array))`.
 Ubique uses 0-based indexing, first element in array is `array[0]`, the last one is `array[array.length - 1]`.
 
-_Dimension__
+__Dimension__
 
 MATLAB® uses 1 as dimension for rows and 2 for columns.
 Ubique uses 0 as dimension for rows and 1 for columns.
