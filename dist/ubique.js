@@ -62,8 +62,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * name: ubique
-	 * version: 0.0.6
-	 * update date: 2015-01-15
+	 * version: 0.0.7
+	 * update date: 2015-01-18
 	 * 
 	 * author: Max Todaro <m.todaro.ge@gmail.com>
 	 * homepage: https://github.com/maxto/ubique
@@ -225,6 +225,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	__webpack_require__(130)(ubique);
 	__webpack_require__(131)(ubique);
 	__webpack_require__(132)(ubique);
+	__webpack_require__(133)(ubique);
+	__webpack_require__(134)(ubique);
+	__webpack_require__(135)(ubique);
+	__webpack_require__(136)(ubique);
+	__webpack_require__(137)(ubique);
+	__webpack_require__(138)(ubique);
+	__webpack_require__(139)(ubique);
+	__webpack_require__(140)(ubique);
+	__webpack_require__(141)(ubique);
 	module.exports = ubique;
 
 /***/ },
@@ -4951,6 +4960,138 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
+	 * Performance metrics
+	 */
+	 module.exports = function($u) {
+	/**
+	 * @method annavgreturn
+	 * @summary Annualized average return
+	 * @description Annualized average return
+	 * 
+	 * @param  {number|array|matrix} x rate or return 
+	 * @param  {number} t frequencey of data. 1: yearly, 4: quarterly, 12: monthly, 52: weekly, 252: daily (def: 252)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @return {number|array}   
+	 *
+	 * @example
+	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
+	 * var z = ubique.cat(1,x,y);
+	 *
+	 * ubique.annavgreturn(x,12); // 0.237261
+	 * ubique.annavgreturn(z,12); // [[0.237261, 0.162131]]
+	 * ubique.annavgreturn(z,12,0); // [-0.0119342, 0.869022, 0.384784, -0.243629, -0.248261, 0.619604, -0.185967, 0.30605, 0.329228, 0.765311]
+	 */
+	 $u.annavgreturn = function(x,t,dim) {
+	  if (arguments.length === 0) {
+	    throw new Error('not enough input arguments');
+	  }
+	  if (arguments.length === 1) {
+	    t = 252;
+	    dim = 1;
+	  }
+	  if (arguments.length === 2) {
+	    dim = 1;
+	  }
+	  var _aavgret = function(a,t) {
+	    return Math.pow(1 + $u.mean(a),t) - 1;
+	  }
+	  if ($u.isnumber(x)) {
+	   return Math.pow(1 + x,t) - 1;
+	  }
+	  if ($u.isarray(x)) {
+	   return  _aavgret(x,t);
+	  }
+	  return $u.vectorfun(x,function(val){return _aavgret(val,t);},dim);
+	 }
+	}
+
+/***/ },
+/* 107 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Performance metrics
+	 */
+	module.exports = function($u) {
+	/**
+	 * @method annreturn
+	 * @summary Annualisation of return (1 + X) ^ (t / n)
+	 * @description Annualisation of return (1 + X) ^ (t / n)
+	 * 
+	 * @param  {number} r rate of return
+	 * @param  {number} t frequencey of data. 1: yearly, 4: quarterly, 12: monthly, 52: weekly, 252: daily
+	 * @param  {number} n period of interest
+	 * @return {number}   
+	 *
+	 * @example
+	 * var r = 0.12, t = 12, n = 20;
+	 * ubique.annreturn(r,t,n); //  0.0703623234312547
+	 */
+	$u.annreturn = function(r,t,n) {
+	  if (arguments.length < 2) {
+	    throw new Error('not enough input arguments');
+	  }
+	  if (arguments.length === 2) {
+	    n = 1;
+	  }
+	  return $u.power(1 + r,(t / n)) - 1;
+	}
+	}
+
+
+/***/ },
+/* 108 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Performance metrics
+	 */
+	 module.exports = function($u) {
+	/**
+	 * @method cagr
+	 * @summary Compound annual growth rate
+	 * @description Compound annual growth rate
+	 * 
+	 * @param  {number|array|matrix} x rate or return 
+	 * @param  {number} p period (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @return {number|array}   
+	 *
+	 * @example
+	 * var x2 = [100,98,101.5,103];
+	 * var y2 = [99.8,96.5,101.1,95.8];
+	 * var z2 = ubique.cat(1,x2,y2);
+	 *
+	 * ubique.cagr(x2,4); // 0.00741707
+	 * ubique.cagr(z2,4); // [[0.00741707, -0.0101743]]
+	 * ubique.cagr(z2,2,0); // [-5.00375e-4, -0.00384869, -9.86681e-4, -0.0179535]
+	 */
+	 $u.cagr = function(x,p,dim) {
+	  if (arguments.length < 2) {
+	    throw new Error('not enough input arguments');
+	  }
+	  if (arguments.length === 2) {
+	    dim = 1;
+	  }
+	  var _cagr = function(a,p) {
+	    return $u.power(1 + $u.ror(a),(1 / p)) - 1;
+	  }
+	  if ($u.isnumber(x)) {
+	   return 0;
+	  }
+	  if ($u.isarray(x)) {
+	   return  _cagr(x,p);
+	  }
+	  return $u.vectorfun(x,function(val){return _cagr(val,p);},dim);
+	 }
+	}
+
+/***/ },
+/* 109 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
 	 * Time Series Analysis
 	 */
 	 module.exports = function($u) {
@@ -5005,7 +5146,200 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 107 */
+/* 110 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Performance metrics
+	 */
+	 module.exports = function($u) {
+	/**
+	 * @method irr
+	 * @summary Internal rate of return on an investment based on a series of periodic cash flows
+	 * @description Calculates the internal rate of return on an investment based on a series of regularly/irregurarly periodic cash flows
+	 * 
+	 * @param  {array} cf    income or payments associated with the investment. Must contain at least one negative and one positive cash flow to calculate rate of return, and the first amount must be negative
+	 * @param  {array} cfd   number of calendar days from the beginning of the period that cash flow occurs
+	 * @param  {number} cd    total number of calendar days in the measurement period
+	 * @param  {number} guess estimate for what the internal rate of return will be (def: 0.1)
+	 * @return {number}       
+	 *
+	 * @example
+	 * //Simple IRR
+	 * ubique.irr([250000,25000,-10000,-285000]); //  0.024712563094781776
+	 * ubique.irr([74.2,37.1,-104.4],[0,1,2],2); //  -0.07410820570460687
+	 *
+	 * //Modified IRR
+	 * ubique.irr([250000,25000,-10000,-285000],[0,45,69,90],90);  //  0.07692283872311274
+	 * ubique.irr([74.2,37.1,-104.4],[0,14,31],31);  //  -0.07271456460699813
+	 */
+	 $u.irr = function(cf,cfd,cd,guess) {
+	   if (arguments.length < 1) {
+	    throw new Error('not enough input arguments');
+	  }
+	  var _npv = function(cf,cfd,cd,guess) {
+	    var npv = 0;
+	    for (var i = 0;i < cf.length;i++) {
+	      npv += cf[i] / Math.pow((1 + guess),cfd[i]/cd);
+	    }
+	    return npv;
+	  }
+	  var _npvd = function(cf,cfd,cd,guess) {
+	    var npv = 0;
+	    for (var i = 0;i < cf.length;i++) {
+	      npv -= cfd[i]/cd * cf[i] / Math.pow((1 + guess),cfd[i]/cd)
+	    }
+	    return npv;
+	  }
+	  if (arguments.length === 1) {
+	    cfd = $u.colon(0,cf.length-1,1);
+	    cd = 1;
+	    guess = 0.1;
+	  }
+	  if (arguments.length === 2) {
+	    cd = 1;
+	    guess = 0.1;
+	  }
+	  if (arguments.length === 3) {
+	    guess = 0.1;
+	  }
+	  var rate = guess,
+	  maxeps = 1e-6,
+	  maxiter = 50,
+	  newrate = 0,
+	  epsrate = 0,
+	  npv = 0,
+	  cnt = 0,
+	  cntv = true;
+	  do {
+	    npv = _npv(cf,cfd,cd,rate);
+	    newrate = rate - npv / _npvd(cf,cfd,cd,rate);
+	    epsrate = Math.abs(newrate - rate);
+	    rate = newrate;
+	    cntv = (epsrate > maxeps) && (Math.abs(npv) > maxeps);
+	  } while (cntv && (cnt++ < maxiter));
+	  if (cntv) {
+	    throw new Error('number error');
+	  }
+	  return rate;
+	}
+
+	}
+
+/***/ },
+/* 111 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Performance metrics
+	 */
+	 module.exports = function($u) {
+	/**
+	 * @method mdietz
+	 * @summary Historical performance of an investment portfolio with external cash flows
+	 * @description Historical performance of an investment portfolio with external cash flows
+	 * 
+	 * @param  {number} ev  ending value
+	 * @param  {number} bv  beginning market value
+	 * @param  {number|array} cf  external cashflows (inflows/outflows)
+	 * @param  {number|array} cfd number of calendar days from the beginning of the period that cash flow occurs
+	 * @param  {number} cd  total number of calendar days in the measurement period
+	 * @return {number}
+	 *
+	 * @example
+	 * var ev = 104.4,bv = 74.2,cf = 37.1,cfd = 14, cd = 31;
+	 * ubique.mdietz(ev,bv,cf,cfd,cd); //  -0.07298099559862156
+	 *
+	 * var ev = 1200,bv = 1000,cf = [10,50,35,20],cfd = [15,38,46,79],cd = 90;
+	 * ubique.mdietz(ev,bv,cf,cfd,cd); //  0.0804
+	 */
+	 $u.mdietz = function(ev,bv,cf,cfd,cd) {
+	  if (arguments.length < 5) {
+	    throw new Error('not enough input arguments');
+	  }
+	  var md = -99999,
+	  w = [];
+	  if ($u.isnumber(cf)) {
+	    md = (ev - bv - cf) / (bv + (cf * (1 - cfd / cd)));
+	  } else {
+	    if (cd <= 0) {
+	      throw new Error('actual number of days in the period negative or zero');
+	    }
+	    for (var i = 0;i < cf.length;i++) {
+	      if (cfd[i] < 0) {
+	        throw new Error('number of days negative or zero');
+	      }
+	      w[i] = (1 - cfd[i] / cd);
+	    }
+	      var ttwcf = 0; //total weighted cash flows
+	      for (var i = 0;i < cf.length;i++) {
+	        ttwcf += w[i] * cf[i];
+	      }
+	      var tncf = 0; //total net cash flows
+	      for (var i = 0;i < cf.length;i++) {
+	        tncf += cf[i];
+	      }
+	      md = (ev - bv - tncf) / (bv + ttwcf);
+	    }
+	    return md;
+	  }
+	}
+
+/***/ },
+/* 112 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Performance metrics
+	 */
+	 module.exports = function($u) {
+	/**
+	 * @method percpos
+	 * @summary Percentage of positive values in array or matrix
+	 * @description Percentage of positive values in array or matrix
+	 * 
+	 * @param  {array|matrix} x array of elements
+	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @return {number|array}
+	 *
+	 * @example
+	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
+	 * var z = ubique.cat(1,x,y);
+	 *
+	 * ubique.percpos(x); // 0.8
+	 * ubique.percpos(z); // [[0.8, 0.5]]
+	 * ubique.percpos(z,0); // [0.5, 1, 1, 0, 0.5, 1, 0.5, 0.5, 0.5, 1]
+	 */
+	 $u.percpos = function(x,dim) {
+	  if (arguments.length === 0) {
+	    throw new Error('not enough input arguments');
+	  }
+	  if (arguments.length === 1) {
+	    dim = 1;
+	  }
+	  var _percpos = function(a) {
+	    var count = 0;
+	    for (var i = 0;i < a.length;i++) {
+	      if (a[i] >= 0) {
+	        count++;
+	      } 
+	      console.log(a[i])
+	    }
+	    return count / a.length;
+	  }
+	  if ($u.isnumber(x)) {
+	    return 1;
+	  }
+	  if ($u.isarray(x)) {
+	    return  _percpos(x);
+	  }
+	  return $u.vectorfun(x,function(val){return _percpos(val);},dim);
+	}
+	}
+
+/***/ },
+/* 113 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5078,7 +5412,52 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 108 */
+/* 114 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Performance metrics
+	 */
+	 module.exports = function($u) {
+	/**
+	 * @method ror
+	 * @summary Simple rate of return
+	 * @description Simple rate of return calculated from the last and the first value of 
+	 * an array of numbers.
+	 * 
+	 * @param  {array!matrix} x array or matrix of values
+	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @return {number|array}   
+	 *
+	 * @example
+	 * var q = [[89,23,12],[34,5,70]];
+	 * 
+	 * ubique.ror([100,112])); //  0.12
+	 * ubique.ror(q); // [[-0.617978, -0.782609, 4.83333]]
+	 * ubique.ror(q,0); // [-0.865169, 1.05882]
+	 */
+	 $u.ror = function(x,dim) {
+	  if (arguments.length === 0) {
+	    throw new Error('not enough input arguments');
+	  }
+	  if (arguments.length === 1) {
+	    dim = 1;
+	  }
+	  var _ror = function(a) {
+	    return a[a.length - 1] / a[0] - 1;
+	  }
+	  if ($u.isnumber(x)) {
+	    return 0;
+	  }
+	  if ($u.isarray(x)) {
+	    return  _ror(x);
+	  }
+	  return $u.vectorfun(x,function(val){return _ror(val);},dim);
+	}
+	}
+
+/***/ },
+/* 115 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5143,7 +5522,86 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 109 */
+/* 116 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Performance metrics
+	 */
+	 module.exports = function($u) {
+	/**
+	 * @method  twr
+	 * @summary True Time-weighted return measures the returns of the assets irrespective of the amount invested
+	 * @description rue Time-weighted return measures the returns of the assets irrespective of the amount invested
+	 * 
+	 * @param  {array} mv array of market values
+	 * @param  {array} cf array of external cashflows (inflows/outflows)
+	 * @return {number}    
+	 *
+	 * @example
+	 * var mv = [250000,255000,257000,288000,293000,285000], cf = [0,0,25000,0,-10000,0];
+	 * ubique.twr(mv,cf);  //  0.07564769566198049
+	 */
+	 $u.twr = function(mv,cf) {
+	  if (arguments.length === 0) {
+	    throw new Error('not enough input arguments');
+	  }
+	  if (arguments.length === 1) {
+	    cf = 0;
+	  }
+	  if (mv.length !== cf.length) {
+	    throw new Error('market value and cash flows must be of the same size');
+	  }
+	  var _twr = [1];
+	  for (var i = 1; i < mv.length; i++) {
+	    _twr[i] = mv[i] / (mv[i - 1] + cf[i - 1]);
+	  }
+	  return $u.prod(_twr) - 1;
+	}
+
+	}
+
+/***/ },
+/* 117 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Performance metrics
+	 */
+	 module.exports = function($u) {
+	/**
+	 * @method xreturn
+	 * @summary Excess return
+	 * @description Excess return. If X and Y are arrays, returns mean of difference of values X - Y, otherwise returns a simple difference X - Y
+	 * 
+	 * @param  {number!array} x number or array of elements in X
+	 * @param  {number|array} y number or array of elements in Y
+	 * @return {number}   
+	 *
+	 * @example
+	 * var x = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
+	 * 
+	 * ubique.xreturn(x,y); // 0.0053
+	 * ubique.xreturn(0.05,0.015); // 0.035
+	 */
+	 $u.xreturn = function(x,y) {
+	  if (arguments.length < 2) {
+	    throw new Error('not enough input arguments');
+	  }
+	  if ($u.isnumber(x) && $u.isnumber(y)) {
+	    return x - y;
+	  } else 
+	  if ($u.isarray(x) && $u.isarray(y)) {
+	    return $u.mean($u.minus(x,y));
+	  } else {
+	    throw new Error('inputs must be numbers or arrays')
+	  }
+	}
+	}
+
+/***/ },
+/* 118 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5229,7 +5687,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 110 */
+/* 119 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5275,7 +5733,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 111 */
+/* 120 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5322,7 +5780,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 112 */
+/* 121 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5399,7 +5857,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 113 */
+/* 122 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5491,7 +5949,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 114 */
+/* 123 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5537,7 +5995,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 115 */
+/* 124 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5591,7 +6049,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 116 */
+/* 125 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5637,7 +6095,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 117 */
+/* 126 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5679,7 +6137,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 118 */
+/* 127 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5722,7 +6180,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 119 */
+/* 128 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5776,7 +6234,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 120 */
+/* 129 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5818,7 +6276,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 121 */
+/* 130 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5883,7 +6341,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 122 */
+/* 131 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5933,7 +6391,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 123 */
+/* 132 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5998,7 +6456,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 124 */
+/* 133 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6055,7 +6513,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 125 */
+/* 134 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6096,7 +6554,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 126 */
+/* 135 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6142,7 +6600,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 127 */
+/* 136 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6188,7 +6646,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 128 */
+/* 137 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6242,7 +6700,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 129 */
+/* 138 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6287,7 +6745,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 130 */
+/* 139 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6342,7 +6800,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 131 */
+/* 140 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6389,7 +6847,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 132 */
+/* 141 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**

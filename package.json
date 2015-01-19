@@ -1,7 +1,7 @@
 {
   "name": "ubique",
-  "version": "0.0.6",
-  "date": "2015-01-15",
+  "version": "0.0.7",
+  "date": "2015-01-19",
   "author": "Max Todaro <m.todaro.ge@gmail.com>",
   "description": "Mathematical and Quantitative Methods for Javascript and Node.js.",
   "main": "./index",

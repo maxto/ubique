@@ -3,7 +3,7 @@ gulp = require('gulp'),
 gutil = require('gulp-util'),
 webpack = require('webpack'),
 uglify = require('uglify-js'),
-compilerConstructor = require('./compiler.js');
+compileConstructor = require('./compiler.js');
 
 var DEST = './dist',
 INDEX = './index.js',
@@ -12,7 +12,7 @@ FILENAME = 'ubique.js',
 FULLFILE = DEST + '/' + FILENAME;
 
 
-var compilerWebpack = webpack({
+var compileWebpack = webpack({
 	cache: true,
 	entry: INDEX,
 	output: {
@@ -26,9 +26,9 @@ var compilerWebpack = webpack({
 gulp.task('bundle',function (cb) {
 
 	//compile constructor
-	compilerConstructor();
+	compileConstructor();
 
-	compilerWebpack.run(function(err,stats) {
+	compileWebpack.run(function(err,stats) {
 		if (err) {
 			gutil.log(err);
 		}

@@ -11,11 +11,18 @@ It includes a toolkit of functions for quantitative analysis and advanced statis
 
 Easy to use, no dependencies. Runs both in Node.js and in the Browser.
 
-## Project Summary
+## Contents
 
-The project aims to create an environment for mathematical and statistical analysis in Javascript and Node.js, alternative to MATLAB®, for scientific client-server applications.
+* [Contents](#contents)
+    * [Features](#features)
+    * [Install](#install)
+    * [Browser Bundle](#browser-bundle)
+    * [Test](#test)
+    * [Ubique for Matlab Users](#ubique-for-matlab-users)
+    * [Contributors](#contributors)
+    * [License](#license)
 
-Main categories and some features:
+## Features
 
 - Matrices and Arrays: matrix creation and concatenation, indexing, sorting and reshaping
 - Data Types: array and vector functions, is-state
@@ -25,9 +32,11 @@ Main categories and some features:
 - Descriptive Statistics: mean,standard deviation, kurtosis, skewness, percentile, zscore
 - Probability Distributions: normal pdf and cdf, inverse, distribution test
 - Interpolation and Regression Analysis
-- Quantitative Analysis
+- Quantitative Analysis: performance and risk metrics
 
-View change [History](HISTORY.md) 
+The project aims to create an environment for mathematical and statistical analysis in Javascript and Node.js, alternative to MATLAB®, for scientific client-server applications.
+
+View [History](HISTORY.md) 
 
 ## Install
 
@@ -104,13 +113,19 @@ In Ubique `number` is a number with dimension `1x1`, `array` is a column vector 
 
 Functions applied to matrices are `column-major order` as in MATLAB® (but the storage is always the native javascript row-major order).
 
+__Indexing__
+
 MATLAB® uses 1-based indexing, first element in array is `array(1)`, the last one is `array(length(array))`.
 Ubique uses 0-based indexing, first element in array is `array[0]`, the last one is `array[array.length - 1]`.
+
+_Dimension__
 
 MATLAB® uses 1 as dimension for rows and 2 for columns.
 Ubique uses 0 as dimension for rows and 1 for columns.
 
-In MATLAB® it's possible to have a variable clone with the simple sequence: `A = [5;4:3]` and `B = A`. If we change an element in `B`, `B(1) = NaN`, `A` doesn't change his values
+__Cloning__
+
+In MATLAB® it's possible to clone a variable `A` with the simple sequence: `A = [5;4:3]` and `B = A`. If we change an element in `B`, `B(1) = NaN`, `A` doesn't change his values
 `A = [5;4:3]` and `B = [NaN;4;3]`.
 In Ubique (based on native Javascript) this sequence doesn't work and we'll have this finale result: `A = [NaN,4,3]` and `B = [NaN,4,3]`. We must clone the array or matrix with a 
 special function `clone` in Ubique. 

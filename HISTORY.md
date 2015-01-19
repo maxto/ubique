@@ -1,26 +1,27 @@
 # History
 
-### 0.0.7 - in progress...
+### 0.0.7 - 20150119
 
 - Update README file with comparative MATLAB® vs ubique
 - Modified `end`, `mldivide`, `mrdivide`, `flipud`, `fliprl`
 - Renamed `flip` in `flipdim`
+- Added functions in _quants_ `annavgreturn`,`annreturn`,`cagr`,`irr`,`mdietz`,`percpos`,`ror`,`twr`,`xreturn`
 
 ### 0.0.6 - 20150115
 
 - Added Install methods: Git, Npm, Bower.
-- Added minified version in `.dist` folder
+- Added minified version in _dist_ folder
 - Added `gulpfile.js` for bundle, minify `npm run build` and watch  `npm run watch`
 
 ### 0.0.5 - 20150114
 
 - Added _contdistrib_ with `normpdf`,`normcdf`,`normiv`
 - Rebuilt main structure with auto-compile for ubique constructor
-- Added webpack for browser bundle in `./dist` folder
+- Added webpack for browser bundle in _dist_ folder
 
 ### 0.0.4 - 20150104
 
-- Added _findat_ folder with `tick2ret`,`ret2tick`
+- Added _findat_ folder with `tick2ret`,`ret2tick` (renamed later in _quants_)
 - Added in _statrnd_ `jbtest`,`pdist`
 - Added in _test\util_ `arrayTestUtils`
 - Added some test functions
