@@ -1,5 +1,9 @@
 # History
 
+### 0.0.8 - xxxxxxxx
+
+- Added in _quants_, `histvar`
+
 ### 0.0.7 - 20150119
 
 - Update README file with comparative MATLAB® vs ubique
