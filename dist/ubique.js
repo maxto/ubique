@@ -235,6 +235,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	__webpack_require__(140)(ubique);
 	__webpack_require__(141)(ubique);
 	__webpack_require__(142)(ubique);
+	__webpack_require__(143)(ubique);
+	__webpack_require__(144)(ubique);
+	__webpack_require__(145)(ubique);
+	__webpack_require__(146)(ubique);
+	__webpack_require__(147)(ubique);
+	__webpack_require__(148)(ubique);
+	__webpack_require__(149)(ubique);
+	__webpack_require__(150)(ubique);
+	__webpack_require__(151)(ubique);
+	__webpack_require__(152)(ubique);
+	__webpack_require__(153)(ubique);
+	__webpack_require__(154)(ubique);
+	__webpack_require__(155)(ubique);
+	__webpack_require__(156)(ubique);
+	__webpack_require__(157)(ubique);
+	__webpack_require__(158)(ubique);
+	__webpack_require__(159)(ubique);
+	__webpack_require__(160)(ubique);
+	__webpack_require__(161)(ubique);
+	__webpack_require__(162)(ubique);
+	__webpack_require__(163)(ubique);
+	__webpack_require__(164)(ubique);
 	module.exports = ubique;
 
 /***/ },
@@ -669,20 +691,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary True for vector input
 	 * @description True for vector input
 	 *              
-	 * @param  {array|matrix}  x input 
+	 * @param  {matrix}  x matrix Nx1 or 1xN
 	 * @return {Boolean}   
 	 *
 	 * @example
-	 * ubique.isvector([1,2,3]); // true
-	 * ubique.isvector([[3,4,5]]); // true
+	 * ubique.isvector([[5,6,7]]); // true
+	 * ubique.isvector([[5],[6],[7]]); // true
 	 */
 	 $u.isvector = function(x) {
-	 	if (($u.iscolumn(x) === true) || ($u.isrow(x) === true)) {
-	 		return true;
+	 	if (arguments.length === 0) {
+	 		throw new Error('not enough input arguments');
+	 	}
+	 	if ($u.ismatrix(x)) {
+	 		if (($u.iscolumn(x) === true) || ($u.isrow(x) === true)) {
+	 			return true;
+	 		}
+	 		return false;
 	 	}
 	 	return false;
 	 }
-
 	}
 
 /***/ },
@@ -4961,6 +4988,60 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
+	 * Risk metrics
+	 */
+	 module.exports = function($u) {
+	/**
+	 * @method adjsharpe
+	 * @summary Adjusted Sharpe Ratio
+	 * @description Sharpe Ratio adjusts for skewness and kurtosis with a penalty factor for negative skewness and excess kurtosis
+	 * 
+	 * @param  {array|matrix} x     array of value
+	 * @param  {number} frisk annual free-risk rate (def: 0)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @return {number}       
+	 *
+	 * @example
+	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
+	 * var z = ubique.cat(1,x,y);
+	 *
+	 * ubique.adjsharpe(x,0.02/12); // 0.748134
+	 * ubique.adjsharpe(z); // [[0.830583, 0.245232]]
+	 */
+	 $u.adjsharpe = function(x,frisk,dim) {
+	 	if (arguments.length === 0) {
+	 		throw new Error('not enough input arguments');
+	 	}
+	 	if (arguments.length === 1) {
+	 		frisk = 0;
+	 		dim = 1;
+	 	}
+	 	if (arguments.length === 2) {
+	 		dim = 1;
+	 	}
+	 	var _asharpe = function(a,frisk) {
+	 		var sr = $u.sharpe(a,frisk),
+	 		sk = $u.skewness(a),
+	 		ku = $u.kurtosis(a);
+	 		return sr * (1 + (sk/6) * sr - ((ku - 3)/24) * Math.sqrt(sr));
+	 	}
+	 	if ($u.isnumber(x)) {
+	 		throw new Error('input must be an array or matrix');
+	 	}
+	 	if ($u.isarray(x)) {
+	 		return  _asharpe(x,frisk);
+	 	}
+	 	return $u.vectorfun(x,function(val){return _asharpe(val,frisk);},dim);
+	 }
+	}
+
+
+/***/ },
+/* 107 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
 	 * Performance metrics
 	 */
 	 module.exports = function($u) {
@@ -4981,7 +5062,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * ubique.annavgreturn(x,12); // 0.237261
 	 * ubique.annavgreturn(z,12); // [[0.237261, 0.162131]]
-	 * ubique.annavgreturn(z,12,0); // [-0.0119342, 0.869022, 0.384784, -0.243629, -0.248261, 0.619604, -0.185967, 0.30605, 0.329228, 0.765311]
 	 */
 	 $u.annavgreturn = function(x,t,dim) {
 	  if (arguments.length === 0) {
@@ -5008,13 +5088,64 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 107 */
+/* 108 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Risk metrics
+	 */
+	 module.exports = function($u) {
+	/**
+	 * @method annavgrisk
+	 * @summary Annualized Average Risk
+	 * @description Annualized standard deviation of asset/portfolio values
+	 * 
+	 * @param  {number|array|matrix} x rate or return 
+	 * @param  {number} t frequencey of data. 1: yearly, 4: quarterly, 12: monthly, 52: weekly, 252: daily (def: 252)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @return {number|array}   
+	 *
+	 * @example
+	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
+	 * var z = ubique.cat(1,x,y);
+	 *
+	 * ubique.annavgrisk(x,12); // 0.0804728
+	 * ubique.annavgrisk(z,12); // [[0.0804728, 0.182948]]
+	 */
+	 $u.annavgrisk = function(x,t,dim) {
+	 	if (arguments.length === 0) {
+	 		throw new Error('not enough input arguments');
+	 	}
+	 	if (arguments.length === 1) {
+	 		t = 252;
+	 		dim = 1;
+	 	}
+	 	if (arguments.length === 2) {
+	 		dim = 1;
+	 	}
+	 	var _aavgrisk = function(a,t) {
+	 		return Math.sqrt(t) * $u.std(a);
+	 	}
+	 	if ($u.isnumber(x)) {
+	 		return 0;
+	 	}
+	 	if ($u.isarray(x)) {
+	 		return  _aavgrisk(x,t);
+	 	}
+	 	return $u.vectorfun(x,function(val){return _aavgrisk(val,t);},dim);
+	 }
+	}
+
+
+/***/ },
+/* 109 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Performance metrics
 	 */
-	module.exports = function($u) {
+	 module.exports = function($u) {
 	/**
 	 * @method annreturn
 	 * @summary Annualisation of return (1 + X) ^ (t / n)
@@ -5026,23 +5157,56 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {number}   
 	 *
 	 * @example
-	 * var r = 0.12, t = 12, n = 20;
-	 * ubique.annreturn(r,t,n); //  0.0703623234312547
+	 * ubique.annreturn([0.015,0.02],12,20); // [0.00897319, 0.0119524]
 	 */
-	$u.annreturn = function(r,t,n) {
-	  if (arguments.length < 2) {
-	    throw new Error('not enough input arguments');
-	  }
-	  if (arguments.length === 2) {
-	    n = 1;
-	  }
-	  return $u.power(1 + r,(t / n)) - 1;
-	}
+	 $u.annreturn = function(r,t,n) {
+	 	if (arguments.length === 0) {
+	 		throw new Error('not enough input arguments');
+	 	}
+	 	if (arguments.length === 1) {
+	 		t = 252;
+	 		n = 1;
+	 	}
+	 	if (arguments.length === 2) {
+	 		n = 1;
+	 	}
+	 	return $u.minus($u.power($u.plus(1,r),(t / n)),1);
+	 }
 	}
 
 
 /***/ },
-/* 108 */
+/* 110 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Risk metrics
+	 */
+	 module.exports = function($u) {
+	/**
+	 * #TOFIX
+	 * @method avgdrawdown
+	 * @summary Average drawdown
+	 * @description Average drawdown
+	 * 
+	 * @param  {array} x    asset/portfolio values
+	 * @param  {string} mode drawdown calculation. 'return' or 'arithmetic' (def: 'return')
+	 * @return {object}      drawdown values (number) and recovery time (number)
+	 *
+	 * @example
+	 * var X = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+	 * avgdd(X)
+	 * // { avgdd: 0.0023000000000000034, avgddr: 0.2 }
+	 */
+	 $u.avgdrawdown = function(x,mode) {
+	  var ddo = $u.drawdown(x,mode);
+	  return {avgdd:$u.mean(ddo.drawdown),avgddr:$u.mean(ddo.recovery)};
+	}
+
+	}
+
+/***/ },
+/* 111 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5089,7 +5253,234 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 109 */
+/* 112 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Risk metrics
+	 */
+	 module.exports = function($u) {
+	/**
+	 * @method downsidepot
+	 * @summary Downside potential
+	 * @description Downside potential
+	 * 
+	 * @param  {array|matrix} x   array or matrix of values
+	 * @param  {number} mar minimum acceptable return (def: 0)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @return {number|array}
+	 *
+	 * @example
+	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
+	 * var z = ubique.cat(1,x,y);
+	 *
+	 * ubique.downsidepot(x,0.1/100); // 0.0025
+	 * ubique.downsidepot(z); // [[0.0023, 0.0173]]
+	 */
+	 $u.downsidepot = function(x,mar,dim) {
+	 	if (arguments.length === 0) {
+	 		throw new Error('not enough input arguments');
+	 	}
+	 	if (arguments.length === 1) {
+	 		mar = 0;
+	 		dim = 1;
+	 	}
+	 	if (arguments.length === 2) {
+	 		dim = 1;
+	 	}
+	 	var _ddp = function(a,mar) {
+	    var z = 0;
+	    for (var i = 0;i < a.length;i++) {
+	      z += Math.max(mar - a[i],0) / a.length;
+	    }
+	    return z;
+	  }
+	  if ($u.isnumber(x)) {
+	   return x;
+	 }
+	 if ($u.isarray(x)) {
+	   return _ddp(x,mar);
+	 } 
+	 return $u.vectorfun(x,function(val){return _ddp(val,mar);},dim);
+	}
+	}
+
+
+/***/ },
+/* 113 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Risk metrics
+	 */
+	 module.exports = function($u) {
+	/**
+	 * @method downsiderisk
+	 * @summary Downside Risk
+	 * @description  Downside Risk or Semi-Standard Deviation. Measures  the  variability  of  underperformance  below  a  minimum  target   rate 
+	 * 
+	 * @param  {array|matrix} x   array or matrix of values
+	 * @param  {number} mar minimum acceptable return (def: 0)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @return {number|array}
+	 *
+	 * @example
+	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
+	 * var z = ubique.cat(1,x,y);
+	 *
+	 * ubique.downsiderisk(x,0.1/100); // 0.00570088
+	 * ubique.downsiderisk(z); // [[0.00526308, 0.0282082]]
+	 */
+	 $u.downsiderisk = function(x,mar,dim) {
+	 	if (arguments.length === 0) {
+	 		throw new Error('not enough input arguments');
+	 	}
+	 	if (arguments.length === 1) {
+	 		mar = 0;
+	 		dim = 1;
+	 	}
+	 	if (arguments.length === 2) {
+	 		dim = 1;
+	 	}
+	 	var _dsrisk = function(a,mar) {
+	 		var z = 0;
+	 		for (var i = 0; i < a.length; i++) {
+	 			z += Math.pow(Math.min(a[i] - mar,0),2) / a.length;
+	 		}
+	 		return Math.sqrt(z);
+	 	}
+	 	if ($u.isnumber(x)) {
+	 		return x;
+	 	}
+	 	if ($u.isarray(x)) {
+	 		return _dsrisk(x,mar);
+	 	} 
+	 	return $u.vectorfun(x,function(val){return _dsrisk(val,mar);},dim);
+	 }
+	}
+
+
+/***/ },
+/* 114 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Risk metrics
+	 */
+	 module.exports = function($u) {
+	/**
+	 * #TOFIX
+	 * @method drawdown
+	 * @summary Drawdown
+	 * @description Any continuous losing return period
+	 *  
+	 * @param  {array} x    asset/portfolio values
+	 * @param  {logical} mode drawdown calculation. TRUE: 'geometric', FALSE: 'arithmetic' (def: TRUE)
+	 * @return {object}      drawdown values (array) and recovery time (array)
+	 *
+	 * @example
+	 * var X = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+	 * drawdown(X,true)
+	 * // { drawdown: [ 0, 0, 0, 0.00900000000000004, 0, 0, 0, 0, 0.013999999999999995, 0 ],
+	 * // recovery: [ 0, 0, 0, 1, 0, 0, 0, 0, 1, 0 ] }
+	 */
+	 $u.drawdown = function(x,mode) {
+	  var cumret = new Array(x.length);
+	  /*
+	  if (mode === true || mode === undefined) {
+	    cumret = $u.cumprod($u.plus(x,1));
+	  } else { 
+	    cumret = $u.plus($u.cumsum(x),1);
+	  }
+	  var cummax = $u.cummax(cumret);
+	  var dd = $u.plus($u.rdivide(cumret,cummax),-1); //drawdown
+	  */
+	  cumret = $u.cumprod(math.add(x,1))
+	  return cumret;
+	}
+
+	}
+
+/***/ },
+/* 115 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Risk metrics
+	 */
+	 module.exports = function($u) {
+	/**
+	 * @method histcondvar
+	 * @summary Historical Conditional Value-At-Risk
+	 * @description Historical Conditional Value-At-Risk. Univariate historical simulation.Single asset
+	 * 
+	 * @param  {array|matrix} array or matrix of values    
+	 * @param  {number} p confidence level in the range [0,1] (def: 0.95)
+	 * @param  {number} amount amount (def: 1)
+	 * @param  {period} period time horizon (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 1)    
+	 * @return {number|array}
+	 *
+	 * @example
+	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
+	 * var z = ubique.cat(1,x,y);
+	 * 
+	 * // historical daily conditional VaR at 5% conf level
+	 * ubique.histcondvar(z,0.95); // [[0.014, 0.061]]
+	 *
+	 * // historical daily conditional VaR at 1% for 100k GBP asset over 10 days 
+	 * ubique.histcondvar(z,0.99,100000,10); // [[4427.19, 19289.9]]
+	 */
+	 $u.histcondvar = function(x,p,amount,period,dim) {
+	  if (arguments.length === 0) {
+	    throw new Error('not enough input arguments');
+	  }
+	  if (arguments.length === 1) {
+	    p = 0.95;
+	    amount = 1;
+	    period = 1;
+	    dim = 1;
+	  }
+	  if (arguments.length === 2) {
+	    amount = 1;
+	    period = 1;
+	    dim = 1;
+	  }
+	  if (arguments.length === 3) {
+	    period = 1;
+	    dim = 1;
+	  }
+	  if (arguments.length === 4) {
+	    dim = 1;
+	  }
+	  var _hcvar = function(a,p,amount,period) {
+	    var _VaR = -$u.histvar(a,p),
+	    z = [],
+	    t = 0;
+	    for (var i = 0; i < a.length; i++) {
+	      if (a[i] <= _VaR) {
+	        z[t] = a[i];
+	        t++;
+	      }
+	    }
+	    return -$u.mean(z) * Math.sqrt(period) * amount;
+	  }
+	  if ($u.isnumber(x)) {
+	   return x;
+	 }
+	 if ($u.isarray(x)) {
+	   return _hcvar(x,p,amount,period);
+	 } 
+	 return $u.vectorfun(x,function(val){return _hcvar(val,p,amount,period);},dim);
+	}
+	}
+
+
+/***/ },
+/* 116 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5103,8 +5494,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * 
 	 * @param  {array|matrix} array or matrix of values    
 	 * @param  {number} p confidence level in the range [0,1] (def: 0.95)
-	 * @param  {number} amount amount
-	 * @param  {period} period period 
+	 * @param  {number} amount amount (def: 1)
+	 * @param  {period} period time horizon (def: 1)
 	 * @param  {number} dim dimension 0: row, 1: column (def: 1)    
 	 * @return {number|array}
 	 *
@@ -5117,7 +5508,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * ubique.histvar(z,0.95); // [[0.014, 0.061]]
 	 *
 	 * // historical daily VaR at 1% for 100k GBP asset over 10 days 
-	 * ubique.histvar(x,0.99,100000,10); // 4427.19
+	 * ubique.histvar(z,0.99,100000,10); //[[4427.19, 19289.9]]
 	 */
 	 $u.histvar = function(x,p,amount,period,dim) {
 	  if (arguments.length === 0) {
@@ -5138,22 +5529,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	    period = 1;
 	    dim = 1;
 	  }
-
+	  if (arguments.length === 4) {
+	    dim = 1;
+	  }
 	  var _histvar = function(a,p,amount,period) {
-	   return -$u.quantile(a,1 - p) * Math.sqrt(period) * amount;
+	    return -$u.quantile(a,1 - p) * Math.sqrt(period) * amount;
 	  }
 	  if ($u.isnumber(x)) {
 	   return x;
-	  }
-	  if ($u.isarray(x)) {
-	   return _histvar(x,p,amount,period);
-	  } 
-	  return $u.vectorfun(x,function(val){return _histvar(val,p,amount,period);},dim);
 	 }
+	 if ($u.isarray(x)) {
+	   return _histvar(x,p,amount,period);
+	 } 
+	 return $u.vectorfun(x,function(val){return _histvar(val,p,amount,period);},dim);
+	}
 	}
 
 /***/ },
-/* 110 */
+/* 117 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5211,7 +5604,34 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 111 */
+/* 118 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Risk metrics
+	 */
+	 module.exports = function(ubique) {
+	/**
+	 * @method inforatio
+	 * @summary Information Ratio
+	 * @description Information Ratio
+	 * 
+	 * @param  {array} x asset/portfolio values
+	 * @param  {array} y benchmark values
+	 * @return {number}   
+	 *
+	 * @example
+	 * var X = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039]:
+	 * var Y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
+	 * inforatio(X,Y);  // 0.09875949754892852
+	 */
+	 ubique.inforatio = function(x,y) {
+	  return ubique.xret(x,y) / ubique.std(ubique.minus(x,y));
+	}
+	}
+
+/***/ },
+/* 119 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5292,7 +5712,67 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 112 */
+/* 120 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Risk metrics
+	 */
+	 module.exports = function(ubique) {
+	/**
+	 * @method jalpha
+	 * @summary Jensen alpha
+	 * @description  Ex-post alpha calculated with regression line. Free-risk is the avereage free-risk for the timeframe selected.
+	 *
+	 * @param  {array} x     array of X values
+	 * @param  {array} y     array of Y values
+	 * @param  {number} frisk  free-risk (def: 0)
+	 * @return {number}      
+	 *
+	 * @example
+	 * var x = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
+	 * jalpha(x,y,0.01/12)
+	 * // 0.016794981090785477
+	 * 
+	 */
+	 ubique.jalpha = function(x,y,frisk) {
+	  frisk = (frisk === undefined) ? 0 : frisk;
+	  return ubique.mean(x) - frisk - ubique.linreg(x,y).beta * (ubique.mean(y) - frisk);
+	}
+	}
+
+/***/ },
+/* 121 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Risk metrics
+	 */
+	 module.exports = function($u) {
+	/**
+	 * @method maxdrawdown
+	 * @summary Maximum drawdown
+	 * @description Maximum drawdown
+	 * 
+	 * @param  {array} x    asset/portfolio values
+	 * @param  {string} mode drawdown calculation. 'return' or 'arithmetic' (def: 'return')
+	 * @return {object}      drawdown values (number) and recovery time (number)
+	 *
+	 * @example
+	 * var X = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+	 * maxdrawdown(X)
+	 * // { maxdrawdown: 0.013999999999999995, maxdrawdownr: 1 }
+	 */
+	 $u.maxdrawdown = function(x,mode) {
+	 	var ddo = $u.drawdown(x,mode);
+	 	ddr = ddo.recovery;
+	 	return {maxdrawdown:$u.max(ddo.drawdown),maxdrawdownr:ddr[ddo.drawdown.indexOf($u.max(ddo.drawdown))]};
+	 }
+	}
+
+/***/ },
+/* 122 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5351,7 +5831,277 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 113 */
+/* 123 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Risk metrics
+	 */
+	 module.exports = function($u) {
+	/**
+	 * @method modigliani
+	 * @summary Modigliani index for risk-adjusted return
+	 * @description Modigliani index for risk-adjusted return
+	 *  
+	 * @param  {array|matrix} x     asset/portfolio values
+	 * @param  {array} y     benchmark values
+	 * @param  {number} frisk free-risk rate (def: 0)
+	 * @return {number|array}       
+	 *
+	 * @example
+	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
+	 * var z = ubique.cat(1,x,y);
+	 *
+	 * ubique.modigliani(x,y); // 0.0406941
+	 * ubique.modigliani(z,x); // [[0.0406941, 0.0126]]
+	 */
+	 $u.modigliani = function(x,y,frisk,dim) {
+	  if (arguments.length < 2) {
+	    throw new Error('not enough input arguments');
+	  }
+	  if (arguments.length === 2) {
+	    frisk = 0;
+	    dim = 1;
+	  }
+	  if (arguments.length === 3) {
+	    dim = 1;
+	  }
+	  var _m2 = function(a,b,frisk) {
+	    return $u.mean(a) + $u.sharpe(a,frisk) * ($u.std(b) - $u.std(a));
+	  }
+	  if ($u.isarray(x) && $u.isarray(y)) {
+	    return  _m2(x,y,frisk);
+	  } else
+	  if ($u.ismatrix(x) && $u.isarray(y)) {
+	   return $u.vectorfun(x,function(val){return _m2(val,y,frisk);},dim);
+	  } else {
+	   throw new Error('first input must be an array/matrix, the second one an array');
+	  }
+	 }
+	}
+
+/***/ },
+/* 124 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Risk metrics
+	 */
+	 module.exports = function(ubique) {
+	/**
+	 * @method  mcvar
+	 * @summary Montecarlo Value-at-Risk
+	 * @description Montecarlo VaR for single asset. Based on geometric Brownian motion.
+	 * 
+	 * @param  {number} p  confidence level in the range [0,1] (def: 0.95)
+	 * @param  {number} t  holding period (def: 1)
+	 * @param  {number} fr free-risk rate (def: 0)
+	 * @param  {number} s  sample volatility or standard deviation (def: 1)
+	 * @param  {number} v  asset/portfolio start value (def: 1)
+	 * @param  {number} iter number of iterations
+	 * @return {number}    
+	 *
+	 * @example
+	 * mcvar(0.95,1,0.0004,0.01,1)
+	 * // 0.0309296496932608
+	 * 
+	 * //historical simulated daily VaR at 1% for 100k GBP asset over 10 days 
+	 * var X = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+	 * mcvar(0.99,10,0,std(X),100000)
+	 * // 24538.540467748742
+	 */
+	 ubique.mcvar = function(p,t,fr,s,v,iter) {
+	  p = p === undefined ? 0.95 : p;
+	  t = t === undefined ? 1 : t;
+	  fr = fr === undefined ? 0 : fr;
+	  s = s === undefined ? 1 : s;
+	  v = v === undefined ? 1 : v;
+	  iter = iter === undefined ? 10000 : iter;
+	  var mcvar = [];
+	  for (var i = 0;i < iter;i++) {
+	    mcvar[i] = Math.exp((fr - 0.5 * Math.pow(s,2)) + s * ubique.norminv(Math.random(),0,1)) - 1;
+	  }
+	  return - Math.pow(t,0.5) * ubique.prctile(mcvar, 1 - p) * v;
+	}
+
+	}
+
+/***/ },
+/* 125 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Risk metrics
+	 */
+	 module.exports = function($u) {
+	/**
+	 * @method omegaratio
+	 * @summary omegaratio ratio
+	 * @description omegaratio ratio
+	 * 
+	 * @param  {array} x     asset/portfolio values
+	 * @param  {number} mar minimum acceptable return (def: 0)
+	 * @return {number}
+	 *
+	 * @example
+	 * var X = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+	 * omegaratio(X,0)
+	 * // 8.782608695652174
+	 */
+	 $u.omegaratio = function(x,mar) {
+	 	if (mar === undefined) {mar = 0;}
+	 	return $u.usp(x,mar) / $u.dsp(x,mar);
+	 }
+
+	}
+
+/***/ },
+/* 126 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Risk metrics
+	 */
+	 module.exports = function($u) {
+	/**
+	 * @method paramcondvar
+	 * @summary Parametric Conditional Value-At-Risk
+	 * @description Parametric Conditional Value-At-Risk. More sensitive to the shape of the loss distribution in the tails
+	 * Also known as Expected Shortfall (ES), Expected Tail Loss (ETL).
+	 * 
+	 * @param  {number|array} mu    mean value (def: 0)
+	 * @param  {number|array} sigma standard deviation (def: 1)
+	 * @param  {number} p     cVaR confidende level in range [0,1] (def: 0.95)
+	 * @param  {number} amount portfolio/asset amount (def: 1)
+	 * @param  {number} period time horizon (def: 1)
+	 * @return {number}       
+	 *
+	 * @example
+	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
+	 * var z = ubique.cat(1,x,y);
+	 *
+	 * // parametric daily Var at 5% conf level
+	 * ubique.paramcondvar(ubique.mean(x),ubique.std(x)); // 0.0300178
+	 *
+	 * //parametric daily VaR at 1% for 100k GBP asset over 10 days (two assets)
+	 * ubique.paramcondvar(ubique.mean(z),ubique.std(z),0.99,100000,10); // [19579, 44511.1]
+	 */
+	 $u.paramcondvar = function(mu,sigma,p,amount,period) {
+	  if (arguments.length < 2) {
+	    throw new Error('not enough input arguments');
+	  }
+	  if (arguments.length === 2) {
+	    p = 0.95;
+	    amount = 1;
+	    period = 1;
+	  }
+	  if (arguments.length === 3) {
+	    amount = 1;
+	    period = 1;
+	  }
+	  if (arguments.length === 4) {
+	    period = 1;
+	  }
+	  var _pcvar = function(_mu,_sigma,p,amount,period) {
+	    return _sigma * $u.normpdf($u.norminv(1 - p))/(1 - p) * amount * Math.sqrt(period) - _mu;
+	  }
+	  if ($u.isvector(mu) && $u.isvector(sigma)) {
+	    mu = $u.flatten(mu);
+	    sigma = $u.flatten(sigma);
+	  }
+
+	  if ($u.isnumber(mu) && $u.isnumber(sigma)) {
+	    return _pcvar(mu,sigma,p,amount,period);
+	  } else 
+	  if ($u.isarray(mu) && $u.isarray(sigma)) {
+	    var out = new Array(mu.length);
+	    for (var i = 0;i < mu.length; i++) {
+	      out[i] = _pcvar(mu[i],sigma[i],p,amount,period);
+	    }
+	    return out;
+	  } else {
+	    throw new Error('mu and sigma must be both numbers or arrays');
+	  }
+	 }
+	}
+
+
+/***/ },
+/* 127 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Risk metrics
+	 */
+	 module.exports = function($u) {
+	/**
+	 * @method paramvar
+	 * @summary Parametric Value-At-Risk
+	 * @description Parametric Value-At-Risk. Asset or portfolio returns are normally distributed.
+	 * 
+	 * @param  {number|array} mu    mean value (def: 0)
+	 * @param  {number|array} sigma standard deviation (def: 1)
+	 * @param  {number} p     VaR confidende level in range [0,1] (def: 0.95)
+	 * @param  {number} amount portfolio/asset amount (def: 1)
+	 * @param  {number} period time horizon (def: 1)
+	 * @return {number}       
+	 *
+	 * @example
+	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
+	 * var z = ubique.cat(1,x,y);
+	 *
+	 * // parametric daily Var at 5% conf level
+	 * ubique.paramvar(ubique.mean(x),ubique.std(x)); // 0.0203108
+	 *
+	 * //parametric daily VaR at 1% for 100k GBP asset over 10 days (two assets)
+	 * ubique.paramvar(ubique.mean(z),ubique.std(z),0.99,100000,10); // [11429.2, 34867.3]
+	 */
+	 $u.paramvar = function(mu,sigma,p,amount,period) {
+	 	if (arguments.length < 2) {
+	 		throw new Error('not enough input arguments');
+	 	}
+	 	if (arguments.length === 2) {
+	 		p = 0.95;
+	 		amount = 1;
+	 		period = 1;
+	 	}
+	 	if (arguments.length === 3) {
+	 		amount = 1;
+	 		period = 1;
+	 	}
+	 	if (arguments.length === 4) {
+	 		period = 1;
+	 	}
+	 	var _pvar = function(_mu,_sigma,p,amount,period) {
+	 		return (-$u.norminv(1 - p) * _sigma - _mu) * Math.sqrt(period) * amount; 
+	 	}
+	 	if ($u.isvector(mu) && $u.isvector(sigma)) {
+	 		mu = $u.flatten(mu);
+	 		sigma = $u.flatten(sigma);
+	 	}
+
+	 	if ($u.isnumber(mu) && $u.isnumber(sigma)) {
+	 		return _pvar(mu,sigma,p,amount,period);
+	 	} else 
+	 	if ($u.isarray(mu) && $u.isarray(sigma)) {
+	 		var out = new Array(mu.length);
+	 		for (var i = 0;i < mu.length; i++) {
+	 			out[i] = _pvar(mu[i],sigma[i],p,amount,period);
+	 		}
+	 		return out;
+	 	} else {
+	 		throw new Error('mu and sigma must be both numbers or arrays');
+	 	}
+	 }
+	}
+
+
+
+/***/ },
+/* 128 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5404,7 +6154,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 114 */
+/* 129 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5477,7 +6227,33 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 115 */
+/* 130 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Risk metrics
+	 */
+	 module.exports = function(ubique) {
+	/**
+	 * @method rrr
+	 * @summary Return/Risk ratio
+	 * @description Return/Risk ratio
+	 * 
+	 * @param  {number} aret  asset/portfolio expected return
+	 * @param  {number} arisk asset/portfolio standard deviation
+	 * @return {number}
+	 *
+	 * @example
+	 * rrr(0.12,0.10)
+	 * // 1.2
+	 */
+	 ubique.rrr = function(aret,arisk) {
+	  return aret / arisk;
+	}
+	}
+
+/***/ },
+/* 131 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5522,7 +6298,90 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 116 */
+/* 132 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Risk metrics
+	 */
+	 module.exports = function($u) {
+	/**
+	 * @method sharpe
+	 * @summary Sharpe Ratio
+	 * @description Sharpe Ratio.Compute Sharpe ratio for an array X of values (daily, weekly, etc) and
+	 * a free-risk rate. Annual free-risk must be divided to match the right timeframe.
+	 * 
+	 * @param  {array|matrix} x     array of value
+	 * @param  {number} frisk annual free-risk rate (def: 0)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @return {number}       
+	 *
+	 * @example
+	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
+	 * var z = ubique.cat(1,x,y);
+	 *
+	 * ubique.sharpe(x,0.02/12); // 0.698794
+	 * ubique.sharpe(z); // [[0.770539, 0.23858]]
+	 */
+	 $u.sharpe = function(x,frisk,dim) {
+	 	if (arguments.length === 0) {
+	 		throw new Error('not enough input arguments');
+	 	}
+	 	if (arguments.length === 1) {
+	 		frisk = 0;
+	 		dim = 1;
+	 	}
+	 	if (arguments.length === 2) {
+	 		dim = 1;
+	 	}
+	 	var _sharpe = function(a,frisk) {
+	 		return ($u.mean(a) - frisk) / $u.std(a);
+	 	}
+	 	if ($u.isnumber(x)) {
+	 		throw new Error('input must be an array or matrix');
+	 	}
+	 	if ($u.isarray(x)) {
+	 		return  _sharpe(x,frisk);
+	 	}
+	 	return $u.vectorfun(x,function(val){return _sharpe(val,frisk);},dim);
+	 }
+
+	}
+
+/***/ },
+/* 133 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Risk metrics
+	 */
+	 module.exports = function($u) {
+	/**
+	 * @method sortino
+	 * @summary Sortino ratio
+	 * @description  Sortino ratio
+	 * 
+	 * @param  {array} x     asset/portfolio valuessi a
+	 * @param  {number} frisk free-risk rate (def: 0)
+	 * @param  {number} mar minimum acceptable return (def: 0)
+	 * @return {number}
+	 *
+	 * @example
+	 * var X = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+	 * sortino(X,0,0)
+	 * // 3.4010510161478655
+	 */
+	 $u.sortino = function(x,frisk,mar) {
+	 	if (frisk === undefined) {frisk = 0;}
+	 	if (mar === undefined) {mar = 0;}
+	 	return ($u.mean(x) - frisk) / $u.dsr(x,mar);
+	 }
+
+	}
+
+/***/ },
+/* 134 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5587,7 +6446,72 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 117 */
+/* 135 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Risk metrics
+	 */
+	 module.exports = function(ubique) {
+	/**
+	 * @method trackerr
+	 * @summary Tracking Error (ex-post)
+	 * @description  Ex-post tracking error
+	 * 
+	 * @param  {array} x array of X values
+	 * @param  {array} y array of Y values
+	 * @return {number}   
+	 *
+	 * @example
+	 * var x = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
+	 * trackerr(x,y)
+	 * // 0.05366572462941314
+	 * 
+	 */
+	 ubique.trackerr = function(x,y) {
+	  var a = ubique.minus(x,y);
+	  return ubique.std(a);
+	}
+	}
+
+/***/ },
+/* 136 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Risk metrics
+	 */
+	 module.exports = function(ubique) {
+	/**
+	 * @method treynor
+	 * @summary Treynor Ratio
+	 * @description Compute the Treynor ratio for an array X of values (daily, weekly, etc) and
+	 * a free-risk rate. Annual free-risk must be divided to match the right timeframe.
+	 * 
+	 * @param  {array} x     array of X values
+	 * @param  {array} y     array of Y values
+	 * @param  {number} frisk  free-risk rate (def: 0)
+	 * @return {number}       
+	 *
+	 * @example
+	 * var x = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
+	 * treynor(x,y,0.01/12)
+	 * // 0.7391550954681383
+	 * 
+	 */
+	 ubique.treynor = function(x,y,frisk) {
+	  frisk = (frisk === undefined) ? 0 : frisk;
+	  var beta = ubique.linreg(x,y).beta;
+	  return (ubique.mean(x) - frisk) / beta;
+	}
+
+
+	}
+
+/***/ },
+/* 137 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5627,7 +6551,94 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 118 */
+/* 138 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Risk metrics
+	 */
+	 module.exports = function($u) {
+	/**
+	 * @method ulcerindex
+	 * @summary Ulcer Index
+	 * @description Ulcer Index of Peter G. Martin (1987). The impact of long, deep drawdowns will have significant
+	 * impact because the underperformance since the last peak is squared.
+	 *  
+	 * @param  {array} x    asset/portfolio values
+	 * @param  {string} mode drawdown calculation. 'return' or 'arithmetic' (def: 'return')
+	 * @return {number}      
+	 *
+	 * @example
+	 * var X = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+	 * ulcerindex(X)
+	 * // 0.05974926249592595
+	 * 
+	 */
+	 $u.ulcerindex = function(x,mode) {
+	 	var dd = $u.drawdown(x,mode),
+	 	n = dd.drawdown.length;
+	 	return $u.sqrt($u.sum($u.power(dd.drawdown,2)) / n);
+	 }
+
+	}
+
+/***/ },
+/* 139 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Risk metrics
+	 */
+	 module.exports = function($u) {
+	/**
+	 * @method upsidepot
+	 * @summary Upside potential
+	 * @description Upside potential
+	 * 
+	 * @param  {array|matrix} x   array or matrix of values
+	 * @param  {number} mar minimum acceptable return (def: 0)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @return {number|array}
+	 *
+	 * @example
+	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
+	 * var z = ubique.cat(1,x,y);
+	 *
+	 * ubique.upsidepot(x,0.1/100); // 0.0194
+	 * ubique.upsidepot(z); // [[0.0202, 0.0299]]
+	 */
+	 $u.upsidepot = function(x,mar,dim) {
+	  if (arguments.length === 0) {
+	    throw new Error('not enough input arguments');
+	  }
+	  if (arguments.length === 1) {
+	   mar = 0;
+	   dim = 1;
+	 }
+	 if (arguments.length === 2) {
+	  dim = 1;
+	}
+
+	var _usp = function(a,mar) {
+	 var z = 0;
+	 for (var i = 0;i < a.length;i++) {
+	  z += Math.max(a[i] - mar,0) / a.length;
+	}
+	return z;
+	}
+	if ($u.isnumber(x)) {
+	 return x;
+	}
+	if ($u.isarray(x)) {
+	 return _usp(x,mar);
+	} 
+	return $u.vectorfun(x,function(val){return _usp(val,mar);},dim);
+	}
+	}
+
+/***/ },
+/* 140 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5666,7 +6677,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 119 */
+/* 141 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5752,7 +6763,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 120 */
+/* 142 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5798,7 +6809,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 121 */
+/* 143 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5845,7 +6856,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 122 */
+/* 144 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5922,7 +6933,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 123 */
+/* 145 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6014,7 +7025,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 124 */
+/* 146 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6060,7 +7071,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 125 */
+/* 147 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6114,7 +7125,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 126 */
+/* 148 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6160,7 +7171,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 127 */
+/* 149 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6202,7 +7213,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 128 */
+/* 150 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6245,7 +7256,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 129 */
+/* 151 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6299,7 +7310,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 130 */
+/* 152 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6341,7 +7352,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 131 */
+/* 153 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6406,7 +7417,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 132 */
+/* 154 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6456,7 +7467,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 133 */
+/* 155 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6521,7 +7532,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 134 */
+/* 156 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6578,7 +7589,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 135 */
+/* 157 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6619,7 +7630,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 136 */
+/* 158 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6665,7 +7676,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 137 */
+/* 159 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6711,7 +7722,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 138 */
+/* 160 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6765,7 +7776,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 139 */
+/* 161 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6810,7 +7821,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 140 */
+/* 162 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6865,7 +7876,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 141 */
+/* 163 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6912,7 +7923,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 142 */
+/* 164 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
