@@ -3,23 +3,12 @@
 [![NPM version](http://img.shields.io/npm/v/ubique.svg?style=flat)](https://www.npmjs.com/package/ubique)
 [![Bower](https://img.shields.io/bower/v/bootstrap.svg?style=flat)](http://bower.io/search/?q=ubique)
 
-Mathematical and Quantitative Methods for Javascript and Node.js.
+Scientific and statistical library for Javascript and Node.js.
 
 Ubique supports arrays, vectors and matrices, providing MATLAB®-like functionalities.
 It includes a toolkit of functions for quantitative analysis and advanced statistics. 
 
 Easy to use, no dependencies. Runs both in Node.js and in the Browser.
-
-## Contents
-
-* [Contents](#contents)
-    * [Features](#features)
-    * [Install](#install)
-    * [Browser Bundle](#browser-bundle)
-    * [Test](#test)
-    * [Ubique for Matlab Users](#ubique-for-matlab-users)
-    * [Contributors](#contributors)
-    * [License](#license)
 
 ## Features
 

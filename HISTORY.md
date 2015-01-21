@@ -2,8 +2,9 @@
 
 ### 0.0.8 - xxxxxxxx
 
-- Added in _quants_ `histvar`,`histcondvar`,`sharpe`,`adjsharpe`,`annavgrisk`,`downsiderisk`,`paramvar`,`paramcondvar`,`downsidepot`,`upsidepot`,`modigliani`
-- Modified `isvector` 
+- Added in _quants_ `histvar`,`histcondvar`,`sharpe`,`adjsharpe`,`annavgrisk`,`downsiderisk`,
+  `paramvar`,`paramcondvar`,`downsidepot`,`upsidepot`,`modigliani`,`inforatio`,`jensenalpha`
+- Modified `isvector`,`linearreg` 
 
 ### 0.0.7 - 20150119
 

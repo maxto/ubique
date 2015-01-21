@@ -5610,25 +5610,46 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * Risk metrics
 	 */
-	 module.exports = function(ubique) {
+	 module.exports = function($u) {
 	/**
 	 * @method inforatio
 	 * @summary Information Ratio
 	 * @description Information Ratio
 	 * 
-	 * @param  {array} x asset/portfolio values
-	 * @param  {array} y benchmark values
-	 * @return {number}   
+	 * @param  {array|matrix} x     asset/portfolio values
+	 * @param  {array} y     benchmark values
+	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @return {number|matrix}      
 	 *
 	 * @example
-	 * var X = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039]:
-	 * var Y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
-	 * inforatio(X,Y);  // 0.09875949754892852
+	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
+	 * var z = [0.04,-0.022,0.043,0.028,-0.078,-0.011,0.033,-0.049,0.09,0.087];
+	 *
+	 * ubique.inforatio(x,y); // 0.0936915
+	 * ubique.inforatio(ubique.cat(1,x,y),z); // [[0.0263019, -0.0597049]]
 	 */
-	 ubique.inforatio = function(x,y) {
-	  return ubique.xret(x,y) / ubique.std(ubique.minus(x,y));
+	 $u.inforatio = function(x,y,dim) {
+	   if (arguments.length < 2) {
+	    throw new Error('not enough input arguments');
+	  }
+	  if (arguments.length === 2) {
+	    dim = 1;
+	  }
+	  var _ir = function(a,b) {
+	    return $u.xreturn(a,b) / $u.std($u.minus(a,b));
+	  }
+	  if ($u.isarray(x) && $u.isarray(y)) {
+	    return  _ir(x,y);
+	  } else
+	  if ($u.ismatrix(x) && $u.isarray(y)) {
+	    return $u.vectorfun(x,function(val){return _ir(val,y);},dim);
+	  } else {
+	   throw new Error('first input must be an array/matrix, the second one an array');
+	 }
 	}
 	}
+
 
 /***/ },
 /* 119 */
@@ -5718,27 +5739,49 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * Risk metrics
 	 */
-	 module.exports = function(ubique) {
+	 module.exports = function($u) {
 	/**
-	 * @method jalpha
+	 * @method jensenalpha
 	 * @summary Jensen alpha
 	 * @description  Ex-post alpha calculated with regression line. Free-risk is the avereage free-risk for the timeframe selected.
 	 *
-	 * @param  {array} x     array of X values
-	 * @param  {array} y     array of Y values
+	 * @param  {array|matrix} x     asset/portfolio values
+	 * @param  {array} y     benchmark values
 	 * @param  {number} frisk  free-risk (def: 0)
-	 * @return {number}      
+	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @return {number|matrix}      
 	 *
 	 * @example
-	 * var x = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
-	 * jalpha(x,y,0.01/12)
-	 * // 0.016794981090785477
-	 * 
+	 * var z = [0.04,-0.022,0.043,0.028,-0.078,-0.011,0.033,-0.049,0.09,0.087];
+	 *
+	 * ubique.jensenalpha(x,y); // 0.0176091
+	 * ubique.jensenalpha(ubique.cat(1,x,y),z); // [[0.0263019, -0.0597049]]
 	 */
-	 ubique.jalpha = function(x,y,frisk) {
-	  frisk = (frisk === undefined) ? 0 : frisk;
-	  return ubique.mean(x) - frisk - ubique.linreg(x,y).beta * (ubique.mean(y) - frisk);
+	 $u.jensenalpha = function(x,y,frisk,dim) {
+	  if (arguments.length < 2) {
+	    throw new Error('not enough input arguments');
+	  }
+	  if (arguments.length === 2) {
+	    frisk = 0;
+	    dim = 1;
+	  }
+	  if (arguments.length === 3) {
+	    dim = 1;
+	  }
+	  var _ja = function(a,b,frisk) {
+	    var beta = $u.linearreg(a,b).beta;
+	    return $u.mean(a) - frisk - beta * ($u.mean(b) - frisk);
+	  }
+	  if ($u.isarray(x) && $u.isarray(y)) {
+	    return  _ja(x,y,frisk);
+	  } else
+	  if ($u.ismatrix(x) && $u.isarray(y)) {
+	    return $u.vectorfun(x,function(val){return _ja(val,y,frisk);},dim);
+	  } else {
+	   throw new Error('first input must be an array/matrix, the second one an array');
+	 }
 	}
 	}
 
@@ -5846,15 +5889,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param  {array|matrix} x     asset/portfolio values
 	 * @param  {array} y     benchmark values
 	 * @param  {number} frisk free-risk rate (def: 0)
-	 * @return {number|array}       
+	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @return {number|matrix}       
 	 *
 	 * @example
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
-	 * var z = ubique.cat(1,x,y);
+	 * var z = [0.04,-0.022,0.043,0.028,-0.078,-0.011,0.033,-0.049,0.09,0.087];
 	 *
 	 * ubique.modigliani(x,y); // 0.0406941
-	 * ubique.modigliani(z,x); // [[0.0406941, 0.0126]]
+	 * ubique.modigliani(ubique.cat(1,x,y),z); // [[0.0425846, 0.0131853]]
 	 */
 	 $u.modigliani = function(x,y,frisk,dim) {
 	  if (arguments.length < 2) {
@@ -5888,7 +5932,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * Risk metrics
 	 */
-	 module.exports = function(ubique) {
+	 module.exports = function($u) {
 	/**
 	 * @method  mcvar
 	 * @summary Montecarlo Value-at-Risk
@@ -5911,7 +5955,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * mcvar(0.99,10,0,std(X),100000)
 	 * // 24538.540467748742
 	 */
-	 ubique.mcvar = function(p,t,fr,s,v,iter) {
+	 $u.mcvar = function(p,t,fr,s,v,iter) {
 	  p = p === undefined ? 0.95 : p;
 	  t = t === undefined ? 1 : t;
 	  fr = fr === undefined ? 0 : fr;
@@ -5920,9 +5964,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  iter = iter === undefined ? 10000 : iter;
 	  var mcvar = [];
 	  for (var i = 0;i < iter;i++) {
-	    mcvar[i] = Math.exp((fr - 0.5 * Math.pow(s,2)) + s * ubique.norminv(Math.random(),0,1)) - 1;
+	    mcvar[i] = Math.exp((fr - 0.5 * Math.pow(s,2)) + s * $u.norminv(Math.random(),0,1)) - 1;
 	  }
-	  return - Math.pow(t,0.5) * ubique.prctile(mcvar, 1 - p) * v;
+	  return - Math.pow(t,0.5) * $u.prctile(mcvar, 1 - p) * v;
 	}
 
 	}
@@ -6233,7 +6277,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * Risk metrics
 	 */
-	 module.exports = function(ubique) {
+	 module.exports = function($u) {
 	/**
 	 * @method rrr
 	 * @summary Return/Risk ratio
@@ -6247,7 +6291,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * rrr(0.12,0.10)
 	 * // 1.2
 	 */
-	 ubique.rrr = function(aret,arisk) {
+	 $u.rrr = function(aret,arisk) {
 	  return aret / arisk;
 	}
 	}
@@ -6452,7 +6496,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * Risk metrics
 	 */
-	 module.exports = function(ubique) {
+	 module.exports = function($u) {
 	/**
 	 * @method trackerr
 	 * @summary Tracking Error (ex-post)
@@ -6469,9 +6513,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * // 0.05366572462941314
 	 * 
 	 */
-	 ubique.trackerr = function(x,y) {
-	  var a = ubique.minus(x,y);
-	  return ubique.std(a);
+	 $u.trackerr = function(x,y) {
+	  var a = $u.minus(x,y);
+	  return $u.std(a);
 	}
 	}
 
@@ -6482,7 +6526,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * Risk metrics
 	 */
-	 module.exports = function(ubique) {
+	 module.exports = function($u) {
 	/**
 	 * @method treynor
 	 * @summary Treynor Ratio
@@ -6501,10 +6545,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * // 0.7391550954681383
 	 * 
 	 */
-	 ubique.treynor = function(x,y,frisk) {
+	 $u.treynor = function(x,y,frisk) {
 	  frisk = (frisk === undefined) ? 0 : frisk;
-	  var beta = ubique.linreg(x,y).beta;
-	  return (ubique.mean(x) - frisk) / beta;
+	  var beta = $u.linreg(x,y).beta;
+	  return ($u.mean(x) - frisk) / beta;
 	}
 
 
@@ -6771,7 +6815,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	 module.exports = function($u) {
 	/**
-	 * @method  linreg
+	 * @method  linearreg
 	 * @summary Linear regression of Y on X
 	 * @description Return an object with fields: Beta, Alpha, R-squared, function
 	 * 
@@ -6783,17 +6827,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var x = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 	 * 
-	 * ubique.linreg(x,y);
+	 * ubique.linearreg(x,y);
 	 * //  { beta: 0.02308942571228251, alpha: 0.017609073236025237, rsq: 0.0027553853574994254, fun: [Function] }
 	 * 
-	 * ubique.linreg([100,101,99,102,105],[1,2,3,4,5])
+	 * ubique.linearreg([100,101,99,102,105],[1,2,3,4,5])
 	 * //  { beta: 1.1, alpha: 98.1, rsq: 0.5707547169811321, fun: [Function] }
 	 * 
-	 * ubique.linreg([100,101,99,102,105],[1,2,3,4,5]).fun(6) //use linear function to forecast value
+	 * ubique.linearreg([100,101,99,102,105],[1,2,3,4,5]).fun(6) //use linear function to forecast value
 	 * // 104.69
 	 * 
 	 */
-	 $u.linreg = function(y,x) {
+	 $u.linearreg = function(y,x) {
 	  var n = y.length,
 	  sx = $u.sum(x),
 	  sy = $u.sum(y),
