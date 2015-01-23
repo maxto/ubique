@@ -3,8 +3,8 @@
 [![NPM version](http://img.shields.io/npm/v/ubique.svg?style=flat)](https://www.npmjs.com/package/ubique)
 [![Bower](https://img.shields.io/bower/v/bootstrap.svg?style=flat)](http://bower.io/search/?q=ubique)
 
-Scientific and statistical library for Javascript and Node.js.
-
+An extensive MATLAB-like scientific library for JavaScript and Node.js http://maxto.github.io/
+ 
 Ubique supports arrays, vectors and matrices, providing MATLAB®-like functionalities.
 It includes a toolkit of functions for quantitative analysis and advanced statistics. 
 
