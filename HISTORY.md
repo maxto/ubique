@@ -2,9 +2,9 @@
 
 ### 0.0.8 - xxxxxxxx
 
-- Added in _matarrs_ array 
+- Added in _matarrs_ `array` 
 - Modified `matrix` and `drawdown`
-- Changed README and project summary
+- Changed README 
 - Added in _quants_ `histvar`,`histcondvar`,`sharpe`,`adjsharpe`,`annavgrisk`,`downsiderisk`,
   `paramvar`,`paramcondvar`,`downsidepot`,`upsidepot`,`modigliani`,`inforatio`,`jensenalpha`
 - Modified `isvector`,`linearreg` 
