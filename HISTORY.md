@@ -1,7 +1,12 @@
 # History
 
-### 0.0.8 - xxxxxxxx
+### 0.0.8 - 20150201
 
+- Modified some _test_ functions
+- Added in _quants_ `cdrawdown`, deleted `maxdrawdown`,`riskretratio`
+- Modified `avgdrawdown`,`drawdown`,`montecarlovar`,`omegaratio`,`sharpe`,
+`sortino`,`trackerr`,`treynor`,`ulcerindex`,`xreturn`
+- Added folder _util_ with `format`
 - Added in _matarrs_ `array` 
 - Modified `matrix` and `drawdown`
 - Changed README 

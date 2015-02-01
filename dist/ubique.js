@@ -62,13 +62,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * name: ubique
-	 * version: 0.0.7
-	 * update date: 2015-01-19
+	 * version: 0.0.8
+	 * update date: 2015-02-01
 	 * 
 	 * author: Max Todaro <m.todaro.ge@gmail.com>
 	 * homepage: https://github.com/maxto/ubique
 	 * 
-	 * description: Mathematical and Quantitative Methods for Javascript and Node.js.
+	 * description: An extensive MATLAB-like scientific library for JavaScript and Node.js
 	 * 
 	 *
 	 * The MIT License (MIT)
@@ -5224,23 +5224,46 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	 module.exports = function($u) {
 	/**
-	 * #TOFIX
 	 * @method avgdrawdown
 	 * @summary Average drawdown
-	 * @description Average drawdown
+	 * @description Average drawdown. Only the three largest drawdowns selected.
 	 * 
-	 * @param  {array} x    asset/portfolio values
-	 * @param  {string} mode drawdown calculation. 'return' or 'arithmetic' (def: 'return')
+	 * @param  {array|matrix} x    asset/portfolio returns
+	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
 	 * @return {object}      drawdown values (number) and recovery time (number)
 	 *
 	 * @example
-	 * var X = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
-	 * avgdd(X)
-	 * // { avgdd: 0.0023000000000000034, avgddr: 0.2 }
+	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
+	 * var z = ubique.cat(1,x,y);
+	 *
+	 * ubique.avgdrawdown(x); // 0.0115
+	 * ubique.avgdrawdown(z); // [ [ 0.0115, 0.0566 ] ]
 	 */
-	 $u.avgdrawdown = function(x,mode) {
-	  var ddo = $u.drawdown(x,mode);
-	  return {avgdd:$u.mean(ddo.drawdown),avgddr:$u.mean(ddo.recovery)};
+	 $u.avgdrawdown = function(x,dim) {
+	  if (arguments.length === 0) {
+	    throw new Error('not enough input arguments');
+	  }
+	  if (arguments.length === 1) {
+	    dim = 1;
+	  }
+	  var avgdd = function(a) {
+	    var cdd =  $u.cdrawdown(a);
+	    if (cdd.length >= 3) {
+	      var cdds = $u.sort(cdd,'descend');
+	      return (cdds[0] + cdds[1] + cdds[2])/3;
+	    } else {
+	      return $u.mean(cdd);
+	    }
+
+	  }
+	  if ($u.isnumber(x)) {
+	    return 0;
+	  }
+	  if ($u.isarray(x)) {
+	    return avgdd(x);
+	  }
+	  return $u.vectorfun(x,function(val){return avgdd(val);},dim);
 	}
 
 	}
@@ -5301,6 +5324,74 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	 module.exports = function($u) {
 	/**
+	 * @method cdrawdown
+	 * @summary Continuous Drawdown
+	 * @description Continuous Drawdown
+	 *  
+	 * @param  {array|matrix} x    asset/portfolio values
+	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @return {array|matrix}
+	 * 
+	 * @example
+	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
+	 * var z = ubique.cat(1,x,y);
+	 *
+	 * ubique.cdrawdown(x); // [ 0.009, 0.014 ]
+	 * ubique.cdrawdown(z); // [ [ 0.009, 0.005 ], [ 0.014, 0.0957 ] ]
+	 */
+	 $u.cdrawdown = function(x,dim) {
+	  if (arguments.length === 0) {
+	    throw new Error('not enough input arguments');
+	  }
+	  if (arguments.length === 1) {
+	    dim = 1;
+	  }
+	  var cdown = function(a) {
+	    var cdd = [], tmp = 0, t = 0;
+	    for (var i = 0; i < a.length; i++) {
+	      if (i === 0 && a[i] < 0) {
+	        tmp = 1 + a[i];
+	      }
+	      if (i > 0) {
+	        if (a[i] < 0) {
+	          if (tmp === 0) {
+	            tmp = 1 + a[i];
+	          } else {
+	            tmp = tmp * (1 + a[i]);
+	          }
+	        }
+	        if (a[i] >=0 ) {
+	          if (tmp !== 0) {
+	            cdd[t] = 1 - tmp;
+	            t++;
+	            tmp = 0;
+	          }
+	        }
+	      }
+	    }
+	    return cdd;
+	  }
+	  if ($u.isnumber(x)) {
+	    return 0;
+	  }
+	  if ($u.isarray(x)) {
+	    return cdown(x);
+	  }
+	  return $u.vectorfun(x,function(val){return cdown(val);},dim);
+	}
+
+	}
+
+/***/ },
+/* 114 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Risk metrics
+	 */
+	 module.exports = function($u) {
+	/**
 	 * @method downsidepot
 	 * @summary Downside potential
 	 * @description Downside potential
@@ -5348,7 +5439,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 114 */
+/* 115 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5403,7 +5494,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 115 */
+/* 116 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5415,10 +5506,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Drawdown
 	 * @description Any continuous losing return period. Return drawdown from peak and time to recovery arrays
 	 *  
-	 * @param  {array|matrix} x    asset/portfolio values
+	 * @param  {array|matrix} x    asset/portfolio matrix of equity time series with the oldest value in x[0] and the last one in x[N-1]
 	 * @param  {string} mode drawdown calculation. 'return','geometric' (def: 'return')
 	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
-	 * @return {object|matrix}
+	 * @return {object|matrix}  .dd (drawdown array)
+	 *                          .ddrecov (drawdown recovery index)
+	 *                          .maxdd (max drawdown)
+	 *                          .maxddrecov (max drawdown recovery period): [start period, end period]
 	 *
 	 * @example
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
@@ -5427,10 +5521,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var yy = $u.cumprod($u.plus(y,1));
 	 * var zz = ubique.cat(1,xx,yy);
 	 *
-	 * ubique.drawdown(xx); // { drawdown: [ 0, 0, 0, 0.00900000000000004, 0, 0, 0, 0, 0.013999999999999995, 0 ],
-	 *                      //   recovery: [ 0, 0, 0, 4, 0, 0, 0, 0, 9, 0 ] }
-	 * ubique.drawdown(zz); // [ [ { drawdown: [Object], recovery: [Object] },
-	 *                             { drawdown: [Object], recovery: [Object] } ] ]
+	 * ubique.drawdown(xx);
+	 * // { dd: [ 0, 0, 0, 0.00900000000000004, 0, 0, 0, 0, 0.013999999999999995, 0 ],
+	 * //   ddrecov: [ 0, 0, 0, 4, 0, 0, 0, 0, 9, 0 ],
+	 * //   maxdd: 0.013999999999999995,
+	 * //   maxddrecov: [ 8, 9 ] }
+	 *
+	 * ubique.drawdown(zz);
+	 * // [ [ { dd: [Object],
+	 * //     ddrecov: [Object],
+	 * //     maxdd: 0.013999999999999995,
+	 * //     maxddrecov: [Object] },
+	 * //   { dd: [Object],
+	 * //     ddrecov: [Object],
+	 * //     maxdd: 0.1092809191007261,
+	 * //     maxddrecov: [Object] } ] ]
 	 */
 	 $u.drawdown = function(x,mode,dim) {
 	  if (arguments.length === 0) {
@@ -5444,19 +5549,44 @@ return /******/ (function(modules) { // webpackBootstrap
 	    dim = 1;
 	  }
 	  var ddown = function(a,mode) {
-	    var highest = a[0],
-	    dd = $u.array(a.length,0),
-	    recov = $u.array(a.length,0);
-	    for (var i = 0; i < a.length; i++) {
-	      if (highest <= a[i]) {
-	        highest = a[i];
+	    if (mode === 'return') {
+	      _a = a;
+	    } else
+	    if (mode === 'geometric') {
+	      _a = $u.log(a);
+	    } else {
+	      throw new Error('unknown drawdown mode');
+	    }
+	    var highest = _a[0],
+	    highestidx = 1,
+	    _dd = $u.array(_a.length,0),
+	    _recov = $u.array(_a.length,0),
+	    _maxdd = 0,
+	    _maxddidx = [1,_a.length],
+	    _cdd = [],
+	    t = 0;
+	    _cdd[t] = 0;
+	    for (var i = 0; i < _a.length; i++) {
+	      if (highest <= _a[i]) {
+	        highest = _a[i];
+	        highestidx = i + 1;
 	      }
-	      dd[i] = (highest - a[i]) / highest;
-	      if (dd[i] !== 0) {
-	        recov[i] = i + 1;
+	      if (mode === 'return') {
+	        _dd[i] = (highest - _a[i]) / highest;
+	      } else 
+	      if (mode === 'geometric') {
+	        _dd[i] = (highest - _a[i]);
+	      }
+	      if (_dd[i] !== 0) {
+	        _recov[i] = i + 1;
+	      }
+	      if (_dd[i] > _maxdd) {
+	        _maxdd = _dd[i];
+	        _maxddidx[0] = highestidx;
+	        _maxddidx[1] = i + 1;
 	      }
 	    }
-	    return {drawdown: dd, recovery: recov};
+	    return {dd: _dd, ddrecov: _recov, maxdd: _maxdd, maxddrecov: _maxddidx};
 	  }
 	  if ($u.isnumber(x)) {
 	    return 0;
@@ -5470,7 +5600,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 116 */
+/* 117 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5546,7 +5676,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 117 */
+/* 118 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5612,7 +5742,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 118 */
+/* 119 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5670,7 +5800,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 119 */
+/* 120 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5718,7 +5848,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 120 */
+/* 121 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5799,7 +5929,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 121 */
+/* 122 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5849,35 +5979,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	   throw new Error('first input must be an array/matrix, the second one an array');
 	 }
 	}
-	}
-
-/***/ },
-/* 122 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Risk metrics
-	 */
-	 module.exports = function($u) {
-	/**
-	 * @method maxdrawdown
-	 * @summary Maximum drawdown
-	 * @description Maximum drawdown
-	 * 
-	 * @param  {array} x    asset/portfolio values
-	 * @param  {string} mode drawdown calculation. 'return' or 'arithmetic' (def: 'return')
-	 * @return {object}      drawdown values (number) and recovery time (number)
-	 *
-	 * @example
-	 * var X = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
-	 * maxdrawdown(X)
-	 * // { maxdrawdown: 0.013999999999999995, maxdrawdownr: 1 }
-	 */
-	 $u.maxdrawdown = function(x,mode) {
-	 	var ddo = $u.drawdown(x,mode);
-	 	ddr = ddo.recovery;
-	 	return {maxdrawdown:$u.max(ddo.drawdown),maxdrawdownr:ddr[ddo.drawdown.indexOf($u.max(ddo.drawdown))]};
-	 }
 	}
 
 /***/ },
@@ -6000,34 +6101,49 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	 module.exports = function($u) {
 	/**
-	 * @method  mcvar
+	 * @method  montecarlovar
 	 * @summary Montecarlo Value-at-Risk
 	 * @description Montecarlo VaR for single asset. Based on geometric Brownian motion.
-	 * 
+	 *
+	 * @param  {number|array} x  array of returns or standard deviation of returns
 	 * @param  {number} p  confidence level in the range [0,1] (def: 0.95)
 	 * @param  {number} t  holding period (def: 1)
 	 * @param  {number} fr free-risk rate (def: 0)
-	 * @param  {number} s  sample volatility or standard deviation (def: 1)
 	 * @param  {number} v  asset/portfolio start value (def: 1)
 	 * @param  {number} iter number of iterations
 	 * @return {number}    
 	 *
 	 * @example
-	 * mcvar(0.95,1,0.0004,0.01,1)
-	 * // 0.0309296496932608
+	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+	 *
+	 * // ex-ante simulated VaR at 95% confidence for t = 1, free risk zero, start capital one
+	 * ubique.montecarlovar(x,0.95,1,0,1,10000); // 0.0771
 	 * 
-	 * //historical simulated daily VaR at 1% for 100k GBP asset over 10 days 
-	 * var X = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
-	 * mcvar(0.99,10,0,std(X),100000)
-	 * // 24538.540467748742
+	 * // historical simulated daily VaR at 1% for 100k GBP asset over 10 days 
+	 * ubique.montecarlovar(ubique.std(x),0.99,10,0,100000); // 23201.0819
 	 */
-	 $u.mcvar = function(p,t,fr,s,v,iter) {
-	  p = p === undefined ? 0.95 : p;
-	  t = t === undefined ? 1 : t;
-	  fr = fr === undefined ? 0 : fr;
-	  s = s === undefined ? 1 : s;
-	  v = v === undefined ? 1 : v;
-	  iter = iter === undefined ? 10000 : iter;
+	 $u.montecarlovar = function(x) {
+	  if (arguments.length === 0) {
+	    throw new Error('not enough input arguments');
+	  }
+	  if ($u.isnumber(x)) {
+	    s = $u.clone(x);
+	  } else 
+	  if ($u.isarray(x)) {
+	    s = $u.std(x);
+	  } else {
+	    throw new Error('first argument must be a number or array');
+	  }
+	  var defargs = {1: 0.95, 2: 1, 3: 0, 4: 1, 5: 10000};
+	  for (var j = 1; j < arguments.length; j++) {
+	    defargs[j] = arguments[j];
+	  }
+	  var p = defargs[1],
+	  t = defargs[2],
+	  fr = defargs[3],
+	  v = defargs[4],
+	  iter = defargs[5];
+
 	  var mcvar = [];
 	  for (var i = 0;i < iter;i++) {
 	    mcvar[i] = Math.exp((fr - 0.5 * Math.pow(s,2)) + s * $u.norminv(Math.random(),0,1)) - 1;
@@ -6050,21 +6166,43 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary omegaratio ratio
 	 * @description omegaratio ratio
 	 * 
-	 * @param  {array} x     asset/portfolio values
+	 * @param  {array|matrix} x     asset/portfolio returns
 	 * @param  {number} mar minimum acceptable return (def: 0)
-	 * @return {number}
+	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @return {number|array}
 	 *
 	 * @example
-	 * var X = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
-	 * omegaratio(X,0)
-	 * // 8.782608695652174
+	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
+	 * var z = ubique.cat(1,x,y);
+	 *
+	 * ubique.omegaratio(x); // 8.7826
+	 * ubique.omegaratio(z); // [ [ 8.7826, 1.7283 ] ]
 	 */
-	 $u.omegaratio = function(x,mar) {
-	 	if (mar === undefined) {mar = 0;}
-	 	return $u.usp(x,mar) / $u.dsp(x,mar);
-	 }
-
+	 $u.omegaratio = function(x,mar,dim) {
+	  if (arguments.length === 0) {
+	    throw new Error('not enough input arguments');
+	  }
+	  if (arguments.length === 1) {
+	    mar = 0;
+	    dim = 1;
+	  }
+	  if (arguments.length === 2) {
+	    dim = 1;
+	  }
+	  var or = function(a,mar) {
+	    return $u.upsidepot(a,mar) / $u.downsidepot(a,mar);
+	  }
+	  if ($u.isnumber(x)) {
+	    return 0;
+	  }
+	  if ($u.isarray(x)) {
+	    return or(x,mar);
+	  } 
+	  return $u.vectorfun(x,function(val){return or(val,mar);},dim);
 	}
+	}
+
 
 /***/ },
 /* 127 */
@@ -6341,32 +6479,6 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * Risk metrics
-	 */
-	 module.exports = function($u) {
-	/**
-	 * @method rrr
-	 * @summary Return/Risk ratio
-	 * @description Return/Risk ratio
-	 * 
-	 * @param  {number} aret  asset/portfolio expected return
-	 * @param  {number} arisk asset/portfolio standard deviation
-	 * @return {number}
-	 *
-	 * @example
-	 * rrr(0.12,0.10)
-	 * // 1.2
-	 */
-	 $u.rrr = function(aret,arisk) {
-	  return aret / arisk;
-	}
-	}
-
-/***/ },
-/* 132 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
 	 * Performance metrics
 	 */
 	 module.exports = function($u) {
@@ -6408,7 +6520,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 133 */
+/* 132 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6424,7 +6536,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param  {array|matrix} x     array of value
 	 * @param  {number} frisk annual free-risk rate (def: 0)
 	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
-	 * @return {number}       
+	 * @return {number|arrray}       
 	 *
 	 * @example
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
@@ -6460,7 +6572,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 134 */
+/* 133 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6472,26 +6584,52 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Sortino ratio
 	 * @description  Sortino ratio
 	 * 
-	 * @param  {array} x     asset/portfolio valuessi a
+	 * @param  {array|matrix} x     asset/portfolio returns
 	 * @param  {number} frisk free-risk rate (def: 0)
 	 * @param  {number} mar minimum acceptable return (def: 0)
-	 * @return {number}
+	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @return {number|arrray}       
 	 *
 	 * @example
-	 * var X = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
-	 * sortino(X,0,0)
-	 * // 3.4010510161478655
+	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
+	 * var z = ubique.cat(1,x,y);
+	 *
+	 * ubique.sortino(x,0.02/12); // 3.0844
+	 * ubique.sortino(z,0.01/12,0.5); // [ [ 0.0354, 0.024 ] ]
 	 */
-	 $u.sortino = function(x,frisk,mar) {
-	 	if (frisk === undefined) {frisk = 0;}
-	 	if (mar === undefined) {mar = 0;}
-	 	return ($u.mean(x) - frisk) / $u.dsr(x,mar);
-	 }
-
+	 $u.sortino = function(x,frisk,mar,dim) {
+	  if (arguments.length === 0) {
+	    throw new Error('not enough input arguments');
+	  }
+	  if (arguments.length === 1) {
+	    frisk = 0;
+	    mar = 0;
+	    dim = 1;
+	  }
+	  if (arguments.length === 2) {
+	    mar = 0;
+	    dim = 1;
+	  }
+	  if (arguments.length === 3) {
+	    dim = 1;
+	  }
+	  var sr = function(a,frisk,mar) {
+	    return ($u.mean(a) - frisk) / $u.downsiderisk(a,mar);
+	  }
+	  if ($u.isnumber(x)) {
+	    return 0;
+	  }
+	  if ($u.isarray(x)) {
+	    return sr(x,frisk,mar);
+	  } 
+	  return $u.vectorfun(x,function(val){return sr(val,frisk,mar);},dim);
+	}
 	}
 
+
 /***/ },
-/* 135 */
+/* 134 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6556,7 +6694,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 136 */
+/* 135 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6573,20 +6711,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {number}   
 	 *
 	 * @example
-	 * var x = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+	 * @example
+	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
-	 * trackerr(x,y)
-	 * // 0.05366572462941314
-	 * 
+	 *
+	 * ubique.trackerr(x,y); // 0.0566
 	 */
 	 $u.trackerr = function(x,y) {
-	  var a = $u.minus(x,y);
-	  return $u.std(a);
+	  if (arguments.length < 2) {
+	    throw new Error('not enough input arguments');
+	  }
+	  return $u.std($u.minus(x,y));
 	}
 	}
 
 /***/ },
-/* 137 */
+/* 136 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6607,21 +6747,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * var x = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
-	 * treynor(x,y,0.01/12)
-	 * // 0.7391550954681383
 	 * 
+	 * ubique.treynor(x,y,0.01/12); // 0.7392
 	 */
 	 $u.treynor = function(x,y,frisk) {
-	  frisk = (frisk === undefined) ? 0 : frisk;
-	  var beta = $u.linreg(x,y).beta;
+	  if (arguments.length < 2) {
+	    throw new Error('not enough input arguments');
+	  }
+	  if (arguments.length === 2) {
+	    frisk = 0;
+	  }
+	  var beta = $u.linearreg(x,y).beta;
 	  return ($u.mean(x) - frisk) / beta;
 	}
-
-
 	}
 
 /***/ },
-/* 138 */
+/* 137 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6661,7 +6803,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 139 */
+/* 138 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6674,26 +6816,50 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @description Ulcer Index of Peter G. Martin (1987). The impact of long, deep drawdowns will have significant
 	 * impact because the underperformance since the last peak is squared.
 	 *  
-	 * @param  {array} x    asset/portfolio values
-	 * @param  {string} mode drawdown calculation. 'return' or 'arithmetic' (def: 'return')
-	 * @return {number}      
+	 * @param  {array|matrix} x    asset/portfolio matrix of equity time series with the oldest value in x[0] and the last one in x[N-1]
+	 * @param  {string} mode drawdown calculation. 'return','geometric' (def: 'return')
+	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @return {number|array} 
 	 *
 	 * @example
-	 * var X = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
-	 * ulcerindex(X)
-	 * // 0.05974926249592595
-	 * 
+	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
+	 * var xx = $u.cumprod($u.plus(x,1));
+	 * var yy = $u.cumprod($u.plus(y,1));
+	 * var zz = ubique.cat(1,xx,yy);
+	 *
+	 * ubique.ulcerindex(xx); // 0.053
+	 * ubique.ulcerindex(zz,'return'); // [ [ 0.0053, 0.0595 ] ]
 	 */
-	 $u.ulcerindex = function(x,mode) {
-	 	var dd = $u.drawdown(x,mode),
-	 	n = dd.drawdown.length;
-	 	return $u.sqrt($u.sum($u.power(dd.drawdown,2)) / n);
-	 }
+	 $u.ulcerindex = function(x,mode,dim) {
+	  if (arguments.length === 0) {
+	    throw new Error('not enough input arguments');
+	  }
+	  if (arguments.length === 1) {
+	    mode = 'return';
+	    dim = 1;
+	  }
+	  if (arguments.length === 2) {
+	    dim = 1;
+	  }
+	  var uidx = function(a,mode) {
+	    var dd = $u.drawdown(a,mode).dd,
+	    n = a.length;
+	    return $u.sqrt($u.sum($u.power(dd,2)) / n);
+	  }
+	  if ($u.isnumber(x)) {
+	    return 0;
+	  }
+	  if ($u.isarray(x)) {
+	    return uidx(x,mode);
+	  }
+	  return $u.vectorfun(x,function(val){return uidx(val,mode);},dim);
+	}
 
 	}
 
 /***/ },
-/* 140 */
+/* 139 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6748,7 +6914,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 141 */
+/* 140 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6781,13 +6947,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if ($u.isarray(x) && $u.isarray(y)) {
 	    return $u.mean($u.minus(x,y));
 	  } else {
-	    throw new Error('inputs must be numbers or arrays')
+	    throw new Error('inputs must be a number or an array')
 	  }
 	}
 	}
 
 /***/ },
-/* 142 */
+/* 141 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6873,7 +7039,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 143 */
+/* 142 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6919,7 +7085,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 144 */
+/* 143 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6966,7 +7132,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 145 */
+/* 144 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7043,7 +7209,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 146 */
+/* 145 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7135,7 +7301,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 147 */
+/* 146 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7181,7 +7347,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 148 */
+/* 147 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7235,7 +7401,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 149 */
+/* 148 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7281,7 +7447,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 150 */
+/* 149 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7323,7 +7489,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 151 */
+/* 150 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7366,7 +7532,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 152 */
+/* 151 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7420,7 +7586,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 153 */
+/* 152 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7462,7 +7628,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 154 */
+/* 153 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7527,7 +7693,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 155 */
+/* 154 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7577,7 +7743,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 156 */
+/* 155 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7642,7 +7808,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 157 */
+/* 156 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7699,7 +7865,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 158 */
+/* 157 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7740,7 +7906,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 159 */
+/* 158 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7786,7 +7952,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 160 */
+/* 159 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7832,7 +7998,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 161 */
+/* 160 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7886,7 +8052,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 162 */
+/* 161 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7931,7 +8097,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 163 */
+/* 162 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7986,7 +8152,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 164 */
+/* 163 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8033,7 +8199,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 165 */
+/* 164 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8082,6 +8248,46 @@ return /******/ (function(modules) { // webpackBootstrap
 	 	return $u.vectorfun(x,function(val){return _zscore(val,flag);},dim);
 	 }
 
+	}
+
+/***/ },
+/* 165 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Utility
+	 */
+	 module.exports = function ($u) {
+	/**
+	 * @method format
+	 * @summary Set display format for output (numbers)
+	 * @description Set display format for output (numbers)
+	 * 
+	 * @param  {number|array|matrix} x   input element
+	 * @param  {number} k number of decimals (def: 4 decimals)
+	 * @return {nuber|array|matrix}
+	 *  
+	 * @example
+	 * ubique.format(5.6677798348349,0); // 6
+	 * ubique.format([4.5565667,0.000002323234]); // [ 4.5565, 0 ]
+	 * ubique.format([[-1000.47748,0.000002],[0.1483478,10.111100]],2); // [ [ -1000.48, 0 ], [ 0.15, 10.11 ] ]
+	 */
+	 $u.format = function (x,k) {
+	  if (arguments.length === 0) {
+	    throw new Error('not enough input arguments');
+	  }
+	  if (arguments.length === 1) {
+	    k = 4;
+	  }
+	  if ($u.isnumber(x)) {
+	    return parseFloat(x.toFixed(k));
+	  } else 
+	  if ($u.isarray(x) || $u.ismatrix(x)) {
+	    return $u.arrayfun(x,function(val) {return parseFloat(val.toFixed(k));});
+	  } else {
+	    return x;
+	  }
+	}
 	}
 
 /***/ }

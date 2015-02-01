@@ -113,8 +113,8 @@ Ubique uses 0 as dimension for rows and 1 for columns.
 
 __Cloning__
 
-In MATLAB® it's possible to clone a variable `A` with the simple sequence: `A = [5;4:3]` and `B = A`. If we change an element in `B`, `B(1) = NaN`, `A` doesn't change his values
-`A = [5;4:3]` and `B = [NaN;4;3]`.
+In MATLAB® it's possible to clone a variable `A` with the simple sequence: `A = [5;4;3]` and `B = A`. If we change an element in `B`, `B(1) = NaN`, `A` doesn't change his values
+`A = [5;4;3]` and `B = [NaN;4;3]`.
 In Ubique (based on native Javascript) this sequence doesn't work and we'll have this finale result: `A = [NaN,4,3]` and `B = [NaN,4,3]`. We must clone the array or matrix with a 
 special function `clone` in Ubique. 
 
@@ -180,9 +180,6 @@ __Comparative code__
 | flipdim(a,2) | `flipdim(a,1)` | Flip order of elements in array or matrix 
 |
 
-## Contributors
-
-- Nikos [(QuantumInformation)](https://github.com/QuantumInformation)
 
 ## License
 

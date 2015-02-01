@@ -2,8 +2,8 @@ var assert = require('assert');
 var ubique = require('../../index.js');
 
 suite('matarrs', function () {
-	console.log('\nTesting matarrs/matrix ...');
-	test('matrix', function (done) {
+	console.log('\nTesting matarrs/cat ...');
+	test('cat', function (done) {
 
 		var a = [[5, 6, 5], [7, 8, -1]];
 		var b = [[-1, 3, -1], [4, 5, 9]];

@@ -1,12 +1,11 @@
 {
   "name": "ubique",
-  "version": "0.0.7",
-  "date": "2015-01-19",
+  "version": "0.0.8",
+  "date": "2015-02-01",
   "author": "Max Todaro <m.todaro.ge@gmail.com>",
-  "description": "Mathematical and Quantitative Methods for Javascript and Node.js.",
+  "description": "An extensive MATLAB-like scientific library for JavaScript and Node.js",
   "main": "./index",
   "contributors": [
-    "Nikos (https://github.com/QuantumInformation)"
   ],
   "homepage": "https://github.com/maxto/ubique",
   "repository": {

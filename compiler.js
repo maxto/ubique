@@ -27,7 +27,7 @@
 
 
 	// load all functions from LIB folder
-	var libfolder = ['datatype','elemop','elmath','linalgebra','matarrs','probdistr','quants','reglin','stats'];
+	var libfolder = ['datatype','elemop','elmath','linalgebra','matarrs','probdistr','quants','reglin','stats','util'];
 	
 	for (var i = 0;i < libfolder.length;i++) {
 		fs.readdirSync(__dirname + '/lib/' + libfolder[i] + '/').forEach(function(file) {
@@ -44,4 +44,3 @@
 };
 
 module.exports = compiler;
-
