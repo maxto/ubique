@@ -1,6 +1,6 @@
 #### Array Creation and Concatenation
 
-- [isarray](/datatype/isarray.md) - True for array
+- [isarray](/doc/datatype/isarray.md) - True for array
 
 #### Array Dimensions
 
