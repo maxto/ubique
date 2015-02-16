@@ -1,29 +1,27 @@
-## For MATLAB users
-
-__General Notes__
+## General Notes
 
 In Ubique `number` is a number with dimension `1x1`, `array` is a column vector `Nx1`, `array of array` is a matrix `MxN`.
 
 Functions applied to matrices are `column-major order` as in MATLAB (but the storage is always the native javascript row-major order).
 
-__Indexing__
+## Indexing
 
 MATLAB uses 1-based indexing, first element in array is `array(1)`, the last one is `array(length(array))`.
 Ubique uses 0-based indexing, first element in array is `array[0]`, the last one is `array[array.length - 1]`.
 
-__Dimension__
+## Dimension
 
 MATLAB uses 1 as dimension for rows and 2 for columns.
 Ubique uses 0 as dimension for rows and 1 for columns.
 
-__Cloning__
+## Cloning
 
 In MATLAB it's possible to clone a variable `A` with the simple sequence: `A = [5;4;3]` and `B = A`. If we change an element in `B`, `B(1) = NaN`, `A` doesn't change his values
 `A = [5;4;3]` and `B = [NaN;4;3]`.
 In Ubique (based on native Javascript) this sequence doesn't work and we'll have this finale result: `A = [NaN,4,3]` and `B = [NaN,4,3]`. We must clone the array or matrix with a 
 special function `clone` in Ubique. 
 
-__Comparative code__
+## Comparative code 
 
 |MATLAB| ubique.| description|
 |----- |--------|------|
