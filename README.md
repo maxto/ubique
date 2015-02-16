@@ -3,9 +3,9 @@
 [![NPM version](http://img.shields.io/npm/v/ubique.svg?style=flat)](https://www.npmjs.com/package/ubique)
 [![Bower](https://img.shields.io/bower/v/bootstrap.svg?style=flat)](http://bower.io/search/?q=ubique)
 
-An extensive MATLAB-like scientific library for JavaScript and Node.js http://maxto.github.io/
+A mathematical and statistical library for JavaScript and Node.js http://maxto.github.io/
  
-Ubique supports arrays, vectors and matrices, providing MATLAB®-like functionalities.
+Ubique supports arrays, vectors and matrices, providing MATLAB&copy;-like functionalities.
 It includes a toolkit of functions for quantitative analysis and advanced statistics. 
 
 Easy to use, no dependencies. Runs both in Node.js and in the Browser.
@@ -22,7 +22,7 @@ Easy to use, no dependencies. Runs both in Node.js and in the Browser.
 - Interpolation and Regression Analysis
 - Quantitative Analysis: performance and risk metrics
 
-The project aims to create an environment for mathematical and statistical analysis in Javascript and Node.js, alternative to MATLAB®, for scientific client-server applications.
+The project aims to create an environment for mathematical and statistical analysis in Javascript and Node.js, alternative to MATLAB&copy;, for scientific client-server applications.
 
 View [History](HISTORY.md) 
 
@@ -93,35 +93,35 @@ To perform a test execute:
 npm test
 ```
 
-## Ubique for MATLAB® users
+## Ubique for MATLAB&copy; users
 
 __General Notes__
 
 In Ubique `number` is a number with dimension `1x1`, `array` is a column vector `Nx1`, `array of array` is a matrix `MxN`.
 
-Functions applied to matrices are `column-major order` as in MATLAB® (but the storage is always the native javascript row-major order).
+Functions applied to matrices are `column-major order` as in MATLAB&copy; (but the storage is always the native javascript row-major order).
 
 __Indexing__
 
-MATLAB® uses 1-based indexing, first element in array is `array(1)`, the last one is `array(length(array))`.
+MATLAB&copy; uses 1-based indexing, first element in array is `array(1)`, the last one is `array(length(array))`.
 Ubique uses 0-based indexing, first element in array is `array[0]`, the last one is `array[array.length - 1]`.
 
 __Dimension__
 
-MATLAB® uses 1 as dimension for rows and 2 for columns.
+MATLAB&copy; uses 1 as dimension for rows and 2 for columns.
 Ubique uses 0 as dimension for rows and 1 for columns.
 
 __Cloning__
 
-In MATLAB® it's possible to clone a variable `A` with the simple sequence: `A = [5;4;3]` and `B = A`. If we change an element in `B`, `B(1) = NaN`, `A` doesn't change his values
+In MATLAB&copy; it's possible to clone a variable `A` with the simple sequence: `A = [5;4;3]` and `B = A`. If we change an element in `B`, `B(1) = NaN`, `A` doesn't change his values
 `A = [5;4;3]` and `B = [NaN;4;3]`.
 In Ubique (based on native Javascript) this sequence doesn't work and we'll have this finale result: `A = [NaN,4,3]` and `B = [NaN,4,3]`. We must clone the array or matrix with a 
 special function `clone` in Ubique. 
 
 __Comparative code__
 
-|MATLAB®| ubique.| description|
-|----- |--------|------|
+|MATLAB&copy;| ubique.| description|
+|-----|--------|------|
 |
 | a = [5,6,5;7,8,-1] | `var a = [[5,6,5],[7,8,-1]]` | Matrix 2x3
 | b = [-1,3,-1;4,5,9] | `var b = [[-1,3,-1],[4,5,9]]` | Matrix 2x3
@@ -183,9 +183,27 @@ __Comparative code__
 
 ## License
 
-The [MIT license](LICENSE)
+The MIT License (MIT)
 
-Copyright® 2014 Max Todaro
+Copyright&copy; 2014-2015 Max Todaro
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
 
 
