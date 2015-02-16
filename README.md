@@ -23,7 +23,7 @@ Easy to use, no dependencies. Runs both in Node.js and in the Browser.
 
 ## Ubique for MATLAB Users
 
-See some comparative [Code](/doc/formatlabusers.md)
+See some comparative [Code](/doc/formatlabusers.html)
 
 ## Install
 
