@@ -4,13 +4,13 @@
 
 #### Array Dimensions
 
-- [isempty](/datatype/isempty.md) - True for empty array or matrix
+- [isempty](/doc/datatype/isempty.md) - True for empty array or matrix
 
 #### Data Type Identification
 
-- [isfunction](/datatype/isfunction.md) - True for function
-- [isinteger](/datatype/isinteger.md) - True for integer
+- [isfunction](/doc/datatype/isfunction.md) - True for function
+- [isinteger](/doc/datatype/isinteger.md) - True for integer
 
 #### Structures
 
-- [arrayfun](/datatype/arrayfun.md) - Apply function to each element of array or matrix
+- [arrayfun](/doc/datatype/arrayfun.md) - Apply function to each element of array or matrix
