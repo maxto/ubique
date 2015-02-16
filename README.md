@@ -1,11 +1,13 @@
 # Ubique
+http://maxto.github.io/
+
 [![Travis Build Status](https://travis-ci.org/maxto/ubique.svg?style=flat)](https://travis-ci.org/maxto/ubique)
 [![NPM version](http://img.shields.io/npm/v/ubique.svg?style=flat)](https://www.npmjs.com/package/ubique)
 [![Bower](https://img.shields.io/bower/v/bootstrap.svg?style=flat)](http://bower.io/search/?q=ubique)
 
 A mathematical and statistical library for JavaScript and Node.js
  
-[Ubique](http://maxto.github.io/) supports arrays, vectors and matrices, providing MATLAB-like functionalities.
+Ubique supports arrays, vectors and matrices, providing MATLAB-like functionalities.
 It includes a toolkit of functions for quantitative analysis and advanced statistics. 
 
 Easy to use, no dependencies. Runs both in Node.js and in the Browser.
@@ -21,9 +23,11 @@ Easy to use, no dependencies. Runs both in Node.js and in the Browser.
 - Interpolation and Regression Analysis
 - Quantitative Analysis: performance and risk metrics
 
+See [API Reference](/doc/apiref.md)
+
 ## Ubique for MATLAB Users
 
-See some comparative [Code](/doc/formatlabusers.html)
+See some comparative [Code](/doc/formatlabusers.md)
 
 ## Install
 
