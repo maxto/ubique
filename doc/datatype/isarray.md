@@ -9,12 +9,12 @@ True for array
 
 |Params|Type|Description
 |---------|----|-----------
-`` | [array] | x element
+|`` | `array` | x element
 
 
 #### Examples
 
-```js@example
+```js
 ubique.isarray([1.4,2.3,3]); // true
 ```
 
