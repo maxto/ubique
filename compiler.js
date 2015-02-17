@@ -2,7 +2,7 @@
  * Compile the constructor UBIQUE with code information,
  * constants properties and all methods inherited from single *.js files in the LIB sub-folders
  * 
- * @return {file} return the constructor ubique.js in /lib folder with all list of functions
+ * @return {file} return the constructor ubique.js in /lib folder with all methods
  */
  function compiler() {
 
