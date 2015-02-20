@@ -9,7 +9,7 @@ Create array of all NaN
 
 |Params|Type|Description
 |---------|----|-----------
-|`args` | `number|array|...` |  variable input arguments (max 2)
+|`args` | number/array/... |  variable input arguments (max 2)
 
 
 #### Examples

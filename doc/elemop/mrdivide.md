@@ -9,8 +9,8 @@ Matrix division X / Y. If X is MxN and Y is NxN, thenit returns a matrix MxN. X 
 
 |Params|Type|Description
 |---------|----|-----------
-|`x` | `number|array|matrix` | number or array of values
-|`y` | `number|array|matrix` | number or array of values
+|`x` | number/array/matrix | number or array of values
+|`y` | number/array/matrix | number or array of values
 
 
 #### Examples

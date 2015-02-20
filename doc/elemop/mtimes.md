@@ -9,8 +9,8 @@ Matrix multiplication X * Y. If X is MxP and Y is PxN, returns a matrix MxN
 
 |Params|Type|Description
 |---------|----|-----------
-|`x` | `number|array|matrix` | number or array of values
-|`y` | `number|array|matrix` | number or array of values
+|`x` | number/array/matrix | number or array of values
+|`y` | number/array/matrix | number or array of values
 
 
 #### Examples

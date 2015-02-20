@@ -9,8 +9,8 @@ Cumulative mean deviation of the values in array X
 
 |Params|Type|Description
 |---------|----|-----------
-|`x` | `array|matrix` | array or matrix of values
-|`dim` | `number` | dimension selected, 1: column 0: row (def: 1)
+|`x` | array/matrix | array or matrix of values
+|`dim` | number | dimension selected, 1: column 0: row (def: 1)
 
 
 #### Examples

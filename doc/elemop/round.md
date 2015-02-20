@@ -9,8 +9,8 @@ Round to nearest integer. Element-wise for matrix
 
 |Params|Type|Description
 |---------|----|-----------
-|`x` | `number|array|matrix` | values
-|`n` | `number` | number of decimal (def: 0)
+|`x` | number/array/matrix | values
+|`n` | number | number of decimal (def: 0)
 
 
 #### Examples

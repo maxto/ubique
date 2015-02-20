@@ -1,49 +1,36 @@
 {
   "name": "ubique",
-  "version": "0.0.8",
-  "date": "2015-02-01",
+  "version": "0.0.9",
+  "date": "2015-02-20",
   "author": "Max Todaro <m.todaro.ge@gmail.com>",
-  "description": "An extensive MATLAB-like scientific library for JavaScript and Node.js",
+  "description": "An extensive MATLAB-like scientific library for JavaScript and Node.js/Io.js",
   "main": "./index",
   "contributors": [
   ],
-  "homepage": "https://github.com/maxto/ubique",
+  "homepage": "http://maxto.github.io/index.html",
   "repository": {
     "type": "git",
     "url": "https://github.com/maxto/ubique.git"
   },
   "keywords": [
-    "math",
-    "mathematics",
+    "mathematic",
     "matrix",
-    "vector",
     "arithmetic",
-    "numbers",
     "statistics",
-    "algebra",
+    "linear algebra",
     "matlab",
     "regression",
-    "interpolation",
     "finance",
-    "quants",
-    "quantitative",
-    "scientific",
-    "analysis"
+    "quantitative analysis"
   ],
   "scripts": {
-    "build": "gulp",
-    "watch": "gulp watch",
     "test": "mocha --ui tdd --recursive"
   },
   "engines": {
     "node": ">= 0.6.0"
   },
   "devDependencies": {
-    "gulp": "^3.8.10",
-    "gulp-util": "^3.0.2",
-    "mocha": "^2.1.0",
-    "uglify-js": "^2.4.16",
-    "webpack": "^1.4.15"
+    "mocha": "^2.1.0"
   },
   "license": "MIT",
   "bugs": {

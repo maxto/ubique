@@ -62,13 +62,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * name: ubique
-	 * version: 0.0.8
-	 * update date: 2015-02-01
+	 * version: 0.0.9
+	 * update date: 2015-02-20
 	 * 
 	 * author: Max Todaro <m.todaro.ge@gmail.com>
-	 * homepage: https://github.com/maxto/ubique
+	 * homepage: http://maxto.github.io/index.html
 	 * 
-	 * description: An extensive MATLAB-like scientific library for JavaScript and Node.js
+	 * description: An extensive MATLAB-like scientific library for JavaScript and Node.js/Io.js
 	 * 
 	 *
 	 * The MIT License (MIT)
@@ -354,7 +354,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary True for array
 	 * @description  True for array
 	 * 
-	 * @param  {array}  x element
+	 * @param  {array} x element
 	 * @return {boolean}   
 	 *
 	 * @example
@@ -2107,7 +2107,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	 module.exports = function($u) {
 	/**
-	 * @method Unary minus
+	 * @method uminus
 	 * @summary Unary minus -X
 	 * @description Unary minus -X
 	 * 
@@ -2123,9 +2123,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 	if (arguments.length === 0) {
 	 		throw new Error('not enough input arguments');
 	 	}
-	 	if ($u.isnumber(x)) {return -x;}
-	 	return $u.arrayfun(x,function(a){return -a;});
-	 }
+	 	if ($u.isnumber(x)) {
+	    return -x;
+	  }
+	  return $u.arrayfun(x,function(a){return -a;});
+	}
 
 	}
 
@@ -3918,12 +3920,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * [Source: http://en.wikipedia.org/wiki/Merge_sort]
 	 * 
 	 * @param  {array} x array of elements
-	 * @param  {string} mode sorting direction, 'ascend' (default) or 'descend'
+	 * @param  {string} mode sorting direction, "ascend" (default) or "descend"
 	 * @return {array}   
 	 *
 	 * @example
-	 * ubique.mergesort([3,1,-1,5],'ascend'); // [-1, 1, 3, 5]
-	 * ubique.mergesort([3,1,-1,0,5],'descend'); // [5, 3, 1, 0, -1]
+	 * var x = [3,1,-1,0,5];
+	 * 
+	 * ubique.mergesort([3,1,-1,5],"ascend"); // [-1, 1, 3, 5]
+	 * ubique.mergesort(x,"descend"); // [5, 3, 1, 0, -1]
 	 */
 	 $u.mergesort = function(x,mode) {
 	 	if (arguments.length === 0) {
@@ -4487,7 +4491,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * @method sub2ind
 	 * @summary Subscripts to linear indices
-	 * @description Subscripts to linear indices. Convert a 2D coordinates [X,Y] of a matrix into linear indices
+	 * @description Subscripts to linear indices. Convert a 2D coordinates X,Y of a matrix into linear indices
 	 * 
 	 * @param  {array|matrix} size  size of array or matrix
 	 * @param  {array|matrix} index X,Y coordinates for 2D matrices in the range [0...N-1]
@@ -4530,7 +4534,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Array Creation and Concatenation
 	 */
 	 module.exports = function($u) {
-
 	 /**
 	  * @method subset
 	  * @summary Subset of array or matrix based on X,Y coordinates
@@ -4539,9 +4542,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  * @param  {array|matrix} m array or matrix of elements
 	  * @param  {number|array} r indexing for rows
 	  * @param  {number|array} c indexing for columns
-	  * @return {number|array|matrix}   
+	  * @return {number|array|matrix}
 	  *
-	  * * @example
+	  * @example
 	  * var a = [[5,6,5],[7,8,-1]];
 	  * var c = [5,6,3];
 	  *
@@ -7240,15 +7243,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * // { bins: 100, freq: 0 } ]
 	 *
 	 * ubique.histc(q,2,1);
-	 * [ [ { bins: 34, freq: 1 },
-	 *   { bins: 5, freq: 1 },
-	 *   { bins: 12, freq: 1 } ],
-	 * [ { bins: 61.5, freq: 0 },
-	 *   { bins: 14, freq: 0 },
-	 *   { bins: 41, freq: 0 } ],
-	 * [ { bins: 89, freq: 1 },
-	 *   { bins: 23, freq: 1 },
-	 *  { bins: 70, freq: 1 } ] ]
+	 * // [ [ { bins: 34, freq: 1 },
+	 * //   { bins: 5, freq: 1 },
+	 * //  { bins: 12, freq: 1 } ],
+	 * // [ { bins: 61.5, freq: 0 },
+	 * //   { bins: 14, freq: 0 },
+	 * //   { bins: 41, freq: 0 } ],
+	 * // [ { bins: 89, freq: 1 },
+	 * //   { bins: 23, freq: 1 },
+	 * //  { bins: 70, freq: 1 } ] ]
 	 */
 	 $u.histc = function(x,bins,dim) {
 	  if (arguments.length === 0) {
@@ -7492,8 +7495,8 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 150 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/**
-	 * Descriptive Statistics
+	 /**
+	 * Descriptive Statistic
 	 */
 	 module.exports = function($u) {
 	/**

@@ -9,7 +9,7 @@ True for array of array (matrix)
 
 |Params|Type|Description
 |---------|----|-----------
-|`` | `matrix` | x matrix
+|`` | matrix | x matrix
 
 
 #### Examples

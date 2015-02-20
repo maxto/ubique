@@ -9,7 +9,7 @@ True for logical input
 
 |Params|Type|Description
 |---------|----|-----------
-|`` | `boolean` | x element
+|`` | boolean | x element
 
 
 #### Examples

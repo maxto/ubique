@@ -9,7 +9,7 @@ True for vector input
 
 |Params|Type|Description
 |---------|----|-----------
-|`` | `matrix` | x matrix Nx1 or 1xN
+|`` | matrix | x matrix Nx1 or 1xN
 
 
 #### Examples

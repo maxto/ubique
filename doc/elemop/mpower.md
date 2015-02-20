@@ -9,8 +9,8 @@ Matrix power X ^ Y. X is the square input matrix and y is the scalar exponent.
 
 |Params|Type|Description
 |---------|----|-----------
-|`x` | `matrix` | base
-|`y` | `number` | exponent
+|`x` | matrix | base
+|`y` | number | exponent
 
 
 #### Examples

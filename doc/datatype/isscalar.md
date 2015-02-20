@@ -9,7 +9,7 @@ True for scalar input
 
 |Params|Type|Description
 |---------|----|-----------
-|`` | `number|array|matrix` | x input
+|`` | number/array/matrix | x input
 
 
 #### Examples

@@ -9,7 +9,7 @@ True for number or NaN value
 
 |Params|Type|Description
 |---------|----|-----------
-|`` | `number` | x element
+|`` | number | x element
 
 
 #### Examples

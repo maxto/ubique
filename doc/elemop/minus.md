@@ -9,8 +9,8 @@ Subtraction X - Y. X and Y must have the same dimension unless one is a number
 
 |Params|Type|Description
 |---------|----|-----------
-|`x` | `number|array|matrix` | number or array of values
-|`y` | `number|array|matrix` | number or array of values
+|`x` | number/array/matrix | number or array of values
+|`y` | number/array/matrix | number or array of values
 
 
 #### Examples

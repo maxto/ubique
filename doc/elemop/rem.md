@@ -9,8 +9,8 @@ Remainder after division. Element-wise for matrix
 
 |Params|Type|Description
 |---------|----|-----------
-|`x` | `number|array|matrix` | dividend
-|`y` | `number|array|matrix` | divisor
+|`x` | number/array/matrix | dividend
+|`y` | number/array/matrix | divisor
 
 
 #### Examples

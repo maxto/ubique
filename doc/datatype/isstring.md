@@ -9,7 +9,7 @@ True for string values
 
 |Params|Type|Description
 |---------|----|-----------
-|`` | `string` | x element
+|`` | string | x element
 
 
 #### Examples

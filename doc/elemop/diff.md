@@ -9,8 +9,8 @@ Differences between adjacent elements in array or matrix
 
 |Params|Type|Description
 |---------|----|-----------
-|`x` | `array|matrix` | array of values
-|`dim` | `number` | dimension selected, 1: column 0: row (def: 1)
+|`x` | array/matrix | array of values
+|`dim` | number | dimension selected, 1: column 0: row (def: 1)
 
 
 #### Examples

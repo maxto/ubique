@@ -9,7 +9,7 @@ True for empty array or matrix
 
 |Params|Type|Description
 |---------|----|-----------
-|`` | `array|matrix` | x input matrix
+|`` | array/matrix | x input matrix
 
 
 #### Examples

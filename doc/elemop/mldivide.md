@@ -9,8 +9,8 @@ Matrix division X \ Y. If X is NxN and Y is NxM, thenreturns a matrix NxM. Y is 
 
 |Params|Type|Description
 |---------|----|-----------
-|`x` | `number|array|matrix` | number or array of values
-|`y` | `number|array|matrix` | number or array of values
+|`x` | number/array/matrix | number or array of values
+|`y` | number/array/matrix | number or array of values
 
 
 #### Examples

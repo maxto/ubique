@@ -9,8 +9,8 @@ Sum of array elements
 
 |Params|Type|Description
 |---------|----|-----------
-|`x` | `array|matrix` | array of values
-|`dim` | `number` | dimension, 1: column 0: row (def: 1)
+|`x` | array/matrix | array of values
+|`dim` | number | dimension, 1: column 0: row (def: 1)
 
 
 #### Examples

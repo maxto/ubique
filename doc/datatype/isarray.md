@@ -9,7 +9,7 @@ True for array
 
 |Params|Type|Description
 |---------|----|-----------
-|`` | `array` | x element
+|`x` | array | element
 
 
 #### Examples

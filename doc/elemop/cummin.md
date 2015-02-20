@@ -9,8 +9,8 @@ Cumulative min of array elements
 
 |Params|Type|Description
 |---------|----|-----------
-|`x` | `array|matrix` | array or matrix of values
-|`dim` | `number` | dimension selected, 1: column 0: row (def: 1)
+|`x` | array/matrix | array or matrix of values
+|`dim` | number | dimension selected, 1: column 0: row (def: 1)
 
 
 #### Examples

@@ -9,7 +9,7 @@ true for function
 
 |Params|Type|Description
 |---------|----|-----------
-|`` | `function` | x function
+|`` | function | x function
 
 
 #### Examples

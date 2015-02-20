@@ -9,7 +9,7 @@ Unary plus +X
 
 |Params|Type|Description
 |---------|----|-----------
-|`x` | `number|array|matrix` | number or array of values
+|`x` | number/array/matrix | number or array of values
 
 
 #### Examples

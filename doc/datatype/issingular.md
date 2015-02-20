@@ -9,7 +9,7 @@ True for singular matrix. A square matrix which does not have an inverse. A matr
 
 |Params|Type|Description
 |---------|----|-----------
-|`x` | `matrix` |  input matrix
+|`x` | matrix |  input matrix
 
 
 #### Examples

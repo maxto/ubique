@@ -9,9 +9,9 @@ Apply function to each element of array or matrix
 
 |Params|Type|Description
 |---------|----|-----------
-|`x` | `array|matrix` |  array elements
-|`fun` | `function` | function to apply
-|`dim` | `number` | dimension selected, 0: row, 1: column (def: 0)
+|`x` | array/matrix |  array elements
+|`fun` | function | function to apply
+|`dim` | number | dimension selected, 0: row, 1: column (def: 0)
 
 
 #### Examples

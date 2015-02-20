@@ -9,8 +9,8 @@ Element-by-element multiplication. X and Y must have the same dimensions unless 
 
 |Params|Type|Description
 |---------|----|-----------
-|`x` | `number|array|matrix` | number or array of values
-|`y` | `number|array|matrix` | number or array of values
+|`x` | number/array/matrix | number or array of values
+|`y` | number/array/matrix | number or array of values
 
 
 #### Examples

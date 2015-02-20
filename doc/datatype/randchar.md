@@ -9,8 +9,8 @@ Generate a random alpha-numeric string
 
 |Params|Type|Description
 |---------|----|-----------
-|`n` | `number` |      number of characters to generate (def: 6)
-|`strset` | `string` | character set to get random sample
+|`n` | number |      number of characters to generate (def: 6)
+|`strset` | string | character set to get random sample
 
 
 #### Examples

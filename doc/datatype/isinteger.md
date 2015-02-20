@@ -9,7 +9,7 @@ True for integer
 
 |Params|Type|Description
 |---------|----|-----------
-|`` | `integer` | x element
+|`` | integer | x element
 
 
 #### Examples

@@ -9,7 +9,7 @@ True for undefined values
 
 |Params|Type|Description
 |---------|----|-----------
-|`` | `undefined` | x element
+|`` | undefined | x element
 
 
 #### Examples

@@ -9,7 +9,7 @@ True for null values
 
 |Params|Type|Description
 |---------|----|-----------
-|`` | `null` | x element
+|`` | null | x element
 
 
 #### Examples

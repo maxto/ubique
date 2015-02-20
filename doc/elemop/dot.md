@@ -9,8 +9,8 @@ Arrays dot product X * Y. X and Y must be arrays of the same length
 
 |Params|Type|Description
 |---------|----|-----------
-|`x` | `number|array` | number or array of values
-|`y` | `number|array` | number or array of values
+|`x` | number/array | number or array of values
+|`y` | number/array | number or array of values
 
 
 #### Examples
