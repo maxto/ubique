@@ -1,8 +1,8 @@
 # ChangeLog
 
-### 0.0.9 - xxxxxxxx
+### 0.0.9 - 20150220
 
-- Updated Documentation
+- Built Documentation: API Docs and For MATLAB Users
 
 ### 0.0.8 - 20150201
 

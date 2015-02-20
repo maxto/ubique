@@ -5,12 +5,12 @@ http://maxto.github.io/
 [![NPM version](http://img.shields.io/npm/v/ubique.svg?style=flat)](https://www.npmjs.com/package/ubique)
 [![Bower](https://img.shields.io/bower/v/bootstrap.svg?style=flat)](http://bower.io/search/?q=ubique)
 
-A mathematical and statistical library for JavaScript and Node.js
+An extensive MATLAB-like scientific library for JavaScript and Node.js/Io.js
  
 Ubique supports arrays, vectors and matrices, providing MATLAB-like functionalities.
 It includes a toolkit of functions for quantitative analysis and advanced statistics. 
 
-Easy to use, no dependencies. Runs both in Node.js and in the Browser.
+Easy to use, Ubique runs both in Node.js/Io.js and in the Browser.
 
 ## Features
 
@@ -23,7 +23,7 @@ Easy to use, no dependencies. Runs both in Node.js and in the Browser.
 - Interpolation and Regression Analysis
 - Quantitative Analysis: performance and risk metrics
 
-See [API Reference](/doc/apiref.md)
+See [API Docs](/doc/contents.md)
 
 ## Ubique for MATLAB Users
 
@@ -90,7 +90,7 @@ View [ChangeLog](CHANGELOG.md)
 
 The MIT License 
 
-Copyright 2014-2015 Max Todaro
+Copyright© 2014-2015 Max Todaro
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
