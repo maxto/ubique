@@ -1,3 +1,5 @@
+![Ubique](http://maxto.github.io/ubiquelogo.jpeg)
+
 # Ubique
 http://maxto.github.io/
 
@@ -25,7 +27,7 @@ Easy to use, Ubique runs both in Node.js/Io.js and in the Browser.
 
 See [API Docs](/doc/contents.md)
 
-## Ubique for MATLAB Users
+## For MATLAB Users
 
 See some comparative [Code](/doc/formatlabusers.md)
 
