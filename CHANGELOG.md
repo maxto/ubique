@@ -1,5 +1,9 @@
 # ChangeLog
 
+### 0.1.0 - 20150223
+
+- Updated site http://maxto.github.io/ with custom template and logo
+
 ### 0.0.9 - 20150220
 
 - Built Documentation: API Docs and For MATLAB Users
