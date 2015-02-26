@@ -8,7 +8,7 @@
   "license": "MIT",
   "ignore": [
     "**/.*",
-    ".gitignore"
+    ".gitignore",
     "node_modules",
     "bower_components",
     "compiler.js",
