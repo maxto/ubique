@@ -95,6 +95,13 @@
 - [isstring](/doc/datatype/isstring.md) - True for string values
 - [isundefined](/doc/datatype/isundefined.md) - True for undefined values
 
+### Dates and Time
+
+- [datenum](/doc/datatype/datenum.md) - Convert date and time to serial date number (Unix)
+- [datestr](/doc/datatype/datestr.md) - Convert serial date number (Unix) to string format
+- [month](/doc/datatype/month.md) - Month of date
+- [weekday](/doc/datatype/weekday.md) - Day of week
+
 ### Descriptive Statistic
 
 - [corrcoef](/doc/stats/corrcoef.md) - Correlation coefficients of two arrays X,Y
@@ -136,6 +143,7 @@
 - [col](/doc/matarrs/col.md) - Get a column of a matrix
 - [colon](/doc/matarrs/colon.md) - Array of numbers from L to U with step S
 - [end](/doc/matarrs/end.md) - Last index in array or matrix
+- [find](/doc/matarrs/find.md) - Find indices of nonzero elements
 - [ind2sub](/doc/matarrs/ind2sub.md) - Multiple subscripts from linear index
 - [row](/doc/matarrs/row.md) - Get a row of matrix
 - [sub2ind](/doc/matarrs/sub2ind.md) - Subscripts to linear indices
@@ -178,6 +186,10 @@
 ### Numeric Types
 
 - [nan](/doc/datatype/nan.md) - Create array of all NaN
+
+### Operations
+
+- [unique](/doc/elemop/unique.md) - Unique values in array or matrix
 
 ### Performance metrics
 
@@ -244,6 +256,8 @@
 ### Time Series Analysis
 
 - [hurst](/doc/quants/hurst.md) - Hurst index/exponent
+- [tomonthly](/doc/quants/tomonthly.md) - Convert a time series to a monthly frequency
+- [toweekly](/doc/quants/toweekly.md) - Convert a time series to a weekly frequency
 
 ### Utility
 

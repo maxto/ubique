@@ -1,5 +1,13 @@
 # ChangeLog
 
+### 0.1.1 - 20150227
+
+- Fixed `size`,`squeeze`,`subset` (now can manage an whole col/row with ':' symbol),
+`subsetlin`
+- New time series functions: `datenum`,`datestr`,`month`,`weekday`,'toweekly',`tomonthly`
+- Added `unique`,`find`
+- Added dependecy `moment.js` for datetime manipulation
+
 ### 0.1.0 - 20150223
 
 - Updated site http://maxto.github.io/ with custom template and logo

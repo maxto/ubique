@@ -1,7 +1,7 @@
 {
   "name": "ubique",
   "main": "./dist/ubique.min.js",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "authors": [
     "Massimiliano Todaro <m.todaro.ge@gmail.com>"
   ],

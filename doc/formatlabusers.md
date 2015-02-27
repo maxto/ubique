@@ -53,6 +53,7 @@ special function `clone` in Ubique.
 | a(:,end) | `col(a,end(a,1))` | Last column in matrix
 | a(2:5) | `subsetlin(a,colon(1,4))` | Subset of matrix based on linear indexing (0..N-1)
 | a(1:2,2:3) | `subset(a,colon(0,1),colon(1,2))` | Subset of matrix based on X,Y coordinates
+| a(1:2,:) |`subset(a,colon(0,1),':')` | Subset of matrix based on some X-elements and all Y elements
 |
 | [x1,x2] = ind2sub(size(a),[3,4]) | `ind2sub(size(a),[2,3])` | Multiple subscripts from linear index -> [[0, 1], [1, 1]]
 | sub2ind(size(a),[1,2],[2,2]) | `sub2ind(size(a),[[0, 1], [1, 1]])` | Subscripts to linear indices -> [2,3]
