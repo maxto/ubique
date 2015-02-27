@@ -2,7 +2,7 @@
 
 ### 0.1.1 - 20150227
 
-- Fixed `size`,`squeeze`,`subset` (now can manage an whole col/row with ':' symbol),
+- Fixed `size`,`squeeze`,`subset`(it's possible to get a whole col/row with ':' symbol),
 `subsetlin`
 - New time series functions: `datenum`,`datestr`,`month`,`weekday`,'toweekly',`tomonthly`
 - Added `unique`,`find`
