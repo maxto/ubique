@@ -1,4 +1,4 @@
-### var
+### varc
 Variance
 
 
@@ -20,9 +20,9 @@ Variance
 var a = [[5,6,5],[7,8,-1]];
 var c = [5,6,3];
 
-ubique.variance(c); // 2.33333
-ubique.variance(c,0); // 1.55556
-ubique.variance(a,0); // [[2, 2, 18]]
-ubique.variance(a,0,0); // [0.222222, 16.2222]
+ubique.varc(c); // 2.33333
+ubique.varc(c,0); // 1.55556
+ubique.varc(a,0); // [[2, 2, 18]]
+ubique.varc(a,0,0); // [0.222222, 16.2222]
 ```
 

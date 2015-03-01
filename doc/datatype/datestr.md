@@ -4,7 +4,7 @@ Convert serial date number (Unix) to string format
 
 #### Description
 
-Convert serial date number (Unix) to string format.Based on moment.js http://momentjs.com/
+Convert serial date number (Unix) to string format.Based on [moment.js](http://momentjs.com)
 
 
 |Params|Type|Description

@@ -1,9 +1,9 @@
 {
   "name": "ubique",
-  "version": "0.1.1",
-  "date": "2015-02-27",
+  "version": "0.1.2",
+  "date": "2015-03-01",
   "author": "Max Todaro <m.todaro.ge@gmail.com>",
-  "description": "An extensive MATLAB-like scientific library for JavaScript and Node.js/Io.js",
+  "description": "An extensive scientific computing library for JavaScript and Node.js",
   "main": "./index",
   "contributors": [],
   "homepage": "http://maxto.github.io/index.html",

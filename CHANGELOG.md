@@ -1,5 +1,11 @@
 # ChangeLog
 
+### 0.1.2 - 20150301
+
+- Replaced `variance.js` with `varc.js`
+- Update README file and some documentation
+- Bugfixes
+
 ### 0.1.1 - 20150227
 
 - Fixed `size`,`squeeze`,`subset`(it's possible to get a whole col/row with ':' symbol),

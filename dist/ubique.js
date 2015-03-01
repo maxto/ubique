@@ -62,13 +62,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * name: ubique
-	 * version: 0.1.1
-	 * update date: 2015-02-27
+	 * version: 0.1.2
+	 * update date: 2015-03-01
 	 * 
 	 * author: Max Todaro <m.todaro.ge@gmail.com>
 	 * homepage: http://maxto.github.io/index.html
 	 * 
-	 * description: An extensive MATLAB-like scientific library for JavaScript and Node.js/Io.js
+	 * description: An extensive scientific computing library for JavaScript and Node.js
 	 * 
 	 *
 	 * The MIT License (MIT)
@@ -377,7 +377,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @method datenum
 	 * @summary Convert date and time to serial date number (Unix)
 	 * @description Convert date and time to serial date number (Unix). 
-	 * Based on moment.js http://momentjs.com/
+	 * Based on [moment.js](http://momentjs.com)
 	 *
 	 * @param  {string|array|matrix} d string or array of DATES
 	 * @param  {string} fmt format string (moment.js format)
@@ -420,7 +420,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @method datestr
 	 * @summary Convert serial date number (Unix) to string format
 	 * @description Convert serial date number (Unix) to string format.
-	 * Based on moment.js http://momentjs.com/
+	 * Based on [moment.js](http://momentjs.com)
 	 * 
 	 * @param  {number|array|matrix} d ISO Unix datetime
 	 * @param  {string} fmt format string (moment.js format, default 'YYYY-MM-DD')
@@ -839,7 +839,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Month of date
 	 * @description Returns a number representing the month for each element in X.
 	 * Months are 0 indexed, Jan is 0 and Dec is 11.
-	 * Based on moment.js http://momentjs.com/
+	 * Based on [moment.js](http://momentjs.com)
 	 * 
 	 * @param  {number|array|matrix} x serial date number (Unix)
 	 * @return {number|array|matrix}
@@ -1013,8 +1013,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @method weekday
 	 * @summary Day of week
 	 * @description Returns a number representing the day of the week for each element in X.
-	 * ISO day of the week with 1 Monday, 2 Tuesday ... 7 Sunday.
-	 * Based on moment.js http://momentjs.com/
+	 * The ISO day of the week begins with 1 Monday, 2 Tuesday ... 7 Sunday.
+	 * Based on [moment.js](http://momentjs.com)
 	 * 
 	 * @param  {number|array|matrix} x serial date number (Unix)
 	 * @return {number|array|matrix}
@@ -8530,7 +8530,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 	if (arguments.length === 2) {
 	 		dim = 1;
 	 	}
-	 	var variance = $u.variance(x,flag,dim);
+	 	var variance = $u.varc(x,flag,dim);
 	 	return $u.sqrt(variance);
 	 }
 
@@ -8546,7 +8546,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	 module.exports = function($u) {
 	/**
-	 * @method var
+	 * @method varc
 	 * @summary Variance
 	 * @description  Variance
 	 * 
@@ -8559,12 +8559,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var a = [[5,6,5],[7,8,-1]];
 	 * var c = [5,6,3];
 	 *
-	 * ubique.variance(c); // 2.33333
-	 * ubique.variance(c,0); // 1.55556 
-	 * ubique.variance(a,0); // [[2, 2, 18]]
-	 * ubique.variance(a,0,0); // [0.222222, 16.2222]
+	 * ubique.varc(c); // 2.33333
+	 * ubique.varc(c,0); // 1.55556 
+	 * ubique.varc(a,0); // [[2, 2, 18]]
+	 * ubique.varc(a,0,0); // [0.222222, 16.2222]
 	 */
-	 $u.variance = function(x,flag,dim) {
+	 $u.varc = function(x,flag,dim) {
 	 	if (arguments.length === 0) {
 	 		throw new Error('not enough input arguments');
 	 	}
@@ -8575,7 +8575,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 	if (arguments.length === 2) {
 	 		dim = 1;
 	 	}
-	 	var _variance = function(a,flag) {
+	 	var _varc = function(a,flag) {
 	 		var mu = $u.mean(a);
 	 		return ($u.sum($u.power($u.abs($u.minus(a,mu)),2))) / (a.length - flag);
 	 	}
@@ -8584,9 +8584,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	 		return 0;
 	 	}
 	 	if ($u.isarray(x)) {
-	 		return  _variance(x,flag);
+	 		return  _varc(x,flag);
 	 	}
-	 	return $u.vectorfun(x,function(val){return _variance(val,flag);},dim);
+	 	return $u.vectorfun(x,function(val){return _varc(val,flag);},dim);
 	 }
 
 	}

@@ -4,7 +4,7 @@ Convert date and time to serial date number (Unix)
 
 #### Description
 
-Convert date and time to serial date number (Unix).Based on moment.js http://momentjs.com/
+Convert date and time to serial date number (Unix).Based on [moment.js](http://momentjs.com)
 
 
 |Params|Type|Description

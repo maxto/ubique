@@ -121,7 +121,7 @@
 - [range](/doc/stats/range.md) - Range of values
 - [skewness](/doc/stats/skewness.md) - Skewness
 - [std](/doc/stats/std.md) - Standard deviation
-- [var](/doc/stats/var.md) - Variance
+- [varc](/doc/stats/varc.md) - Variance
 - [xkurtosis](/doc/stats/xkurtosis.md) - Excess kurtosis
 - [zscore](/doc/stats/zscore.md) - Standardized Z score
 
