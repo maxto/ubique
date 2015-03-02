@@ -1,4 +1,4 @@
-![Ubique](http://maxto.github.io/ubiquelogo.jpeg)
+![Ubique](http://maxto.github.io/ubique-logo.jpg)
 
 # Ubique
 http://maxto.github.io/
@@ -50,8 +50,10 @@ var xy = ubique.cat(1,x,y);
 //   [ -0.014, 0.062 ],
 //   [ 0.039, 0.058 ] ]
 
-// get some descriptive statistics for X and Y along colum
+// get some descriptive statistics for X and Y along column
+
 var descStat = {
+
   numel: ubique.nrows(xy),
   mean: ubique.mean(xy),
   stdev: ubique.std(xy),
@@ -68,29 +70,32 @@ var descStat = {
   alpha: ubique.linearreg(x,y).alpha,
   beta: ubique.linearreg(x,y).beta,
   r2: ubique.linearreg(x,y).rsq
+
 };
 
 // {
 // numel: 10,
-// mean: [ [ 0.0179, 0.012599999999999997 ] ],
-// stdev: [ [ 0.023230487630602065, 0.052812456443111555 ] ],
-// variance: [ [ 0.0005396555555555555, 0.0027891555555555553 ] ],
+// mean: [ [ 0.0179, 0.0125 ] ],
+// stdev: [ [ 0.0232, 0.0528 ] ],
+// variance: [ [ 0.000539, 0.002789 ] ],
 // max: [ [ 0.066, 0.081 ] ],
 // min: [ [ -0.014, -0.061 ] ],
 // mode: [ [ 0.015, 0.058 ] ],
 // median: [ [ -0.0115, -0.055 ] ],
 // iqr: [ [ 0.023, 0.095 ] ],
-// kurtosis: [ [ 3.0375811348880486, 1.397642467111859 ] ],
-// skewness: [ [ 0.6174813132481229, -0.11890905913946115 ] ],
-// pdist: 0.17053152201279387,
-// sum: [ [ 0.179, 0.12599999999999997 ] ],
-// alpha: 0.017609073236025237,
-// beta: 0.02308942571228251,
-// r2: 0.0027553853574994254
+// kurtosis: [ [ 3.037, 1.397 ] ],
+// skewness: [ [ 0.617, -0.118 ] ],
+// pdist: 0.17053,
+// sum: [ [ 0.179, 0.125 ] ],
+// alpha: 0.0176,
+// beta: 0.023,
+// r2: 0.0027
 // }
 
 // get some financial metrics
+
 finMetrics = {
+
   annualizedReturn: ubique.annavgreturn(xy),
   excessReturn: ubique.xreturn(x,y),
   sharpe: ubique.sharpe(xy),
@@ -100,18 +105,19 @@ finMetrics = {
   maxdrawdown: [ubique.drawdown(x).maxdd,ubique.drawdown(y).maxdd],
   ulcerindex: ubique.ulcerindex(xy),
   hurst: ubique.hurst(xy),
+
 };
 
 // {
-// annualizedReturn: [ [ 86.43570576295313, 22.461545039671048 ] ],
-// excessReturn: 0.005299999999999999,
-// sharpe: [ [ 0.7705391416932597, 0.2385800784247263 ] ],
-// sortino: [ [ 3.4010510161478655, 0.4466793403301668 ] ],
-// annualizedRisk: [ [ 0.368772558632011, 0.838371755249424 ] ],
-// downsideRisk: [ [ 0.0052630789467763076, 0.028208154849263006 ] ],
-// maxdrawdown: [ 1.346153846153846, 1.7530864197530867 ],
-// ulcerindex: [ [ 0.6344798231002222, 0.9914433491870109 ] ],
-// hurst: [ [ 0.3440590389509703, 0.5153097350177327 ] ]
+// annualizedReturn: [ [ 86.43, 22.46 ] ],
+// excessReturn: 0.0052,
+// sharpe: [ [ 0.77, 0.23 ] ],
+// sortino: [ [ 3.40, 0.44 ] ],
+// annualizedRisk: [ [ 0.36, 0.83 ] ],
+// downsideRisk: [ [ 0.005, 0.028 ] ],
+// maxdrawdown: [ 1.346, 1.753 ],
+// ulcerindex: [ [ 0.634, 0.991 ] ],
+// hurst: [ [ 0.344, 0.515 ] ]
 // }
 ```
 

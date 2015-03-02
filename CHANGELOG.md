@@ -1,9 +1,16 @@
 # ChangeLog
 
+### 0.1.3 - 20150302
+
+- Added Relational Operators: `eq`,`ge`,`gt`,`le`,`lt`,`ne`
+- Modified `minus` and `plus` methods
+- Fixed `tomonthly`
+- Update README file
+
 ### 0.1.2 - 20150301
 
 - Replaced `variance.js` with `varc.js`
-- Update README file and some documentation
+- Updated README file and some documentation
 - Bugfixes
 
 ### 0.1.1 - 20150227

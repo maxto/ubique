@@ -187,10 +187,6 @@
 
 - [nan](/doc/datatype/nan.md) - Create array of all NaN
 
-### Operations
-
-- [unique](/doc/elemop/unique.md) - Unique values in array or matrix
-
 ### Performance metrics
 
 - [annavgreturn](/doc/quants/annavgreturn.md) - Annualized average return
@@ -202,6 +198,15 @@
 - [ror](/doc/quants/ror.md) - Simple rate of return
 - [twr](/doc/quants/twr.md) - True Time-weighted return measures the returns of the assets irrespective of the amount invested
 - [xreturn](/doc/quants/xreturn.md) - Excess return
+
+### Relational Operations
+
+- [eq](/doc/elemop/eq.md) - Equality X === Y
+- [ge](/doc/elemop/ge.md) - Greater than or equal to X >= Y
+- [gt](/doc/elemop/gt.md) - Greater than X > Y
+- [le](/doc/elemop/le.md) - Less than or equal to X <= Y
+- [lt](/doc/elemop/lt.md) - Less than X < Y
+- [ne](/doc/elemop/ne.md) - Inequality X !== Y
 
 ### Risk metrics
 
@@ -227,6 +232,10 @@
 - [treynor](/doc/quants/treynor.md) - Treynor Ratio
 - [ulcerindex](/doc/quants/ulcerindex.md) - Ulcer Index
 - [upsidepot](/doc/quants/upsidepot.md) - Upside potential
+
+### Set Operations
+
+- [unique](/doc/elemop/unique.md) - Unique values in array or matrix
 
 ### Sorting and Reshaping Arrays
 
