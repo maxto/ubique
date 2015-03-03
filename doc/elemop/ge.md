@@ -1,11 +1,15 @@
-### ge
+### ge(x,y)
+
 Greater than or equal to X >= Y
 
 
 #### Description
 
-Greater than or equal to X >= Y
+Greater than or equal to X >= Y  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

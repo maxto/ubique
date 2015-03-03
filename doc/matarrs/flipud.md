@@ -1,11 +1,15 @@
-### flipud
+### flipud(x)
+
 Flip matrix up to down
 
 
 #### Description
 
-Flip matrix up to down
+Flip matrix up to down  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

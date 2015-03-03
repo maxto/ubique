@@ -1,11 +1,15 @@
-### cov
+### cov(x)
+
 Covariance matrix
 
 
 #### Description
 
-Covariance matrix
+Covariance matrix  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

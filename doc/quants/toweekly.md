@@ -1,11 +1,17 @@
-### toweekly
+### toweekly(nd,nv)
+
 Convert a time series to a weekly frequency
 
 
 #### Description
 
-Convert a time series to a weekly frequency. Default: all daysin the range. Example: daily dates [Wed,...Fri,...Mon,...Fri,...Thu] will become[Wed,...,Fri...,Fri...,Thu]
+Convert a time series to a weekly frequency. Default: all days  
+in the range. Example: daily dates [Wed,...Fri,...Mon,...Fri,...Thu] will become  
+[Wed,...,Fri...,Fri...,Thu]  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

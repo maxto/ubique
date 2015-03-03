@@ -1,11 +1,15 @@
-### power
+### power(x,y)
+
 Element-wise power X. ^ Y
 
 
 #### Description
 
-Element-wise power X. ^ Y
+Element-wise power X. ^ Y  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

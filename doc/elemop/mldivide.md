@@ -1,11 +1,16 @@
-### mldivide
+### mldivide(y,x)
+
 Matrix division X \ Y
 
 
 #### Description
 
-Matrix division X \ Y. If X is NxN and Y is NxM, thenreturns a matrix NxM. Y is multiplied with the inverse of X. X must be square.
+Matrix division X \ Y. If X is NxN and Y is NxM, then  
+returns a matrix NxM. Y is multiplied with the inverse of X. X must be square.  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

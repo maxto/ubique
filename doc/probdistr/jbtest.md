@@ -1,11 +1,16 @@
-### jbtest
+### jbtest(x)
+
 Jarque-Bera test
 
 
 #### Description
 
-A test decition for the null hypothesis that the datain array X comes from a normal distribution with an unknown mean and variance
+A test decition for the null hypothesis that the data  
+in array X comes from a normal distribution with an unknown mean and variance  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

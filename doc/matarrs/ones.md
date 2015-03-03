@@ -1,11 +1,15 @@
-### ones
+### ones()
+
 Create array of all ones
 
 
 #### Description
 
-Create array of all ones
+Create array of all ones  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

@@ -1,11 +1,15 @@
-### length
+### length(x)
+
 length of vector or largest array dimension
 
 
 #### Description
 
-length of vector or largest array dimension
+length of vector or largest array dimension  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

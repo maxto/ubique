@@ -1,11 +1,15 @@
-### ndims
+### ndims(x)
+
 Number of array dimensions
 
 
 #### Description
 
-Number of array dimensions
+Number of array dimensions  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

@@ -1,11 +1,18 @@
-### hurst
+### hurst(x,flag,dim)
+
 Hurst index/exponent
 
 
 #### Description
 
-It's a useful statistic for detecting if a time series is mean reverting (anti-persistent), totally random or persistent.A value in the range [0.5) indicates mean-reverting (anti-persistent)A value of 0.5 indicate a random walkA value H in the range (0.5,1] indicates momentum (persistent)
+It's a useful statistic for detecting if a time series is mean reverting (anti-persistent), totally random or persistent.  
+A value in the range [0.5) indicates mean-reverting (anti-persistent)  
+A value of 0.5 indicate a random walk  
+A value H in the range (0.5,1] indicates momentum (persistent)  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

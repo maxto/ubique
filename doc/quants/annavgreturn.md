@@ -1,11 +1,15 @@
-### annavgreturn
+### annavgreturn(x,t,dim)
+
 Annualized average return
 
 
 #### Description
 
-Annualized average return
+Annualized average return  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

@@ -1,11 +1,15 @@
-### kurtosis
+### kurtosis(x,flag,dim)
+
 Kurtosis
 
 
 #### Description
 
-Kurtosis
+Kurtosis  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

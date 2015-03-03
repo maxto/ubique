@@ -1,11 +1,15 @@
-### round
+### round(x,n)
+
 Round to nearest integer
 
 
 #### Description
 
-Round to nearest integer. Element-wise for matrix
+Round to nearest integer. Element-wise for matrix  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

@@ -1,11 +1,15 @@
-### isvector
+### isvector(x)
+
 True for vector input
 
 
 #### Description
 
-True for vector input
+True for vector input  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

@@ -1,11 +1,15 @@
-### log
+### log(x)
+
 Square root
 
 
 #### Description
 
-Square root
+Square root  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

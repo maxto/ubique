@@ -1,11 +1,15 @@
-### diff
+### diff(x,dim)
+
 Differences between adjacent elements in array
 
 
 #### Description
 
-Differences between adjacent elements in array or matrix
+Differences between adjacent elements in array or matrix  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

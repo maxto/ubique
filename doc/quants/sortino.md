@@ -1,11 +1,15 @@
-### sortino
+### sortino(x,frisk,mar,dim)
+
 Sortino ratio
 
 
 #### Description
 
-Sortino ratio
+Sortino ratio  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

@@ -1,11 +1,15 @@
-### cagr
+### cagr(x,p,dim)
+
 Compound annual growth rate
 
 
 #### Description
 
-Compound annual growth rate
+Compound annual growth rate  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

@@ -1,11 +1,15 @@
-### nan
+### nan()
+
 Create array of all NaN
 
 
 #### Description
 
-Create array of all NaN
+Create array of all NaN  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

@@ -1,11 +1,15 @@
-### eq
+### eq(x,y)
+
 Equality X === Y
 
 
 #### Description
 
-Equality X === Y
+Equality X === Y  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

@@ -1,11 +1,15 @@
-### islogical
+### islogical(x)
+
 True for logical input
 
 
 #### Description
 
-True for logical input
+True for logical input  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

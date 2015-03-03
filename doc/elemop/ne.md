@@ -1,11 +1,15 @@
-### ne
+### ne(x,y)
+
 Inequality X !== Y
 
 
 #### Description
 
-Inequality X !== Y
+Inequality X !== Y  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

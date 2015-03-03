@@ -1,11 +1,19 @@
-### normpdf
+### normpdf(x,mu,sigma)
+
 Normal probability density function (pdf)
 
 
 #### Description
 
-Normal probability density function (pdf).Returns the pdf of the normal distribution withmean MU and standard deviation SIGMA, evaluated at the values in XDefault values: MU = 0, SIGMA = 1
+Normal probability density function (pdf).  
+Returns the pdf of the normal distribution with  
+mean MU and standard deviation SIGMA, evaluated at the values in X  
+  
+Default values: MU = 0, SIGMA = 1  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

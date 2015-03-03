@@ -1,11 +1,15 @@
-### cumprod
+### cumprod(x,dim)
+
 Cumulative product of array elements
 
 
 #### Description
 
-Cumulative product of array elements
+Cumulative product of array elements  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

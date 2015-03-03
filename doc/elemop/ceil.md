@@ -1,11 +1,15 @@
-### ceil
+### ceil(x,n)
+
 Round toward positive infinity
 
 
 #### Description
 
-Round toward positive infinity
+Round toward positive infinity  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

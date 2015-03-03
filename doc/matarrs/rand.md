@@ -1,11 +1,15 @@
-### rand
+### rand()
+
 Uniformly distribuited pseudorandom numbers
 
 
 #### Description
 
-Uniformly distribuited pseudorandom numbers
+Uniformly distribuited pseudorandom numbers  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

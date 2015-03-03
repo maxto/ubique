@@ -1,11 +1,15 @@
-### trues
+### trues()
+
 Create array of all true
 
 
 #### Description
 
-Create array of all true
+Create array of all true  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

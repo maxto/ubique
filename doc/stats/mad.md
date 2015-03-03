@@ -1,11 +1,15 @@
-### mad
+### mad(x,dim)
+
 Mean absolute deviation
 
 
 #### Description
 
-Mean absolute deviation
+Mean absolute deviation  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

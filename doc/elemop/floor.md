@@ -1,11 +1,15 @@
-### floor
+### floor(x,n)
+
 Round toward negative infinity
 
 
 #### Description
 
-Round toward negative infinity
+Round toward negative infinity  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

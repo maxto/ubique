@@ -1,11 +1,15 @@
-### lt
+### lt(x,y)
+
 Less than X < Y
 
 
 #### Description
 
-Less than X < Y
+Less than X < Y  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

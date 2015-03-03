@@ -1,11 +1,15 @@
-### interp1
+### interp1(x,y,xnew)
+
 Linear interpolation
 
 
 #### Description
 
-Linear interpolation. Returns the 1-D value of Y, given Xi query points.
+Linear interpolation. Returns the 1-D value of Y, given Xi query points.  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

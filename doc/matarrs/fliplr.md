@@ -1,11 +1,15 @@
-### fliplr
+### fliplr(x)
+
 Flip matrix left to right
 
 
 #### Description
 
-Flip matrix left to right
+Flip matrix left to right  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

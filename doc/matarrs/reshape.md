@@ -1,11 +1,15 @@
-### reshape
+### reshape(x,m,n)
+
 Reshape array or matrix with custom values
 
 
 #### Description
 
-Reshape array or matrix with custom values
+Reshape array or matrix with custom values  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

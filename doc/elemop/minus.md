@@ -1,11 +1,15 @@
-### minus
+### minus(x,y)
+
 Subtraction X - Y
 
 
 #### Description
 
-Subtraction X - Y. X and Y must have the same dimension unless one is a number
+Subtraction X - Y. X and Y must have the same dimension unless one is a number  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

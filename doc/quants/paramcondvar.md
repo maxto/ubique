@@ -1,11 +1,16 @@
-### paramcondvar
+### paramcondvar(mu,sigma,p,amount,period)
+
 Parametric Conditional Value-At-Risk
 
 
 #### Description
 
-Parametric Conditional Value-At-Risk. More sensitive to the shape of the loss distribution in the tailsAlso known as Expected Shortfall (ES), Expected Tail Loss (ETL).
+Parametric Conditional Value-At-Risk. More sensitive to the shape of the loss distribution in the tails  
+Also known as Expected Shortfall (ES), Expected Tail Loss (ETL).  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

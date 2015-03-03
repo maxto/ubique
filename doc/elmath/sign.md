@@ -1,11 +1,15 @@
-### sign
+### sign(x)
+
 Signum function
 
 
 #### Description
 
-Signum function
+Signum function  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

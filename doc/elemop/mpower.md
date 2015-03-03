@@ -1,11 +1,15 @@
-### mpower
+### mpower(x,y)
+
 Matrix power X ^ Y
 
 
 #### Description
 
-Matrix power X ^ Y. X is the square input matrix and y is the scalar exponent.
+Matrix power X ^ Y. X is the square input matrix and y is the scalar exponent.  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

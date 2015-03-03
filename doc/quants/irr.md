@@ -1,11 +1,15 @@
-### irr
+### irr(cf,cfd,cd,guess)
+
 Internal rate of return on an investment based on a series of periodic cash flows
 
 
 #### Description
 
-Calculates the internal rate of return on an investment based on a series of regularly/irregurarly periodic cash flows
+Calculates the internal rate of return on an investment based on a series of regularly/irregurarly periodic cash flows  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

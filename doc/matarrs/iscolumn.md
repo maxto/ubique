@@ -1,11 +1,15 @@
-### iscolumn
+### iscolumn(x)
+
 True for column vector
 
 
 #### Description
 
-True for column vector
+True for column vector  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

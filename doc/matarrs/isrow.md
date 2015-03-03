@@ -1,11 +1,15 @@
-### isrow
+### isrow(x)
+
 True for row vector
 
 
 #### Description
 
-True for row vector
+True for row vector  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

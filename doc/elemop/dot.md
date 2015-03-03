@@ -1,11 +1,15 @@
-### dot
+### dot(x,y)
+
 Arrays dot product X * Y
 
 
 #### Description
 
-Arrays dot product X * Y. X and Y must be arrays of the same length
+Arrays dot product X * Y. X and Y must be arrays of the same length  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

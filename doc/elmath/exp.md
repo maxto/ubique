@@ -1,11 +1,15 @@
-### exp
+### exp(x)
+
 Exponential value
 
 
 #### Description
 
-Exponential value
+Exponential value  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

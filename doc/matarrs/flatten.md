@@ -1,11 +1,16 @@
-### flatten
+### flatten(x,dim)
+
 Flatten a matrix
 
 
 #### Description
 
-Flatten a matrix and returns an array. The concatenation is made by columns.Example: flatten([[a,b],[c,d]]) returns [a,c,b,d]
+Flatten a matrix and returns an array. The concatenation is made by columns.  
+Example: flatten([[a,b],[c,d]]) returns [a,c,b,d]  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

@@ -1,11 +1,15 @@
-### col
+### col(x,n)
+
 Get a column of a matrix
 
 
 #### Description
 
-Get a column of a matrix
+Get a column of a matrix  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

@@ -337,11 +337,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {array|matrix}     
 	 *
 	 * @example
-	 * ubique.arrayfun([1.4,2.3,3],Math.log); //  [0.336472, 0.832909, 1.09861]
-	 * ubique.arrayfun([1.4,0,-10],function(a) {return ubique.sign(a);});  // [1, 0, -1]
-	 * ubique.arrayfun([[5,6],[1,3]],Math.log); // [[1.60944, 1.79176], [0, 1.09861]]
-	 * ubique.arrayfun([[5,6,5],[7,8,-1]],function(value) {return ubique.sign(value);}) // [[1, 1, 1], [1, 1, -1]]
-	 * ubique.arrayfun([[5,6,5],[7,8,-1]],function(value) {return ubique.sign(value);},1) // [[1, 1], [1, 1], [1, -1]]
+	 * var A = [1.4,2.3,3];
+	 * 
+	 * ubique.arrayfun(A,Math.log);
+	 * // [ 0.3364722366212129, 0.8329091229351039, 1.0986122886681098 ]
+	 * ubique.arrayfun([1.4,0,-10],function(a) {return ubique.sign(a);});
+	 * // [ 1, 0, -1 ]
+	 * ubique.arrayfun([[5,6],[1,3]],Math.log);
+	 * // [[1.60944, 1.79176], [0, 1.09861]]
+	 * ubique.arrayfun([[5,6,5],[7,8,-1]],function(value) {return ubique.sign(value);});
+	 * // [[1, 1, 1], [1, 1, -1]]
+	 * ubique.arrayfun([[5,6,5],[7,8,-1]],function(value) {return ubique.sign(value);},1);
+	 * // [[1, 1], [1, 1], [1, -1]]
 	 */
 	 $u.arrayfun = function(x,fun,dim) {
 	 	if (arguments.length < 2) {
@@ -382,11 +389,42 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * @method datenum
 	 * @summary Convert date and time to serial date number (Unix)
-	 * @description Convert date and time to serial date number (Unix). 
-	 * Based on [moment.js](http://momentjs.com)
+	 * @description Convert date and time to serial date number (Unix). Based on [moment.js](http://momentjs.com)
+	 * 
+	 * |Identifier| Example          | Description |
+	 * | ----------- | ---------------- | ----------- |
+	 * | `YYYY`      | `2014`           | 4 digit year |
+	 * | `YY`        | `14`             | 2 digit year |
+	 * | `Q`         | `1..4`           | Quarter of year. Sets month to first month in quarter. |
+	 * | `M MM`      | `1..12`          | Month number |
+	 * | `MMM MMMM`  | `January..Dec`   | Month name in locale set by `moment.locale()` |
+	 * | `D DD`      | `1..31`          | Day of month |
+	 * | `Do`        | `1st..31st`      | Day of month with ordinal |
+	 * | `DDD DDDD`  | `1..365`         | Day of year |
+	 * | `X`         | `1410715640.579` | Unix timestamp |
+	 * | `x`         | `1410715640579`  | Unix ms timestamp |
+	 * |
+	 * | `gggg`   | `2014`  | Locale 4 digit week year |
+	 * | `gg`     | `14`    | Locale 2 digit week year |
+	 * | `w ww`   | `1..53` | Locale week of year |
+	 * | `e`      | `1..7`  | Locale day of week |
+	 * | `GGGG`   | `2014`  | ISO 4 digit week year |
+	 * | `GG`     | `14`    | ISO 2 digit week year |
+	 * | `W WW`   | `1..53` | ISO week of year |
+	 * | `E`      | `1..7`  | ISO day of week |
+	 * |
+	 * | `H HH`         | `0..23`  | 24 hour time |
+	 * | `h hh`         | `1..12`  | 12 hour time used with `a A`. |
+	 * | `a A`          | `am pm`  | Post or ante meridiem |
+	 * | `m mm`         | `0..59`  | Minutes |
+	 * | `s ss`         | `0..59`  | Seconds |
+	 * | `S`            | `0..9`   | Tenths of a second |
+	 * | `SS`           | `0..99`  | Hundreds of a second |
+	 * | `SSS`          | `0..999` | Thousandths of a second |
+	 * | `Z ZZ`         | `+12:00` | Offset from UTC as `+-HH:mm`, `+-HHmm`, or `Z` |
 	 *
-	 * @param  {string|array|matrix} d string or array of DATES
-	 * @param  {string} fmt format string (moment.js format)
+	 * @param  {string|array|matrix} d string or array of dates
+	 * @param  {string} fmt format string
 	 * @return {string|array|matrix}
 	 *
 	 * @example
@@ -425,11 +463,42 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * @method datestr
 	 * @summary Convert serial date number (Unix) to string format
-	 * @description Convert serial date number (Unix) to string format.
-	 * Based on [moment.js](http://momentjs.com)
+	 * @description Convert serial date number (Unix) to string format. Based on [moment.js](http://momentjs.com)
+	 *
+	 * |Identifier| Example          | Description |
+	 * | ----------- | ---------------- | ----------- |
+	 * | `YYYY`      | `2014`           | 4 digit year |
+	 * | `YY`        | `14`             | 2 digit year |
+	 * | `Q`         | `1..4`           | Quarter of year. Sets month to first month in quarter. |
+	 * | `M MM`      | `1..12`          | Month number |
+	 * | `MMM MMMM`  | `January..Dec`   | Month name in locale set by `moment.locale()` |
+	 * | `D DD`      | `1..31`          | Day of month |
+	 * | `Do`        | `1st..31st`      | Day of month with ordinal |
+	 * | `DDD DDDD`  | `1..365`         | Day of year |
+	 * | `X`         | `1410715640.579` | Unix timestamp |
+	 * | `x`         | `1410715640579`  | Unix ms timestamp |
+	 * |
+	 * | `gggg`   | `2014`  | Locale 4 digit week year |
+	 * | `gg`     | `14`    | Locale 2 digit week year |
+	 * | `w ww`   | `1..53` | Locale week of year |
+	 * | `e`      | `1..7`  | Locale day of week |
+	 * | `GGGG`   | `2014`  | ISO 4 digit week year |
+	 * | `GG`     | `14`    | ISO 2 digit week year |
+	 * | `W WW`   | `1..53` | ISO week of year |
+	 * | `E`      | `1..7`  | ISO day of week |
+	 * |
+	 * | `H HH`         | `0..23`  | 24 hour time |
+	 * | `h hh`         | `1..12`  | 12 hour time used with `a A`. |
+	 * | `a A`          | `am pm`  | Post or ante meridiem |
+	 * | `m mm`         | `0..59`  | Minutes |
+	 * | `s ss`         | `0..59`  | Seconds |
+	 * | `S`            | `0..9`   | Tenths of a second |
+	 * | `SS`           | `0..99`  | Hundreds of a second |
+	 * | `SSS`          | `0..999` | Thousandths of a second |
+	 * | `Z ZZ`         | `+12:00` | Offset from UTC as `+-HH:mm`, `+-HHmm`, or `Z` |
 	 * 
 	 * @param  {number|array|matrix} d ISO Unix datetime
-	 * @param  {string} fmt format string (moment.js format, default 'YYYY-MM-DD')
+	 * @param  {string} fmt format string (def: 'YYYY-MM-DD')
 	 * @return {number|array|matrix}
 	 *
 	 * @example

@@ -1,11 +1,15 @@
-### fix
+### fix(x)
+
 Round toward zero
 
 
 #### Description
 
-Round toward zero
+Round toward zero  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

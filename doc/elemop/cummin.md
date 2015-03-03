@@ -1,11 +1,15 @@
-### cummin
+### cummin(x,dim)
+
 Cumulative min of array elements
 
 
 #### Description
 
-Cumulative min of array elements
+Cumulative min of array elements  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

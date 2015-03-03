@@ -1,11 +1,16 @@
-### lu
+### lu(x)
+
 LU matrix factorization
 
 
 #### Description
 
-LU matrix factorization based on Doolittle algorithm. The LU decomposition with pivoting always exists,even if the matrix is singular.
+LU matrix factorization based on Doolittle algorithm. The LU decomposition with pivoting always exists,  
+even if the matrix is singular.  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

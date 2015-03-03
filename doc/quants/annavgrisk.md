@@ -1,11 +1,15 @@
-### annavgrisk
+### annavgrisk(x,t,dim)
+
 Annualized Average Risk
 
 
 #### Description
 
-Annualized standard deviation of asset/portfolio values
+Annualized standard deviation of asset/portfolio values  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

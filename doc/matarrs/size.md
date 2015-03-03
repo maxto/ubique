@@ -1,11 +1,16 @@
-### size
+### size(x)
+
 Size of N-D array
 
 
 #### Description
 
-Size of N-D array. N-D array is equal to MxN matrix,1-D Array is equal to Mx1 vector, Number is equal to 1x1 array
+Size of N-D array. N-D array is equal to MxN matrix,  
+1-D Array is equal to Mx1 vector, Number is equal to 1x1 array  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

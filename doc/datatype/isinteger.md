@@ -1,11 +1,15 @@
-### isinteger
+### isinteger(x)
+
 True for integer
 
 
 #### Description
 
-True for integer
+True for integer  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

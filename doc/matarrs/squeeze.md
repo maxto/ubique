@@ -1,11 +1,16 @@
-### squeeze
+### squeeze(x)
+
 Remove singleton dimensions from N-D arrays (matrices)
 
 
 #### Description
 
-Remove singleton dimensions N_D arrays (matrices).Number returns number and 1-D array returns 1-D array.
+Remove singleton dimensions N_D arrays (matrices).  
+Number returns number and 1-D array returns 1-D array.  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

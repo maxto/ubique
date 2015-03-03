@@ -1,11 +1,15 @@
-### rows
+### rows(x)
+
 Number of rows in vector|matrix
 
 
 #### Description
 
-Number of rows in vector|matrix
+Number of rows in vector|matrix  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

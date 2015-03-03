@@ -1,11 +1,15 @@
-### avgdrawdown
+### avgdrawdown(x,dim)
+
 Average drawdown
 
 
 #### Description
 
-Average drawdown. Only the three largest drawdowns selected.
+Average drawdown. Only the three largest drawdowns selected.  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

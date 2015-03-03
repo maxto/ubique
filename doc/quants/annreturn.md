@@ -1,11 +1,15 @@
-### annreturn
+### annreturn(r,t,n)
+
 Annualisation of return (1 + X) ^ (t / n)
 
 
 #### Description
 
-Annualisation of return (1 + X) ^ (t / n)
+Annualisation of return (1 + X) ^ (t / n)  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

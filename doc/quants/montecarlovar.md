@@ -1,11 +1,15 @@
-### montecarlovar
+### montecarlovar(x)
+
 Montecarlo Value-at-Risk
 
 
 #### Description
 
-Montecarlo VaR for single asset. Based on geometric Brownian motion.
+Montecarlo VaR for single asset. Based on geometric Brownian motion.  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

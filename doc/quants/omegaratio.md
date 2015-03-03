@@ -1,11 +1,15 @@
-### omegaratio
+### omegaratio(x,mar,dim)
+
 omegaratio ratio
 
 
 #### Description
 
-omegaratio ratio
+omegaratio ratio  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

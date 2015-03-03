@@ -1,11 +1,16 @@
-### linsolve
+### linsolve(A,b)
+
 Solve linear system of equations Ax = b
 
 
 #### Description
 
-Solve linear system of equations Ax = b using LU factorization withrows pivoting
+Solve linear system of equations Ax = b using LU factorization with  
+rows pivoting  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

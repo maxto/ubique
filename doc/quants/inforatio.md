@@ -1,11 +1,15 @@
-### inforatio
+### inforatio(x,y,dim)
+
 Information Ratio
 
 
 #### Description
 
-Information Ratio
+Information Ratio  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

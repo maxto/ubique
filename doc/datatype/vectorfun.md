@@ -1,11 +1,15 @@
-### vectorfun
+### vectorfun(x,fun,dim)
+
 Apply a function to each vector column or row of a matrix
 
 
 #### Description
 
-Apply a function to each vector column or row of a matrix
+Apply a function to each vector column or row of a matrix  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

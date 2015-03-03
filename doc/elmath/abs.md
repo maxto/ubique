@@ -1,11 +1,15 @@
-### abs
+### abs(x)
+
 Absolute value
 
 
 #### Description
 
-Absolute value
+Absolute value  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

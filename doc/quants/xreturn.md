@@ -1,11 +1,15 @@
-### xreturn
+### xreturn(x,y)
+
 Excess return
 
 
 #### Description
 
-Excess return. If X and Y are arrays, returns mean of difference of values X - Y, otherwise returns a simple difference X - Y
+Excess return. If X and Y are arrays, returns mean of difference of values X - Y, otherwise returns a simple difference X - Y  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

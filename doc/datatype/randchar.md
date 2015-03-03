@@ -1,11 +1,15 @@
-### randchar
+### randchar(n,strset)
+
 Generate a random alpha-numeric string
 
 
 #### Description
 
-Generate a random alpha-numeric string
+Generate a random alpha-numeric string  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

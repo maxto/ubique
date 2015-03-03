@@ -1,11 +1,15 @@
-### prod
+### prod(x,dim)
+
 Product of array elements
 
 
 #### Description
 
-Product of array elements
+Product of array elements  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

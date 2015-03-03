@@ -1,11 +1,17 @@
-### weekday
+### weekday(x)
+
 Day of week
 
 
 #### Description
 
-Returns a number representing the day of the week for each element in X.The ISO day of the week begins with 1 Monday, 2 Tuesday ... 7 Sunday.Based on [moment.js](http://momentjs.com)
+Returns a number representing the day of the week for each element in X.  
+The ISO day of the week begins with 1 Monday, 2 Tuesday ... 7 Sunday.  
+Based on [moment.js](http://momentjs.com)  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

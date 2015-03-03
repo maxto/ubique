@@ -1,11 +1,15 @@
-### isundefined
+### isundefined(x)
+
 True for undefined values
 
 
 #### Description
 
-True for undefined values
+True for undefined values  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

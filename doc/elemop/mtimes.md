@@ -1,11 +1,15 @@
-### mtimes
+### mtimes(x,y)
+
 Matrix multiplication X * Y
 
 
 #### Description
 
-Matrix multiplication X * Y. If X is MxP and Y is PxN, returns a matrix MxN
+Matrix multiplication X * Y. If X is MxP and Y is PxN, returns a matrix MxN  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

@@ -1,11 +1,15 @@
-### inv
+### inv(x)
+
 Matrix inverse
 
 
 #### Description
 
-Inverse of a square matrix
+Inverse of a square matrix  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

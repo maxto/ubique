@@ -1,11 +1,15 @@
-### cumsum
+### cumsum(x,dim)
+
 Cumulative sum of array elements
 
 
 #### Description
 
-Cumulative sum of array elements
+Cumulative sum of array elements  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

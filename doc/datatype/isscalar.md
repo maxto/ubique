@@ -1,11 +1,15 @@
-### isscalar
+### isscalar(x)
+
 True for scalar input
 
 
 #### Description
 
-True for scalar input
+True for scalar input  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

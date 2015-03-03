@@ -1,11 +1,16 @@
-### sort
+### sort(x,mode,dim)
+
 Sort array elements in ascending/descending order
 
 
 #### Description
 
-Sort array elements in ascending/descending order. For matrix it is possibile to sortalong a dimension. Based on Merge Sort algorithm
+Sort array elements in ascending/descending order. For matrix it is possibile to sort  
+along a dimension. Based on Merge Sort algorithm  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

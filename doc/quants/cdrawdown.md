@@ -1,11 +1,15 @@
-### cdrawdown
+### cdrawdown(x,dim)
+
 Continuous Drawdown
 
 
 #### Description
 
-Continuous Drawdown
+Continuous Drawdown  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

@@ -1,11 +1,18 @@
-### norminv
+### norminv(p,mu,sigma)
+
 Inverse of the normal cumulative distribution function (cdf)
 
 
 #### Description
 
-Returns the inverse cdf for the normal distribution with mean MUand standard deviation SIGMA at P valueDefault values: MU = 0, SIGMA = 1
+Returns the inverse cdf for the normal distribution with mean MU  
+and standard deviation SIGMA at P value  
+  
+Default values: MU = 0, SIGMA = 1  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

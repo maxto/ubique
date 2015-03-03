@@ -1,11 +1,15 @@
-### mod
+### mod(x,y)
+
 Modulus after division
 
 
 #### Description
 
-Modulus after division. Element-wise for matrix
+Modulus after division. Element-wise for matrix  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

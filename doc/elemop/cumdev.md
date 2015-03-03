@@ -1,11 +1,15 @@
-### cumdev
+### cumdev(x,dim)
+
 Cumulative mean deviation
 
 
 #### Description
 
-Cumulative mean deviation of the values in array X
+Cumulative mean deviation of the values in array X  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

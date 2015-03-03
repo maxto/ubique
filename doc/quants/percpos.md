@@ -1,11 +1,15 @@
-### percpos
+### percpos(x,dim)
+
 Percentage of positive values in array or matrix
 
 
 #### Description
 
-Percentage of positive values in array or matrix
+Percentage of positive values in array or matrix  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

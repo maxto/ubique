@@ -1,11 +1,15 @@
-### times
+### times(x,y)
+
 Array multiply X. * Y
 
 
 #### Description
 
-Element-by-element multiplication. X and Y must have the same dimensions unless ones is a number
+Element-by-element multiplication. X and Y must have the same dimensions unless ones is a number  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

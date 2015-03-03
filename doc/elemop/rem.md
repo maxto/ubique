@@ -1,11 +1,15 @@
-### rem
+### rem(x,y)
+
 Remainder after division
 
 
 #### Description
 
-Remainder after division. Element-wise for matrix
+Remainder after division. Element-wise for matrix  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

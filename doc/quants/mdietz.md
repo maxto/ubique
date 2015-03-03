@@ -1,11 +1,15 @@
-### mdietz
+### mdietz(ev,bv,cf,cfd,cd)
+
 Historical performance of an investment portfolio with external cash flows
 
 
 #### Description
 
-Historical performance of an investment portfolio with external cash flows
+Historical performance of an investment portfolio with external cash flows  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

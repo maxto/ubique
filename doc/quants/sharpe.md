@@ -1,11 +1,16 @@
-### sharpe
+### sharpe(x,frisk,dim)
+
 Sharpe Ratio
 
 
 #### Description
 
-Sharpe Ratio.Compute Sharpe ratio for an array X of values (daily, weekly, etc) anda free-risk rate. Annual free-risk must be divided to match the right timeframe.
+Sharpe Ratio.Compute Sharpe ratio for an array X of values (daily, weekly, etc) and  
+a free-risk rate. Annual free-risk must be divided to match the right timeframe.  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

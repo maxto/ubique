@@ -1,11 +1,17 @@
-### erfcinv
+### erfcinv(y)
+
 Inverse complementary error function
 
 
 #### Description
 
-Inverse complementary error functionIt satisfies y = erfc(x) for 2 >= y >= 0 with -Inf <= x <= Inf
+Inverse complementary error function  
+  
+It satisfies y = erfc(x) for 2 >= y >= 0 with -Inf <= x <= Inf  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

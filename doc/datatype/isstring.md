@@ -1,11 +1,15 @@
-### isstring
+### isstring(x)
+
 True for string values
 
 
 #### Description
 
-True for string values
+True for string values  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

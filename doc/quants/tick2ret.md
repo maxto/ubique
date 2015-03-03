@@ -1,11 +1,15 @@
-### tick2ret
+### tick2ret(x,mode,dim)
+
 Convert a value series to a return series
 
 
 #### Description
 
-Convert a value series to a return series. 'simple' (default) for simple returns, 'continuous' for continuously compounded
+Convert a value series to a return series. 'simple' (default) for simple returns, 'continuous' for continuously compounded  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

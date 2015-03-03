@@ -1,11 +1,16 @@
-### mrdivide
+### mrdivide(x,y)
+
 Matrix division X / Y
 
 
 #### Description
 
-Matrix division X / Y. If X is MxN and Y is NxN, thenit returns a matrix MxN. X is multiplied with the inverse of Y. Y must be square.
+Matrix division X / Y. If X is MxN and Y is NxN, then  
+it returns a matrix MxN. X is multiplied with the inverse of Y. Y must be square.  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

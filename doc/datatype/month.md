@@ -1,11 +1,17 @@
-### month
+### month(x)
+
 Month of date
 
 
 #### Description
 
-Returns a number representing the month for each element in X.Months are 0 indexed, Jan is 0 and Dec is 11.Based on [moment.js](http://momentjs.com)
+Returns a number representing the month for each element in X.  
+Months are 0 indexed, Jan is 0 and Dec is 11.  
+Based on [moment.js](http://momentjs.com)  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

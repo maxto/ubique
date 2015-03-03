@@ -1,11 +1,15 @@
-### jensenalpha
+### jensenalpha(x,y,frisk,dim)
+
 Jensen alpha
 
 
 #### Description
 
-Ex-post alpha calculated with regression line. Free-risk is the avereage free-risk for the timeframe selected.
+Ex-post alpha calculated with regression line. Free-risk is the avereage free-risk for the timeframe selected.  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

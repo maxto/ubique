@@ -1,11 +1,15 @@
-### isempty
+### isempty(x)
+
 True for empty array or matrix
 
 
 #### Description
 
-True for empty array or matrix
+True for empty array or matrix  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

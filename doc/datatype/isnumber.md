@@ -1,11 +1,15 @@
-### isnumber
+### isnumber(x)
+
 True for number
 
 
 #### Description
 
-True for number or NaN value
+True for number or NaN value  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

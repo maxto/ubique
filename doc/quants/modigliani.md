@@ -1,11 +1,15 @@
-### modigliani
+### modigliani(x,y,frisk,dim)
+
 Modigliani index for risk-adjusted return
 
 
 #### Description
 
-Modigliani index for risk-adjusted return
+Modigliani index for risk-adjusted return  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

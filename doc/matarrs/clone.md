@@ -1,11 +1,15 @@
-### clone
+### clone(x)
+
 Create a clone of the input array or matrix
 
 
 #### Description
 
-Create a clone of the input array or matrix
+Create a clone of the input array or matrix  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

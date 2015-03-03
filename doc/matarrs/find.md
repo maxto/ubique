@@ -1,11 +1,15 @@
-### find
+### find(x)
+
 Find indices of nonzero elements
 
 
 #### Description
 
-Find indices of nonzero elements
+Find indices of nonzero elements  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

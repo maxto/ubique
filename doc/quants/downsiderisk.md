@@ -1,11 +1,15 @@
-### downsiderisk
+### downsiderisk(x,mar,dim)
+
 Downside Risk
 
 
 #### Description
 
-Downside Risk or Semi-Standard Deviation. Measures  the  variability  of  underperformance  below  a  minimum  target   rate
+Downside Risk or Semi-Standard Deviation. Measures  the  variability  of  underperformance  below  a  minimum  target   rate  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

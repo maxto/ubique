@@ -1,11 +1,15 @@
-### issingular
+### issingular(x)
+
 True for singular matrix
 
 
 #### Description
 
-True for singular matrix. A square matrix which does not have an inverse. A matrix is singular if and only if its determinant is zero.
+True for singular matrix. A square matrix which does not have an inverse. A matrix is singular if and only if its determinant is zero.  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

@@ -1,11 +1,15 @@
-### repmat
+### repmat(x,m,n)
+
 Replicate and tile array
 
 
 #### Description
 
-Replicate and tile array
+Replicate and tile array  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

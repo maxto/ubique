@@ -1,11 +1,15 @@
-### isfunction
+### isfunction = 
+
 True for function
 
 
 #### Description
 
-true for function
+true for function  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

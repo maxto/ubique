@@ -1,11 +1,15 @@
-### isarray
+### isarray(x)
+
 True for array
 
 
 #### Description
 
-True for array
+True for array  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

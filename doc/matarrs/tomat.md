@@ -1,11 +1,15 @@
-### tomat
+### tomat(x)
+
 Convert number or array to matrix
 
 
 #### Description
 
-Convert number or array to matrix
+Convert number or array to matrix  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

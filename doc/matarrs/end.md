@@ -1,11 +1,15 @@
-### end
+### end(x,dim)
+
 Last index in array or matrix
 
 
 #### Description
 
-Last index in array or matrix. Indexing is in the range [0...N-1]
+Last index in array or matrix. Indexing is in the range [0...N-1]  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

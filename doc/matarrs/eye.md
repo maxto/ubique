@@ -1,11 +1,15 @@
-### eye
+### eye()
+
 Identity matrix
 
 
 #### Description
 
-Identity matrix
+Identity matrix  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

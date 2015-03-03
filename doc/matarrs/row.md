@@ -1,11 +1,15 @@
-### row
+### row(x,n)
+
 Get a row of matrix
 
 
 #### Description
 
-Get a row of a matrix
+Get a row of a matrix  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

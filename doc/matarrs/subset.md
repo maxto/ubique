@@ -1,11 +1,16 @@
-### subset
+### subset(m,r,c)
+
 Subset of array or matrix based on X,Y coordinates
 
 
 #### Description
 
-Subset of array or matrix based on X,Y coordinates.Extract a single column or row with the symbols ':'
+Subset of array or matrix based on X,Y coordinates.  
+Extract a single column or row with the symbols ':'  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

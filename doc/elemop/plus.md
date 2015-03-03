@@ -1,11 +1,15 @@
-### plus
+### plus(x,y)
+
 Addition X + Y
 
 
 #### Description
 
-Addition X + Y
+Addition X + Y  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

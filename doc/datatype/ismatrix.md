@@ -1,11 +1,15 @@
-### ismatrix
+### ismatrix(x)
+
 True for matrix
 
 
 #### Description
 
-True for array of array (matrix)
+True for array of array (matrix)  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

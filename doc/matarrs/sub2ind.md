@@ -1,11 +1,15 @@
-### sub2ind
+### sub2ind(size,index)
+
 Subscripts to linear indices
 
 
 #### Description
 
-Subscripts to linear indices. Convert a 2D coordinates X,Y of a matrix into linear indices
+Subscripts to linear indices. Convert a 2D coordinates X,Y of a matrix into linear indices  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

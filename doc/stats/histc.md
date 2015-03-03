@@ -1,11 +1,15 @@
-### histc
+### histc(x,bins,dim)
+
 Histogram count
 
 
 #### Description
 
-For array X counts the number of values in X that fall between the elements in the BINS array. Values outside the range in BINS are not counted.
+For array X counts the number of values in X that fall between the elements in the BINS array. Values outside the range in BINS are not counted.  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

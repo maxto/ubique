@@ -1,11 +1,15 @@
-### downsidepot
+### downsidepot(x,mar,dim)
+
 Downside potential
 
 
 #### Description
 
-Downside potential
+Downside potential  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

@@ -1,11 +1,15 @@
-### colon
+### colon(l,u,s)
+
 Array of numbers from L to U with step S
 
 
 #### Description
 
-Array of numbers from L to U with step S
+Array of numbers from L to U with step S  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

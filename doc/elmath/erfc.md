@@ -1,11 +1,18 @@
-### erfc
+### erfc(x)
+
 Complementary error function
 
 
 #### Description
 
-Complementary error functionerfc(x) = 2/sqrt(pi) * integral from x to inf of exp(-t^2) dterfc(x) = 1 - erf(x)
+Complementary error function  
+  
+erfc(x) = 2/sqrt(pi) * integral from x to inf of exp(-t^2) dt  
+erfc(x) = 1 - erf(x)  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

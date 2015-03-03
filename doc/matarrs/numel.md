@@ -1,11 +1,15 @@
-### numel
+### numel(x)
+
 Number of elements in an array
 
 
 #### Description
 
-Number of elements in an array
+Number of elements in an array  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

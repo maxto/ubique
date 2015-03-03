@@ -1,11 +1,16 @@
-### transpose
+### transpose(x)
+
 Transpose X.'
 
 
 #### Description
 
-Transpose of matrix X. Array is Nx1 as default.Transpose of Array is 1xN matrix.
+Transpose of matrix X. Array is Nx1 as default.  
+Transpose of Array is 1xN matrix.  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

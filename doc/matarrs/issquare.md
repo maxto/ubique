@@ -1,11 +1,15 @@
-### issquare
+### issquare(x)
+
 True for square matrix
 
 
 #### Description
 
-True for square matrix
+True for square matrix  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

@@ -1,11 +1,15 @@
-### unique
+### unique(x,dim)
+
 Unique values in array or matrix
 
 
 #### Description
 
-Unique values in array or matrix
+Unique values in array or matrix  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

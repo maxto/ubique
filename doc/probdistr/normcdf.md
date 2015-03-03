@@ -1,11 +1,15 @@
-### normcdf
+### normcdf(x,mu,sigma)
+
 Normal cumulative distribution function (cdf)
 
 
 #### Description
 
-The Standard Normal Distribution: mu = 0 and sigma = 1
+The Standard Normal Distribution: mu = 0 and sigma = 1  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

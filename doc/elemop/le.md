@@ -1,11 +1,15 @@
-### le
+### le(x,y)
+
 Less than or equal to X <= Y
 
 
 #### Description
 
-Less than or equal to X <= Y
+Less than or equal to X <= Y  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

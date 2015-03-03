@@ -1,11 +1,15 @@
-### adjsharpe
+### adjsharpe(x,frisk,dim)
+
 Adjusted Sharpe Ratio
 
 
 #### Description
 
-Sharpe Ratio adjusts for skewness and kurtosis with a penalty factor for negative skewness and excess kurtosis
+Sharpe Ratio adjusts for skewness and kurtosis with a penalty factor for negative skewness and excess kurtosis  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

@@ -1,11 +1,16 @@
-### ind2sub
+### ind2sub(size,index)
+
 Multiple subscripts from linear index
 
 
 #### Description
 
-Multiple subscripts from linear index. Returns an array or matrix withthe equivalent row and column of the corresponding index.
+Multiple subscripts from linear index. Returns an array or matrix with  
+the equivalent row and column of the corresponding index.  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

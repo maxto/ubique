@@ -1,11 +1,16 @@
-### tomonthly
+### tomonthly(nd,nv)
+
 Convert a time series to a monthly frequency
 
 
 #### Description
 
-Convert a time series to a monthly frequency. Default: all daysin the range.
+Convert a time series to a monthly frequency. Default: all days  
+in the range.  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

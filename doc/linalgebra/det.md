@@ -1,11 +1,15 @@
-### det
+### det(x)
+
 Matrix determinant
 
 
 #### Description
 
-Matrix determinant with LU decomposition method
+Matrix determinant with LU decomposition method  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

@@ -1,11 +1,15 @@
-### diag
+### diag(x,k)
+
 Diagonal matrix and get diagonals of a matrix
 
 
 #### Description
 
-Diagonal matrix (if array) and get diagonals of a matrix (if matrix)
+Diagonal matrix (if array) and get diagonals of a matrix (if matrix)  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

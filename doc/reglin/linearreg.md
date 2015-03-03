@@ -1,11 +1,15 @@
-### linearreg
+### linearreg(y,x)
+
 Linear regression of Y on X
 
 
 #### Description
 
-Return an object with fields: Beta, Alpha, R-squared, function
+Return an object with fields: Beta, Alpha, R-squared, function  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

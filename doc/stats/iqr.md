@@ -1,11 +1,15 @@
-### iqr
+### iqr(x,dim)
+
 Interquartile range
 
 
 #### Description
 
-Return the interquartile (Q3 - Q1 quartiles)
+Return the interquartile (Q3 - Q1 quartiles)  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

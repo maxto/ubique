@@ -1,11 +1,15 @@
-### trackerr
+### trackerr(x,y)
+
 Tracking Error (ex-post)
 
 
 #### Description
 
-Ex-post tracking error
+Ex-post tracking error  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

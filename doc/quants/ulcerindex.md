@@ -1,11 +1,16 @@
-### ulcerindex
+### ulcerindex(x,mode,dim)
+
 Ulcer Index
 
 
 #### Description
 
-Ulcer Index of Peter G. Martin (1987). The impact of long, deep drawdowns will have significantimpact because the underperformance since the last peak is squared.
+Ulcer Index of Peter G. Martin (1987). The impact of long, deep drawdowns will have significant  
+impact because the underperformance since the last peak is squared.  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

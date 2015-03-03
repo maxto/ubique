@@ -1,11 +1,15 @@
-### uplus
+### uplus(x)
+
 Unary plus +X
 
 
 #### Description
 
-Unary plus +X
+Unary plus +X  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

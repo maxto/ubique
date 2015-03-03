@@ -1,11 +1,17 @@
-### erfinv
+### erfinv(y)
+
 Inverse error function
 
 
 #### Description
 
-Inverse error functionThe inverse error function satisfies y = erf(x), for -1 <= y <= 1 and -inf <= x <= inf
+Inverse error function  
+  
+The inverse error function satisfies y = erf(x), for -1 <= y <= 1 and -inf <= x <= inf  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

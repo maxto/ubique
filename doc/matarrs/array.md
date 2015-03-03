@@ -1,11 +1,15 @@
-### array
+### array(n,val)
+
 Create an array with custom elements
 
 
 #### Description
 
-Create an array with custom elements
+Create an array with custom elements  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

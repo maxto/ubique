@@ -1,11 +1,15 @@
-### histvar
+### histvar(x,p,amount,period,dim)
+
 Historical Value-At-Risk
 
 
 #### Description
 
-Univariate historical simulation. Single asset
+Univariate historical simulation. Single asset  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

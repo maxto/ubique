@@ -1,11 +1,15 @@
-### ret2tick
+### ret2tick(x,mode,sval,dim)
+
 Convert a return series to a value series with a start value
 
 
 #### Description
 
-Convert a return series to a value series with a start value
+Convert a return series to a value series with a start value  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

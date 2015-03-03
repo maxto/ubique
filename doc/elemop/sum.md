@@ -1,11 +1,15 @@
-### sum
+### sum(x,dim)
+
 Sum of array elements
 
 
 #### Description
 
-Sum of array elements
+Sum of array elements  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

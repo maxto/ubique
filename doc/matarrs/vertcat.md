@@ -1,11 +1,15 @@
-### vertcat
+### vertcat()
+
 Concatenate arrays or matrices vertically
 
 
 #### Description
 
-Concatenate arrays or matrices vertically
+Concatenate arrays or matrices vertically  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

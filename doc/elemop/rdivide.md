@@ -1,11 +1,16 @@
-### rdivide
+### rdivide(x,y)
+
 Right array division X. / Y
 
 
 #### Description
 
-Divides each element of X by the corresponding element of Y. Inputs X and Ymust have the same size
+Divides each element of X by the corresponding element of Y. Inputs X and Y  
+must have the same size  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

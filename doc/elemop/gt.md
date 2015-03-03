@@ -1,11 +1,15 @@
-### gt
+### gt(x,y)
+
 Greater than X > Y
 
 
 #### Description
 
-Greater than X > Y
+Greater than X > Y  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

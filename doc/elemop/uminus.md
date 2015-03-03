@@ -1,11 +1,15 @@
-### uminus
+### uminus(x)
+
 Unary minus -X
 
 
 #### Description
 
-Unary minus -X
+Unary minus -X  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

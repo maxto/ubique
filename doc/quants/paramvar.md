@@ -1,11 +1,15 @@
-### paramvar
+### paramvar(mu,sigma,p,amount,period)
+
 Parametric Value-At-Risk
 
 
 #### Description
 
-Parametric Value-At-Risk. Asset or portfolio returns are normally distributed.
+Parametric Value-At-Risk. Asset or portfolio returns are normally distributed.  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

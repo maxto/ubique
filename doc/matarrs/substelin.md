@@ -1,11 +1,15 @@
-### substelin
+### substelin(m,idx)
+
 Subset of array or matrix based on linear indexing
 
 
 #### Description
 
-Subset of array or matrix based on linear indexing
+Subset of array or matrix based on linear indexing  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

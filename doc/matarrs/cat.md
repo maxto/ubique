@@ -1,11 +1,15 @@
-### cat
+### cat()
+
 Concatenate arrays and matrices
 
 
 #### Description
 
-Concatenate arrays and matrices along specified dimension as first argument
+Concatenate arrays and matrices along specified dimension as first argument  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

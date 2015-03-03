@@ -1,11 +1,15 @@
-### cummax
+### cummax(x,dim)
+
 Cumulative max of array elements
 
 
 #### Description
 
-Cumulative max of array elements
+Cumulative max of array elements  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

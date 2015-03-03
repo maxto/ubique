@@ -1,11 +1,16 @@
-### ror
+### ror(x,dim)
+
 Simple rate of return
 
 
 #### Description
 
-Simple rate of return calculated from the last and the first value ofan array of numbers.
+Simple rate of return calculated from the last and the first value of  
+an array of numbers.  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

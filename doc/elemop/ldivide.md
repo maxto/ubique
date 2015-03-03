@@ -1,11 +1,16 @@
-### ldivide
+### ldivide(y,x)
+
 Left array division X. \ Y
 
 
 #### Description
 
-Divides each element of Y by the corresponding element of X. Inputs X and Ymust have the same size
+Divides each element of Y by the corresponding element of X. Inputs X and Y  
+must have the same size  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

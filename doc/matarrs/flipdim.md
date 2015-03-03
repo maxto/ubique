@@ -1,11 +1,15 @@
-### flipdim
+### flipdim(x,dim)
+
 Flip order of elements in array or matrix
 
 
 #### Description
 
-Flip order of elements in array or matrix
+Flip order of elements in array or matrix  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

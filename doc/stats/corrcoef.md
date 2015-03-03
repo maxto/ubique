@@ -1,11 +1,15 @@
-### corrcoef
+### corrcoef(x)
+
 Correlation coefficients of two arrays X,Y
 
 
 #### Description
 
-Correlation coefficients of two arrays X,Y
+Correlation coefficients of two arrays X,Y  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

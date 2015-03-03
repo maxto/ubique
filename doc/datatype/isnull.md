@@ -1,11 +1,15 @@
-### isnull
+### isnull(x)
+
 True for null values
 
 
 #### Description
 
-True for null values
+True for null values  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

@@ -1,11 +1,15 @@
-### horzcat
+### horzcat()
+
 Concatenate arrays or matrices horizontally
 
 
 #### Description
 
-Concatenate arrays or matrices horizontally
+Concatenate arrays or matrices horizontally  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

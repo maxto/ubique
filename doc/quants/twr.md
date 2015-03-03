@@ -1,11 +1,15 @@
-### twr
+### twr(mv,cf)
+
 True Time-weighted return measures the returns of the assets irrespective of the amount invested
 
 
 #### Description
 
-rue Time-weighted return measures the returns of the assets irrespective of the amount invested
+rue Time-weighted return measures the returns of the assets irrespective of the amount invested  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

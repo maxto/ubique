@@ -1,11 +1,15 @@
-### linspace
+### linspace(a,b,n)
+
 Create linearly spaced arrays
 
 
 #### Description
 
-Create linearly spaced arrays
+Create linearly spaced arrays  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

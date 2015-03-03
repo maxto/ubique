@@ -1,11 +1,15 @@
-### logspace
+### logspace(a,b,n)
+
 Create logarithmically spaced arrays
 
 
 #### Description
 
-Create logarithmically spaced arrays
+Create logarithmically spaced arrays  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

@@ -1,11 +1,15 @@
-### ncols
+### ncols(x)
+
 Number of columns in vector|matrix
 
 
 #### Description
 
-Number of columns in vector|matrix
+Number of columns in vector|matrix  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------
