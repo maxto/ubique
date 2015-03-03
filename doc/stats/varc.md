@@ -1,11 +1,15 @@
-### varc
+### varc(x,flag,dim)
+
 Variance
 
 
 #### Description
 
-Variance
+Variance  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

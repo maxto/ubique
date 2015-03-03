@@ -1,11 +1,15 @@
-### mode
+### mode(x,dim)
+
 Most frequent value in an array of elements
 
 
 #### Description
 
-Most frequent value in an array of elements (Unimodal)
+Most frequent value in an array of elements (Unimodal)  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

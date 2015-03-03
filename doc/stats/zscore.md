@@ -1,11 +1,15 @@
-### zscore
+### zscore(x,flag,dim)
+
 Standardized Z score
 
 
 #### Description
 
-Standardized Z score
+Standardized Z score  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

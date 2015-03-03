@@ -1,11 +1,15 @@
-### quartile
+### quartile(x,dim)
+
 Quartilies of a sample
 
 
 #### Description
 
-Quartilies of a sample
+Quartilies of a sample  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

@@ -1,11 +1,15 @@
-### mean
+### mean(x,dim)
+
 Average value of array
 
 
 #### Description
 
-Average value of array
+Average value of array  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

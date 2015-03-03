@@ -1,11 +1,15 @@
-### median
+### median(x,dim)
+
 Median value of array
 
 
 #### Description
 
-Median value of array
+Median value of array  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

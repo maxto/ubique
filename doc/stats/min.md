@@ -1,11 +1,15 @@
-### min
+### min(x,dim)
+
 Smallest element in array
 
 
 #### Description
 
-Smallest element in array
+Smallest element in array  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

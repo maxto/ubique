@@ -1,11 +1,15 @@
-### moment
+### moment(x,k,dim)
+
 Central moments
 
 
 #### Description
 
-Central moments. First moment is zero, second is variance.
+Central moments. First moment is zero, second is variance.  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

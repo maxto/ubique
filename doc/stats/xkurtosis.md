@@ -1,11 +1,15 @@
-### xkurtosis
+### xkurtosis(x,flag,dim)
+
 Excess kurtosis
 
 
 #### Description
 
-Excess kurtosis
+Excess kurtosis  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

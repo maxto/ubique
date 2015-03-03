@@ -1,11 +1,15 @@
-### range
+### range(x,dim)
+
 Range of values
 
 
 #### Description
 
-Range of values
+Range of values  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

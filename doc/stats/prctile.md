@@ -1,11 +1,15 @@
-### prctile
+### prctile(x,p,dim)
+
 Percentiles of a sample
 
 
 #### Description
 
-Percentiles of a sample, inclusive
+Percentiles of a sample, inclusive  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

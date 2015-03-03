@@ -1,11 +1,15 @@
-### quantile
+### quantile(x,p,dim)
+
 Quantilies of a sample
 
 
 #### Description
 
-Quantilies of a sample
+Quantilies of a sample  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

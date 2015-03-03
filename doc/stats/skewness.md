@@ -1,11 +1,15 @@
-### skewness
+### skewness(x,flag,dim)
+
 Skewness
 
 
 #### Description
 
-Skewness
+Skewness  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

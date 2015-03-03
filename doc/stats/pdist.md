@@ -1,11 +1,16 @@
-### pdist
+### pdist(x,y,mode)
+
 Pairwise distance between two sets of observations
 
 
 #### Description
 
-Compute distance between two array with differente methods:euclidean, manhattan, chebycheb, hamming
+Compute distance between two array with differente methods:  
+euclidean, manhattan, chebycheb, hamming  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

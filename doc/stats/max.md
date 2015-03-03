@@ -1,11 +1,15 @@
-### max
+### max(x,dim)
+
 Largest element in array
 
 
 #### Description
 
-Largest element in array
+Largest element in array  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

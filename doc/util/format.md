@@ -1,11 +1,15 @@
-### format
+### format (x,k)
+
 Set display format for output (numbers)
 
 
 #### Description
 
-Set display format for output (numbers)
+Set display format for output (numbers)  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------

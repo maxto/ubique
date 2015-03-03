@@ -1,11 +1,15 @@
-### std
+### std(x,flag,dim)
+
 Standard deviation
 
 
 #### Description
 
-Standard deviation
+Standard deviation  
 
+
+
+#### Arguments
 
 |Params|Type|Description
 |---------|----|-----------
