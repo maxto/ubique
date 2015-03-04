@@ -1,6 +1,11 @@
-### arrayfun(x,fun,dim)
+### arrayfun
 
 Apply function to each element of array or matrix
+
+
+#### Syntax
+
+ubique.arrayfun(x,fun,dim)
 
 
 #### Description
@@ -21,9 +26,9 @@ Apply function to each element of array or matrix
 #### Examples
 
 ```js
-var A = [1.4,2.3,3];
+var x = [1.4,2.3,3];
 
-ubique.arrayfun(A,Math.log);
+ubique.arrayfun(x,Math.log);
 // [ 0.3364722366212129, 0.8329091229351039, 1.0986122886681098 ]
 ubique.arrayfun([1.4,0,-10],function(a) {return ubique.sign(a);});
 // [ 1, 0, -1 ]

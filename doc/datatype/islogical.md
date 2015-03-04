@@ -1,6 +1,11 @@
-### islogical(x)
+### islogical
 
 True for logical input
+
+
+#### Syntax
+
+ubique.islogical(x)
 
 
 #### Description
@@ -13,12 +18,13 @@ True for logical input
 
 |Params|Type|Description
 |---------|----|-----------
-|`` | boolean | x element
+|`x` | boolean | element
 
 
 #### Examples
 
 ```js
-ubique.islogical(true); // true
+ubique.islogical(true);
+// true
 ```
 

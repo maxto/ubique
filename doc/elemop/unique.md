@@ -1,6 +1,11 @@
-### unique(x,dim)
+### unique
 
 Unique values in array or matrix
+
+
+#### Syntax
+
+ubique.unique(x,dim)
 
 
 #### Description

@@ -1,6 +1,11 @@
-### month(x)
+### month
 
 Month of date
+
+
+#### Syntax
+
+ubique.month(x)
 
 
 #### Description

@@ -1,6 +1,11 @@
-### isinteger(x)
+### isinteger
 
 True for integer
+
+
+#### Syntax
+
+ubique.isinteger(x)
 
 
 #### Description
@@ -13,12 +18,13 @@ True for integer
 
 |Params|Type|Description
 |---------|----|-----------
-|`` | integer | x element
+|`x` | number | element
 
 
 #### Examples
 
 ```js
-ubique.isinteger(5); // true
+ubique.isinteger(5);
+// true
 ```
 

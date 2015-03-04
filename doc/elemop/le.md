@@ -1,6 +1,11 @@
-### le(x,y)
+### le
 
 Less than or equal to X <= Y
+
+
+#### Syntax
+
+ubique.le(x,y)
 
 
 #### Description

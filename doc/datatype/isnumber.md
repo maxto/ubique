@@ -1,6 +1,11 @@
-### isnumber(x)
+### isnumber
 
 True for number
+
+
+#### Syntax
+
+ubique.isnumber(x)
 
 
 #### Description
@@ -13,13 +18,15 @@ True for number or NaN value
 
 |Params|Type|Description
 |---------|----|-----------
-|`` | number | x element
+|`x` | number | element
 
 
 #### Examples
 
 ```js
-ubique.isnumber(5); // true
-ubique.isnumber(NaN); // true
+ubique.isnumber(5);
+// true
+ubique.isnumber(NaN);
+// true
 ```
 

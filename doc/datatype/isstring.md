@@ -1,6 +1,11 @@
-### isstring(x)
+### isstring
 
 True for string values
+
+
+#### Syntax
+
+ubique.isstring(x)
 
 
 #### Description
@@ -13,12 +18,13 @@ True for string values
 
 |Params|Type|Description
 |---------|----|-----------
-|`` | string | x element
+|`x` | string | element
 
 
 #### Examples
 
 ```js
-ubique.isstring('test'); // true
+ubique.isstring('test');
+// true
 ```
 

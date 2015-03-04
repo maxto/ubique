@@ -1,6 +1,11 @@
-### mrdivide(x,y)
+### mrdivide
 
 Matrix division X / Y
+
+
+#### Syntax
+
+ubique.mrdivide(x,y)
 
 
 #### Description
@@ -28,10 +33,15 @@ var e = [[9, 5], [6, 1]];
 var f = [[3, 2], [5, 2]];
 var l = [[1,1,-1],[1,-2,3],[2,3,1]];
 
-ubique.mrdivide(5,6); // 0.833333
-ubique.mrdivide(c,6); // [0.833333, 1, 0.5]
-ubique.mrdivide(e,5); // [[1.8, 1], [1.2, 0.2]]
-ubique.mrdivide(e,f); // [[1.75, 0.75], [-1.75, 2.25]]
-ubique.mrdivide(a,l); // [[-0.769231, 0.538462, 2.61538], [3.38462, 0.230769, 1.69231]]
+ubique.mrdivide(5,6);
+// 0.833333
+ubique.mrdivide(c,6);
+// [0.833333, 1, 0.5]
+ubique.mrdivide(e,5);
+// [[1.8, 1], [1.2, 0.2]]
+ubique.mrdivide(e,f);
+// [[1.75, 0.75], [-1.75, 2.25]]
+ubique.mrdivide(a,l);
+// [[-0.769231, 0.538462, 2.61538], [3.38462, 0.230769, 1.69231]]
 ```
 

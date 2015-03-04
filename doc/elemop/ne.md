@@ -1,6 +1,11 @@
-### ne(x,y)
+### ne
 
 Inequality X !== Y
+
+
+#### Syntax
+
+ubique.ne(x,y)
 
 
 #### Description

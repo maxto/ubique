@@ -1,6 +1,11 @@
-### prod(x,dim)
+### prod
 
 Product of array elements
+
+
+#### Syntax
+
+ubique.prod(x,dim)
 
 
 #### Description
@@ -20,8 +25,11 @@ Product of array elements
 #### Examples
 
 ```js
-ubique.prod([5,6,3]); // 14
-ubique.prod([[5,6,5],[7,8,-1]],0); // [150, -56]
-ubique.prod([[5,6,5],[7,8,-1]],1); // [[35, 48, -5]]
+ubique.prod([5,6,3]);
+// 14
+ubique.prod([[5,6,5],[7,8,-1]],0);
+// [150, -56]
+ubique.prod([[5,6,5],[7,8,-1]],1);
+// [[35, 48, -5]]
 ```
 

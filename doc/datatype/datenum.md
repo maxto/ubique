@@ -1,6 +1,11 @@
-### datenum(d,fmt)
+### datenum
 
 Convert date and time to serial date number (Unix)
+
+
+#### Syntax
+
+ubique.datenum(d,fmt)
 
 
 #### Description

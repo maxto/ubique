@@ -1,6 +1,11 @@
-### isundefined(x)
+### isundefined
 
 True for undefined values
+
+
+#### Syntax
+
+ubique.isundefined(x)
 
 
 #### Description
@@ -13,12 +18,13 @@ True for undefined values
 
 |Params|Type|Description
 |---------|----|-----------
-|`` | undefined | x element
+|`x` | undefined | element
 
 
 #### Examples
 
 ```js
-ubique.isundefined(undefined); // true
+ubique.isundefined(undefined);
+// true
 ```
 

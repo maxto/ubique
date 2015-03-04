@@ -1,6 +1,11 @@
-### weekday(x)
+### weekday
 
 Day of week
+
+
+#### Syntax
+
+ubique.weekday(x)
 
 
 #### Description

@@ -1,6 +1,11 @@
-### isfunction = 
+### isfunction
 
 True for function
+
+
+#### Syntax
+
+ubique.isfunction = 
 
 
 #### Description
@@ -13,13 +18,15 @@ true for function
 
 |Params|Type|Description
 |---------|----|-----------
-|`` | function | x function
+|`x` | function | function
 
 
 #### Examples
 
 ```js
-ubique.isfunction(function(a){return console.log(a);}); // true
-ubique.isfunction(Math.log); // true
+ubique.isfunction(function(a){return console.log(a);});
+// true
+ubique.isfunction(Math.log);
+// true
 ```
 

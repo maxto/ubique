@@ -1,6 +1,11 @@
-### vectorfun(x,fun,dim)
+### vectorfun
 
 Apply a function to each vector column or row of a matrix
+
+
+#### Syntax
+
+ubique.vectorfun(x,fun,dim)
 
 
 #### Description
@@ -13,7 +18,7 @@ Apply a function to each vector column or row of a matrix
 
 |Params|Type|Description
 |---------|----|-----------
-|`x` | array/matrix |   input matrix
+|`x` | array/matrix | input matrix
 |`fun` | function | function to apply
 |`dim` | number | dimension 0: row, 1: column (def: 0)
 
@@ -21,9 +26,11 @@ Apply a function to each vector column or row of a matrix
 #### Examples
 
 ```js
-var a = [[5,6,5],[7,8,-1]];
+var d = [[5,6,5],[7,8,-1]];
 
-ubique.vectorfun(a,function(val){return ubique.mean(val)},0); // [5.33333, 4.66667]
-ubique.vectorfun(a,function(val){return ubique.mean(val)},1); // [[6, 7, 2]]
+ubique.vectorfun(d,function(val){return ubique.mean(val)},0);
+// [5.33333, 4.66667]
+ubique.vectorfun(d,function(val){return ubique.mean(val)},1);
+// [[6, 7, 2]]
 ```
 

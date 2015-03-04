@@ -1,6 +1,11 @@
-### uplus(x)
+### uplus
 
 Unary plus +X
+
+
+#### Syntax
+
+ubique.uplus(x)
 
 
 #### Description
@@ -19,8 +24,11 @@ Unary plus +X
 #### Examples
 
 ```js
-ubique.uplus(-5); // -5
-ubique.uplus([5,6]); // [5, 6]
-ubique.uplus([[5,6],[-1,-3]]); // [[5, 6], [-1, -3]]
+ubique.uplus(-5);
+// -5
+ubique.uplus([5,6]);
+// [5, 6]
+ubique.uplus([[5,6],[-1,-3]]);
+// [[5, 6], [-1, -3]]
 ```
 

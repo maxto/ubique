@@ -1,6 +1,11 @@
-### ismatrix(x)
+### ismatrix
 
 True for matrix
+
+
+#### Syntax
+
+ubique.ismatrix(x)
 
 
 #### Description
@@ -13,13 +18,15 @@ True for array of array (matrix)
 
 |Params|Type|Description
 |---------|----|-----------
-|`` | matrix | x matrix
+|`x` | matrix | matrix
 
 
 #### Examples
 
 ```js
-ubique.ismatrix([[1,3,4]]); // true (1x3)
-ubique.ismatrix([[1],[3],[4]]); // true (3x1)
+ubique.ismatrix([[1,3,4]]);
+// true
+ubique.ismatrix([[1],[3],[4]]);
+// true
 ```
 

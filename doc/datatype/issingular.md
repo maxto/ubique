@@ -1,6 +1,11 @@
-### issingular(x)
+### issingular
 
 True for singular matrix
+
+
+#### Syntax
+
+ubique.issingular(x)
 
 
 #### Description
@@ -13,12 +18,13 @@ True for singular matrix. A square matrix which does not have an inverse. A matr
 
 |Params|Type|Description
 |---------|----|-----------
-|`x` | matrix |  input matrix
+|`x` | matrix | input matrix
 
 
 #### Examples
 
 ```js
-ubique.issingular([[2,6],[1,3]]); // false
+ubique.issingular([[2,6],[1,3]]);
+// false
 ```
 

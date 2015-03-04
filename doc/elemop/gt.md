@@ -1,6 +1,11 @@
-### gt(x,y)
+### gt
 
 Greater than X > Y
+
+
+#### Syntax
+
+ubique.gt(x,y)
 
 
 #### Description

@@ -1,6 +1,11 @@
-### minus(x,y)
+### minus
 
 Subtraction X - Y
+
+
+#### Syntax
+
+ubique.minus(x,y)
 
 
 #### Description

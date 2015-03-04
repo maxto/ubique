@@ -1,6 +1,11 @@
-### ge(x,y)
+### ge
 
 Greater than or equal to X >= Y
+
+
+#### Syntax
+
+ubique.ge(x,y)
 
 
 #### Description

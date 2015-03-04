@@ -1,6 +1,11 @@
-### datestr(d,fmt)
+### datestr
 
 Convert serial date number (Unix) to string format
+
+
+#### Syntax
+
+ubique.datestr(d,fmt)
 
 
 #### Description

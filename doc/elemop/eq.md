@@ -1,6 +1,11 @@
-### eq(x,y)
+### eq
 
 Equality X === Y
+
+
+#### Syntax
+
+ubique.eq(x,y)
 
 
 #### Description

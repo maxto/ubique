@@ -1,6 +1,11 @@
-### isempty(x)
+### isempty
 
 True for empty array or matrix
+
+
+#### Syntax
+
+ubique.isempty(x)
 
 
 #### Description
@@ -13,13 +18,15 @@ True for empty array or matrix
 
 |Params|Type|Description
 |---------|----|-----------
-|`` | array/matrix | x input matrix
+|`x` | array/matrix | input matrix
 
 
 #### Examples
 
 ```js
-ubique.isempty([]); // true
-ubique.isempty([[]]); // true
+ubique.isempty([]);
+// true
+ubique.isempty([[]]);
+// true
 ```
 

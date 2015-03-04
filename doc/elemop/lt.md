@@ -1,6 +1,11 @@
-### lt(x,y)
+### lt
 
 Less than X < Y
+
+
+#### Syntax
+
+ubique.lt(x,y)
 
 
 #### Description

@@ -1,6 +1,11 @@
-### isnull(x)
+### isnull
 
 True for null values
+
+
+#### Syntax
+
+ubique.isnull(x)
 
 
 #### Description
@@ -13,12 +18,13 @@ True for null values
 
 |Params|Type|Description
 |---------|----|-----------
-|`` | null | x element
+|`x` | null | element
 
 
 #### Examples
 
 ```js
-ubique.isnull(null); // true
+ubique.isnull(null);
+// true
 ```
 

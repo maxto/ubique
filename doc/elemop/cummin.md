@@ -1,6 +1,11 @@
-### cummin(x,dim)
+### cummin
 
 Cumulative min of array elements
+
+
+#### Syntax
+
+ubique.cummin(x,dim)
 
 
 #### Description
@@ -20,8 +25,11 @@ Cumulative min of array elements
 #### Examples
 
 ```js
-ubique.cummin([5,6,3]); // [5, 5, 3]
-ubique.cummin([[5,6,5],[7,8,-1]]); // [[5, 6, 5], [5, 6, -1]]
-ubique.cummin([[5,6,5],[7,8,-1]],0); // [[5, 5, 5], [7, 7, -1]]
+ubique.cummin([5,6,3]);
+// [5, 5, 3]
+ubique.cummin([[5,6,5],[7,8,-1]]);
+// [[5, 6, 5], [5, 6, -1]]
+ubique.cummin([[5,6,5],[7,8,-1]],0);
+// [[5, 5, 5], [7, 7, -1]]
 ```
 
