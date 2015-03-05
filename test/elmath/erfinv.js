@@ -7,7 +7,7 @@ test('erfinv', function (done) {
 
 
 
-assert.deepEqual(ubique.erfinv(0.5),0.47693623612155117);
+assert.deepEqual(ubique.erfinv(0.5),0.476936236121551);
 
 
 done();

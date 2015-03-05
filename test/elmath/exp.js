@@ -8,8 +8,8 @@ test('exp', function (done) {
 var a = [[5,6,5],[7,8,-1]];
 var c = [5,6,3];
 
-assert.deepEqual(ubique.exp(6),403.4287934927351);
-assert.deepEqual(ubique.exp(c),[148.4131591025766,403.4287934927351,20.085536923187668]);
+assert.deepEqual(ubique.exp(6),403.42879349273505);
+assert.deepEqual(ubique.exp(c),[148.41315910257657,403.42879349273505,20.085536923187668]);
 
 
 done();
