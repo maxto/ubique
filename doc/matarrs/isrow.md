@@ -1,6 +1,11 @@
-### isrow(x)
+### isrow
 
 True for row vector
+
+
+#### Syntax
+
+ubique.isrow(x)
 
 
 #### Description
@@ -13,12 +18,13 @@ True for row vector
 
 |Params|Type|Description
 |---------|----|-----------
-|`` | matrix | x input matrix
+|`x` | matrix | input matrix
 
 
 #### Examples
 
 ```js
-ubique.isrow([[2,2]]); // true
+ubique.isrow([[2,2]]);
+// true
 ```
 

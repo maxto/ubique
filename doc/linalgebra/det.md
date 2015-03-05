@@ -1,6 +1,11 @@
-### det(x)
+### det
 
 Matrix determinant
+
+
+#### Syntax
+
+ubique.det(x)
 
 
 #### Description
@@ -19,11 +24,9 @@ Matrix determinant with LU decomposition method
 #### Examples
 
 ```js
-var e = [[0, 5], [6, 0]];
-var f = [[3, 2], [5, 2]];
-
-ubique.det(e); // -30
-ubique.det(f); // -4
-ubique.det([[2,2],[2,2]]); // 0
+ubique.det([[1,5],[6,2]]);
+// -28
+ubique.det([[2,2],[2,3]]);
+// 2
 ```
 

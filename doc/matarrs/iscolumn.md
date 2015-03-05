@@ -1,6 +1,11 @@
-### iscolumn(x)
+### iscolumn
 
 True for column vector
+
+
+#### Syntax
+
+ubique.iscolumn(x)
 
 
 #### Description
@@ -13,12 +18,13 @@ True for column vector
 
 |Params|Type|Description
 |---------|----|-----------
-|`` | matrix | x input matrix
+|`x` | matrix | input matrix
 
 
 #### Examples
 
 ```js
-ubique.iscolumn([[2],[2]]); // true
+ubique.iscolumn([[2],[2]]);
+// true
 ```
 

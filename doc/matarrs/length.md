@@ -1,6 +1,11 @@
-### length(x)
+### length
 
 length of vector or largest array dimension
+
+
+#### Syntax
+
+ubique.length(x)
 
 
 #### Description
@@ -19,8 +24,11 @@ length of vector or largest array dimension
 #### Examples
 
 ```js
-ubique.length([3,5,6]); // 3
-ubique.length(5); // 1
-ubique.length([[5,4],[-1,2]]); // 2
+ubique.length([3,5,6]);
+// 3
+ubique.length(5);
+// 1
+ubique.length([[5,4],[-1,2]]);
+// 2
 ```
 

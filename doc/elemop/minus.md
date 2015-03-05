@@ -34,8 +34,6 @@ ubique.minus([5,6,4],[3,-1,0]);
 // [2, 7, 4]
 ubique.minus([5,6,4],10);
 // [-5, -4, -6]
-ubique.minus(NaN,[5,6,4]);
-// [NaN, NaN, NaN]
 ubique.minus(a,b);
 // [[6, 3, 6], [3, 3, -10]]
 ```

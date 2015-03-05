@@ -1,6 +1,11 @@
-### fix(x)
+### fix
 
 Round toward zero
+
+
+#### Syntax
+
+ubique.fix(x)
 
 
 #### Description
@@ -19,8 +24,11 @@ Round toward zero
 #### Examples
 
 ```js
-ubique.fix(3.78); // 3
-ubique.fix([4.51,-1.4]); // [4, -1]
-ubique.fix([[4.51,-1.4],[3.78,0.01]]); // [[4, -1], [3, 0]]
+ubique.fix(3.78);
+// 3
+ubique.fix([4.51,-1.4]);
+// [4, -1]
+ubique.fix([[4.51,-1.4],[3.78,0.01]]);
+// [[4, -1], [3, 0]]
 ```
 

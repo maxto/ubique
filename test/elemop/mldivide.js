@@ -1,13 +1,13 @@
 var assert = require('assert');
 var ubique = require('../../index.js');
 
-suite('datatype',function () {
-console.log('Testing datatype/mldivide ...');
+suite('elemop',function () {
+console.log('Testing elemop/mldivide ...');
 test('mldivide', function (done) {
 
 var a = [[5,6,5],[7,8,-1]];
-var e = [[9, 5], [6, 1]];
-var f = [[3, 2], [5, 2]];
+var e = [[9, 5],[6, 1]];
+var f = [[3, 2],[5, 2]];
 
 assert.deepEqual(ubique.mldivide(5,6),1.2);
 assert.deepEqual(ubique.mldivide(e,f),[[1.0476190476190477,0.380952380952381],[-1.285714285714286,-0.2857142857142857]]);

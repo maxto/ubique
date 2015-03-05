@@ -1,6 +1,11 @@
-### erfcinv(y)
+### erfcinv
 
 Inverse complementary error function
+
+
+#### Syntax
+
+ubique.erfcinv(y)
 
 
 #### Description
@@ -21,6 +26,7 @@ It satisfies y = erfc(x) for 2 >= y >= 0 with -Inf <= x <= Inf
 #### Examples
 
 ```js
-ubique.erfcinv(1.5);  // -0.476936236121904
+ubique.erfcinv(1.5);
+// -0.476936236121904
 ```
 

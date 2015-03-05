@@ -1,6 +1,11 @@
-### find(x)
+### find
 
 Find indices of nonzero elements
+
+
+#### Syntax
+
+ubique.find(x)
 
 
 #### Description

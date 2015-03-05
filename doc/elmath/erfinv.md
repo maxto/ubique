@@ -1,6 +1,11 @@
-### erfinv(y)
+### erfinv
 
 Inverse error function
+
+
+#### Syntax
+
+ubique.erfinv(y)
 
 
 #### Description
@@ -21,6 +26,7 @@ The inverse error function satisfies y = erf(x), for -1 <= y <= 1 and -inf <= x 
 #### Examples
 
 ```js
-ubique.erfinv(0.5); // 0.47693623612155117
+ubique.erfinv(0.5);
+// 0.47693623612155117
 ```
 

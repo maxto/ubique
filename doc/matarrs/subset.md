@@ -1,6 +1,11 @@
-### subset(m,r,c)
+### subset
 
 Subset of array or matrix based on X,Y coordinates
+
+
+#### Syntax
+
+ubique.subset(m,r,c)
 
 
 #### Description

@@ -34,8 +34,6 @@ ubique.plus([5,6,4],[3,-1,0]);
 // [8, 5, 4]
 ubique.plus([5,6,4],10);
 // [15, 16, 14]
-ubique.plus(NaN,[5,6,4]);
-// [NaN, NaN, NaN]
 ubique.plus(a,b);
 // [[4, 9, 4], [11, 13, 8]]
 ```

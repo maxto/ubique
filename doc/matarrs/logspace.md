@@ -1,6 +1,11 @@
-### logspace(a,b,n)
+### logspace
 
 Create logarithmically spaced arrays
+
+
+#### Syntax
+
+ubique.logspace(a,b,n)
 
 
 #### Description
@@ -21,6 +26,7 @@ Create logarithmically spaced arrays
 #### Examples
 
 ```js
-ubique.logspace(0,1,5); // [1, 1.7782794100389228, 3.1622776601683795, 5.623413251903491, 10]
+ubique.logspace(0,1,5);
+// [1, 1.7782794100389228, 3.1622776601683795, 5.623413251903491, 10]
 ```
 

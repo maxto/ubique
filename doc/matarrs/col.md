@@ -1,6 +1,11 @@
-### col(x,n)
+### col
 
 Get a column of a matrix
+
+
+#### Syntax
+
+ubique.col(x,n)
 
 
 #### Description
@@ -20,6 +25,7 @@ Get a column of a matrix
 #### Examples
 
 ```js
-ubique.col([[5,6,5],[7,8,-1]],0); // [5, 7]
+ubique.col([[5,6,5],[7,8,-1]],0);
+// [5, 7]
 ```
 

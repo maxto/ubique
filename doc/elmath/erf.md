@@ -1,6 +1,11 @@
-### erf(x)
+### erf
 
 Error function
+
+
+#### Syntax
+
+ubique.erf(x)
 
 
 #### Description
@@ -22,6 +27,7 @@ erf(x) = 2/sqrt(pi) * integral from 0 to x of exp(-t^2) dt
 #### Examples
 
 ```js
-ubique.erf(0.5);  // 0.5204999077232426
+ubique.erf(0.5);
+// 0.5204999077232426
 ```
 

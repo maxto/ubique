@@ -1,8 +1,8 @@
 var assert = require('assert');
 var ubique = require('../../index.js');
 
-suite('datatype',function () {
-console.log('Testing datatype/mpower ...');
+suite('elemop',function () {
+console.log('Testing elemop/mpower ...');
 test('mpower', function (done) {
 
 var l = [[1,1,-1],[1,-2,3],[2,3,1]];

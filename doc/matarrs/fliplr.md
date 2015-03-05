@@ -1,6 +1,11 @@
-### fliplr(x)
+### fliplr
 
 Flip matrix left to right
+
+
+#### Syntax
+
+ubique.fliplr(x)
 
 
 #### Description
@@ -19,6 +24,7 @@ Flip matrix left to right
 #### Examples
 
 ```js
-ubique.fliplr([[1,4],[2,5],[3,6]]); // [[4, 1], [5, 2], [6, 3]]
+ubique.fliplr([[1,4],[2,5],[3,6]]);
+// [[4, 1], [5, 2], [6, 3]]
 ```
 

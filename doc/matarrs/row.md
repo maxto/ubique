@@ -1,6 +1,11 @@
-### row(x,n)
+### row
 
 Get a row of matrix
+
+
+#### Syntax
+
+ubique.row(x,n)
 
 
 #### Description
@@ -20,7 +25,9 @@ Get a row of a matrix
 #### Examples
 
 ```js
-ubique.row([[5,6,5],[7,8,-1]],0); // [5, 6, 5]
-ubique.row([5,6,5]); // 5
+ubique.row([[5,6,5],[7,8,-1]],0);
+// [5, 6, 5]
+ubique.row([5,6,5]);
+// 5
 ```
 

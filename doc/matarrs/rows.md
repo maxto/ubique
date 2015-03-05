@@ -1,6 +1,11 @@
-### rows(x)
+### rows
 
 Number of rows in vector|matrix
+
+
+#### Syntax
+
+ubique.rows(x)
 
 
 #### Description
@@ -19,7 +24,9 @@ Number of rows in vector|matrix
 #### Examples
 
 ```js
-ubique.nrows([5,6,7]); // 3
-ubique.nrows([[3,2,7],[4,5,6]]); // 2
+ubique.nrows([5,6,7]);
+// 3
+ubique.nrows([[3,2,7],[4,5,6]]);
+// 2
 ```
 

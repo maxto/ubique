@@ -1,6 +1,11 @@
-### end(x,dim)
+### end
 
 Last index in array or matrix
+
+
+#### Syntax
+
+ubique.end(x,dim)
 
 
 #### Description
@@ -20,8 +25,11 @@ Last index in array or matrix. Indexing is in the range [0...N-1]
 #### Examples
 
 ```js
-ubique.end([5,6,3]); // 2
-ubique.end([[4,5,0],[-1,2,-3]]); // [1, 2]
-ubique.end([[4,5,0],[-1,2,-3]],0); // 1
+ubique.end([5,6,3]);
+// 2
+ubique.end([[4,5,0],[-1,2,-3]]);
+// [1, 2]
+ubique.end([[4,5,0],[-1,2,-3]],0);
+// 1
 ```
 

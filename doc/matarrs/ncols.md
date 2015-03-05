@@ -1,6 +1,11 @@
-### ncols(x)
+### ncols
 
 Number of columns in vector|matrix
+
+
+#### Syntax
+
+ubique.ncols(x)
 
 
 #### Description
@@ -19,7 +24,9 @@ Number of columns in vector|matrix
 #### Examples
 
 ```js
-ubique.ncols([5,6,7]); // 1
-ubique.ncols([[3,2,7],[4,5,6]]); //  3
+ubique.ncols([5,6,7]);
+// 1
+ubique.ncols([[3,2,7],[4,5,6]]);
+//  3
 ```
 

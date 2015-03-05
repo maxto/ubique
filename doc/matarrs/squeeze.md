@@ -1,6 +1,11 @@
-### squeeze(x)
+### squeeze
 
 Remove singleton dimensions from N-D arrays (matrices)
+
+
+#### Syntax
+
+ubique.squeeze(x)
 
 
 #### Description
@@ -14,7 +19,7 @@ Number returns number and 1-D array returns 1-D array.
 
 |Params|Type|Description
 |---------|----|-----------
-|`x` | string/number/array/matrix |  elements of X
+|`x` | string/number/array/matrix | elements of X
 
 
 #### Examples

@@ -1,8 +1,8 @@
 var assert = require('assert');
 var ubique = require('../../index.js');
 
-suite('datatype',function () {
-console.log('Testing datatype/cummin ...');
+suite('elemop',function () {
+console.log('Testing elemop/cummin ...');
 test('cummin', function (done) {
 
 

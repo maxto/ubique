@@ -1,6 +1,11 @@
-### substelin(m,idx)
+### substelin
 
 Subset of array or matrix based on linear indexing
+
+
+#### Syntax
+
+ubique.substelin(m,idx)
 
 
 #### Description

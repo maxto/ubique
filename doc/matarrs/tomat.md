@@ -1,6 +1,11 @@
-### tomat(x)
+### tomat
 
 Convert number or array to matrix
+
+
+#### Syntax
+
+ubique.tomat(x)
 
 
 #### Description
@@ -19,8 +24,11 @@ Convert number or array to matrix
 #### Examples
 
 ```js
-ubique.tomat(5); // [[5]]
-ubique.tomat([5,6,3]); // [[5], [6], [3]]
-ubique.tomat(true); // [[true]]
+ubique.tomat(5);
+// [[5]]
+ubique.tomat([5,6,3]);
+// [[5], [6], [3]]
+ubique.tomat(true);
+// [[true]]
 ```
 

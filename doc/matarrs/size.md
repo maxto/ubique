@@ -1,6 +1,11 @@
-### size(x)
+### size
 
 Size of N-D array
+
+
+#### Syntax
+
+ubique.size(x)
 
 
 #### Description

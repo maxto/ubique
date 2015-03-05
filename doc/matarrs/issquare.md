@@ -1,6 +1,11 @@
-### issquare(x)
+### issquare
 
 True for square matrix
+
+
+#### Syntax
+
+ubique.issquare(x)
 
 
 #### Description
@@ -13,12 +18,13 @@ True for square matrix
 
 |Params|Type|Description
 |---------|----|-----------
-|`` | matrix | x input matrix
+|`x` | matrix | input matrix
 
 
 #### Examples
 
 ```js
-ubique.issquare([[9, 5], [6, 1]]); // true
+ubique.issquare([[9, 5], [6, 1]]);
+// true
 ```
 

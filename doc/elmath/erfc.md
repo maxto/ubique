@@ -1,6 +1,11 @@
-### erfc(x)
+### erfc
 
 Complementary error function
+
+
+#### Syntax
+
+ubique.erfc(x)
 
 
 #### Description
@@ -22,6 +27,7 @@ erfc(x) = 1 - erf(x)
 #### Examples
 
 ```js
-ubique.erfc(0.5); // 0.47950009227675744
+ubique.erfc(0.5);
+// 0.47950009227675744
 ```
 
