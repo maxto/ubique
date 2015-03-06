@@ -1,6 +1,11 @@
-### normcdf(x,mu,sigma)
+### normcdf
 
 Normal cumulative distribution function (cdf)
+
+
+#### Syntax
+
+ubique.normcdf(x,mu,sigma)
 
 
 #### Description
@@ -21,10 +26,11 @@ The Standard Normal Distribution: mu = 0 and sigma = 1
 #### Examples
 
 ```js
-var y = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
-var mu = ubique.mean(x), sigma = ubique.std(x);
+var x = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 
-ubique.normcdf(2); // 0.97725
-ubique.normcdf(0,mu,sigma); // 0.22049
+ubique.normcdf(2);
+// 0.97725
+ubique.normcdf(0,ubique.mean(x),ubique.std(x));
+// 0.22049
 ```
 

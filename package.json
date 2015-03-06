@@ -26,10 +26,14 @@
     "test": "mocha --ui tdd --recursive"
   },
   "engines": {
-    "node": ">= 0.6.0"
+    "node": ">= 0.10.0"
   },
   "devDependencies": {
-    "mocha": "^2.1.0"
+    "gulp": "^3.8.11",
+    "gulp-util": "^3.0.4",
+    "mocha": "^2.1.0",
+    "uglify-js": "^2.4.16",
+    "webpack": "^1.7.2"
   },
   "license": "MIT",
   "bugs": {

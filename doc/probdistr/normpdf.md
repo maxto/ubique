@@ -1,6 +1,11 @@
-### normpdf(x,mu,sigma)
+### normpdf
 
 Normal probability density function (pdf)
+
+
+#### Syntax
+
+ubique.normpdf(x,mu,sigma)
 
 
 #### Description
@@ -17,18 +22,19 @@ Default values: MU = 0, SIGMA = 1
 
 |Params|Type|Description
 |---------|----|-----------
-|`x` | number |     real value
-|`mu` | number |    mean value (def: 0)
+|`x` | number | real value
+|`mu` | number | mean value (def: 0)
 |`sigma` | number | standard deviation (def: 1)
 
 
 #### Examples
 
 ```js
-var y = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
-var mu = ubique.mean(y), sigma = ubique.std(y);
+var x = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 
-ubique.normpdf(1); // 0.241971
-ubique.normpdf(0,mu,sigma); // 12.7622
+ubique.normpdf(1);
+// 0.241971
+ubique.normpdf(0, ubique.mean(x),ubique.std(x));
+// 12.7622
 ```
 
