@@ -28,8 +28,11 @@ Median value of array
 var a = [[5,6,5],[7,8,-1]];
 var c = [5,6,3];
 
-ubique.median(c); // 4.66667
-ubique.median(a,0); // [5.33333, 4.66667]
-ubique.median(a); // [6, 7, 2]
+ubique.median(c);
+// 4.66667
+ubique.median(a,0);
+// [5.33333, 4.66667]
+ubique.median(a);
+// [6, 7, 2]
 ```
 

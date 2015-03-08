@@ -18,7 +18,7 @@ Average drawdown. Only the three largest drawdowns selected.
 
 |Params|Type|Description
 |---------|----|-----------
-|`x` | array/matrix |    asset/portfolio returns
+|`x` | array/matrix | asset/portfolio returns
 |`dim` | number | dimension 0: row, 1: column (def: 1)
 
 

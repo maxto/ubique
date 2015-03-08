@@ -28,8 +28,11 @@ Range of values
 var a = [[5,6,5],[7,8,-1]];
 var c = [5,6,3];
 
-ubique.range(c); // 3
-ubique.range(a,0); // [1,9]
-ubique.range(a); // [[2, 2, 6]]
+ubique.range(c);
+// 3
+ubique.range(a,0);
+// [1,9]
+ubique.range(a);
+// [[2, 2, 6]]
 ```
 

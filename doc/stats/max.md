@@ -27,8 +27,11 @@ Largest element in array
 ```js
 var b = [[-1,3,-1],[4,5,9]];
 
-ubique.max([5,6,-1]); // 6
-ubique.max(b,0); // [3, 9]
-ubique.max(b); // [[4, 5, 9]]
+ubique.max([5,6,-1]);
+// 6
+ubique.max(b,0);
+// [3, 9]
+ubique.max(b);
+// [[4, 5, 9]]
 ```
 

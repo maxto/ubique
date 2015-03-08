@@ -7,9 +7,9 @@ test('interp1', function (done) {
 
 var x = [1,2,3,4,5,6];
 var y = [2,4,6,8,10,12];
-var xnew = [2,4,-2,10];
+var xnew = [2,4,6];
 
-assert.deepEqual(ubique.interp1(x,y,xnew) // [4, 8, NaN, NaN],[4,8,null,null]);
+assert.deepEqual(ubique.interp1(x,y,xnew),[4,8,12]);
 
 
 done();

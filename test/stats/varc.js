@@ -8,10 +8,10 @@ test('varc', function (done) {
 var a = [[5,6,5],[7,8,-1]];
 var c = [5,6,3];
 
-assert.deepEqual(ubique.varc(c) // 2.33333,2.333333333333333);
-assert.deepEqual(ubique.varc(c,0) // 1.55556,1.5555555555555554);
-assert.deepEqual(ubique.varc(a,0) // [[2, 2, 18]],[[1,1,9]]);
-assert.deepEqual(ubique.varc(a,0,0) // [0.222222, 16.2222],[0.22222222222222224,16.22222222222222]);
+assert.deepEqual(ubique.varc(c),2.333333333333333);
+assert.deepEqual(ubique.varc(c,0),1.5555555555555554);
+assert.deepEqual(ubique.varc(a,0),[[1,1,9]]);
+assert.deepEqual(ubique.varc(a,0,0),[0.22222222222222224,16.22222222222222]);
 
 
 done();

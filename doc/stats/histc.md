@@ -18,8 +18,8 @@ For array X counts the number of values in X that fall between the elements in t
 
 |Params|Type|Description
 |---------|----|-----------
-|`x` | array/matrix |     array or matrix of values
-|`bins` | number/array |  number of bins (as NUMBER) or array of edges (as ARRAY) (def: 10)
+|`x` | array/matrix | array or matrix of values
+|`bins` | number/array | number of bins (as NUMBER) or array of edges (as ARRAY) (def: 10)
 |`dim` | number | dimension 0: row, 1: column (def: 1)
 
 

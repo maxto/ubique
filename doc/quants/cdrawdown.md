@@ -18,7 +18,7 @@ Continuous Drawdown
 
 |Params|Type|Description
 |---------|----|-----------
-|`x` | array/matrix |    asset/portfolio values
+|`x` | array/matrix | asset/portfolio values
 |`dim` | number | dimension 0: row, 1: column (def: 1)
 
 

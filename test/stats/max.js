@@ -7,9 +7,9 @@ test('max', function (done) {
 
 var b = [[-1,3,-1],[4,5,9]];
 
-assert.deepEqual(ubique.max([5,6,-1]) // 6,6);
-assert.deepEqual(ubique.max(b,0) // [3, 9],[3,9]);
-assert.deepEqual(ubique.max(b) // [[4, 5, 9]],[[4,5,9]]);
+assert.deepEqual(ubique.max([5,6,-1]),6);
+assert.deepEqual(ubique.max(b,0),[3,9]);
+assert.deepEqual(ubique.max(b),[[4,5,9]]);
 
 
 done();

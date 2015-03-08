@@ -5,13 +5,9 @@ suite('quants',function () {
 console.log('Testing quants/tomonthly ...');
 test('tomonthly', function (done) {
 
-var nd = ubique.datenum(['15-01-18','15-02-28','15-03-05','15-03-24','15-04-27'],'YY-MM-DD');
-var nv = [100,99,102,103,98];
-var nv2 = [1.2,1.1,1.3,1.4,0.9];
-var nvm = ubique.cat(1,nv,nv2);
 
-assert.deepEqual(ubique.tomonthly(nd,nv),[[1421539200,1425081600,1427155200,1430089200],[100,99,103,98]]);
-assert.deepEqual(ubique.tomonthly(nd,nvm),[[1421539200,1425081600,1427155200,1430089200],[[100,1.2],[99,1.1],[103,1.4],[98,0.9]]]);
+
+assert.deepEqual(ubique.tomonthly(ubique.datenum(['15-01-18','15-02-28','15-03-05','15-03-24','15-04-27'],'YY-MM-DD'),[100,99,102,103,98]),[[1421539200,1425081600,1427155200,1430089200],[100,99,103,98]]);
 
 
 done();

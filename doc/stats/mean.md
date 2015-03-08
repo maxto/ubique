@@ -28,8 +28,11 @@ Average value of array
 var a = [[5,6,5],[7,8,-1]];
 var c = [5,6,3];
 
-ubique.mean(c); // 4.66667
-ubique.mean(a,0); // [5.33333, 4.66667]
-ubique.mean(a); // [6, 7, 2]
+ubique.mean(c);
+// 4.66667
+ubique.mean(a,0);
+// [5.33333, 4.66667]
+ubique.mean(a);
+// [6, 7, 2]
 ```
 

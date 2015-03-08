@@ -28,8 +28,11 @@ Most frequent value in an array of elements (Unimodal)
 var a = [[5,6,5],[7,8,-1]];
 var c = [5,6,3];
 
-ubique.mode(c); // 3
-ubique.mode(a,0); // [5, -1]
-ubique.mode(a); // [[5, 6, -1]]
+ubique.mode(c);
+// 3
+ubique.mode(a,0);
+// [5, -1]
+ubique.mode(a);
+// [[5, 6, -1]]
 ```
 

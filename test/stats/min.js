@@ -7,9 +7,9 @@ test('min', function (done) {
 
 var b = [[-1,3,-1],[4,5,9]];
 
-assert.deepEqual(ubique.min([5,6,-1]) // -1,-1);
-assert.deepEqual(ubique.min(b,0) // [-1, 4],[-1,4]);
-assert.deepEqual(ubique.min(b) // [[-1, 3, -1]],[[-1,3,-1]]);
+assert.deepEqual(ubique.min([5,6,-1]),-1);
+assert.deepEqual(ubique.min(b,0),[-1,4]);
+assert.deepEqual(ubique.min(b),[[-1,3,-1]]);
 
 
 done();

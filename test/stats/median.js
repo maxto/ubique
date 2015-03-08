@@ -8,9 +8,9 @@ test('median', function (done) {
 var a = [[5,6,5],[7,8,-1]];
 var c = [5,6,3];
 
-assert.deepEqual(ubique.median(c) // 4.66667,5);
-assert.deepEqual(ubique.median(a,0) // [5.33333, 4.66667],[5,7]);
-assert.deepEqual(ubique.median(a) // [6, 7, 2],[[6,7,2]]);
+assert.deepEqual(ubique.median(c),5);
+assert.deepEqual(ubique.median(a,0),[5,7]);
+assert.deepEqual(ubique.median(a),[[6,7,2]]);
 
 
 done();

@@ -3105,8 +3105,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {number}   
 	 *
 	 * @example
-	 * ubique.erfinv(0.5);
-	 * // 0.47693623612155117
+	 * ubique.erfinv(0.1);
+	 * // 0.08885596505119535
 	 */
 	 $u.erfinv = function(y) {
 	    if (arguments.length === 0) {
@@ -5934,6 +5934,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {number}   
 	 *
 	 * @example
+	 * var x = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+	 * 
 	 * ubique.jbtest(x);
 	 * // 0.6360604293924916
 	 */
@@ -6295,9 +6297,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Average drawdown
 	 * @description Average drawdown. Only the three largest drawdowns selected.
 	 * 
-	 * @param  {array|matrix} x    asset/portfolio returns
+	 * @param  {array|matrix} x asset/portfolio returns
 	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
-	 * @return {object}      drawdown values (number) and recovery time (number)
+	 * @return {object}
 	 *
 	 * @example
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
@@ -6398,7 +6400,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Continuous Drawdown
 	 * @description Continuous Drawdown
 	 *  
-	 * @param  {array|matrix} x    asset/portfolio values
+	 * @param  {array|matrix} x asset/portfolio values
 	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
 	 * @return {array|matrix}
 	 * 
@@ -6939,7 +6941,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * @method irr
 	 * @summary Internal rate of return on an investment based on a series of periodic cash flows
-	 * @description Calculates the internal rate of return on an investment based on a series of regularly/irregurarly periodic cash flows
+	 * @description Calculates the internal rate of return on an investment
+	 * based on a series of regularly/irregurarly periodic cash flows.
 	 * 
 	 * @param  {array} cf income or payments associated with the investment. Must contain at least one negative and one positive cash flow to calculate rate of return, and the first amount must be negative
 	 * @param  {array} cfd number of calendar days from the beginning of the period that cash flow occurs
@@ -7217,7 +7220,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	 $u.montecarlovar = function(x) {
 	  if (arguments.length === 0) {
-	    throw new Error('not enough input arguments');
+	    return [];
 	  }
 	  if ($u.isnumber(x)) {
 	    s = $u.clone(x);
@@ -7485,7 +7488,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (a[i] >= 0) {
 	        count++;
 	      } 
-	      console.log(a[i])
 	    }
 	    return count / a.length;
 	  }
@@ -7508,8 +7510,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	 module.exports = function($u) {
 	/**
-	 * @method  ret2tick
-	 * @summary  Convert a return series to a value series with a start value
+	 * @method ret2tick
+	 * @summary Convert a return series to a value series with a start value
 	 * @description  Convert a return series to a value series with a start value
 	 * 
 	 * @param  {array|matrix} x array of elements
@@ -7743,8 +7745,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	 module.exports = function($u) {
 	/**
-	 * @method  tick2ret
-	 * @summary  Convert a value series to a return series
+	 * @method tick2ret
+	 * @summary Convert a value series to a return series
 	 * @description  Convert a value series to a return series. 'simple' (default) for simple returns, 'continuous' for continuously compounded
 	 * 
 	 * @param  {array|matrix} x array of elements
@@ -7820,17 +7822,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {matrix}
 	 *
 	 * @example
-	 * var nd = ubique.datenum(['15-01-18','15-02-28','15-03-05','15-03-24','15-04-27'],'YY-MM-DD');
-	 * var nv = [100,99,102,103,98];
-	 * var nv2 = [1.2,1.1,1.3,1.4,0.9];
-	 * var nvm = ubique.cat(1,nv,nv2);
-	 * 
-	 * ubique.tomonthly(nd,nv);
+	 * ubique.tomonthly(ubique.datenum(['15-01-18','15-02-28','15-03-05','15-03-24','15-04-27'],'YY-MM-DD'),[100,99,102,103,98]);
 	 * // [ [ 1421535600, 1425078000, 1427151600, 1430085600 ],
 	 * // [ 100, 99, 103, 98 ] ]
-	 * ubique.tomonthly(nd,nvm);
-	 * // [ [ 1421535600, 1425078000, 1427151600, 1430085600 ],
-	 * [ [ 100, 1.2 ], [ 99, 1.1 ], [ 103, 1.4 ], [ 98, 0.9 ] ] ]
 	 */
 	 $u.tomonthly = function(nd,nv) {
 	  if (arguments.length < 2) {
@@ -7874,17 +7868,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {matrix}
 	 *
 	 * @example
-	 * var nd = ubique.datenum(['15-01-15','15-01-23','15-01-30','15-02-04'],'YY-MM-DD');
-	 * var nv = [100,99,102,103,98];
-	 * var nv2 = [1.2,1.1,1.3,1.4,0.9];
-	 * var nvm = ubique.cat(1,nv,nv2);
-	 * 
-	 * ubique.toweekly(nd,nv);
+	 * ubique.toweekly(ubique.datenum(['15-01-15','15-01-23','15-01-30','15-02-04'],'YY-MM-DD'),[100,99,102,103,98]);
 	 * // [ [ 1421276400, 1421967600, 1422572400, 1423004400 ],
 	 * // [ 100, 99, 102, 103 ] ]
-	 * ubique.toweekly(nd,nvm);
-	 * // [ [ 1421276400, 1421967600, 1422572400, 1423004400 ],
-	 * // [ [ 100, 1.2 ], [ 99, 1.1 ], [ 102, 1.3 ], [ 103, 1.4 ] ] ]
 	 */
 	 $u.toweekly = function(nd,nv) {
 	  if (arguments.length < 2) {
@@ -7990,7 +7976,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	 module.exports = function($u) {
 	/**
-	 * @method  twr
+	 * @method twr
 	 * @summary True Time-weighted return measures the returns of the assets irrespective of the amount invested
 	 * @description rue Time-weighted return measures the returns of the assets irrespective of the amount invested
 	 * 
@@ -8000,6 +7986,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * @example
 	 * var mv = [250000,255000,257000,288000,293000,285000], cf = [0,0,25000,0,-10000,0];
+	 * 
 	 * ubique.twr(mv,cf);
 	 * // 0.07564769566198049
 	 */
@@ -8043,15 +8030,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * @example
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
-	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
-	 * var xx = ubique.cumprod(ubique.plus(x,1));
-	 * var yy = ubique.cumprod(ubique.plus(y,1));
-	 * var zz = ubique.cat(1,xx,yy);
-	 *
-	 * ubique.ulcerindex(xx);
-	 * // 0.053
-	 * ubique.ulcerindex(zz,'return');
-	 * // [ [ 0.0053, 0.0595 ] ]
+	 * 
+	 * ubique.ulcerindex(x);
+	 * // 0.6344798231002222
+	 * ubique.ulcerindex([[0.003,0.026],[0.015,-0.009],[0.014,0.024],[0.015,0.066],[-0.014,0.039]],'return');
+	 * // [ [ 0.8651268372004445, 0.6301432708803503 ] ]
 	 */
 	 $u.ulcerindex = function(x,mode,dim) {
 	  if (arguments.length === 0) {
@@ -8186,7 +8169,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	 module.exports = function($u) {
 	/**
-	 * @method  interp1
+	 * @method interp1
 	 * @summary Linear interpolation
 	 * @description Linear interpolation. Returns the 1-D value of Y, given Xi query points. 
 	 * 
@@ -8198,9 +8181,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * var x = [1,2,3,4,5,6];
 	 * var y = [2,4,6,8,10,12];
-	 * var xnew = [2,4,-2,10];
+	 * var xnew = [2,4,6];
 	 *
-	 * ubique.interp1(x,y,xnew); // [4, 8, NaN, NaN]
+	 * ubique.interp1(x,y,xnew);
+	 * // [ 4, 8, 12 ]
 	 */
 	 $u.interp1 = function(x,y,xnew) {
 	  if (arguments.length === 0) {
@@ -8285,16 +8269,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 	 * 
 	 * ubique.linearreg(x,y);
-	 * //  { beta: 0.02308942571228251, alpha: 0.017609073236025237, rsq: 0.0027553853574994254, fun: [Function] }
+	 * // { beta: 0.02308942571228251, alpha: 0.017609073236025237, rsq: 0.0027553853574994254, fun: [Function] }
 	 * 
 	 * ubique.linearreg([100,101,99,102,105],[1,2,3,4,5])
-	 * //  { beta: 1.1, alpha: 98.1, rsq: 0.5707547169811321, fun: [Function] }
+	 * // { beta: 1.1, alpha: 98.1, rsq: 0.5707547169811321, fun: [Function] }
 	 * 
-	 * ubique.linearreg([100,101,99,102,105],[1,2,3,4,5]).fun(6) //use linear function to forecast value
+	 * ubique.linearreg([100,101,99,102,105],[1,2,3,4,5]).fun(6);
 	 * // 104.69
 	 * 
 	 */
 	 $u.linearreg = function(y,x) {
+	  if (arguments.length < 2) {
+	    throw new Error('not enough input arguments');
+	  }
 	  var n = y.length,
 	  sx = $u.sum(x),
 	  sy = $u.sum(y),
@@ -8322,20 +8309,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Correlation coefficients of two arrays X,Y
 	 * @description Correlation coefficients of two arrays X,Y
 	 *
-	 * @param  {array|matrix} x    array or matrix of elemnts X
-	 * @param  {array|matrix} y    (vararg) second arguments, array or matrix of elements Y
-	 * @param  {number} flag       (vararg) Bessel's correction 0: population, 1: sample (def: 1)
+	 * @param  {array|matrix} x array or matrix of elemnts X
+	 * @param  {array|matrix} y array or matrix of elements Y
+	 * @param  {number} flag Bessel's correction 0: population, 1: sample (def: 1)
 	 * @return {number|array}
 	 *
 	 * @example
 	 * var c = [5,6,3];
 	 * var d = [0.5,-3,2.3];
-	 * var e = [[9, 5], [6, 1]];
-	 * var f = [[3, 2], [5, 2]];
 	 * var l = [[1,1,-1],[1,-2,3],[2,3,1]];
 	 *
-	 * ubique.corrcoef(l); // [[1, 0.802955, 0], [0.802955, 1, -0.59604], [0, -0.59604, 1]]
-	 * ubique.corrcoef(c,d); // [[1, -0.931151], [-0.931151, 1]]
+	 * ubique.corrcoef(l);
+	 * // [[1, 0.802955, 0], [0.802955, 1, -0.59604], [0, -0.59604, 1]]
+	 * ubique.corrcoef(c,d);
+	 * // [[1, -0.931151], [-0.931151, 1]]
 	 */
 	 $u.corrcoef = function(x) {
 	 	if (arguments.length === 0) {
@@ -8369,9 +8356,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Covariance matrix
 	 * @description Covariance matrix
 	 *
-	 * @param  {array|matrix} x    array or matrix of elemnts X
-	 * @param  {array|matrix} y    (vararg) second arguments, array or matrix of elements Y
-	 * @param  {number} flag       (vararg) Bessel's correction 0: population, 1: sample (def: 1)
+	 * @param  {array|matrix} x array or matrix of elemnts X
+	 * @param  {array|matrix} y array or matrix of elements Y
+	 * @param  {number} flag Bessel's correction 0: population, 1: sample (def: 1)
 	 * @return {number|array}
 	 *
 	 * @example
@@ -8381,11 +8368,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var f = [[3, 2], [5, 2]];
 	 * var l = [[1,1,-1],[1,-2,3],[2,3,1]];
 	 *
-	 * ubique.cov(c); // 2.33333
-	 * ubique.cov(c,d); // [[2.33333, -3.83333], [-3.83333, 7.26333]]
-	 * ubique.cov(c,d,0); // [[1.55556, -2.55556], [-2.55556, 4.84222]]
-	 * ubique.cov(e,f); // [[10.9167, 2], [2, 2]]
-	 * ubique.cov(l); // [[0.333333, 1.16667, 0], [1.16667, 6.33333, -3], [0, -3, 4]]
+	 * ubique.cov(c);
+	 * // 2.33333
+	 * ubique.cov(c,d);
+	 * // [[2.33333, -3.83333], [-3.83333, 7.26333]]
+	 * ubique.cov(c,d,0);
+	 * // [[1.55556, -2.55556], [-2.55556, 4.84222]]
+	 * ubique.cov(e,f);
+	 * // [[10.9167, 2], [2, 2]]
+	 * ubique.cov(l);
+	 * // [[0.333333, 1.16667, 0], [1.16667, 6.33333, -3], [0, -3, 4]]
 	 */
 	 $u.cov = function(x) {
 	 	var arglen = arguments.length;
@@ -8446,8 +8438,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Histogram count
 	 * @description  For array X counts the number of values in X that fall between the elements in the BINS array. Values outside the range in BINS are not counted.
 	 * 
-	 * @param  {array|matrix} x     array or matrix of values
-	 * @param  {number|array} bins  number of bins (as NUMBER) or array of edges (as ARRAY) (def: 10)
+	 * @param  {array|matrix} x array or matrix of values
+	 * @param  {number|array} bins number of bins (as NUMBER) or array of edges (as ARRAY) (def: 10)
 	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
 	 * @return {aray|matrix}       
 	 *
@@ -8545,10 +8537,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * var x = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
-	 * var z = ubique.cat(1,x,y);
 	 *
-	 * ubique.iqr(x); // 0.023
-	 * ubique.iqr(z); // [[0.023, 0.095]]
+	 * ubique.iqr(x);
+	 * // 0.023
+	 * ubique.iqr(ubique.cat(1,x,y));
+	 * // [[0.023, 0.095]]
 	 */
 	 $u.iqr = function(x,dim) {
 	 	if (arguments.length === 0) {
@@ -8584,19 +8577,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Kurtosis
 	 * @description Kurtosis
 	 * 
-	 * @param  {array|matrix} x  array or matrix of elements
-	 * @param  {number} flag     0: bias correction, 1: simple (def: 1)
-	 * @param  {number} dim      dimension 0: row, 1: column (def: 1)
+	 * @param  {array|matrix} x array or matrix of elements
+	 * @param  {number} flag 0: bias correction, 1: simple (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
 	 * @return {number|array|matrix}
 	 *
 	 * @example
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
-	 * var z = ubique.cat(1,x,y);
 	 * 
-	 * ubique.kurtosis(x); // 3.03758
-	 * ubique.kurtosis(x,0); // 4.03072
-	 * ubique.kurtosis(z); // [[3.03758, 1.39764]]
+	 * ubique.kurtosis(x);
+	 * // 3.03758
+	 * ubique.kurtosis(x,0);
+	 * // 4.03072
+	 * ubique.kurtosis(ubique.cat(1,x,y));
+	 * // [[3.03758, 1.39764]]
 	 */
 	 $u.kurtosis = function(x,flag,dim) {
 	 	if (arguments.length === 0) {
@@ -8646,9 +8641,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var a = [[5,6,5],[7,8,-1]];
 	 * var c = [5,6,3];
 	 *
-	 * ubique.mad(c); // 1.11111
-	 * ubique.mad(a,0); // [0.444444, 3.77778]
-	 * ubique.mad(a); // [[1, 1, 3]]
+	 * ubique.mad(c);
+	 * // 1.11111
+	 * ubique.mad(a,0);
+	 * // [0.444444, 3.77778]
+	 * ubique.mad(a);
+	 * // [[1, 1, 3]]
 	 */
 	 $u.mad = function(x,dim) {
 	 	if (arguments.length === 0) {
@@ -8680,7 +8678,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	 module.exports = function($u) {
 	/**
-	 * @method  max
+	 * @method max
 	 * @summary Largest element in array
 	 * @description Largest element in array
 	 * 
@@ -8691,9 +8689,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * var b = [[-1,3,-1],[4,5,9]];
 	 * 
-	 * ubique.max([5,6,-1]); // 6
-	 * ubique.max(b,0); // [3, 9]
-	 * ubique.max(b); // [[4, 5, 9]]
+	 * ubique.max([5,6,-1]);
+	 * // 6
+	 * ubique.max(b,0);
+	 * // [3, 9]
+	 * ubique.max(b);
+	 * // [[4, 5, 9]]
 	 */
 	 $u.max = function(x,dim) {
 	 	if (arguments.length === 0) {
@@ -8734,9 +8735,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var a = [[5,6,5],[7,8,-1]];
 	 * var c = [5,6,3];
 	 *
-	 * ubique.mean(c); // 4.66667
-	 * ubique.mean(a,0); // [5.33333, 4.66667]
-	 * ubique.mean(a); // [6, 7, 2]
+	 * ubique.mean(c);
+	 * // 4.66667
+	 * ubique.mean(a,0);
+	 * // [5.33333, 4.66667]
+	 * ubique.mean(a);
+	 * // [6, 7, 2]
 	 */
 	 $u.mean = function(x,dim) {
 	 	if (arguments.length === 0) {
@@ -8777,9 +8781,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var a = [[5,6,5],[7,8,-1]];
 	 * var c = [5,6,3];
 	 *
-	 * ubique.median(c); // 4.66667
-	 * ubique.median(a,0); // [5.33333, 4.66667]
-	 * ubique.median(a); // [6, 7, 2]
+	 * ubique.median(c);
+	 * // 4.66667
+	 * ubique.median(a,0);
+	 * // [5.33333, 4.66667]
+	 * ubique.median(a);
+	 * // [6, 7, 2]
 	 */
 	 $u.median = function(x,dim) {
 	 	if (arguments.length === 0) {
@@ -8830,9 +8837,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * var b = [[-1,3,-1],[4,5,9]];
 	 *
-	 * ubique.min([5,6,-1]); // -1
-	 * ubique.min(b,0); // [-1, 4]
-	 * ubique.min(b); // [[-1, 3, -1]]
+	 * ubique.min([5,6,-1]);
+	 * // -1
+	 * ubique.min(b,0);
+	 * // [-1, 4]
+	 * ubique.min(b);
+	 * // [[-1, 3, -1]]
 	 */
 	 $u.min = function(x,dim) {
 	 	if (arguments.length === 0) {
@@ -8873,9 +8883,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var a = [[5,6,5],[7,8,-1]];
 	 * var c = [5,6,3];
 	 *
-	 * ubique.mode(c); // 3
-	 * ubique.mode(a,0); // [5, -1]
-	 * ubique.mode(a); // [[5, 6, -1]]
+	 * ubique.mode(c);
+	 * // 3
+	 * ubique.mode(a,0);
+	 * // [5, -1]
+	 * ubique.mode(a);
+	 * // [[5, 6, -1]]
 	 */
 	 $u.mode = function(x,dim) {
 	  if (arguments.length === 0) {
@@ -8926,7 +8939,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	 module.exports = function($u) {
 	/**
-	 * @method  moment
+	 * @method moment
 	 * @summary Central moments
 	 * @description Central moments. First moment is zero, second is variance.
 	 * 
@@ -8938,11 +8951,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * var x = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
-	 * var z = ubique.cat(1,x,y);
 	 * 
-	 * ubique.moment(x,3); // 6.60941e-6
-	 * ubique.moment(x,1); // 0
-	 * ubique.moment(z,2); // [[4.8569e-4, 0.00251024]]
+	 * ubique.moment(x,3);
+	 * // 6.60941e-6
+	 * ubique.moment(x,1);
+	 * // 0
+	 * ubique.moment(ubique.cat(1,x,y),2);
+	 * // [[4.8569e-4, 0.00251024]]
 	 */
 	 $u.moment = function(x,k,dim) {
 	 	if (arguments.length < 2) {
@@ -8981,8 +8996,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @description  Compute distance between two array with differente methods:
 	 * euclidean, manhattan, chebycheb, hamming
 	 * 
-	 * @param  {array} x    array of values in X
-	 * @param  {array} y    array of values in Y
+	 * @param  {array} x array of values in X
+	 * @param  {array} y array of values in Y
 	 * @param  {string} mode methods: 'euclidean','manhattan','chebychev','hamming' (def: 'euclidean')
 	 * @return {number}
 	 *
@@ -8990,10 +9005,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 	 * 
-	 * ubique.pdist(x,y,'euclidean'); // 0.170532
-	 * ubique.pdist(x,y,'manhattan'); // 0.471
-	 * ubique.pdist(x,y,'chebychev'); // 0.087
-	 * ubique.pdist(x,y,'hamming'); // 10
+	 * ubique.pdist(x,y,'euclidean');
+	 * // 0.170532
+	 * ubique.pdist(x,y,'manhattan');
+	 * // 0.471
+	 * ubique.pdist(x,y,'chebychev');
+	 * // 0.087
+	 * ubique.pdist(x,y,'hamming');
+	 * // 10
 	 */
 	$u.pdist = function(x,y,mode) {
 	  if (arguments.length < 2) {
@@ -9041,7 +9060,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	 module.exports = function($u) {
 	/**
-	 * @method  prctile
+	 * @method prctile
 	 * @summary Percentiles of a sample
 	 * @description Percentiles of a sample, inclusive
 	 * 
@@ -9053,11 +9072,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * var x = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
-	 * var z = ubique.cat(1,x,y);
 	 * 
-	 * ubique.prctile(x,5); // -0.014
-	 * ubique.prctile(x,33); // 0.0118
-	 * ubique.prctile(z,5,0); // [-0.005, 0.026, 0.015, -0.037, -0.061, 0.024, -0.049, -0.021, -0.014, 0.039]
+	 * ubique.prctile(x,5);
+	 * // -0.014
+	 * ubique.prctile(x,33);
+	 * // 0.0118
+	 * ubique.prctile(ubique.cat(1,x,y),5,0);
+	 * // [-0.005, 0.026, 0.015, -0.037, -0.061, 0.024, -0.049, -0.021, -0.014, 0.039]
 	 */
 	 $u.prctile = function(x,p,dim) {
 	  if (arguments.length < 2) {
@@ -9110,10 +9131,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * var x = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
-	 * var z = ubique.cat(1,x,y);
 	 * 
-	 * ubique.quantile(x,0.25); // 0.003
-	 * ubique.quantile(z,0.33); // [[0.0118, -0.0242]]
+	 * ubique.quantile(x,0.25);
+	 * // 0.003
+	 * ubique.quantile(ubique.cat(1,x,y),0.33);
+	 * // [[0.0118, -0.0242]]
 	 */
 	 $u.quantile = function(x,p,dim) {
 	 	if (arguments.length < 2) {
@@ -9150,10 +9172,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * var x = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
-	 * var z = ubique.cat(1,x,y);
 	 *
-	 * ubique.quartile(x); // [0.003, 0.015, 0.026]
-	 * ubique.quartile(z); // [[0.003, -0.037], [0.015, 0.0175], [0.026, 0.058]]
+	 * ubique.quartile(x);
+	 * // [0.003, 0.015, 0.026]
+	 * ubique.quartile(ubique.cat(1,x,y));
+	 * // [[0.003, -0.037], [0.015, 0.0175], [0.026, 0.058]]
 	 */
 	 $u.quartile = function(x,dim) {
 	 	if (arguments.length === 0) {
@@ -9197,9 +9220,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var a = [[5,6,5],[7,8,-1]];
 	 * var c = [5,6,3];
 	 *
-	 * ubique.range(c); // 3
-	 * ubique.range(a,0); // [1,9]
-	 * ubique.range(a); // [[2, 2, 6]]
+	 * ubique.range(c);
+	 * // 3
+	 * ubique.range(a,0);
+	 * // [1,9]
+	 * ubique.range(a);
+	 * // [[2, 2, 6]]
 	 */
 	 $u.range = function(x,dim) {
 	 	if (arguments.length === 0) {
@@ -9231,23 +9257,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	 module.exports = function($u) {
 	/**
-	 * @method  skewness
+	 * @method skewness
 	 * @summary Skewness
 	 * @description Skewness
 	 * 
-	 * @param  {array|matrix} x  array or matrix of elements
-	 * @param  {number} flag     0: bias correction, 1: simple (def: 1)
-	 * @param  {number} dim      dimension 0: row, 1: column (def: 1)
+	 * @param  {array|matrix} x array or matrix of elements
+	 * @param  {number} flag 0: bias correction, 1: simple (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
 	 * @return {number|array|matrix}
 	 *
 	 * @example
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
-	 * var z = ubique.cat(1,x,y);
 	 * 
-	 * ubique.skewness(x); // 0.617481
-	 * ubique.skewness(x,1); // 0.732243
-	 * ubique.skewness(z); // [[0.617481, -0.118909]]
+	 * ubique.skewness(x);
+	 * // 0.617481
+	 * ubique.skewness(x,1);
+	 * // 0.732243
+	 * ubique.skewness(ubique.cat(1,x,y));
+	 * // [[0.617481, -0.118909]]
 	 */
 	 $u.skewness = function(x,flag,dim) {
 	 	if (arguments.length === 0) {
@@ -9287,7 +9315,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * @method std
 	 * @summary Standard deviation
-	 * @description  Standard deviation
+	 * @description Standard deviation
 	 * 
 	 * @param  {array|matrix} x array of values
 	 * @param  {number} flag normalization value 0: population, 1:sample (def: 1)
@@ -9298,10 +9326,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var a = [[5,6,5],[7,8,-1]];
 	 * var c = [5,6,3];
 	 *
-	 * ubique.std(c); // 1.52753
-	 * ubique.std(c,0); // 1.24722 
-	 * ubique.std(a,0); // [[1, 1, 3]]
-	 * ubique.std(a,0,0); // [0.471405, 4.02768]
+	 * ubique.std(c);
+	 * // 1.52753
+	 * ubique.std(c,0);
+	 * // 1.24722 
+	 * ubique.std(a,0);
+	 * // [[1, 1, 3]]
+	 * ubique.std(a,0,0);
+	 * // [0.471405, 4.02768]
 	 */
 	 $u.std = function(x,flag,dim) {
 	 	if (arguments.length === 0) {
@@ -9343,10 +9375,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var a = [[5,6,5],[7,8,-1]];
 	 * var c = [5,6,3];
 	 *
-	 * ubique.varc(c); // 2.33333
-	 * ubique.varc(c,0); // 1.55556 
-	 * ubique.varc(a,0); // [[2, 2, 18]]
-	 * ubique.varc(a,0,0); // [0.222222, 16.2222]
+	 * ubique.varc(c);
+	 * // 2.33333
+	 * ubique.varc(c,0);
+	 * // 1.55556 
+	 * ubique.varc(a,0);
+	 * // [[2, 2, 18]]
+	 * ubique.varc(a,0,0);
+	 * // [0.222222, 16.2222]
 	 */
 	 $u.varc = function(x,flag,dim) {
 	 	if (arguments.length === 0) {
@@ -9389,19 +9425,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Excess kurtosis
 	 * @description Excess kurtosis
 	 * 
-	 * @param  {array|matrix} x  array or matrix of elements
-	 * @param  {number} flag     0: bias correction, 1: simple (def: 1)
-	 * @param  {number} dim      dimension 0: row, 1: column (def: 1)
+	 * @param  {array|matrix} x array or matrix of elements
+	 * @param  {number} flag 0: bias correction, 1: simple (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
 	 * @return {number|array|matrix}
 	 *
 	 * @example
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
-	 * var z = ubique.cat(1,x,y);
 	 * 
-	 * ubique.xkurtosis(x); // 0.0375811
-	 * ubique.xkurtosis(x,0); // 1.03072
-	 * ubique.xkurtosis(z); // [[0.0375811, -1.60236]]
+	 * ubique.xkurtosis(x);
+	 * // 0.0375811
+	 * ubique.xkurtosis(x,0);
+	 * // 1.03072
+	 * ubique.xkurtosis( ubique.cat(1,x,y));
+	 * // [[0.0375811, -1.60236]]
 	 */
 	 $u.xkurtosis = function(x,flag,dim) {
 	 	if (arguments.length === 0) {
@@ -9445,10 +9483,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var a = [[5,6,5],[7,8,-1]];
 	 * var c = [5,6,3];
 	 *
-	 * ubique.zscore(c); // [0.218218, 0.872872, -1.09109]
-	 * ubique.zscore(c,0); // [0.267261, 1.06904, -1.33631]
-	 * ubique.zscore(a,0); // [[-1, -1, 1], [1, 1, -1]]
-	 * ubique.zscore(a,0,0); // [[-0.707107, 1.41421, -0.707107], [0.579324, 0.827606, -1.40693]]
+	 * ubique.zscore(c);
+	 * // [0.218218, 0.872872, -1.09109]
+	 * ubique.zscore(c,0);
+	 * // [0.267261, 1.06904, -1.33631]
+	 * ubique.zscore(a,0);
+	 * // [[-1, -1, 1], [1, 1, -1]]
+	 * ubique.zscore(a,0,0);
+	 * // [[-0.707107, 1.41421, -0.707107], [0.579324, 0.827606, -1.40693]]
 	 */
 	 $u.zscore = function(x,flag,dim) {
 	 	if (arguments.length === 0) {
@@ -9488,14 +9530,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Set display format for output (numbers)
 	 * @description Set display format for output (numbers)
 	 * 
-	 * @param  {number|array|matrix} x   input element
+	 * @param  {number|array|matrix} x input element
 	 * @param  {number} k number of decimals (def: 4 decimals)
 	 * @return {nuber|array|matrix}
 	 *  
 	 * @example
-	 * ubique.format(5.6677798348349,0); // 6
-	 * ubique.format([4.5565667,0.000002323234]); // [ 4.5565, 0 ]
-	 * ubique.format([[-1000.47748,0.000002],[0.1483478,10.111100]],2); // [ [ -1000.48, 0 ], [ 0.15, 10.11 ] ]
+	 * ubique.format(5.6677798348349,0);
+	 * // 6
+	 * ubique.format([4.5565667,0.000002323234]);
+	 * // [ 4.5565, 0 ]
+	 * ubique.format([[-1000.47748,0.000002],[0.1483478,10.111100]],2);
+	 * // [ [ -1000.48, 0 ], [ 0.15, 10.11 ] ]
 	 */
 	 $u.format = function (x,k) {
 	  if (arguments.length === 0) {
@@ -12563,173 +12608,173 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	}).call(this);
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(183)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(263)(module)))
 
 /***/ },
 /* 182 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./af": 184,
-		"./af.js": 184,
-		"./ar": 188,
-		"./ar-ma": 185,
-		"./ar-ma.js": 185,
-		"./ar-sa": 186,
-		"./ar-sa.js": 186,
-		"./ar-tn": 187,
-		"./ar-tn.js": 187,
-		"./ar.js": 188,
-		"./az": 189,
-		"./az.js": 189,
-		"./be": 190,
-		"./be.js": 190,
-		"./bg": 191,
-		"./bg.js": 191,
-		"./bn": 192,
-		"./bn.js": 192,
-		"./bo": 193,
-		"./bo.js": 193,
-		"./br": 194,
-		"./br.js": 194,
-		"./bs": 195,
-		"./bs.js": 195,
-		"./ca": 196,
-		"./ca.js": 196,
-		"./cs": 197,
-		"./cs.js": 197,
-		"./cv": 198,
-		"./cv.js": 198,
-		"./cy": 199,
-		"./cy.js": 199,
-		"./da": 200,
-		"./da.js": 200,
-		"./de": 202,
-		"./de-at": 201,
-		"./de-at.js": 201,
-		"./de.js": 202,
-		"./el": 203,
-		"./el.js": 203,
-		"./en-au": 204,
-		"./en-au.js": 204,
-		"./en-ca": 205,
-		"./en-ca.js": 205,
-		"./en-gb": 206,
-		"./en-gb.js": 206,
-		"./eo": 207,
-		"./eo.js": 207,
-		"./es": 208,
-		"./es.js": 208,
-		"./et": 209,
-		"./et.js": 209,
-		"./eu": 210,
-		"./eu.js": 210,
-		"./fa": 211,
-		"./fa.js": 211,
-		"./fi": 212,
-		"./fi.js": 212,
-		"./fo": 213,
-		"./fo.js": 213,
-		"./fr": 215,
-		"./fr-ca": 214,
-		"./fr-ca.js": 214,
-		"./fr.js": 215,
-		"./fy": 216,
-		"./fy.js": 216,
-		"./gl": 217,
-		"./gl.js": 217,
-		"./he": 218,
-		"./he.js": 218,
-		"./hi": 219,
-		"./hi.js": 219,
-		"./hr": 220,
-		"./hr.js": 220,
-		"./hu": 221,
-		"./hu.js": 221,
-		"./hy-am": 222,
-		"./hy-am.js": 222,
-		"./id": 223,
-		"./id.js": 223,
-		"./is": 224,
-		"./is.js": 224,
-		"./it": 225,
-		"./it.js": 225,
-		"./ja": 226,
-		"./ja.js": 226,
-		"./ka": 227,
-		"./ka.js": 227,
-		"./km": 228,
-		"./km.js": 228,
-		"./ko": 229,
-		"./ko.js": 229,
-		"./lb": 230,
-		"./lb.js": 230,
-		"./lt": 231,
-		"./lt.js": 231,
-		"./lv": 232,
-		"./lv.js": 232,
-		"./mk": 233,
-		"./mk.js": 233,
-		"./ml": 234,
-		"./ml.js": 234,
-		"./mr": 235,
-		"./mr.js": 235,
-		"./ms-my": 236,
-		"./ms-my.js": 236,
-		"./my": 237,
-		"./my.js": 237,
-		"./nb": 238,
-		"./nb.js": 238,
-		"./ne": 239,
-		"./ne.js": 239,
-		"./nl": 240,
-		"./nl.js": 240,
-		"./nn": 241,
-		"./nn.js": 241,
-		"./pl": 242,
-		"./pl.js": 242,
-		"./pt": 244,
-		"./pt-br": 243,
-		"./pt-br.js": 243,
-		"./pt.js": 244,
-		"./ro": 245,
-		"./ro.js": 245,
-		"./ru": 246,
-		"./ru.js": 246,
-		"./sk": 247,
-		"./sk.js": 247,
-		"./sl": 248,
-		"./sl.js": 248,
-		"./sq": 249,
-		"./sq.js": 249,
-		"./sr": 251,
-		"./sr-cyrl": 250,
-		"./sr-cyrl.js": 250,
-		"./sr.js": 251,
-		"./sv": 252,
-		"./sv.js": 252,
-		"./ta": 253,
-		"./ta.js": 253,
-		"./th": 254,
-		"./th.js": 254,
-		"./tl-ph": 255,
-		"./tl-ph.js": 255,
-		"./tr": 256,
-		"./tr.js": 256,
-		"./tzm": 258,
-		"./tzm-latn": 257,
-		"./tzm-latn.js": 257,
-		"./tzm.js": 258,
-		"./uk": 259,
-		"./uk.js": 259,
-		"./uz": 260,
-		"./uz.js": 260,
-		"./vi": 261,
-		"./vi.js": 261,
-		"./zh-cn": 262,
-		"./zh-cn.js": 262,
-		"./zh-tw": 263,
-		"./zh-tw.js": 263
+		"./af": 183,
+		"./af.js": 183,
+		"./ar": 187,
+		"./ar-ma": 184,
+		"./ar-ma.js": 184,
+		"./ar-sa": 185,
+		"./ar-sa.js": 185,
+		"./ar-tn": 186,
+		"./ar-tn.js": 186,
+		"./ar.js": 187,
+		"./az": 188,
+		"./az.js": 188,
+		"./be": 189,
+		"./be.js": 189,
+		"./bg": 190,
+		"./bg.js": 190,
+		"./bn": 191,
+		"./bn.js": 191,
+		"./bo": 192,
+		"./bo.js": 192,
+		"./br": 193,
+		"./br.js": 193,
+		"./bs": 194,
+		"./bs.js": 194,
+		"./ca": 195,
+		"./ca.js": 195,
+		"./cs": 196,
+		"./cs.js": 196,
+		"./cv": 197,
+		"./cv.js": 197,
+		"./cy": 198,
+		"./cy.js": 198,
+		"./da": 199,
+		"./da.js": 199,
+		"./de": 201,
+		"./de-at": 200,
+		"./de-at.js": 200,
+		"./de.js": 201,
+		"./el": 202,
+		"./el.js": 202,
+		"./en-au": 203,
+		"./en-au.js": 203,
+		"./en-ca": 204,
+		"./en-ca.js": 204,
+		"./en-gb": 205,
+		"./en-gb.js": 205,
+		"./eo": 206,
+		"./eo.js": 206,
+		"./es": 207,
+		"./es.js": 207,
+		"./et": 208,
+		"./et.js": 208,
+		"./eu": 209,
+		"./eu.js": 209,
+		"./fa": 210,
+		"./fa.js": 210,
+		"./fi": 211,
+		"./fi.js": 211,
+		"./fo": 212,
+		"./fo.js": 212,
+		"./fr": 214,
+		"./fr-ca": 213,
+		"./fr-ca.js": 213,
+		"./fr.js": 214,
+		"./fy": 215,
+		"./fy.js": 215,
+		"./gl": 216,
+		"./gl.js": 216,
+		"./he": 217,
+		"./he.js": 217,
+		"./hi": 218,
+		"./hi.js": 218,
+		"./hr": 219,
+		"./hr.js": 219,
+		"./hu": 220,
+		"./hu.js": 220,
+		"./hy-am": 221,
+		"./hy-am.js": 221,
+		"./id": 222,
+		"./id.js": 222,
+		"./is": 223,
+		"./is.js": 223,
+		"./it": 224,
+		"./it.js": 224,
+		"./ja": 225,
+		"./ja.js": 225,
+		"./ka": 226,
+		"./ka.js": 226,
+		"./km": 227,
+		"./km.js": 227,
+		"./ko": 228,
+		"./ko.js": 228,
+		"./lb": 229,
+		"./lb.js": 229,
+		"./lt": 230,
+		"./lt.js": 230,
+		"./lv": 231,
+		"./lv.js": 231,
+		"./mk": 232,
+		"./mk.js": 232,
+		"./ml": 233,
+		"./ml.js": 233,
+		"./mr": 234,
+		"./mr.js": 234,
+		"./ms-my": 235,
+		"./ms-my.js": 235,
+		"./my": 236,
+		"./my.js": 236,
+		"./nb": 237,
+		"./nb.js": 237,
+		"./ne": 238,
+		"./ne.js": 238,
+		"./nl": 239,
+		"./nl.js": 239,
+		"./nn": 240,
+		"./nn.js": 240,
+		"./pl": 241,
+		"./pl.js": 241,
+		"./pt": 243,
+		"./pt-br": 242,
+		"./pt-br.js": 242,
+		"./pt.js": 243,
+		"./ro": 244,
+		"./ro.js": 244,
+		"./ru": 245,
+		"./ru.js": 245,
+		"./sk": 246,
+		"./sk.js": 246,
+		"./sl": 247,
+		"./sl.js": 247,
+		"./sq": 248,
+		"./sq.js": 248,
+		"./sr": 250,
+		"./sr-cyrl": 249,
+		"./sr-cyrl.js": 249,
+		"./sr.js": 250,
+		"./sv": 251,
+		"./sv.js": 251,
+		"./ta": 252,
+		"./ta.js": 252,
+		"./th": 253,
+		"./th.js": 253,
+		"./tl-ph": 254,
+		"./tl-ph.js": 254,
+		"./tr": 255,
+		"./tr.js": 255,
+		"./tzm": 257,
+		"./tzm-latn": 256,
+		"./tzm-latn.js": 256,
+		"./tzm.js": 257,
+		"./uk": 258,
+		"./uk.js": 258,
+		"./uz": 259,
+		"./uz.js": 259,
+		"./vi": 260,
+		"./vi.js": 260,
+		"./zh-cn": 261,
+		"./zh-cn.js": 261,
+		"./zh-tw": 262,
+		"./zh-tw.js": 262
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -12747,22 +12792,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 183 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = function(module) {
-		if(!module.webpackPolyfill) {
-			module.deprecate = function() {};
-			module.paths = [];
-			// module.parent = undefined by default
-			module.children = [];
-			module.webpackPolyfill = 1;
-		}
-		return module;
-	}
-
-
-/***/ },
-/* 184 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -12839,7 +12868,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 185 */
+/* 184 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -12902,7 +12931,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 186 */
+/* 185 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -13009,7 +13038,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 187 */
+/* 186 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -13070,7 +13099,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 188 */
+/* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -13210,7 +13239,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 189 */
+/* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -13323,7 +13352,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 190 */
+/* 189 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -13483,7 +13512,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 191 */
+/* 190 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -13577,7 +13606,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 192 */
+/* 191 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -13694,7 +13723,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 193 */
+/* 192 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -13808,7 +13837,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 194 */
+/* 193 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -13923,7 +13952,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 195 */
+/* 194 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -14069,7 +14098,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 196 */
+/* 195 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -14152,7 +14181,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 197 */
+/* 196 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -14315,7 +14344,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 198 */
+/* 197 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -14382,7 +14411,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 199 */
+/* 198 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -14467,7 +14496,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 200 */
+/* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -14531,7 +14560,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 201 */
+/* 200 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -14611,7 +14640,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 202 */
+/* 201 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -14690,7 +14719,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 203 */
+/* 202 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -14790,7 +14819,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 204 */
+/* 203 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -14860,7 +14889,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 205 */
+/* 204 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -14927,7 +14956,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 206 */
+/* 205 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -14998,7 +15027,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 207 */
+/* 206 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -15075,7 +15104,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 208 */
+/* 207 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -15158,7 +15187,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 209 */
+/* 208 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -15242,7 +15271,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 210 */
+/* 209 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -15310,7 +15339,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 211 */
+/* 210 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -15419,7 +15448,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 212 */
+/* 211 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -15532,7 +15561,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 213 */
+/* 212 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -15596,7 +15625,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 214 */
+/* 213 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -15658,7 +15687,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 215 */
+/* 214 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -15724,7 +15753,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 216 */
+/* 215 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -15799,7 +15828,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 217 */
+/* 216 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -15878,7 +15907,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 218 */
+/* 217 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -15964,7 +15993,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 219 */
+/* 218 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -16091,7 +16120,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 220 */
+/* 219 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -16238,7 +16267,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 221 */
+/* 220 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -16355,7 +16384,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 222 */
+/* 221 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -16479,7 +16508,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 223 */
+/* 222 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -16566,7 +16595,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 224 */
+/* 223 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -16698,7 +16727,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 225 */
+/* 224 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -16772,7 +16801,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 226 */
+/* 225 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -16841,7 +16870,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 227 */
+/* 226 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -16956,7 +16985,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 228 */
+/* 227 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -17018,7 +17047,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 229 */
+/* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -17089,7 +17118,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 230 */
+/* 229 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -17234,7 +17263,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 231 */
+/* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -17360,7 +17389,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 232 */
+/* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -17445,7 +17474,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 233 */
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -17539,7 +17568,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 234 */
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -17614,7 +17643,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 235 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -17740,7 +17769,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 236 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -17826,7 +17855,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 237 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -17921,7 +17950,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 238 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -17986,7 +18015,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 239 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -18113,7 +18142,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 240 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -18188,7 +18217,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 241 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -18252,7 +18281,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 242 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -18358,7 +18387,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 243 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -18422,7 +18451,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 244 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -18490,7 +18519,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 245 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -18569,7 +18598,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 246 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -18751,7 +18780,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 247 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -18915,7 +18944,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 248 */
+/* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -19067,7 +19096,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 249 */
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -19140,7 +19169,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 250 */
+/* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -19253,7 +19282,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 251 */
+/* 250 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -19366,7 +19395,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 252 */
+/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -19437,7 +19466,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 253 */
+/* 252 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -19573,7 +19602,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 254 */
+/* 253 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -19642,7 +19671,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 255 */
+/* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -19708,7 +19737,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 256 */
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -19808,7 +19837,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 257 */
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -19870,7 +19899,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 258 */
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -19932,7 +19961,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 259 */
+/* 258 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -20101,7 +20130,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 260 */
+/* 259 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -20163,7 +20192,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 261 */
+/* 260 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -20233,7 +20262,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 262 */
+/* 261 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -20364,7 +20393,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 263 */
+/* 262 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -20466,6 +20495,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    });
 	}));
+
+
+/***/ },
+/* 263 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function(module) {
+		if(!module.webpackPolyfill) {
+			module.deprecate = function() {};
+			module.paths = [];
+			// module.parent = undefined by default
+			module.children = [];
+			module.webpackPolyfill = 1;
+		}
+		return module;
+	}
 
 
 /***/ }

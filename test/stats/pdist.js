@@ -8,10 +8,10 @@ test('pdist', function (done) {
 var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 
-assert.deepEqual(ubique.pdist(x,y,'euclidean') // 0.170532,0.17053152201279387);
-assert.deepEqual(ubique.pdist(x,y,'manhattan') // 0.471,0.4710000000000001);
-assert.deepEqual(ubique.pdist(x,y,'chebychev') // 0.087,0.08700000000000001);
-assert.deepEqual(ubique.pdist(x,y,'hamming') // 10,10);
+assert.deepEqual(ubique.pdist(x,y,'euclidean'),0.17053152201279387);
+assert.deepEqual(ubique.pdist(x,y,'manhattan'),0.4710000000000001);
+assert.deepEqual(ubique.pdist(x,y,'chebychev'),0.08700000000000001);
+assert.deepEqual(ubique.pdist(x,y,'hamming'),10);
 
 
 done();
