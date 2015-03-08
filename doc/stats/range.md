@@ -1,6 +1,11 @@
-### range(x,dim)
+### range
 
 Range of values
+
+
+#### Syntax
+
+ubique.range(x,dim)
 
 
 #### Description

@@ -1,6 +1,11 @@
-### max(x,dim)
+### max
 
 Largest element in array
+
+
+#### Syntax
+
+ubique.max(x,dim)
 
 
 #### Description

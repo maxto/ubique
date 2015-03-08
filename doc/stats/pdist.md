@@ -1,6 +1,11 @@
-### pdist(x,y,mode)
+### pdist
 
 Pairwise distance between two sets of observations
+
+
+#### Syntax
+
+ubique.pdist(x,y,mode)
 
 
 #### Description

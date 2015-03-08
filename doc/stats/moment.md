@@ -1,6 +1,11 @@
-### moment(x,k,dim)
+### moment
 
 Central moments
+
+
+#### Syntax
+
+ubique.moment(x,k,dim)
 
 
 #### Description

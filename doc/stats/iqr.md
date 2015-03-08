@@ -1,6 +1,11 @@
-### iqr(x,dim)
+### iqr
 
 Interquartile range
+
+
+#### Syntax
+
+ubique.iqr(x,dim)
 
 
 #### Description

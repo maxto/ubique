@@ -1,6 +1,11 @@
-### toweekly(nd,nv)
+### toweekly
 
 Convert a time series to a weekly frequency
+
+
+#### Syntax
+
+ubique.toweekly(nd,nv)
 
 
 #### Description

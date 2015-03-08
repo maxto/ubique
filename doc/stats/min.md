@@ -1,6 +1,11 @@
-### min(x,dim)
+### min
 
 Smallest element in array
+
+
+#### Syntax
+
+ubique.min(x,dim)
 
 
 #### Description

@@ -1,6 +1,11 @@
-### corrcoef(x)
+### corrcoef
 
 Correlation coefficients of two arrays X,Y
+
+
+#### Syntax
+
+ubique.corrcoef(x)
 
 
 #### Description

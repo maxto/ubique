@@ -1,6 +1,11 @@
-### quartile(x,dim)
+### quartile
 
 Quartilies of a sample
+
+
+#### Syntax
+
+ubique.quartile(x,dim)
 
 
 #### Description

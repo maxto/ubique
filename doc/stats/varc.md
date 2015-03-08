@@ -1,6 +1,11 @@
-### varc(x,flag,dim)
+### varc
 
 Variance
+
+
+#### Syntax
+
+ubique.varc(x,flag,dim)
 
 
 #### Description

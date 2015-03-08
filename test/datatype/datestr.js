@@ -7,9 +7,9 @@ test('datestr', function (done) {
 
 
 
-assert.deepEqual(ubique.datestr(1419980400),"2014-12-31");
+assert.deepEqual(ubique.datestr(1419980400),"2014-12-30");
 assert.deepEqual(ubique.datestr([1419984000,1422662400],'DD-MMM-YY'),["31-Dec-14","31-Jan-15"]);
-assert.deepEqual(ubique.datestr([[1419980400,1422658800],[1423954800,1425164400]],'YY-MM-DD hh:mm:ss'),[["14-12-31 12:00:00","15-01-31 12:00:00"],["15-02-15 12:00:00","15-03-01 12:00:00"]]);
+assert.deepEqual(ubique.datestr([[1419980400,1422658800],[1423954800,1425164400]],'YY-MM-DD hh:mm:ss'),[["14-12-30 11:00:00","15-01-30 11:00:00"],["15-02-14 11:00:00","15-02-28 11:00:00"]]);
 
 
 done();

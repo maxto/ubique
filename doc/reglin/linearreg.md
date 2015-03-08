@@ -1,6 +1,11 @@
-### linearreg(y,x)
+### linearreg
 
 Linear regression of Y on X
+
+
+#### Syntax
+
+ubique.linearreg(y,x)
 
 
 #### Description

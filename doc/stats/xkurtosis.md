@@ -1,6 +1,11 @@
-### xkurtosis(x,flag,dim)
+### xkurtosis
 
 Excess kurtosis
+
+
+#### Syntax
+
+ubique.xkurtosis(x,flag,dim)
 
 
 #### Description

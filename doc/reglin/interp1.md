@@ -1,6 +1,11 @@
-### interp1(x,y,xnew)
+### interp1
 
 Linear interpolation
+
+
+#### Syntax
+
+ubique.interp1(x,y,xnew)
 
 
 #### Description

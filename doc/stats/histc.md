@@ -1,6 +1,11 @@
-### histc(x,bins,dim)
+### histc
 
 Histogram count
+
+
+#### Syntax
+
+ubique.histc(x,bins,dim)
 
 
 #### Description

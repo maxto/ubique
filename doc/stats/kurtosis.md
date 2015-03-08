@@ -1,6 +1,11 @@
-### kurtosis(x,flag,dim)
+### kurtosis
 
 Kurtosis
+
+
+#### Syntax
+
+ubique.kurtosis(x,flag,dim)
 
 
 #### Description

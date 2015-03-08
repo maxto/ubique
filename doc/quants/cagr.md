@@ -1,6 +1,11 @@
-### cagr(x,p,dim)
+### cagr
 
 Compound annual growth rate
+
+
+#### Syntax
+
+ubique.cagr(x,p,dim)
 
 
 #### Description
@@ -21,12 +26,14 @@ Compound annual growth rate
 #### Examples
 
 ```js
-var x2 = [100,98,101.5,103];
-var y2 = [99.8,96.5,101.1,95.8];
-var z2 = ubique.cat(1,x2,y2);
+var x = [100,98,101.5,103];
+var y = [99.8,96.5,101.1,95.8];
 
-ubique.cagr(x2,4); // 0.00741707
-ubique.cagr(z2,4); // [[0.00741707, -0.0101743]]
-ubique.cagr(z2,2,0); // [-5.00375e-4, -0.00384869, -9.86681e-4, -0.0179535]
+ubique.cagr(x,4);
+// 0.00741707
+ubique.cagr(ubique.cat(1,x,y),4);
+// [[0.00741707, -0.0101743]]
+ubique.cagr(ubique.cat(1,x,y),2,0);
+// [-5.00375e-4, -0.00384869, -9.86681e-4, -0.0179535]
 ```
 

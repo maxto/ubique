@@ -1,6 +1,11 @@
-### mad(x,dim)
+### mad
 
 Mean absolute deviation
+
+
+#### Syntax
+
+ubique.mad(x,dim)
 
 
 #### Description

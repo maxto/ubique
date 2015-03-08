@@ -337,9 +337,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {array|matrix}     
 	 *
 	 * @example
-	 * var A = [1.4,2.3,3];
+	 * var x = [1.4,2.3,3];
 	 * 
-	 * ubique.arrayfun(A,Math.log);
+	 * ubique.arrayfun(x,Math.log);
 	 * // [ 0.3364722366212129, 0.8329091229351039, 1.0986122886681098 ]
 	 * ubique.arrayfun([1.4,0,-10],function(a) {return ubique.sign(a);});
 	 * // [ 1, 0, -1 ]
@@ -536,21 +536,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * Array Creation and Concatenation
 	 */
-	module.exports = function($u) {
+	 module.exports = function($u) {
 	/**
 	 * @method isarray
 	 * @summary True for array
 	 * @description  True for array
 	 * 
-	 * @param  {array} x element
+	 * @param  {array} x input element
 	 * @return {boolean}   
 	 *
 	 * @example
-	 * ubique.isarray([1.4,2.3,3]); // true
+	 * ubique.isarray([1.4,2.3,3]);
+	 * // true
 	 */
 	 $u.isarray = function(x) {
-	 	return Array.isArray(x) && !Array.isArray(x[0]);
-	 }
+	  if (arguments.length === 0) {
+	    throw new Error('not enough input arguments');
+	  }
+	  return Array.isArray(x) && !Array.isArray(x[0]);
+	}
 
 	}
 
@@ -568,22 +572,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary True for empty array or matrix
 	 * @description  True for empty array or matrix
 	 *              
-	 * @param  {array|matrix}  x input matrix
+	 * @param  {array|matrix} x input matrix
 	 * @return {Boolean}   
 	 *
 	 * @example
-	 * ubique.isempty([]); // true
-	 * ubique.isempty([[]]); // true
+	 * ubique.isempty([]);
+	 * // true
+	 * ubique.isempty([[]]);
+	 * // true
 	 */
 	 $u.isempty = function(x) {
-	 	if ($u.isarray(x) && x.length === 0) {
-	 		return true;
-	 	}
-	 	if ($u.ismatrix(x) && x[0].length === 0) {
-	 		return true;
-	 	}
-	 	return false;
+	  if (arguments.length === 0) {
+	    throw new Error('not enough input arguments');
+	  }
+	  if ($u.isarray(x) && x.length === 0) {
+	   return true;
 	 }
+	 if ($u.ismatrix(x) && x[0].length === 0) {
+	   return true;
+	 }
+	 return false;
+	}
 
 	}
 
@@ -600,15 +609,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	* @summary True for function
 	* @description true for function
 	* 
-	* @param  {function}  x function
+	* @param  {function} x function
 	* @return {Boolean}   
 	*
 	* @example
-	* ubique.isfunction(function(a){return console.log(a);}); // true
-	* ubique.isfunction(Math.log); // true
+	* ubique.isfunction(function(a){return console.log(a);});
+	* // true
+	* ubique.isfunction(Math.log);
+	* // true
 	*/
 	$u.isfunction = function(x) {
-		return typeof x === 'function';
+	  if (arguments.length === 0) {
+	    throw new Error('not enough input arguments');
+	  }
+	  return typeof x === 'function';
 	}
 
 	}
@@ -626,14 +640,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	* @summary True for integer
 	* @description  True for integer
 	* 
-	* @param  {integer}  x element
-	* @return {boolean}   
+	* @param  {number} x element
+	* @return {boolean}
 	*
 	* @example
-	* ubique.isinteger(5); // true
+	* ubique.isinteger(5);
+	* // true
 	*/
 	$u.isinteger = function(x) {
-		return $u.isnumber(x) && Math.round(x) === x;
+	  if (arguments.length === 0) {
+	    throw new Error('not enough input arguments');
+	  }
+	  return $u.isnumber(x) && Math.round(x) === x;
 	}
 
 	}
@@ -651,15 +669,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary True for logical input
 	 * @description True for logical input
 	 *              
-	 * @param  {boolean}  x element
+	 * @param  {boolean} x element
 	 * @return {boolean}   
 	 *
 	 * @example
-	 * ubique.islogical(true); // true
+	 * ubique.islogical(true);
+	 * // true
 	 */
 	 $u.islogical = function(x) {
-	 	return typeof x === 'boolean';
-	 }
+	  if (arguments.length === 0) {
+	    throw new Error('not enough input arguments');
+	  }
+	  return typeof x === 'boolean';
+	}
 
 	}
 
@@ -676,12 +698,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary True for matrix
 	 * @description True for array of array (matrix)
 	 * 
-	 * @param  {matrix}  x matrix
+	 * @param  {matrix} x matrix
 	 * @return {Boolean}  
 	 *
 	 * @example
-	 * ubique.ismatrix([[1,3,4]]); // true (1x3)
-	 * ubique.ismatrix([[1],[3],[4]]); // true (3x1)
+	 * ubique.ismatrix([[1,3,4]]);
+	 * // true
+	 * ubique.ismatrix([[1],[3],[4]]);
+	 * // true
 	 */
 	 $u.ismatrix = function(x) {
 	 	if (arguments.length === 0) {
@@ -702,21 +726,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * Data Type Identification
 	 */
-	module.exports = function($u) {
+	 module.exports = function($u) {
 	/**
 	 * @method isnull
 	 * @summary True for null values
 	 * @description  True for null values
 	 * 
-	 * @param  {null}  x element
+	 * @param  {null} x element
 	 * @return {boolean}   
 	 *
 	 * @example
-	 * ubique.isnull(null); // true
+	 * ubique.isnull(null);
+	 * // true
 	 */
 	 $u.isnull = function(x) {
-	 	return x === null;
-	 }
+	  if (arguments.length === 0) {
+	    throw new Error('not enough input arguments');
+	  }
+	  return x === null;
+	}
 
 	}
 
@@ -733,14 +761,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary True for number
 	 * @description  True for number or NaN value
 	 * 
-	 * @param  {number}  x element
+	 * @param  {number} x element
 	 * @return {boolean}   
 	 *
 	 * @example
-	 * ubique.isnumber(5); // true
-	 * ubique.isnumber(NaN); // true 
+	 * ubique.isnumber(5);
+	 * // true
+	 * ubique.isnumber(NaN);
+	 * // true 
 	 */
 	 $u.isnumber = function(x) {
+	  if (arguments.length === 0) {
+	    throw new Error('not enough input arguments');
+	  }
 	 	return typeof x === 'number';
 	 }
 
@@ -759,13 +792,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary True for scalar input
 	 * @description True for scalar input
 	 *              
-	 * @param  {number|array|matrix}  x input 
+	 * @param  {number|array|matrix} x input 
 	 * @return {Boolean}   
 	 *
 	 * @example
-	 * ubique.isscalar(2); // true
-	 * ubique.isscalar([2]); // true
-	 * ubique.isscalar([[2]]); // true
+	 * ubique.isscalar(2);
+	 * // true
+	 * ubique.isscalar([2]);
+	 * // true
+	 * ubique.isscalar([[2]]);
+	 * // true
 	 */
 	 $u.isscalar = function(x) {
 	 	if ($u.nrows(x) === 1 && $u.ncols(x) === 1) {
@@ -789,11 +825,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary True for singular matrix
 	 * @description True for singular matrix. A square matrix which does not have an inverse. A matrix is singular if and only if its determinant is zero.
 	 * 
-	 * @param  {matrix} x  input matrix
+	 * @param  {matrix} x input matrix
 	 * @return {boolean}     
 	 *
 	 * @example
-	 * ubique.issingular([[2,6],[1,3]]); // false
+	 * ubique.issingular([[2,6],[1,3]]);
+	 * // false
 	 */
 	 $u.issingular = function(x) {
 	  if (arguments.length === 0) {
@@ -830,15 +867,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary True for string values
 	 * @description  True for string values
 	 * 
-	 * @param  {string}  x element
+	 * @param  {string} x element
 	 * @return {boolean|array}   
 	 *
 	 * @example
-	 * ubique.isstring('test'); // true
+	 * ubique.isstring('test');
+	 * // true
 	 */
 	 $u.isstring = function(x) {
-	 	return typeof x === 'string';
-	 }
+	  if (arguments.length === 0) {
+	    throw new Error('not enough input arguments');
+	  }
+	  return typeof x === 'string';
+	}
 
 	}
 
@@ -855,15 +896,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary True for undefined values
 	 * @description  True for undefined values
 	 * 
-	 * @param  {undefined}  x element
+	 * @param  {undefined} x element
 	 * @return {boolean}   
 	 *
 	 * @example
-	 * ubique.isundefined(undefined); // true
+	 * ubique.isundefined(undefined);
+	 * // true
 	 */
 	 $u.isundefined = function(x) {
-	 	return x === undefined;
-	 }
+	  if (arguments.length === 0) {
+	    throw new Error('not enough input arguments');
+	  }
+	  return x === undefined;
+	}
 
 	}
 
@@ -880,12 +925,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary True for vector input
 	 * @description True for vector input
 	 *              
-	 * @param  {matrix}  x matrix Nx1 or 1xN
+	 * @param  {matrix} x matrix Nx1 or 1xN
 	 * @return {Boolean}   
 	 *
 	 * @example
-	 * ubique.isvector([[5,6,7]]); // true
-	 * ubique.isvector([[5],[6],[7]]); // true
+	 * ubique.isvector([[5,6,7]]);
+	 * // true
+	 * ubique.isvector([[5],[6],[7]]);
+	 * // true
 	 */
 	 $u.isvector = function(x) {
 	 	if (arguments.length === 0) {
@@ -957,17 +1004,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Create array of all NaN
 	 * @description Create array of all NaN
 	 * 
-	 * @param  {number|array|...} args  variable input arguments (max 2)
+	 * @param  {number|array|...} args variable input arguments (max 2)
 	 * @return {number|matrix}     
 	 *
 	 * @example
-	 * ubique.NaN(); // NaN
-	 * ubique.NaN(0); // []
-	 * ubique.NaN(1); / [[NaN]]
-	 * ubique.NaN(2); // [[NaN, NaN], [NaN, NaN]]
-	 * ubique.NaN([2,1]); // [[NaN], [NaN]]
-	 * ubique.NaN(1,2); // [[NaN, NaN]]
-	 * ubique.NaN(2,3); // [[NaN, NaN, NaN], [NaN, NaN, NaN]]
+	 * ubique.nan();
+	 * // NaN
+	 * ubique.nan(0);
+	 * // []
+	 * ubique.nan(1);
+	 * // [[NaN]]
+	 * ubique.nan(2);
+	 * // [[NaN, NaN], [NaN, NaN]]
+	 * ubique.nan([2,1]);
+	 * // [[NaN], [NaN]]
+	 * ubique.nan(1,2);
+	 * // [[NaN, NaN]]
+	 * ubique.nan(2,3);
+	 * // [[NaN, NaN, NaN], [NaN, NaN, NaN]]
 	 */
 	 $u.nan = function() {
 	  if ($u.isundefined(arguments[0]) || $u.isempty(arguments[0])) {
@@ -997,19 +1051,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Generate a random alpha-numeric string
 	 * @description Generate a random alpha-numeric string
 	 * 
-	 * @param  {number} n      number of characters to generate (def: 6)
+	 * @param  {number} n number of characters to generate (def: 6)
 	 * @param  {string} strset character set to get random sample
 	 * @return {string}        
 	 *
 	 * @example
-	 * ubique.randchar(12,'ABCD!-|/%&$\1234567890'); //  D&80%BB/C%B
-	 * ubique.randchar(16,'ABCDEFGHILMNOPQRSTUVZ-1234567890');  //  U68MP-U7ZI26T2HS
+	 * ubique.randchar(12,'ABCD!-|/%&$\1234567890');
+	 * // D&80%BB/C%B
+	 * ubique.randchar(16,'ABCDEFGHILMNOPQRSTUVZ-1234567890');
+	 * // U68MP-U7ZI26T2HS
 	 */
 	 $u.randchar = function(n,strset) {
-	  if ($u.isundefines(n)) {
-	    n = 6;
+	  if (arguments.length === 0) {
+	    return [];
 	  }
-	  if ($u.isundefined(strset)) {
+	  if (arguments.length === 1) {
 	    strset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 	  }
 	  return Array.apply(0, Array(n)).map(function() {
@@ -1034,16 +1090,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Apply a function to each vector column or row of a matrix 
 	 * @description Apply a function to each vector column or row of a matrix 
 	 * 
-	 * @param  {array|matrix} x   input matrix
+	 * @param  {array|matrix} x input matrix
 	 * @param  {function} fun function to apply
 	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {array}     
 	 *
 	 * @example
-	 * var a = [[5,6,5],[7,8,-1]];
+	 * var d = [[5,6,5],[7,8,-1]];
 	 * 
-	 * ubique.vectorfun(a,function(val){return ubique.mean(val)},0); // [5.33333, 4.66667]
-	 * ubique.vectorfun(a,function(val){return ubique.mean(val)},1); // [[6, 7, 2]]
+	 * ubique.vectorfun(d,function(val){return ubique.mean(val)},0);
+	 * // [5.33333, 4.66667]
+	 * ubique.vectorfun(d,function(val){return ubique.mean(val)},1);
+	 * // [[6, 7, 2]]
 	 */
 	 $u.vectorfun = function(x,fun,dim) {
 	 	if (arguments.length < 2) {
@@ -1133,13 +1191,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @description Round toward positive infinity
 	 * 
 	 * @param  {number|array|matrix} x number or array of values
+	 * @param  {number} x number of decimals
 	 * @return {number|array|matrix}
 	 *
 	 * @example
-	 * ubique.ceil(Math.PI,12); // 3.14159265359
-	 * ubique.ceil(3.78); // 4
-	 * ubique.ceil([4.51,-1.4]); // [5, -1]
-	 * ubique.ceil([[4.5134,-1.4345],[3.7809,0.0134]],2); // [[4.52, -1.43], [3.79, 0.02]]
+	 * ubique.ceil(Math.PI,12);
+	 * // 3.14159265359
+	 * ubique.ceil(3.78);
+	 * // 4
+	 * ubique.ceil([4.51,-1.4]);
+	 * // [5, -1]
+	 * ubique.ceil([[4.5134,-1.4345],[3.7809,0.0134]],2);
+	 * // [[4.52, -1.43], [3.79, 0.02]]
 	 */
 	 $u.ceil = function(x,n) {
 	 	if (arguments.length === 0) {
@@ -1178,9 +1241,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var b = [[-1,3,-1],[4,5,9]];
 	 * var c = [5,6,3];
 	 *
-	 * ubique.cumdev(c); // [0.333333, 1.66667, -8.88178e-16]
-	 * ubique.cumdev(b,0); // [[-1.33333, 1.33333, 0], [-2, -3, 0]]
-	 * ubique.cumdev(b); // [[-2.5, -1, -5], [0, 0, 0]]
+	 * ubique.cumdev(c);
+	 * // [0.333333, 1.66667, -8.88178e-16]
+	 * ubique.cumdev(b,0);
+	 * // [[-1.33333, 1.33333, 0], [-2, -3, 0]]
+	 * ubique.cumdev(b);
+	 * // [[-2.5, -1, -5], [0, 0, 0]]
 	 */
 	 $u.cumdev = function(x,dim) {
 	 	if (arguments.length === 0) {
@@ -1218,9 +1284,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {array|matrix}   
 	 *
 	 * @example
-	 * ubique.cummax([5,6,3]); // [5, 6, 6]
-	 * ubique.cummax([[5,6,5],[7,8,-1]]); // [[5, 6, 5], [7, 8, 5]]
-	 * ubique.cummax([[5,6,5],[7,8,-1]],0); // [[5, 6, 6], [7, 8, 8]]
+	 * ubique.cummax([5,6,3]);
+	 * // [5, 6, 6]
+	 * ubique.cummax([[5,6,5],[7,8,-1]]);
+	 * // [[5, 6, 5], [7, 8, 5]]
+	 * ubique.cummax([[5,6,5],[7,8,-1]],0);
+	 * // [[5, 6, 6], [7, 8, 8]]
 	 */
 	 $u.cummax = function(x,dim) {
 	  if (arguments.length === 0) {
@@ -1267,9 +1336,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {array|matrix}   
 	 *
 	 * @example
-	 * ubique.cummin([5,6,3]); // [5, 5, 3]
-	 * ubique.cummin([[5,6,5],[7,8,-1]]); // [[5, 6, 5], [5, 6, -1]]
-	 * ubique.cummin([[5,6,5],[7,8,-1]],0); // [[5, 5, 5], [7, 7, -1]]
+	 * ubique.cummin([5,6,3]);
+	 * // [5, 5, 3]
+	 * ubique.cummin([[5,6,5],[7,8,-1]]);
+	 * // [[5, 6, 5], [5, 6, -1]]
+	 * ubique.cummin([[5,6,5],[7,8,-1]],0);
+	 * // [[5, 5, 5], [7, 7, -1]]
 	 */
 	 $u.cummin = function(x,dim) {
 	  if (arguments.length === 0) {
@@ -1316,9 +1388,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {array|matrix}   
 	 *
 	 * @example
-	 * ubique.cumprod([5,6,3]); // [5, 30, 90]
-	 * ubique.cumprod([[5,6,5],[7,8,-1]]); // [[5, 6, 5], [35, 48, -5]]
-	 * ubique.cumprod([[5,6,5],[7,8,-1]],0); // [[5, 30, 150], [7, 56, -56]]
+	 * ubique.cumprod([5,6,3]);
+	 * // [5, 30, 90]
+	 * ubique.cumprod([[5,6,5],[7,8,-1]]);
+	 * // [[5, 6, 5], [35, 48, -5]]
+	 * ubique.cumprod([[5,6,5],[7,8,-1]],0);
+	 * // [[5, 30, 150], [7, 56, -56]]
 	 */
 	 $u.cumprod = function(x,dim) {
 	  if (arguments.length === 0) {
@@ -1361,9 +1436,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {array|matrix}   
 	 *
 	 * @example
-	 * ubique.cumsum([5,6,3]); // [5, 11, 14]
-	 * ubique.cumsum([[5,6,5],[7,8,-1]]); // [[5, 6, 5], [12, 14, 4]]
-	 * ubique.cumsum([[5,6,5],[7,8,-1]],0); // [[5, 11, 16], [7, 15, 14]]
+	 * ubique.cumsum([5,6,3]);
+	 * // [5, 11, 14]
+	 * ubique.cumsum([[5,6,5],[7,8,-1]]);
+	 * // [[5, 6, 5], [12, 14, 4]]
+	 * ubique.cumsum([[5,6,5],[7,8,-1]],0);
+	 * // [[5, 11, 16], [7, 15, 14]]
 	 */
 	 $u.cumsum = function(x,dim) {
 	  if (arguments.length === 0) {
@@ -1406,9 +1484,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {array|matrix}   
 	 *
 	 * @example
-	 * ubique.diff([5,6,3]); //  [1, -3]
-	 * ubique.diff([[5,6,5],[7,8,-1]]); // [[2, 2, -6]]
-	 * ubique.diff([[5,6,5],[7,8,-1]],0); // [[1, -1], [1, -9]]
+	 * ubique.diff([5,6,3]);
+	 * // [1, -3]
+	 * ubique.diff([[5,6,5],[7,8,-1]]);
+	 * // [[2, 2, -6]]
+	 * ubique.diff([[5,6,5],[7,8,-1]],0);
+	 * // [[1, -1], [1, -9]]
 	 */
 	 $u.diff = function(x,dim) {
 	 	if (arguments.length === 0) {
@@ -1445,16 +1526,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Arrays dot product X * Y
 	 * @description Arrays dot product X * Y. X and Y must be arrays of the same length
 	 * 
-	 * @param  {number|array} x number or array of values
-	 * @param  {number|array} y number or array of values
-	 * @return {number|array}   
+	 * @param  {array} x number or array of values
+	 * @param  {array} y number or array of values
+	 * @return {array}   
 	 *
 	 * @example
 	 * var c = [5,6,3];
 	 * var d = [0.5,-3,2.3];
 	 * 
-	 * ubique.dot(5,6); // 30
-	 * ubique.dot(c,d); // -8.6
+	 * ubique.dot(c,d);
+	 * // -8.6
 	 */
 	 $u.dot = function(x,y) {
 	 	if (arguments.length === 0) {
@@ -1530,13 +1611,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @description Round toward negative infinity
 	 * 
 	 * @param  {number|array|matrix} x number or array of values
+	 * @param  {number} x number of decimals
 	 * @return {number|array|matrix}
 	 *
 	 * @example
-	 * ubique.floor(Math.PI,12); // 3.141592653589
-	 * ubique.floor(3.78); // 3
-	 * ubique.floor([4.51,-1.4]); // [4, -2]
-	 * ubique.floor([[4.5134,-1.4345],[3.7809,0.0134]],2); // [[4.51, -1.44], [3.78, 0.01]]
+	 * ubique.floor(Math.PI,12);
+	 * // 3.141592653589
+	 * ubique.floor(3.78);
+	 * // 3
+	 * ubique.floor([4.51,-1.4]);
+	 * // [4, -2]
+	 * ubique.floor([[4.5134,-1.4345],[3.7809,0.0134]],2);
+	 * // [[4.51, -1.44], [3.78, 0.01]]
 	 */
 	 $u.floor = function(x,n) {
 	 	if (arguments.length === 0) {
@@ -1674,12 +1760,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var e = [[9, 5], [6, 1]];
 	 * var f = [[3, 2], [5, 2]];
 	 * 
-	 * ubique.ldivide(5,6); // 1.2
-	 * ubique.ldivide([5,6,7],3); // [0.6, 0.5, 0.428571]
-	 * ubique.ldivide(3,[-1,-2,-3]); // [-0.333333, -0.666667, -1]
-	 * ubique.ldivide(c,d); // [0.1, -0.5, 0.766667]
-	 * ubique.ldivide(e,f); //  [[3, 2.5], [1.2, 0.5]]
-	 * ubique.ldivide(e,3); //  [[0.333333, 0.6], [0.5, 3]]
+	 * ubique.ldivide(5,6);
+	 * // 1.2
+	 * ubique.ldivide([5,6,7],3);
+	 * // [0.6, 0.5, 0.428571]
+	 * ubique.ldivide(3,[-1,-2,-3]);
+	 * // [-0.333333, -0.666667, -1]
+	 * ubique.ldivide(c,d);
+	 * // [0.1, -0.5, 0.766667]
+	 * ubique.ldivide(e,f);
+	 * // [[3, 2.5], [1.2, 0.5]]
+	 * ubique.ldivide(e,3);
+	 * // [[0.333333, 0.6], [0.5, 3]]
 	 */
 	 $u.ldivide = function(y,x) {
 	 	if (arguments.length < 2) {
@@ -1850,8 +1942,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * // [2, 7, 4]
 	 * ubique.minus([5,6,4],10);
 	 * // [-5, -4, -6]
-	 * ubique.minus(NaN,[5,6,4]);
-	 * // [NaN, NaN, NaN]
 	 * ubique.minus(a,b);
 	 * // [[6, 3, 6], [3, 3, -10]]
 	 */
@@ -1928,13 +2018,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	  *
 	  * @example
 	  * var a = [[5,6,5],[7,8,-1]];
-	  * var e = [[9, 5], [6, 1]];
-	  * var f = [[3, 2], [5, 2]];
+	  * var e = [[9, 5],[6, 1]];
+	  * var f = [[3, 2],[5, 2]];
 	  * 
-	  * ubique.mldivide(5,6); // 0.833333
-	  * ubique.mldivide(e,f); // [[1.8, 1], [1.2, 0.2]]
-	  * ubique.mldivide(5,e); // [[1.04762, 0.380952], [-1.28571, -0.285714]]
-	  * ubique.mldivide(e,a); // [[1.42857, 1.61905, -0.47619], [-1.57143, -1.71429, 1.85714]]
+	  * ubique.mldivide(5,6);
+	  * // 1.2
+	  * ubique.mldivide(e,f);
+	  * // [ [ 1.0476, 0.381 ], [ -1.2857, -0.2857 ] ]
+	  * ubique.mldivide(5,e);
+	  * // [ [ 1.8, 1 ], [ 1.2, 0.2 ] ]
+	  * ubique.mldivide(e,a);
+	  * // [ [ 1.4286, 1.619, -0.4762 ], [ -1.5714, -1.7143, 1.8571 ] ]
 	  */
 	  $u.mldivide = function(y,x) {
 	    if (arguments.length < 2) {
@@ -1979,9 +2073,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var a = [[5,6,5],[7,8,-1]];
 	 * var b = [[-1,3,-1],[4,5,9]];
 	 * 
-	 * ubique.mod([13,-7],2.2); //  [2, 1.8]
-	 * ubique.mod([13,-7],[5,6]); // [3, 5]
-	 * ubique.mod(a,b); // [[0, 0, 0], [3, 3, 8]]
+	 * ubique.mod([13,-7],2.2);
+	 * // [2, 1.8]
+	 * ubique.mod([13,-7],[5,6]);
+	 * // [3, 5]
+	 * ubique.mod(a,b);
+	 * // [[0, 0, 0], [3, 3, 8]]
 	 */
 	 $u.mod = function(x,y) {
 	 	if (arguments.length < 2) {
@@ -2013,7 +2110,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * var l = [[1,1,-1],[1,-2,3],[2,3,1]];
 	 *
-	 * ubique.mpower(l,3); // [[-2, 11, -11], [11, -35, 33], [22, 33, -2]]
+	 * ubique.mpower(l,3);
+	 * // [[-2, 11, -11], [11, -35, 33], [22, 33, -2]]
 	 */
 	 $u.mpower = function(x,y) {
 	 	if (arguments.length === 0) {
@@ -2061,11 +2159,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	  * var f = [[3, 2], [5, 2]];
 	  * var l = [[1,1,-1],[1,-2,3],[2,3,1]];
 	  * 
-	  * ubique.mrdivide(5,6); // 0.833333
-	  * ubique.mrdivide(c,6); // [0.833333, 1, 0.5]
-	  * ubique.mrdivide(e,5); // [[1.8, 1], [1.2, 0.2]]
-	  * ubique.mrdivide(e,f); // [[1.75, 0.75], [-1.75, 2.25]]
-	  * ubique.mrdivide(a,l); // [[-0.769231, 0.538462, 2.61538], [3.38462, 0.230769, 1.69231]]
+	  * ubique.mrdivide(5,6);
+	  * // 0.833333
+	  * ubique.mrdivide(c,6);
+	  * // [0.833333, 1, 0.5]
+	  * ubique.mrdivide(e,5);
+	  * // [[1.8, 1], [1.2, 0.2]]
+	  * ubique.mrdivide(e,f);
+	  * // [[1.75, 0.75], [-1.75, 2.25]]
+	  * ubique.mrdivide(a,l);
+	  * // [[-0.769231, 0.538462, 2.61538], [3.38462, 0.230769, 1.69231]]
 	  */
 	  $u.mrdivide = function(x,y) {
 	    if (arguments.length < 2) {
@@ -2111,11 +2214,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var b = [[-1,3,-1],[4,5,9]];
 	 * var c = [5,6,3];
 	 * 
-	 * ubique.mtimes(5,6); // 30
-	 * ubique.mtimes(c,3); // [15, 18, 9]
-	 * ubique.mtimes(a,3); // [[15, 18, 15], [21, 24, -3]]
-	 * ubique.mtimes(c,[[3,4,5]]); // [[15, 20, 25], [18, 24, 30], [9, 12, 15]]
-	 * ubique.mtimes(a,c); // [[76], [80]]
+	 * ubique.mtimes(5,6);
+	 * // 30
+	 * ubique.mtimes(c,3);
+	 * // [15, 18, 9]
+	 * ubique.mtimes(a,3);
+	 * // [[15, 18, 15], [21, 24, -3]]
+	 * ubique.mtimes(c,[[3,4,5]]);
+	 * // [[15, 20, 25], [18, 24, 30], [9, 12, 15]]
+	 * ubique.mtimes(a,c);
+	 * // [[76], [80]]
 	 */
 	 $u.mtimes = function(x,y) {
 	 	if (arguments.length === 0) {
@@ -2207,14 +2315,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {number|array|matrix}   
 	 *
 	 * @example
-	 * ubique.plus(5,6);  // 11
-	 * ubique.plus([5,6,4],[3,-1,0]); //  [8, 5, 4]
-	 * ubique.plus([5,6,4],10); //  [15, 16, 14]
-	 * ubique.plus(NaN,[5,6,4]);  // [NaN, NaN, NaN]
-	 *
 	 * var a = [[5,6,5],[7,8,-1]];
 	 * var b = [[-1,3,-1],[4,5,9]];
-	 * ubique.plus(a,b);  // [[4, 9, 4], [11, 13, 8]]
+	 * 
+	 * ubique.plus(5,6);
+	 * // 11
+	 * ubique.plus([5,6,4],[3,-1,0]);
+	 * // [8, 5, 4]
+	 * ubique.plus([5,6,4],10);
+	 * // [15, 16, 14]
+	 * ubique.plus(a,b);
+	 * // [[4, 9, 4], [11, 13, 8]]
 	 */
 	 $u.plus = function(x,y) {
 	 	if (arguments.length === 0) {
@@ -2292,14 +2403,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var c = [5,6,3];
 	 * var d = [0.5,-3,2.3];
 	 * 
-	 * ubique.power(5,4); // 625
-	 * ubique.power(c,5); // [3125, 7776, 243]
-	 * ubique.power(5,c); // [3125, 15625, 125]
-	 * ubique.power(a,5); // [[3125, 7776, 3125], [16807, 32768, -1]]
-	 * ubique.power(5,a); // [[3125, 15625, 3125], [78125, 3.90625e+5, 0.2]]
-	 * ubique.power(c,d); // [2.23607, 0.00462963, 12.5135]
-	 * ubique.power(a,b); // [[0.2, 216, 0.2], [2401, 32768, -1]]
-	 * 
+	 * ubique.power(5,4);
+	 * // 625
+	 * ubique.power(c,5);
+	 * // [3125, 7776, 243]
+	 * ubique.power(5,c);
+	 * // [3125, 15625, 125]
+	 * ubique.power(a,5);
+	 * // [[3125, 7776, 3125], [16807, 32768, -1]]
+	 * ubique.power(5,a);
+	 * // [[3125, 15625, 3125], [78125, 3.90625e+5, 0.2]]
+	 * ubique.power(c,d);
+	 * // [2.23607, 0.00462963, 12.5135]
+	 * ubique.power(a,b);
+	 * // [[0.2, 216, 0.2], [2401, 32768, -1]]
 	 */
 	 $u.power = function(x,y) {
 	 	if (arguments.length < 2) {
@@ -2368,9 +2485,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {number|array}   
 	 *
 	 * @example
-	 * ubique.prod([5,6,3]); // 14
-	 * ubique.prod([[5,6,5],[7,8,-1]],0); // [150, -56]
-	 * ubique.prod([[5,6,5],[7,8,-1]],1); // [[35, 48, -5]]
+	 * ubique.prod([5,6,3]);
+	 * // 14
+	 * ubique.prod([[5,6,5],[7,8,-1]],0);
+	 * // [150, -56]
+	 * ubique.prod([[5,6,5],[7,8,-1]],1);
+	 * // [[35, 48, -5]]
 	 */
 	 $u.prod = function(x,dim) {
 	 	if (arguments.length === 0) {
@@ -2417,12 +2537,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var e = [[9, 5], [6, 1]];
 	 * var f = [[3, 2], [5, 2]];
 	 * 
-	 * ubique.rdivide(5,6); // 0.833333
-	 * ubique.rdivide(a,3); // [[1.66667, 2, 1.66667], [2.33333, 2.66667, -0.333333]]
-	 * ubique.rdivide(3,[-1,-2,-3]); // [-3, -1.5, -1]
-	 * ubique.rdivide([5,6,7],[-1,-2,-3]); // [-5, -3, -2.33333]
-	 * ubique.rdivide(e,f); //  [[3, 2.5], [1.2, 0.5]]
-	 * ubique.rdivide(e,3); //  [[3, 1.66667], [2, 0.333333]]
+	 * ubique.rdivide(5,6);
+	 * // 0.833333
+	 * ubique.rdivide(a,3);
+	 * // [[1.66667, 2, 1.66667], [2.33333, 2.66667, -0.333333]]
+	 * ubique.rdivide(3,[-1,-2,-3]);
+	 * // [-3, -1.5, -1]
+	 * ubique.rdivide([5,6,7],[-1,-2,-3]);
+	 * // [-5, -3, -2.33333]
+	 * ubique.rdivide(e,f);
+	 * // [[3, 2.5], [1.2, 0.5]]
+	 * ubique.rdivide(e,3);
+	 * // [[3, 1.66667], [2, 0.333333]]
 	 */
 	 $u.rdivide = function(x,y) {
 	 	if (arguments.length < 2) {
@@ -2490,12 +2616,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {number|array|matrix}   
 	 *
 	 * @example
-	 * ubique.rem([13,-7],2.2); // [2, -0.4]
-	 * ubique.rem([13,-7],[5,6]); // [3, -1]
-	 *
 	 * var a = [[5,6,5],[7,8,-1]];
 	 * var b = [[-1,3,-1],[4,5,9]];
-	 * ubique.rem(a,b); // [[0, 0, 0], [3, 3, -1]]
+	 * 
+	 * ubique.rem([13,-7],2.2);
+	 * // [2, -0.4]
+	 * ubique.rem([13,-7],[5,6]);
+	 * // [3, -1]
+	 * ubique.rem(a,b);
+	 * // [[0, 0, 0], [3, 3, -1]]
 	 */
 	 $u.rem = function(x,y) {
 	 	if (arguments.length === 0) {
@@ -2525,10 +2654,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {number|array|matrix}   
 	 *
 	 * @example
-	 * ubique.round(Math.PI,12); // 3.14159265359
-	 * ubique.round([-1.4543,4.5234],2); // [-1.45, 4.52]
-	 * ubique.round([-1.9,-0.2,3.4,5.6,7.0]); // [-2, 0, 3, 6, 7]
-	 * ubique.round([[1.45,-2.3],[1.1,-4.3]]); // [[1, -2], [1, -4]]
+	 * ubique.round(Math.PI,12);
+	 * // 3.14159265359
+	 * ubique.round([-1.4543,4.5234],2);
+	 * // [-1.45, 4.52]
+	 * ubique.round([-1.9,-0.2,3.4,5.6,7.0]);
+	 * // [-2, 0, 3, 6, 7]
+	 * ubique.round([[1.45,-2.3],[1.1,-4.3]]);
+	 * // [[1, -2], [1, -4]]
 	 */
 	 $u.round = function(x,n) {
 	 	if (arguments.length === 0) {
@@ -2564,9 +2697,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {number|array}   
 	 *
 	 * @example
-	 * ubique.sum([5,6,3]); // 14
-	 * ubique.sum([[5,6,5],[7,8,-1]],0); // [16, 14]
-	 * ubique.sum([[5,6,5],[7,8,-1]],1); // [[12, 14, 4]]
+	 * ubique.sum([5,6,3]);
+	 * // 14
+	 * ubique.sum([[5,6,5],[7,8,-1]],0);
+	 * // [16, 14]
+	 * ubique.sum([[5,6,5],[7,8,-1]],1);
+	 * // [[12, 14, 4]]
 	 */
 	 $u.sum = function(x,dim) {
 	 	if (arguments.length === 0) {
@@ -2608,14 +2744,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {number|array|matrix}   
 	 *
 	 * @example
-	 * ubique.times(5,6);  // 30
-	 * ubique.times([5,6,4],[3,-1,0]); //  [15, -6, 0]
-	 * ubique.times([5,6,4],10); //  [50, 60, 40]
-	 * ubique.times(NaN,[5,6,4]);  // [NaN, NaN, NaN]
-	 *
 	 * var a = [[5,6,5],[7,8,-1]];
 	 * var b = [[-1,3,-1],[4,5,9]];
-	 * ubique.times(a,b);  // [[-5, 18, -5], [28, 40, -9]]
+	 * ubique.times(5,6);
+	 * // 30
+	 * ubique.times([5,6,4],[3,-1,0]);
+	 * // [15, -6, 0]
+	 * ubique.times([5,6,4],10);
+	 * // [50, 60, 40]
+	 * ubique.times(a,b);
+	 * // [[-5, 18, -5], [28, 40, -9]]
 	 */
 	 $u.times = function(x,y) {
 	 	if (arguments.length === 0) {
@@ -2685,9 +2823,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {number|array|matrix}
 	 *
 	 * @example
-	 * ubique.uminus(-5); // 5
-	 * ubique.uminus([5,6]); // [-5, -6]
-	 * ubique.uminus([[5,6],[-1,-3]]); // [[-5, -6], [1, 3]]
+	 * ubique.uminus(-5);
+	 * // 5
+	 * ubique.uminus([5,6]);
+	 * // [-5, -6]
+	 * ubique.uminus([[5,6],[-1,-3]]);
+	 * // [[-5, -6], [1, 3]]
 	 */
 	 $u.uminus = function(x) {
 	 	if (arguments.length === 0) {
@@ -2771,9 +2912,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {number|array|matrix}
 	 *
 	 * @example
-	 * ubique.uplus(-5); // -5
-	 * ubique.uplus([5,6]); // [5, 6]
-	 * ubique.uplus([[5,6],[-1,-3]]); // [[5, 6], [-1, -3]]
+	 * ubique.uplus(-5);
+	 * // -5
+	 * ubique.uplus([5,6]);
+	 * // [5, 6]
+	 * ubique.uplus([[5,6],[-1,-3]]);
+	 * // [[5, 6], [-1, -3]]
 	 */
 	 $u.uplus = function(x) {
 	 	if (arguments.length === 0) {
@@ -2802,9 +2946,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {number|array|matrix}   
 	 *
 	 * @example
-	 * ubique.abs(-0.5);  // -1
-	 * ubique.abs([0.1,-0.5]); // [0.1, 0.5]
-	 * ubique.abs([[5,-2],[-3,4]]); // [[5, 2], [3, 4]]
+	 * ubique.abs(-0.5);
+	 * // -1
+	 * ubique.abs([0.1,-0.5]);
+	 * // [0.1, 0.5]
+	 * ubique.abs([[5,-2],[-3,4]]);
+	 * // [[5, 2], [3, 4]]
 	 */
 	 $u.abs = function(x) {
 	 	if (arguments.length === 0) {
@@ -2839,11 +2986,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {number}
 	 * 
 	 * @example
-	 * ubique.erf(0.5);  // 0.5204999077232426
+	 * ubique.erf(0.5);
+	 * // 0.5204999077232426
 	 */
 	 $u.erf = function(x) {
-	 	return 1 - $u.erfc(x);
-	 }
+	  if (arguments.length === 0) {
+	    throw new Error('not enough input arguments');
+	  }
+	  return 1 - $u.erfc(x);
+	}
 
 	}
 
@@ -2867,9 +3018,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {number}
 	 * 
 	 * @example
-	 * ubique.erfc(0.5); // 0.47950009227675744
+	 * ubique.erfc(0.5);
+	 * // 0.47950009227675744
 	 */
 	 $u.erfc = function(x) {
+	  if (arguments.length === 0) {
+	    throw new Error('not enough input arguments');
+	  }
 	  var z = Math.abs(x),
 	  t = 1 / (0.5 * z + 1),
 	  a1 = t * 0.17087277 + -0.82215223,
@@ -2909,9 +3064,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {number}   
 	 *
 	 * @example
-	 * ubique.erfcinv(1.5);  // -0.476936236121904
+	 * ubique.erfcinv(1.5);
+	 * // -0.476936236121904
 	 */
 	 $u.erfcinv = function(y) {
+	    if (arguments.length === 0) {
+	        throw new Error('not enough input arguments');
+	    }
 	    if (y >= 2) {return -Infinity;}
 	    if (y <= 0) {return Infinity;}
 	    var z = 0,
@@ -2946,9 +3105,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {number}   
 	 *
 	 * @example
-	 * ubique.erfinv(0.5); // 0.47693623612155117
+	 * ubique.erfinv(0.5);
+	 * // 0.47693623612155117
 	 */
 	 $u.erfinv = function(y) {
+	    if (arguments.length === 0) {
+	        throw new Error('not enough input arguments');
+	    }
 	    var x,x1,x2,x3,x4,x5,x6,x7,x8,x9,z,z1,z2,z3
 	    if (y <= -1) {x = -Infinity;return x;}
 	    else if (y >= 1) {x = Infinity;return x;}
@@ -3017,9 +3180,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var a = [[5,6,5],[7,8,-1]];
 	 * var c = [5,6,3];
 	 *
-	 * ubique.exp(6); // 403.429
-	 * ubique.exp(c); // [148.413, 403.429, 20.0855]
-	 * ubqie.exp(a); // [[148.413, 403.429, 148.413], [1096.63, 2980.96, 0.367879]]
+	 * ubique.exp(6);
+	 * // 403.429
+	 * ubique.exp(c);
+	 * // [148.413, 403.429, 20.0855]
+	 * ubqie.exp(a);
+	 * // [[148.413, 403.429, 148.413], [1096.63, 2980.96, 0.367879]]
 	 */
 	 $u.exp = function(x) {
 	 	if (arguments.length === 0) {
@@ -3051,12 +3217,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {number|array|matrix}   
 	 *
 	 * @example  
-	 * var a = [[5,6,5],[7,8,-1]];
+	 * var a = [[5,6,5],[7,8,2]];
 	 * var c = [5,6,3];
 	 *
-	 * ubique.log(6); // 1.79176
-	 * ubique.log(c); // [1.60944, 1.79176, 1.09861]
-	 * ubique.log(a); // [[1.60944, 1.79176, 1.60944], [1.94591, 2.07944, NaN]]
+	 * ubique.log(6);
+	 * // 1.79176
+	 * ubique.log(c);
+	 * // [ 1.60944, 1.79176, 1.09861 ]
+	 * ubique.log([[5,6,5],[7,8,2]]);
+	 * // [ [ 1.6094, 1.7918, 1.6094 ], [ 1.9459, 2.0794, 0.6931 ] ]
 	 */
 	 $u.log = function(x) {
 	 	if (arguments.length === 0) {
@@ -3088,9 +3257,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {number|array|matrix}   
 	 *
 	 * @example
-	 * ubique.sign(-0.5);  // -1
-	 * ubique.sign([0.1,-0.5]); // [1, -1]
-	 * ubique.sign([[5,-2],[-3,4]]); // [[1, -1], [-1, 1]]
+	 * ubique.sign(-0.5);
+	 * // -1
+	 * ubique.sign([0.1,-0.5]);
+	 * // [1, -1]
+	 * ubique.sign([[5,-2],[-3,4]]);
+	 * // [[1, -1], [-1, 1]]
 	 */
 	 $u.sign = function(x) {
 	 	if (arguments.length === 0) {
@@ -3134,12 +3306,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {number|array|matrix}   
 	 *
 	 * @example  
-	 * var a = [[5,6,5],[7,8,-1]];
+	 * var a = [[5,6,5],[7,8,2]];
 	 * var c = [5,6,3];
 	 *
-	 * ubique.sqrt(6); // 2.44949
-	 * ubique.sqrt(c); // [2.23607, 2.44949, 1.73205]
-	 * ubique.sqrt(a); // [[2.23607, 2.44949, 2.23607], [2.64575, 2.82843, NaN]]
+	 * ubique.sqrt(6);
+	 * // 2.44949
+	 * ubique.sqrt(c);
+	 * // [ 2.23607, 2.44949, 1.73205 ]
+	 * ubique.sqrt(a);
+	 * // [ [ 2.2361, 2.4495, 2.2361 ], [ 2.6458, 2.8284, 1.4142 ] ]
 	 */
 	 $u.sqrt = function(x) {
 	 	if (arguments.length === 0) {
@@ -3171,12 +3346,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {number}   
 	 * 
 	 * @example
-	 * var e = [[0, 5], [6, 0]];
-	 * var f = [[3, 2], [5, 2]];
-	 * 
-	 * ubique.det(e); // -30
-	 * ubique.det(f); // -4
-	 * ubique.det([[2,2],[2,2]]); // 0
+	 * ubique.det([[1,5],[6,2]]);
+	 * // -28
+	 * ubique.det([[2,2],[2,3]]);
+	 * // 2
 	 */
 	 $u.det = function(x) {
 	 	if (arguments.length === 0) {
@@ -3222,8 +3395,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  * var f = [[3, 2], [5, 2]]; // [[-0.5, 0.5], [1.25, -0.75]]
 	  * var l = [[1,1,-1],[1,-2,3],[2,3,1]];
 	  *
-	  * ubique.inv(f); // [[-0.5, 0.5], [1.25, -0.75]]
-	  * ubique.inv(l); // [[0.846154, 0.307692, -0.0769231], [-0.384615, -0.230769, 0.307692], [-0.538462, 0.0769231, 0.230769]]
+	  * ubique.inv(f);
+	  * // [[-0.5, 0.5], [1.25, -0.75]]
+	  * ubique.inv(l);
+	  * // [[0.846154, 0.307692, -0.0769231], [-0.384615, -0.230769, 0.307692], [-0.538462, 0.0769231, 0.230769]]
 	  */
 	  $u.inv = function(x) {
 	    if (arguments.length === 0) {
@@ -3262,18 +3437,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	  * @return {array|matrix}   
 	  *
 	  * @example
+	  * var a = [[5,6,5],[7,8,-1]];
+	  * var c = [5,6,3];
+	  * var g = [[5,6,5],[7,8,-1],[5,6,3]];
 	  * var l = [[1,1,-1],[1,-2,3],[2,3,1]];
 	  * var m = [4,-6,7];
 	  * 
-	  * ubique.linsolve(l,m); // [1, 2, -1]
-	  *
-	  * var a = [[5,6,5],[7,8,-1]];
-	  * var c = [5,6,3];
-	  * var g = ubique.cat(0,a,c);
-	  *
-	  * ubique.linsolve(g,m); // [-68.5, 59, -1.5]
-	  *
-	  * ubique.linsolve(l,ubique.eye(3)); // [[0.846154, 0.307692, -0.0769231], [-0.384615, -0.230769, 0.307692], [-0.538462, 0.0769231, 0.230769]]
+	  * ubique.linsolve(l,m);
+	  * // [1, 2, -1]
+	  * ubique.linsolve(g,m);
+	  * // [-68.5, 59, -1.5]
+	  * ubique.linsolve(l,ubique.eye(3));
+	  * // [[0.846154, 0.307692, -0.0769231], [-0.384615, -0.230769, 0.307692], [-0.538462, 0.0769231, 0.230769]]
 	  */
 	  $u.linsolve = function(A,b) {
 	    if (arguments.length <= 1) {
@@ -3354,9 +3529,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * @method lu
 	 * @summary LU matrix factorization
-	 * @description LU matrix factorization based on Doolittle algorithm. The LU decomposition with pivoting always exists, 
-	 * even if the matrix is singular. 
-	 *
+	 * @description LU matrix factorization based on Doolittle algorithm. The LU decomposition with pivoting always exists, even if the matrix is singular.  
+	 * Returns an object:  
+	 * 
+	 * LU (lu matrix) 
+	 * L (lower triangular matrix)
+	 * U (upper triangular matrix)
+	 * P (pivot vector)
+	 * S (pivot sign) +1 or -1
+	 * 
 	 * @param  {matrix} x input matrix
 	 * @return {object}    .LU (lu matrix) 
 	 *                     .L (lower triangular matrix)
@@ -3368,17 +3549,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var a = [[5,6,5],[7,8,-1]];
 	 * var e = [[0, 5], [6, 0]];
 	 *
-	 * ubique.lu(a); // { LU: [ [ 7, 8, -1 ], [ 0.7142857142857143, 0.2857142857142856, 5.714285714285714 ] ],
-	 *               //    L: [ [ 1, 0 ], [ 0.7142857142857143, 1 ] ],
-	 *               //    U: [ [ 7, 8, -1 ], [ 0, 0.2857142857142856, 5.714285714285714 ] ],
-	 *               //    P: [ 1, 0 ],
-	 *               //    S: -1;}
+	 * ubique.lu(a);
+	 * // { LU: [ [ 7, 8, -1 ], [ 0.7142857142857143, 0.2857142857142856, 5.714285714285714 ] ],
+	 * //    L: [ [ 1, 0 ], [ 0.7142857142857143, 1 ] ],
+	 * //    U: [ [ 7, 8, -1 ], [ 0, 0.2857142857142856, 5.714285714285714 ] ],
+	 * //    P: [ 1, 0 ],
+	 * //    S: -1;}
 	 *
-	 * ubique.lu(e); // { LU: [ [ 6, 0 ], [ 0, 5 ] ],
-	 *               //    L: [ [ 1, 0 ], [ 0, 1 ] ],
-	 *               //    U: [ [ 6, 0 ], [ 0, 5 ] ],
-	 *               //    P: [ 1, 0 ],
-	 *               //    S: -1;}
+	 * ubique.lu(e);
+	 * // { LU: [ [ 6, 0 ], [ 0, 5 ] ],
+	 * //    L: [ [ 1, 0 ], [ 0, 1 ] ],
+	 * //    U: [ [ 6, 0 ], [ 0, 5 ] ],
+	 * //    P: [ 1, 0 ],
+	 * //    S: -1;}
 	 */
 	 $u.lu = function(x) {
 	 	if (arguments.length === 0) {
@@ -3387,7 +3570,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	 	// LU decomposition
 	 	var lud = function(a) {
-	 		var _a = a;
+	 		var _a = $u.clone(a);
 	 		m = $u.nrows(_a),
 	 		n = $u.ncols(_a),
 	 		piv = $u.colon(0,m - 1),
@@ -3506,11 +3689,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {array}       
 	 *
 	 * @example
-	 * ubique.array(); // []
-	 * ubique.array(3): // [NaN, NaN, NaN]
-	 * ubique.array(3,-1); // [-1, -1, -1]
-	 * ubique.array(3,'y'); // [ 'y', 'y', 'y' ]
-	 * ubique.array(3,true); // [ true, true, true ]
+	 * ubique.array();
+	 * // []
+	 * ubique.array(3,-1);
+	 * // [-1, -1, -1]
+	 * ubique.array(3,'y');
+	 * // [ 'y', 'y', 'y' ]
+	 * ubique.array(3,true);
+	 * // [ true, true, true ]
 	 */
 	 $u.array = function(n,val) {
 	  if (arguments.length === 0) {
@@ -3540,7 +3726,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Concatenate arrays and matrices
 	 * @description Concatenate arrays and matrices along specified dimension as first argument
 	 *              
-	 * @param  {number|array|matrix...} args variable arguments: first must be a number for dimension (0:rows, 1:columns)
+	 * @param  {number|array|matrix...} args variable arguments (0:rows, 1:columns)
 	 * @return {array|matrix}     
 	 *
 	 * @example
@@ -3550,19 +3736,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var d = [0.5,-3,2.3];
 	 * var f = [[3, 2], [5, 2]];
 	 *
-	 * // Row concat
-	 * ubique.cat(0,a,b); // [[5, 6, 5], [7, 8, -1], [-1, 3, -1], [4, 5, 9]]
-	 * ubique.cat(0,a,b,b); // [[5, 6, 5], [7, 8, -1], [-1, 3, -1], [4, 5, 9], [-1, 3, -1], [4, 5, 9]]
-	 * ubique.cat(0,c,d); // [5, 6, 3, 0.5, -3, 2.3]
-	 * ubique.cat(0,[1],[2]); // [1, 2]
-	 * ubique.cat(0,5,7,9,8); // [5,7,9,8]
-	 * ubique.cat(0,5,7,c); // [5, 7, 5, 6, 3]
-	 *
-	 * // Column concat
-	 * ubique.cat(1,a,b); // [[5, 6, 5, -1, 3, -1], [7, 8, -1, 4, 5, 9]]
-	 * ubique.cat(1,a,b,f); // [[5, 6, 5, -1, 3, -1, 3, 2], [7, 8, -1, 4, 5, 9, 5, 2]]
-	 * ubique.cat(1,a,[2,3]); // [[5, 6, 5, 2], [7, 8, -1, 3]]
-	 * ubique.cat(1,5,6,7); // [[5, 6, 7]]
+	 * ubique.cat(0,a,b);
+	 * // [[5, 6, 5], [7, 8, -1], [-1, 3, -1], [4, 5, 9]]
+	 * ubique.cat(0,a,b,b);
+	 * // [[5, 6, 5], [7, 8, -1], [-1, 3, -1], [4, 5, 9], [-1, 3, -1], [4, 5, 9]]
+	 * ubique.cat(0,c,d);
+	 * // [5, 6, 3, 0.5, -3, 2.3]
+	 * ubique.cat(0,[1],[2]);
+	 * // [1, 2]
+	 * ubique.cat(0,5,7,9,8);
+	 * // [5,7,9,8]
+	 * ubique.cat(0,5,7,c);
+	 * // [5, 7, 5, 6, 3]
+	 * ubique.cat(1,a,b);
+	 * // [[5, 6, 5, -1, 3, -1], [7, 8, -1, 4, 5, 9]]
+	 * ubique.cat(1,a,b,f);
+	 * // [[5, 6, 5, -1, 3, -1, 3, 2], [7, 8, -1, 4, 5, 9, 5, 2]]
+	 * ubique.cat(1,a,[2,3]);
+	 * // [[5, 6, 5, 2], [7, 8, -1, 3]]
+	 * ubique.cat(1,5,6,7);
+	 * // [[5, 6, 7]]
 	 */
 	 $u.cat = function() {
 	 	var _args = arguments,
@@ -3668,11 +3861,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * var b = [[-1,3,-1],[4,5,9]];
 	 * var c = [5,6,3];
-	 * var d = [[[5]]];
+	 * var d = [[5]];
 	 * 
-	 * ubique.clone(b); // [[-1,3,-1],[4,5,9]]
-	 * ubique.clone(c); // [5,6,3]
-	 * ubique.clone(d): // [[[5]]]
+	 * ubique.clone(b);
+	 * // [[-1,3,-1],[4,5,9]]
+	 * ubique.clone(c);
+	 * // [5,6,3]
+	 * ubique.clone(d);
+	 * // [[5]]
 	 */
 	 $u.clone = function(x) {
 	 	if (arguments.length === 0) {
@@ -3721,7 +3917,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {array}   
 	 *
 	 * @example
-	 * ubique.col([[5,6,5],[7,8,-1]],0); // [5, 7]
+	 * ubique.col([[5,6,5],[7,8,-1]],0);
+	 * // [5, 7]
 	 */
 	 $u.col = function(x,n) {
 	  if (arguments.length === 0) {
@@ -3764,10 +3961,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {array}
 	 *
 	 * @example
-	 * ubique.colon(1,10,1); //  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-	 * ubique.colon(10,1,1); //  []
-	 * ubique.colon(-5,5,2); // [-5, -3, -1, 1, 3, 5]
-	 * ubique.colon(-7,14,2); // [-7, -5, -3, -1, 1, 3, 5, 7, 9, 11, 13]
+	 * ubique.colon(1,10,1);
+	 * // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+	 * ubique.colon(10,1,1);
+	 * //  []
+	 * ubique.colon(-5,5,2);
+	 * // [-5, -3, -1, 1, 3, 5]
+	 * ubique.colon(-7,14,2);
+	 * // [-7, -5, -3, -1, 1, 3, 5, 7, 9, 11, 13]
 	 */
 	 $u.colon = function(l,u,s) {
 	 	if (arguments.length === 0) {
@@ -3809,15 +4010,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * @example
 	 * // build diag matrix
-	 * ubique.diag([5,6,-3]); // [[5, 0, 0], [0, 6, 0], [0, 0, -3]]
-	 * ubique.diag([5,6,-3,1]); // [[0, 5, 0, 0], [0, 0, 6, 0], [0, 0, 0, -3], [0, 0, 0, 0]]
-	 * ubique.diag([5,6,-3,-1]); // [[0, 0, 0, 0], [5, 0, 0, 0], [0, 6, 0, 0], [0, 0, -3, 0]]
+	 * ubique.diag([5,6,-3]);
+	 * // [[5, 0, 0], [0, 6, 0], [0, 0, -3]]
+	 * ubique.diag([5,6,-3,1]);
+	 * // [[0, 5, 0, 0], [0, 0, 6, 0], [0, 0, 0, -3], [0, 0, 0, 0]]
+	 * ubique.diag([5,6,-3,-1]);
+	 * // [[0, 0, 0, 0], [5, 0, 0, 0], [0, 6, 0, 0], [0, 0, -3, 0]]
 	 *
 	 * // get diag values from matrix
-	 * ubique.diag([[5, 0, 0], [0, 6, 0], [0, 0, -3]]); // [5,6,-3]
-	 * ubique.diag([[0, 5, 0, 0], [0, 0, 6, 0], [0, 0, 0, -3], [0, 0, 0, 0]],1); // [5,6,-3]
-	 * ubique.diag([[0, 0, 0, 0], [5, 0, 0, 0], [0, 6, 0, 0], [0, 0, -3, 0]],-1); // [5,6,-3]
-	 * ubique.diag([[5, 0, 0], [0, 6, 0], [0, 0, -3]],2); // [0, 0]
+	 * ubique.diag([[5, 0, 0], [0, 6, 0], [0, 0, -3]]);
+	 * // [5,6,-3]
+	 * ubique.diag([[0, 5, 0, 0], [0, 0, 6, 0], [0, 0, 0, -3], [0, 0, 0, 0]],1);
+	 * // [5,6,-3]
+	 * ubique.diag([[0, 0, 0, 0], [5, 0, 0, 0], [0, 6, 0, 0], [0, 0, -3, 0]],-1);
+	 * // [5,6,-3]
+	 * ubique.diag([[5, 0, 0], [0, 6, 0], [0, 0, -3]],2);
+	 * // [0, 0]
 	 */
 	 $u.diag = function(x,k) {
 	 	if ($u.isundefined(k)) {k = 0;}
@@ -3872,9 +4080,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {number|array}   
 	 * 
 	 * @example
-	 * ubique.end([5,6,3]); // 2
-	 * ubique.end([[4,5,0],[-1,2,-3]]); // [1, 2]
-	 * ubique.end([[4,5,0],[-1,2,-3]],0); // 1
+	 * ubique.end([5,6,3]);
+	 * // 2
+	 * ubique.end([[4,5,0],[-1,2,-3]]);
+	 * // [1, 2]
+	 * ubique.end([[4,5,0],[-1,2,-3]],0);
+	 * // 1
 	 */
 	 $u.end = function(x,dim) {
 	 	if (arguments.length === 0) {
@@ -3920,17 +4131,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Identity matrix
 	 * @description Identity matrix
 	 * 
-	 * @param  {number|array|...} args  variable input arguments (max 2)
+	 * @param  {number|array|...} args variable input arguments (max 2)
 	 * @return {number|matrix}     
 	 *
 	 * @example
-	 * ubique.eye(); // 1
-	 * ubique.eye(0); // []
-	 * ubique.eye(1); / [[1]]
-	 * ubique.eye(2); // [[1, 0], [0, 1]]
-	 * ubique.eye([2,1]); // [[1], [0]]
-	 * ubique.eye(1,2); // [[1, 0]]
-	 * ubique.eye(2,3); // [[1, 0, 0], [0, 1, 0]]
+	 * ubique.eye();
+	 * // 1
+	 * ubique.eye(0);
+	 * // []
+	 * ubique.eye(1);
+	 * // [[1]]
+	 * ubique.eye(2);
+	 * // [[1, 0], [0, 1]]
+	 * ubique.eye([2,1]);
+	 * // [[1], [0]]
+	 * ubique.eye(1,2);
+	 * // [[1, 0]]
+	 * ubique.eye(2,3);
+	 * // [[1, 0, 0], [0, 1, 0]]
 	 */
 	 $u.eye = function() {
 	 	if ($u.isundefined(arguments[0]) || $u.isempty(arguments[0])) {
@@ -3966,17 +4184,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Create array of all false
 	 * @description Create array of all false
 	 * 
-	 * @param  {number|array|...} args  variable input arguments (max 2)
+	 * @param  {number|array|...} args variable input arguments (max 2)
 	 * @return {number|matrix}     
 	 *
 	 * @example
-	 * ubique.falses(); // false
-	 * ubique.falses(0); // []
-	 * ubique.falses(1); / [[false]]
-	 * ubique.falses(2); // [[false, false], [false, false]]
-	 * ubique.falses([2,1]); // [[false], [false]]
-	 * ubique.falses(1,2); // [[false, false]]
-	 * ubique.falses(2,3); // [[false, false, false], [false, false, false]]
+	 * ubique.falses();
+	 * // false
+	 * ubique.falses(0);
+	 * // []
+	 * ubique.falses(1);
+	 * // [[false]]
+	 * ubique.falses(2);
+	 * // [[false, false], [false, false]]
+	 * ubique.falses([2,1]);
+	 * // [[false], [false]]
+	 * ubique.falses(1,2);
+	 * // [[false, false]]
+	 * ubique.falses(2,3);
+	 * // [[false, false, false], [false, false, false]]
 	 */
 	 $u.falses = function() {
 	  if ($u.isundefined(arguments[0]) || $u.isempty(arguments[0])) {
@@ -4049,9 +4274,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {number|array|matrix}
 	 *
 	 * @example
-	 * ubique.fix(3.78); // 3
-	 * ubique.fix([4.51,-1.4]); // [4, -1]
-	 * ubique.fix([[4.51,-1.4],[3.78,0.01]]); // [[4, -1], [3, 0]]
+	 * ubique.fix(3.78);
+	 * // 3
+	 * ubique.fix([4.51,-1.4]);
+	 * // [4, -1]
+	 * ubique.fix([[4.51,-1.4],[3.78,0.01]]);
+	 * // [[4, -1], [3, 0]]
 	 */
 	 $u.fix = function(x) {
 	 	if (arguments.length === 0) {
@@ -4080,7 +4308,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @method flatten
 	 * @summary Flatten a matrix
 	 * @description Flatten a matrix and returns an array. The concatenation is made by columns.
-	 * Example: flatten([[a,b],[c,d]]) returns [a,c,b,d]
 	 * 
 	 * @param  {matrix} x matrix of elements
 	 * @param  {number} dim dimension selected, 1: column 0: row (def: 1)
@@ -4089,9 +4316,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * var l = [[1,1,-1],[1,-2,3],[2,3,1]];
 	 * 
-	 * ubique.flatten([[5,6],[7,8]]); // [5, 7, 6, 8]
-	 * ubique.flatten([[5,6],[7,8]],1); // [5, 6, 7, 8]
-	 * ubique.flatten(l); // [1, 1, 2, 1, -2, 3, -1, 3, 1]
+	 * ubique.flatten([[5,6],[7,8]]);
+	 * // [5, 7, 6, 8]
+	 * ubique.flatten([[5,6],[7,8]],1);
+	 * // [5, 6, 7, 8]
+	 * ubique.flatten(l);
+	 * // [1, 1, 2, 1, -2, 3, -1, 3, 1]
 	 */
 	 $u.flatten = function(x,dim) {
 	 	if (arguments.length === 0) {
@@ -4132,7 +4362,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Flip order of elements in array or matrix
 	 * @description Flip order of elements in array or matrix
 	 * 
-	 * @param  {array|matrix} x  array or matrix of elements
+	 * @param  {array|matrix} x array or matrix of elements
 	 * @param  {number} dim dimension to apply reverse ordering 0: rows, 1: column (def: 0)
 	 * @return {array|matrix}     
 	 * 
@@ -4140,10 +4370,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var a = [[5,6,5],[7,8,-1]];
 	 * var c = [5,6,3];
 	 * 
-	 * ubique.flipdim(c); // [3, 6, 5]
-	 * ubique.flipdim(c,1); // [5, 6, 3]
-	 * ubique.flipdim(a); // [[7, 8, -1], [5, 6, 5]]
-	 * ubique.flipdim(a,1); // [[5, 6, 5], [-1, 8, 7]]
+	 * ubique.flipdim(c);
+	 * // [3, 6, 5]
+	 * ubique.flipdim(c,1);
+	 * // [5, 6, 3]
+	 * ubique.flipdim(a);
+	 * // [[7, 8, -1], [5, 6, 5]]
+	 * ubique.flipdim(a,1);
+	 * // [[5, 6, 5], [-1, 8, 7]]
 	 */
 	 $u.flipdim = function(x,dim) {
 	  if (arguments.length === 0) {
@@ -4152,6 +4386,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if (arguments.length === 1) {
 	    dim = 1;
 	  }
+	  var _flipdim = function(a) {
+	    var b = a.reverse();
+	    return $u.clone(a.reverse());
+	  }
 	  if ($u.isnumber(x)) {
 	    return x;
 	  } else 
@@ -4159,11 +4397,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (dim === 1) {
 	      return x
 	    } else {
-	      return x.reverse();
+	      return _flipdim(x);
 	    }
 	  } else 
 	  if ($u.ismatrix(x)) {
-	    return $u.vectorfun(x,function(val){return val.reverse();},1 - dim);
+	    return $u.vectorfun(x,function(val){return _flipdim(val);},1 - dim);
 	  } else {
 	    throw new Error('unknown input arguments');
 	  }
@@ -4188,7 +4426,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {array|matrix}   
 	 *
 	 * @example
-	 * ubique.fliplr([[1,4],[2,5],[3,6]]); // [[4, 1], [5, 2], [6, 3]]
+	 * ubique.fliplr([[1,4],[2,5],[3,6]]);
+	 * // [[4, 1], [5, 2], [6, 3]]
 	 */
 	 $u.fliplr = function(x) {
 	 	if (arguments.length === 0) {
@@ -4217,7 +4456,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {array|matrix}   
 	 *
 	 * @example
-	 * ubique.fliplr([[1,4],[2,5],[3,6]]); // [[3, 6], [2, 5], [1, 4]]
+	 * ubique.fliplr([[1,4],[2,5],[3,6]]);
+	 * // [[3, 6], [2, 5], [1, 4]]
 	 */
 	 $u.flipud = function(x) {
 	 		if (arguments.length === 0) {
@@ -4251,11 +4491,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var d = [0.5,-3,2.3];
 	 * var f = [[3, 2], [5, 2]];
 	 *
-	 * ubique.horzcat(a,b); // [[5, 6, 5, -1, 3, -1], [7, 8, -1, 4, 5, 9]]
-	 * ubique.horzcat(a,b,f); // [[5, 6, 5, -1, 3, -1, 3, 2], [7, 8, -1, 4, 5, 9, 5, 2]]
-	 * ubique.horzcat(a,[2,3]); // [[5, 6, 5, 2], [7, 8, -1, 3]]
-	 * ubique.horzcat(5,6,7); // [[5, 6, 7]]
-	 * ubique.horzcat($u.transpose(c)); // [[5, 5, 6, 3]]
+	 * ubique.horzcat(a,b);
+	 * // [[5, 6, 5, -1, 3, -1], [7, 8, -1, 4, 5, 9]]
+	 * ubique.horzcat(a,b,f);
+	 * // [[5, 6, 5, -1, 3, -1, 3, 2], [7, 8, -1, 4, 5, 9, 5, 2]]
+	 * ubique.horzcat(a,[2,3]);
+	 * // [[5, 6, 5, 2], [7, 8, -1, 3]]
+	 * ubique.horzcat(5,6,7);
+	 * // [[5, 6, 7]]
+	 * ubique.horzcat(ubique.transpose(c));
+	 * // [[5, 5, 6, 3]]
 	 */
 	 $u.horzcat = function() {
 	 	var _args = [1];
@@ -4281,16 +4526,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @description Multiple subscripts from linear index. Returns an array or matrix with 
 	 * the equivalent row and column of the corresponding index. 
 	 * 
-	 * @param  {array|matrix} size  size of array or matrix
+	 * @param  {array|matrix} size size of array or matrix
 	 * @param  {number|array} index linear indexing [0...N-1]
 	 * @return {array|matrix}       
 	 *
 	 * @example
 	 * var a = [[5,6,5],[7,8,-1]];
 	 * 
-	 * ubique.ind2sub(ubique.size(a),5); // [1, 2]
-	 * ubique.ind2sub(ubique.size(a),[0,1,2]); // [[0, 0], [1, 0], [0, 1]]
-	 * ubique.ind2sub(ubique.size([5,6,3]),2); // [2, 0]
+	 * ubique.ind2sub(ubique.size(a),5);
+	 * // [1, 2]
+	 * ubique.ind2sub(ubique.size(a),[0,1,2]);
+	 * // [[0, 0], [1, 0], [0, 1]]
+	 * ubique.ind2sub(ubique.size([5,6,3]),2);
+	 * // [2, 0]
 	 */
 	 $u.ind2sub = function(size,index) {
 	  if (arguments.length === 0) {
@@ -4325,11 +4573,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary True for column vector
 	 * @description True for column vector
 	 *              
-	 * @param  {matrix}  x input matrix
+	 * @param  {matrix} x input matrix
 	 * @return {Boolean}   
 	 *
 	 * @example
-	 * ubique.iscolumn([[2],[2]]); // true
+	 * ubique.iscolumn([[2],[2]]);
+	 * // true
 	 */
 	 $u.iscolumn = function(x) {
 	 	if (arguments.length === 0) {
@@ -4356,11 +4605,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary True for row vector
 	 * @description True for row vector
 	 *              
-	 * @param  {matrix}  x input matrix
+	 * @param  {matrix} x input matrix
 	 * @return {Boolean}   
 	 *
 	 * @example
-	 * ubique.isrow([[2,2]]); // true
+	 * ubique.isrow([[2,2]]);
+	 * // true
 	 */
 	 $u.isrow = function(x) {
 	 	if (arguments.length === 0) {
@@ -4387,17 +4637,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary True for square matrix
 	 * @description True for square matrix
 	 *              
-	 * @param  {matrix}  x input matrix
+	 * @param  {matrix} x input matrix
 	 * @return {Boolean}   
 	 *
 	 * @example
-	 * ubique.issquare([[9, 5], [6, 1]]); // true
+	 * ubique.issquare([[9, 5], [6, 1]]);
+	 * // true
 	 */
 	 $u.issquare = function(x) {
 	 	if (arguments.length === 0) {
 	 		throw new Error('not enough input arguments');
 	 	}
-
 	 	if ($u.nrows(x) === $u.ncols(x)) {
 	 		return true;
 	 	}
@@ -4423,12 +4673,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	* @return {number}
 	*
 	* @example
-	* ubique.length([3,5,6]); // 3
-	* ubique.length(5); // 1
-	* ubique.length([[5,4],[-1,2]]); // 2
+	* ubique.length([3,5,6]);
+	* // 3
+	* ubique.length(5);
+	* // 1
+	* ubique.length([[5,4],[-1,2]]);
+	* // 2
 	*/
 	$u.length = function(x) {
-		return Math.max.apply(Math,$u.size(x));
+	  if (arguments.length === 0) {
+	    throw new Error('not enough input arguments');
+	  }
+	  return Math.max.apply(Math,$u.size(x));
 	}
 
 	}
@@ -4452,19 +4708,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {array}
 	 *
 	 * @example
-	 * ubique.linspace(1,10,5); // [1, 3.25, 5.5, 7.75, 10]
+	 * ubique.linspace(1,10,5);
+	 * // [1, 3.25, 5.5, 7.75, 10]
 	 */
 	 $u.linspace = function(a,b,n) {
-	 	if ($u.isundefined(n)) {n = 100;}
-	 	var v = new Array(n),
-	 	step = (b - a) / (n - 1);
-	 	v[0] = a;
-	 	v[n - 1] = b;
-	 	for (var i = 0;i < n;i++) {
-	 		v[i] = a + step * i;
-	 	}
-	 	return v;
+	  if (arguments.length < 2) {
+	    throw new Error('not enough input arguments');
+	  }
+	  if (arguments.length === 2) {
+	    n = 10;
+	  }
+	  var v = new Array(n),
+	  step = (b - a) / (n - 1);
+	  v[0] = a;
+	  v[n - 1] = b;
+	  for (var i = 0;i < n;i++) {
+	   v[i] = a + step * i;
 	 }
+	 return v;
+	}
 
 	}
 
@@ -4487,11 +4749,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {array}
 	 *
 	 * @example
-	 * ubique.logspace(0,1,5); // [1, 1.7782794100389228, 3.1622776601683795, 5.623413251903491, 10]
+	 * ubique.logspace(0,1,5);
+	 * // [1, 1.7782794100389228, 3.1622776601683795, 5.623413251903491, 10]
 	 */
-	$u.logspace = function(a,b,n) {
-	 	return $u.linspace(a,b,n).map(function(val){return Math.pow(10,val)});
-	 }
+	 $u.logspace = function(a,b,n) {
+	  if (arguments.length < 2) {
+	    throw new Error('not enough input arguments');
+	  }
+	  if (arguments.length === 2) {
+	    n = 10;
+	  }
+	  return $u.linspace(a,b,n).map(function(val){return Math.pow(10,val)});
+	}
 
 	}
 
@@ -4507,18 +4776,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @method matrix
 	 * @summary Create a matrix object
 	 * @description Create a matrix object with 2 inputs, an array of size [rows,cols] and a chosen value
-	 * or with 3 inputs, two numbers for dimension (rows,cols) and the last one for the value
+	 * or with 3 inputs, two numbers for dimension (rows,cols) and the last one for the value.
 	 * 
 	 * @param  {number|array|...} args variable input arguments (max 3)
 	 * @return {matrix}       
 	 *
 	 * @example
-	 * ubique.matrix(0); // []
-	 * ubique.matrix(2): // [[NaN, NaN], [NaN, NaN]]
-	 * ubique.matrix([2,3]); // [[NaN, NaN, NaN], [NaN, NaN, NaN]]
-	 * ubique.matrix(2,3); // [[NaN, NaN, NaN], [NaN, NaN, NaN]]
-	 * ubique.matrix([2,3],0); // [[0, 0, 0], [0, 0, 0]]
-	 * ubique.matrix(2,3); // [[0, 0, 0], [0, 0, 0]]
+	 * ubique.matrix(0);
+	 * // []
+	 * ubique.matrix(2);
+	 * // [[0, 0], [0, 0]]
+	 * ubique.matrix([2,3]);
+	 * // [[0, 0, 0], [0, 0, 0]]
+	 * ubique.matrix(2,3);
+	 * // [[0, 0, 0], [0, 0, 0]]
+	 * ubique.matrix([2,3],5);
+	 * // [[5, 5, 5], [5, 5, 5]]
+	 * ubique.matrix(2,3);
+	 * // [[0, 0, 0], [0, 0, 0]]
 	 */
 	 $u.matrix = function() {
 	 	if (arguments.length === 0) {
@@ -4541,17 +4816,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	 	} else
 	 	if (nargs === 1) {
 	 		if ($u.isnumber(_args[0])) {
-	 			return _matrix(_args[0],_args[0],NaN);
+	 			return _matrix(_args[0],_args[0],0);
 	 		} else 
 	 		if ($u.isarray(_args[0])) {
-	 			return _matrix(_args[0][0],_args[0][1],NaN);
+	 			return _matrix(_args[0][0],_args[0][1],0);
 	 		} else {
 	 			throw new Error('unknwon input type');
 	 		}
 	 	} else
 	 	if (nargs === 2) {
 	 		if ($u.isnumber(_args[0]) && $u.isnumber(_args[1])) {
-	 			return _matrix(_args[0],_args[1],NaN);
+	 			return _matrix(_args[0],_args[1],0);
 	 		}
 	 		return _matrix(_args[0][0],_args[0][1],_args[1]);
 	 	} else
@@ -4575,11 +4850,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * @method mergesort
 	 * @summary Sort array in ascending/descending order
-	 * @description  Mergesort is a divide and conquer algorithm that was invented by John von Neumann. 
+	 * @description  Mergesort is a divide and conquer algorithm that was invented by John von Neumann.
 	 * A merge sort works as follows:
+	 * 
 	 * 1 - Divide the unsorted list into n sublists, each containing 1 element (a list of 1 element is considered sorted).
 	 * 2 - Repeatedly merge sublists to produce new sorted sublists until there is only 1 sublist remaining. This will be the sorted list.
-	 * [Source: http://en.wikipedia.org/wiki/Merge_sort]
+	 * 
+	 * Source: [Merge sort](http://en.wikipedia.org/wiki/Merge_sort)
 	 * 
 	 * @param  {array} x array of elements
 	 * @param  {string} mode sorting direction, "ascend" (default) or "descend"
@@ -4588,8 +4865,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * var x = [3,1,-1,0,5];
 	 * 
-	 * ubique.mergesort([3,1,-1,5],"ascend"); // [-1, 1, 3, 5]
-	 * ubique.mergesort(x,"descend"); // [5, 3, 1, 0, -1]
+	 * ubique.mergesort([3,1,-1,5],"ascend");
+	 * // [-1, 1, 3, 5]
+	 * ubique.mergesort(x,"descend");
+	 * // [5, 3, 1, 0, -1]
 	 */
 	 $u.mergesort = function(x,mode) {
 	 	if (arguments.length === 0) {
@@ -4656,12 +4935,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {number}   
 	 *
 	 * @example
-	 * ubique.ncols([5,6,7]); // 1
-	 * ubique.ncols([[3,2,7],[4,5,6]]); //  3
+	 * ubique.ncols([5,6,7]);
+	 * // 1
+	 * ubique.ncols([[3,2,7],[4,5,6]]);
+	 * //  3
 	 */
 	 $u.ncols = function(x) {
-	 	return $u.size(x)[1];
-	 }
+	  if (arguments.length === 0) {
+	    throw new Error('not enough input arguments');
+	  }
+	  return $u.size(x)[1];
+	}
 
 	}
 
@@ -4682,11 +4966,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	* @return {number}  
 	*
 	* @example
-	* ubique.ndims([3,5,6]); // 2
-	* ubique.ndims([[3,2,7],[4,5,6]]); // 2
+	* ubique.ndims([3,5,6]);
+	* // 2
+	* ubique.ndims([[3,2,7],[4,5,6]]);
+	* // 2
 	*/
 	$u.ndims = function(x) {
-		return $u.length($u.size(x));
+	  if (arguments.length === 0) {
+	    throw new Error('not enough input arguments');
+	  }
+	  return $u.length($u.size(x));
 	}
 
 	}
@@ -4708,12 +4997,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {number}  
 	 *
 	 * @example
-	 * ubique.nrows([5,6,7]); // 3
-	 * ubique.nrows([[3,2,7],[4,5,6]]); // 2
+	 * ubique.nrows([5,6,7]);
+	 * // 3
+	 * ubique.nrows([[3,2,7],[4,5,6]]);
+	 * // 2
 	 */
 	 $u.nrows = function(x) {
-	 	return $u.size(x)[0];
-	 }
+	  if (arguments.length === 0) {
+	    throw new Error('not enough input arguments');
+	  }
+	  return $u.size(x)[0];
+	}
 
 	}
 
@@ -4734,12 +5028,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {number} 
 	 *
 	 * @example
-	 * ubique.numel([3,5,6]); // 3
-	 * ubique.numel([[3,2,7],[4,5,6]]); // 6
+	 * ubique.numel([3,5,6]);
+	 * // 3
+	 * ubique.numel([[3,2,7],[4,5,6]]);
+	 * // 6
 	 */
 	 $u.numel = function(x) {
-	 	return $u.size(x)[0] * $u.size(x)[1];
-	 }
+	  if (arguments.length === 0) {
+	    throw new Error('not enough input arguments');
+	  }
+	  return $u.size(x)[0] * $u.size(x)[1];
+	}
 
 	}
 
@@ -4756,17 +5055,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Create array of all ones
 	 * @description Create array of all ones
 	 * 
-	 * @param  {number|array|...} args  variable input arguments (max 2)
+	 * @param  {number|array|...} args variable input arguments (max 2)
 	 * @return {number|matrix}     
 	 *
 	 * @example
-	 * ubique.ones(); // 1
-	 * ubique.ones(0); // []
-	 * ubique.ones(1); / [[1]]
-	 * ubique.ones(2); // [[1, 1], [1, 1]]
-	 * ubique.ones([2,1]); // [[1], [1]]
-	 * ubique.ones(1,2); // [[1, 1]]
-	 * ubique.ones(2,3); // [[1, 1, 1], [1, 1, 1]]
+	 * ubique.ones();
+	 * // 1
+	 * ubique.ones(0);
+	 * // []
+	 * ubique.ones(1);
+	 * // [[1]]
+	 * ubique.ones(2);
+	 * // [[1, 1], [1, 1]]
+	 * ubique.ones([2,1]);
+	 * // [[1], [1]]
+	 * ubique.ones(1,2);
+	 * // [[1, 1]]
+	 * ubique.ones(2,3);
+	 * // [[1, 1, 1], [1, 1, 1]]
 	 */
 	 $u.ones = function() {
 	  if ($u.isundefined(arguments[0]) || $u.isempty(arguments[0])) {
@@ -4796,17 +5102,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Uniformly distribuited pseudorandom numbers
 	 * @description Uniformly distribuited pseudorandom numbers
 	 * 
-	 * @param  {number|array|...} args  variable input arguments (max 2)
+	 * @param  {number|array|...} args variable input arguments (max 2)
 	 * @return {number|matrix}    
 	 *
 	 * @example
-	 * ubique.rand(); // 0.1455961789470166
-	 * ubique.rand(0); // []
-	 * ubique.rand(1); // [[0.12391899712383747]]
-	 * ubique.rand(2); // [[0.33334478829056025, 0.09839745867066085],[0.6006140187382698, 0.3131265211850405]]
-	 * ubique.rand([2,1]); // [[0.40439655422233045], [0.7663801296148449]]
-	 * ubique.rand(1,2); // [[0.16782891773618758, 0.5958379742223769]]
-	 * ubique.rand(2,3); // [[0.890318026766181, 0.7398379456717521, 0.6165686929598451], [0.7234933257568628, 0.9895968120545149, 0.875643968814984]]
+	 * ubique.rand();
+	 * // 0.1455961789470166
+	 * ubique.rand(0);
+	 * // []
+	 * ubique.rand(1);
+	 * // [[0.12391899712383747]]
+	 * ubique.rand(2);
+	 * // [[0.33334478829056025, 0.09839745867066085],[0.6006140187382698, 0.3131265211850405]]
+	 * ubique.rand([2,1]);
+	 * // [[0.40439655422233045], [0.7663801296148449]]
+	 * ubique.rand(1,2);
+	 * // [[0.16782891773618758, 0.5958379742223769]]
+	 * ubique.rand(2,3);
+	 * // [[0.890318026766181, 0.7398379456717521, 0.6165686929598451], [0.7234933257568628, 0.9895968120545149, 0.875643968814984]]
 	 */
 	 $u.rand = function() {
 	 	var _args = arguments,
@@ -4860,7 +5173,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Replicate and tile array
 	 * @description  Replicate and tile array
 	 *
-	 * @param  {number|array|matrix|boolean} x  value assigned to every elements of array or matrix
+	 * @param  {number|array|matrix|boolean} x value assigned to every elements of array or matrix
 	 * @param  {number} m number of matrix rows
 	 * @param  {number} n number of matrix columns
 	 * @return {matrix}     
@@ -4868,13 +5181,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * var l = [[1,1,-1],[1,-2,3],[2,3,1]];
 	 * 
-	 * ubique.repmat(10,3); // [[10, 10, 10], [10, 10, 10], [10, 10, 10]]
-	 * ubique.repmat(0.5,3,2); // [[0.5, 0.5], [0.5, 0.5], [0.5, 0.5]]
-	 * ubique.repmat(0.5,1,4); // [[ 0.5, 0.5, 0.5 ]]
-	 * ubique.repmat(NaN,2,4); // [[NaN, NaN, NaN, NaN], [NaN, NaN, NaN, NaN]]
-	 * ubique.repmat(true,4,1);  // [[true], [true], [true], [true]]
-	 * ubique.repmat([5,6,3],1,2); // [[5, 5], [6, 6], [3, 3]]
-	 * ubique.repmat(l,2); // [[1, 1, -1, 1, 1, -1], [1, -2, 3, 1, -2, 3], [2, 3, 1, 2, 3, 1], [1, 1, -1, 1, 1, -1], [1, -2, 3, 1, -2, 3], [2, 3, 1, 2, 3, 1]]
+	 * ubique.repmat(10,3);
+	 * // [[10, 10, 10], [10, 10, 10], [10, 10, 10]]
+	 * ubique.repmat(0.5,3,2);
+	 * // [[0.5, 0.5], [0.5, 0.5], [0.5, 0.5]]
+	 * ubique.repmat(0.5,1,4);
+	 * // [[ 0.5, 0.5, 0.5 ]]
+	 * ubique.repmat(true,4,1); 
+	 * // [[true], [true], [true], [true]]
+	 * ubique.repmat([5,6,3],1,2);
+	 * // [[5, 5], [6, 6], [3, 3]]
+	 * ubique.repmat(l,2);
+	 * // [[1, 1, -1, 1, 1, -1], [1, -2, 3, 1, -2, 3], [2, 3, 1, 2, 3, 1], [1, 1, -1, 1, 1, -1], [1, -2, 3, 1, -2, 3], [2, 3, 1, 2, 3, 1]]
 	 */
 	 $u.repmat = function(x,m,n) {
 	 	if (arguments.length < 2) {
@@ -4915,7 +5233,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Reshape array or matrix with custom values
 	 * @description  Reshape array or matrix with custom values
 	 *
-	 * @param  {array|matrix} x  array or matrix of elements
+	 * @param  {array|matrix} x array or matrix of elements
 	 * @param  {number} m number of rows for the new matrix
 	 * @param  {number} n number of cols for the new matrix
 	 * @return {matrix}     
@@ -4923,9 +5241,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * var b = [[-1,3,-1],[4,5,9]];
 	 * 
-	 * ubique.reshape([5,6,3],1,3); // [[5, 6, 3]]
-	 * ubique.reshape(b,3,2); // [[-1, 5], [4, -1], [3, 9]]
-	 * ubique.reshape(b,6,1); // [[-1], [4], [3], [5], [-1], [9]]
+	 * ubique.reshape([5,6,3],1,3);
+	 * // [[5, 6, 3]]
+	 * ubique.reshape(b,3,2);
+	 * // [[-1, 5], [4, -1], [3, 9]]
+	 * ubique.reshape(b,6,1);
+	 * // [[-1], [4], [3], [5], [-1], [9]]
 	 */
 	 $u.reshape = function(x,m,n) {
 	 	if (arguments.length < 3) {
@@ -4983,8 +5304,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {array}   
 	 *
 	 * @example
-	 * ubique.row([[5,6,5],[7,8,-1]],0); // [5, 6, 5]
-	 * ubique.row([5,6,5]); // 5
+	 * ubique.row([[5,6,5],[7,8,-1]],0);
+	 * // [5, 6, 5]
+	 * ubique.row([5,6,5]);
+	 * // 5
 	 */
 	 $u.row = function(x,n) {
 	 	if (arguments.length === 0) {
@@ -5083,11 +5406,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return  {array}      
 	 *
 	 * @example
-	 * ubique.sort([0,5,-1,3,-4,9,0],'ascend'); // [-4, -1, 0, 0, 3, 5, 9]
-	 * ubique.sort([0,5,-1,3,-4,9,0],'descend'); // [9, 5, 3, 0, 0, -1, -4]
-	 * ubique.sort([[-1,3,-1],[4,5,9]],'ascend'); // [[-1, 3, -1], [4, 5, 9]]
-	 * ubique.sort([[-1,3,-1],[4,5,9]],'descend'); // [[4, 5, 9], [-1, 3, -1]]
-	 * ubique.sort([[-1,3,-1],[4,5,9]],'descend',0); // [[3, -1, -1], [9, 5, 4]]
+	 * ubique.sort([0,5,-1,3,-4,9,0],'ascend');
+	 * // [-4, -1, 0, 0, 3, 5, 9]
+	 * ubique.sort([0,5,-1,3,-4,9,0],'descend');
+	 * // [9, 5, 3, 0, 0, -1, -4]
+	 * ubique.sort([[-1,3,-1],[4,5,9]],'ascend');
+	 * // [[-1, 3, -1], [4, 5, 9]]
+	 * ubique.sort([[-1,3,-1],[4,5,9]],'descend');
+	 * // [[4, 5, 9], [-1, 3, -1]]
+	 * ubique.sort([[-1,3,-1],[4,5,9]],'descend',0);
+	 * // [[3, -1, -1], [9, 5, 4]]
 	 */
 	 $u.sort = function(x,mode,dim) {
 	 	if (arguments.length === 0) {
@@ -5125,7 +5453,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @description Remove singleton dimensions N_D arrays (matrices).
 	 * Number returns number and 1-D array returns 1-D array.
 	 * 
-	 * @param  {string|number|array|matrix} x  elements of X
+	 * @param  {string|number|array|matrix} x elements of X
 	 * @return {string|number|array|matrix}   
 	 *
 	 * @example
@@ -5177,9 +5505,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * var a = [[5,6,5],[7,8,-1]];
 	 * 
-	 * ubique.sub2ind(ubique.size(a),[1, 2]); // 5
-	 * ubique.sub2ind(ubique.size(a),[[0, 0], [1, 0], [0, 1]]); // [0, 1, 2]
-	 * ubique.sub2ind(ubique.size([5,6,3]),[2, 0]); // 2
+	 * ubique.sub2ind(ubique.size(a),[1, 2]);
+	 * // 5
+	 * ubique.sub2ind(ubique.size(a),[[0, 0], [1, 0], [0, 1]]);
+	 * // [0, 1, 2]
+	 * ubique.sub2ind(ubique.size([5,6,3]),[2, 0]);
+	 * // 2
 	 */
 	 $u.sub2ind = function(size,index) {
 	 	if (arguments.length === 0) {
@@ -5367,9 +5698,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {matrix}     
 	 *
 	 * @example
-	 * ubique.tomat(5); // [[5]]
-	 * ubique.tomat([5,6,3]); // [[5], [6], [3]]
-	 * ubique.tomat(true); // [[true]]
+	 * ubique.tomat(5);
+	 * // [[5]]
+	 * ubique.tomat([5,6,3]);
+	 * // [[5], [6], [3]]
+	 * ubique.tomat(true);
+	 * // [[true]]
 	 */
 	 $u.tomat = function(x) {
 	 	if (arguments.length === 0) {
@@ -5416,8 +5750,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var a = [[5,6,5],[7,8,-1]];
 	 * var c = [5,6,3];
 	 *
-	 * ubique.transpose(a); // [ [ 5, 7 ], [ 6, 8 ], [ 5, -1 ] ]
-	 * ubique.transpose(c); // [ [ 5 ], [ 6 ], [ 3 ] ]
+	 * ubique.transpose(a);
+	 * // [ [ 5, 7 ], [ 6, 8 ], [ 5, -1 ] ]
+	 * ubique.transpose(c);
+	 * // [ [ 5 ], [ 6 ], [ 3 ] ]
 	 */
 	 $u.transpose = function(x) {
 	 	if (arguments.length === 0) {
@@ -5453,17 +5789,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Create array of all true
 	 * @description Create array of all true
 	 * 
-	 * @param  {number|array|...} args  variable input arguments (max 2)
+	 * @param  {number|array|...} args variable input arguments (max 2)
 	 * @return {number|matrix}     
 	 *
 	 * @example
-	 * ubique.trues(); // true
-	 * ubique.trues(0); // []
-	 * ubique.trues(1); / [[true]]
-	 * ubique.trues(2); // [[true, true], [true, true]]
-	 * ubique.trues([2,1]); // [[true], [true]]
-	 * ubique.trues(1,2); // [[true, true]]
-	 * ubique.trues(2,3); // [[true, true, true], [true, true, true]]
+	 * ubique.trues();
+	 * // true
+	 * ubique.trues(0);
+	 * // []
+	 * ubique.trues(1);
+	 * // [[true]]
+	 * ubique.trues(2);
+	 * // [[true, true], [true, true]]
+	 * ubique.trues([2,1]);
+	 * // [[true], [true]]
+	 * ubique.trues(1,2);
+	 * // [[true, true]]
+	 * ubique.trues(2,3);
+	 * // [[true, true, true], [true, true, true]]
 	 */
 	 $u.trues = function() {
 	  if ($u.isundefined(arguments[0]) || $u.isempty(arguments[0])) {
@@ -5503,12 +5846,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var d = [0.5,-3,2.3];
 	 * var f = [[3, 2], [5, 2]];
 	 *
-	 * ubique.vertcat(a,b); // [[5, 6, 5], [7, 8, -1], [-1, 3, -1], [4, 5, 9]]
-	 * ubique.vertcat(a,b,b); // [[5, 6, 5], [7, 8, -1], [-1, 3, -1], [4, 5, 9], [-1, 3, -1], [4, 5, 9]]
-	 * ubique.vertcat(c,d); // [5, 6, 3, 0.5, -3, 2.3]
-	 * ubique.vertcat([1],[2]); // [1, 2]
-	 * ubique.vertcat(5,7,9,8); // [5,7,9,8]
-	 * ubique.vertcat(5,7,c); // [5, 7, 5, 6, 3]
+	 * ubique.vertcat(a,b);
+	 * // [[5, 6, 5], [7, 8, -1], [-1, 3, -1], [4, 5, 9]]
+	 * ubique.vertcat(a,b,b);
+	 * // [[5, 6, 5], [7, 8, -1], [-1, 3, -1], [4, 5, 9], [-1, 3, -1], [4, 5, 9]]
+	 * ubique.vertcat(c,d);
+	 * // [5, 6, 3, 0.5, -3, 2.3]
+	 * ubique.vertcat([1],[2]);
+	 * // [1, 2]
+	 * ubique.vertcat(5,7,9,8);
+	 * // [5,7,9,8]
+	 * ubique.vertcat(5,7,c);
+	 * // [5, 7, 5, 6, 3]
 	 */
 	 $u.vertcat = function() {
 	 	var _args = [0];
@@ -5533,17 +5882,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Create array or matrix of all zeros
 	 * @description Create array or matrix of all zeros
 	 * 
-	 * @param  {number|array|...} args  variable input arguments (max 2)
+	 * @param  {number|array|...} args variable input arguments (max 2)
 	 * @return {number|matrix}     
 	 *
 	 * @example
-	 * ubique.zeros(); // 0
-	 * ubique.zeros(0); // []
-	 * ubique.zeros(1); / [[0]]
-	 * ubique.zeros(2); // [[0, 0], [0, 0]]
-	 * ubique.zeros([2,1]); // [[0], [0]]
-	 * ubique.zeros(1,2); // [[0, 0]]
-	 * ubique.zeros(2,3); // [[0, 0, 0], [0, 0, 0]]
+	 * ubique.zeros();
+	 * // 0
+	 * ubique.zeros(0);
+	 * // []
+	 * ubique.zeros(1);
+	 * // [[0]]
+	 * ubique.zeros(2);
+	 * // [[0, 0], [0, 0]]
+	 * ubique.zeros([2,1]);
+	 * // [[0], [0]]
+	 * ubique.zeros(1,2);
+	 * // [[0, 0]]
+	 * ubique.zeros(2,3);
+	 * // [[0, 0, 0], [0, 0, 0]]
 	 */
 	 $u.zeros = function() {
 	  if ($u.isundefined(arguments[0]) || $u.isempty(arguments[0])) {
@@ -5567,7 +5923,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * Distribution Tests
 	 */
-	module.exports = function($u) {
+	 module.exports = function($u) {
 	/**
 	 * @method  jbtest
 	 * @summary Jarque-Bera test
@@ -5578,12 +5934,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {number}   
 	 *
 	 * @example
-	 * ubique.jbtest(x); // 0.6360604293924916
+	 * ubique.jbtest(x);
+	 * // 0.6360604293924916
 	 */
-	$u.jbtest = function(x) {
+	 $u.jbtest = function(x) {
+	  if (arguments.length === 0) {
+	    throw new Error('not enough input arguments');
+	  }
 	  var n = x.length,
-	    s = $u.skewness(x),
-	    xk = $u.xkurtosis(x);
+	  s = $u.skewness(x),
+	  xk = $u.xkurtosis(x);
 	  return (n/6) * (Math.pow(s,2) + Math.pow(xk,2)/4);
 	}
 
@@ -5608,11 +5968,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {number}
 	 *
 	 * @example
-	 * var y = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
-	 * var mu = ubique.mean(x), sigma = ubique.std(x);
+	 * var x = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * 
-	 * ubique.normcdf(2); // 0.97725
-	 * ubique.normcdf(0,mu,sigma); // 0.22049
+	 * ubique.normcdf(2);
+	 * // 0.97725
+	 * ubique.normcdf(0,ubique.mean(x),ubique.std(x));
+	 * // 0.22049
 	 */
 	 $u.normcdf = function(x,mu,sigma) {
 	  if (arguments.length === 0) {
@@ -5646,17 +6007,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * Default values: MU = 0, SIGMA = 1
 	 * 
-	 * @param  {number} p     probability value in range [0,1]
-	 * @param  {number} mu    mean value
+	 * @param  {number} p probability value in range [0,1]
+	 * @param  {number} mu mean value
 	 * @param  {number} sigma standard deviation 
 	 * @return {number}       
 	 *
 	 * @example
 	 * var x = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
-	 * var p = 0.01, mu = ubique.mean(x), sigma = ubique.std(x);
 	 *
-	 * ubique.normiv(0.05); // -1.64485
-	 * ubique.norminv(p,mu,sigma); // -0.0361422
+	 * ubique.norminv(0.05);
+	 * // -1.64485
+	 * ubique.norminv(0.01,ubique.mean(x),ubique.std(x));
+	 * // -0.0361422
 	 */
 	 $u.norminv = function(p,mu,sigma) {
 	  if (arguments.length === 0) {
@@ -5695,17 +6057,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * Default values: MU = 0, SIGMA = 1
 	 * 
-	 * @param  {number} x     real value
-	 * @param  {number} mu    mean value (def: 0)
+	 * @param  {number} x real value
+	 * @param  {number} mu mean value (def: 0)
 	 * @param  {number} sigma standard deviation (def: 1)
 	 * @return {number}       
 	 *
 	 * @example
-	 * var y = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
-	 * var mu = ubique.mean(y), sigma = ubique.std(y);
+	 * var x = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * 
-	 * ubique.normpdf(1); // 0.241971
-	 * ubique.normpdf(0,mu,sigma); // 12.7622
+	 * ubique.normpdf(1);
+	 * // 0.241971
+	 * ubique.normpdf(0,ubique.mean(x),ubique.std(x));
+	 * // 12.7622
 	 */
 	 $u.normpdf = function(x,mu,sigma) {
 	  if (arguments.length === 0) {
@@ -5736,7 +6099,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Adjusted Sharpe Ratio
 	 * @description Sharpe Ratio adjusts for skewness and kurtosis with a penalty factor for negative skewness and excess kurtosis
 	 * 
-	 * @param  {array|matrix} x     array of value
+	 * @param  {array|matrix} x array of value
 	 * @param  {number} frisk annual free-risk rate (def: 0)
 	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
 	 * @return {number}       
@@ -5744,10 +6107,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
-	 * var z = ubique.cat(1,x,y);
-	 *
-	 * ubique.adjsharpe(x,0.02/12); // 0.748134
-	 * ubique.adjsharpe(z); // [[0.830583, 0.245232]]
+	 * 
+	 * ubique.adjsharpe(x,0.02/12);
+	 * // 0.748134
+	 * ubique.adjsharpe(ubique.cat(1,x,y));
+	 * // [[0.830583, 0.245232]]
 	 */
 	 $u.adjsharpe = function(x,frisk,dim) {
 	 	if (arguments.length === 0) {
@@ -5798,10 +6162,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
-	 * var z = ubique.cat(1,x,y);
 	 *
-	 * ubique.annavgreturn(x,12); // 0.237261
-	 * ubique.annavgreturn(z,12); // [[0.237261, 0.162131]]
+	 * ubique.annavgreturn(ubique.cat(1,x,y),12);
+	 * // 0.237261
+	 * ubique.annavgreturn(ubique.cat(1,x,y),12);
+	 * // [[0.237261, 0.162131]]
 	 */
 	 $u.annavgreturn = function(x,t,dim) {
 	  if (arguments.length === 0) {
@@ -5848,10 +6213,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
-	 * var z = ubique.cat(1,x,y);
 	 *
-	 * ubique.annavgrisk(x,12); // 0.0804728
-	 * ubique.annavgrisk(z,12); // [[0.0804728, 0.182948]]
+	 * ubique.annavgrisk(ubique.cat(1,x,y),12);
+	 * // 0.0804728
+	 * ubique.annavgrisk(ubique.cat(1,x,y),12);
+	 * // [[0.0804728, 0.182948]]
 	 */
 	 $u.annavgrisk = function(x,t,dim) {
 	 	if (arguments.length === 0) {
@@ -5897,7 +6263,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {number}   
 	 *
 	 * @example
-	 * ubique.annreturn([0.015,0.02],12,20); // [0.00897319, 0.0119524]
+	 * ubique.annreturn([0.015,0.02],12,20);
+	 * // [0.00897319, 0.0119524]
 	 */
 	 $u.annreturn = function(r,t,n) {
 	 	if (arguments.length === 0) {
@@ -5935,10 +6302,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
-	 * var z = ubique.cat(1,x,y);
 	 *
-	 * ubique.avgdrawdown(x); // 0.0115
-	 * ubique.avgdrawdown(z); // [ [ 0.0115, 0.0566 ] ]
+	 * ubique.avgdrawdown(x);
+	 * // 0.0115
+	 * ubique.avgdrawdown(ubique.cat(1,x,y));
+	 * // [ [ 0.0115, 0.0566 ] ]
 	 */
 	 $u.avgdrawdown = function(x,dim) {
 	  if (arguments.length === 0) {
@@ -5987,13 +6355,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {number|array}   
 	 *
 	 * @example
-	 * var x2 = [100,98,101.5,103];
-	 * var y2 = [99.8,96.5,101.1,95.8];
-	 * var z2 = ubique.cat(1,x2,y2);
+	 * var x = [100,98,101.5,103];
+	 * var y = [99.8,96.5,101.1,95.8];
 	 *
-	 * ubique.cagr(x2,4); // 0.00741707
-	 * ubique.cagr(z2,4); // [[0.00741707, -0.0101743]]
-	 * ubique.cagr(z2,2,0); // [-5.00375e-4, -0.00384869, -9.86681e-4, -0.0179535]
+	 * ubique.cagr(x,4);
+	 * // 0.00741707
+	 * ubique.cagr(ubique.cat(1,x,y),4);
+	 * // [[0.00741707, -0.0101743]]
+	 * ubique.cagr(ubique.cat(1,x,y),2,0);
+	 * // [-5.00375e-4, -0.00384869, -9.86681e-4, -0.0179535]
 	 */
 	 $u.cagr = function(x,p,dim) {
 	  if (arguments.length < 2) {
@@ -6035,10 +6405,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
-	 * var z = ubique.cat(1,x,y);
 	 *
-	 * ubique.cdrawdown(x); // [ 0.009, 0.014 ]
-	 * ubique.cdrawdown(z); // [ [ 0.009, 0.005 ], [ 0.014, 0.0957 ] ]
+	 * ubique.cdrawdown(x);
+	 * // [ 0.009, 0.014 ]
+	 * ubique.cdrawdown(ubique.cat(1,x,y));
+	 * // [ [ 0.009, 0.005 ], [ 0.014, 0.0957 ] ]
 	 */
 	 $u.cdrawdown = function(x,dim) {
 	  if (arguments.length === 0) {
@@ -6096,7 +6467,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Downside potential
 	 * @description Downside potential
 	 * 
-	 * @param  {array|matrix} x   array or matrix of values
+	 * @param  {array|matrix} x array or matrix of values
 	 * @param  {number} mar minimum acceptable return (def: 0)
 	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
 	 * @return {number|array}
@@ -6104,10 +6475,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
-	 * var z = ubique.cat(1,x,y);
 	 *
-	 * ubique.downsidepot(x,0.1/100); // 0.0025
-	 * ubique.downsidepot(z); // [[0.0023, 0.0173]]
+	 * ubique.downsidepot(x,0.1/100);
+	 * // 0.0025
+	 * ubique.downsidepot(ubique.cat(1,x,y));
+	 * // [[0.0023, 0.0173]]
 	 */
 	 $u.downsidepot = function(x,mar,dim) {
 	 	if (arguments.length === 0) {
@@ -6149,9 +6521,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * @method downsiderisk
 	 * @summary Downside Risk
-	 * @description  Downside Risk or Semi-Standard Deviation. Measures  the  variability  of  underperformance  below  a  minimum  target   rate 
+	 * @description Downside Risk or Semi-Standard Deviation. 
+	 * Measures  the  variability  of  underperformance  below  a  minimum  target   rate 
 	 * 
-	 * @param  {array|matrix} x   array or matrix of values
+	 * @param  {array|matrix} x array or matrix of values
 	 * @param  {number} mar minimum acceptable return (def: 0)
 	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
 	 * @return {number|array}
@@ -6159,10 +6532,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
-	 * var z = ubique.cat(1,x,y);
 	 *
-	 * ubique.downsiderisk(x,0.1/100); // 0.00570088
-	 * ubique.downsiderisk(z); // [[0.00526308, 0.0282082]]
+	 * ubique.downsiderisk(x,0.1/100);
+	 * // 0.00570088
+	 * ubique.downsiderisk(ubique.cat(1,x,y));
+	 * // [[0.00526308, 0.0282082]]
 	 */
 	 $u.downsiderisk = function(x,mar,dim) {
 	 	if (arguments.length === 0) {
@@ -6205,29 +6579,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @method drawdown
 	 * @summary Drawdown
 	 * @description Any continuous losing return period. Return drawdown from peak and time to recovery arrays
-	 *  
-	 * @param  {array|matrix} x    asset/portfolio matrix of equity time series with the oldest value in x[0] and the last one in x[N-1]
+	 *
+	 * Returns an object with:
+	 *
+	 * dd (drawdown array)
+	 * ddrecov (drawdown recovery index)
+	 * maxdd (max drawdown)
+	 * maxddrecov (max drawdown recovery period): [start period, end period]
+	 * 
+	 * @param  {array|matrix} x asset/portfolio matrix of equity time series with the oldest value in x[0] and the last one in x[N-1]
 	 * @param  {string} mode drawdown calculation. 'return','geometric' (def: 'return')
 	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
-	 * @return {object|matrix}  .dd (drawdown array)
-	 *                          .ddrecov (drawdown recovery index)
-	 *                          .maxdd (max drawdown)
-	 *                          .maxddrecov (max drawdown recovery period): [start period, end period]
+	 * @return {object}  
 	 *
 	 * @example
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
-	 * var xx = $u.cumprod($u.plus(x,1));
-	 * var yy = $u.cumprod($u.plus(y,1));
-	 * var zz = ubique.cat(1,xx,yy);
-	 *
-	 * ubique.drawdown(xx);
+	 * 
+	 * ubique.drawdown(ubique.cumprod(ubique.plus(x,1)));
 	 * // { dd: [ 0, 0, 0, 0.00900000000000004, 0, 0, 0, 0, 0.013999999999999995, 0 ],
 	 * //   ddrecov: [ 0, 0, 0, 4, 0, 0, 0, 0, 9, 0 ],
 	 * //   maxdd: 0.013999999999999995,
 	 * //   maxddrecov: [ 8, 9 ] }
 	 *
-	 * ubique.drawdown(zz);
+	 * ubique.drawdown(ubique.cat(1,ubique.cumprod(ubique.plus(x,1)),ubique.cumprod(ubique.plus(y,1))));
 	 * // [ [ { dd: [Object],
 	 * //     ddrecov: [Object],
 	 * //     maxdd: 0.013999999999999995,
@@ -6312,7 +6687,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Historical Conditional Value-At-Risk
 	 * @description Historical Conditional Value-At-Risk. Univariate historical simulation.Single asset
 	 * 
-	 * @param  {array|matrix} array or matrix of values    
+	 * @param  {array|matrix} x array or matrix of values    
 	 * @param  {number} p confidence level in the range [0,1] (def: 0.95)
 	 * @param  {number} amount amount (def: 1)
 	 * @param  {period} period time horizon (def: 1)
@@ -6322,13 +6697,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
-	 * var z = ubique.cat(1,x,y);
 	 * 
 	 * // historical daily conditional VaR at 5% conf level
-	 * ubique.histcondvar(z,0.95); // [[0.014, 0.061]]
+	 * ubique.histcondvar(ubique.cat(1,x,y),0.95);
+	 * // [[0.014, 0.061]]
 	 *
 	 * // historical daily conditional VaR at 1% for 100k GBP asset over 10 days 
-	 * ubique.histcondvar(z,0.99,100000,10); // [[4427.19, 19289.9]]
+	 * ubique.histcondvar(ubique.cat(1,x,y),0.99,100000,10);
+	 * // [[4427.19, 19289.9]]
 	 */
 	 $u.histcondvar = function(x,p,amount,period,dim) {
 	  if (arguments.length === 0) {
@@ -6388,7 +6764,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Historical Value-At-Risk
 	 * @description Univariate historical simulation. Single asset
 	 * 
-	 * @param  {array|matrix} array or matrix of values    
+	 * @param  {array|matrix} x array or matrix of values    
 	 * @param  {number} p confidence level in the range [0,1] (def: 0.95)
 	 * @param  {number} amount amount (def: 1)
 	 * @param  {period} period time horizon (def: 1)
@@ -6398,13 +6774,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
-	 * var z = ubique.cat(1,x,y);
 	 * 
 	 * // historical daily VaR at 5% conf level
-	 * ubique.histvar(z,0.95); // [[0.014, 0.061]]
+	 * ubique.histvar(ubique.cat(1,x,y),0.95);
+	 * // [[0.014, 0.061]]
 	 *
 	 * // historical daily VaR at 1% for 100k GBP asset over 10 days 
-	 * ubique.histvar(z,0.99,100000,10); //[[4427.19, 19289.9]]
+	 * ubique.histvar(ubique.cat(1,x,y),0.99,100000,10);
+	 * // [[4427.19, 19289.9]]
 	 */
 	 $u.histvar = function(x,p,amount,period,dim) {
 	  if (arguments.length === 0) {
@@ -6465,11 +6842,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
-	 * var z = ubique.cat(1,x,y);
 	 * 
-	 * ubique.hurst(x); // 0.344059
-	 * ubique.hurst(x,1); // 0.3669383
-	 * ubique.hurst(z); // [[0.344059, 0.51531]]
+	 * ubique.hurst(x);
+	 * // 0.344059
+	 * ubique.hurst(x,1);
+	 * // 0.3669383
+	 * ubique.hurst(ubique.cat(1,x,y));
+	 * // [[0.344059, 0.51531]]
 	 */
 	 $u.hurst = function(x,flag,dim) {
 	 	if (arguments.length === 0) {
@@ -6512,8 +6891,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Information Ratio
 	 * @description Information Ratio
 	 * 
-	 * @param  {array|matrix} x     asset/portfolio values
-	 * @param  {array} y     benchmark values
+	 * @param  {array|matrix} x asset/portfolio values
+	 * @param  {array} y benchmark values
 	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
 	 * @return {number|matrix}      
 	 *
@@ -6522,8 +6901,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 	 * var z = [0.04,-0.022,0.043,0.028,-0.078,-0.011,0.033,-0.049,0.09,0.087];
 	 *
-	 * ubique.inforatio(x,y); // 0.0936915
-	 * ubique.inforatio(ubique.cat(1,x,y),z); // [[0.0263019, -0.0597049]]
+	 * ubique.inforatio(x,y);
+	 * // 0.0936915
+	 * ubique.inforatio(ubique.cat(1,x,y),z);
+	 * // [[0.0263019, -0.0597049]]
 	 */
 	 $u.inforatio = function(x,y,dim) {
 	   if (arguments.length < 2) {
@@ -6560,20 +6941,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Internal rate of return on an investment based on a series of periodic cash flows
 	 * @description Calculates the internal rate of return on an investment based on a series of regularly/irregurarly periodic cash flows
 	 * 
-	 * @param  {array} cf    income or payments associated with the investment. Must contain at least one negative and one positive cash flow to calculate rate of return, and the first amount must be negative
-	 * @param  {array} cfd   number of calendar days from the beginning of the period that cash flow occurs
-	 * @param  {number} cd    total number of calendar days in the measurement period
+	 * @param  {array} cf income or payments associated with the investment. Must contain at least one negative and one positive cash flow to calculate rate of return, and the first amount must be negative
+	 * @param  {array} cfd number of calendar days from the beginning of the period that cash flow occurs
+	 * @param  {number} cd total number of calendar days in the measurement period
 	 * @param  {number} guess estimate for what the internal rate of return will be (def: 0.1)
 	 * @return {number}       
 	 *
 	 * @example
 	 * //Simple IRR
-	 * ubique.irr([250000,25000,-10000,-285000]); //  0.024712563094781776
-	 * ubique.irr([74.2,37.1,-104.4],[0,1,2],2); //  -0.07410820570460687
+	 * ubique.irr([250000,25000,-10000,-285000]);
+	 * // 0.024712563094781776
+	 * ubique.irr([74.2,37.1,-104.4],[0,1,2],2);
+	 * // -0.07410820570460687
 	 *
 	 * //Modified IRR
-	 * ubique.irr([250000,25000,-10000,-285000],[0,45,69,90],90);  //  0.07692283872311274
-	 * ubique.irr([74.2,37.1,-104.4],[0,14,31],31);  //  -0.07271456460699813
+	 * ubique.irr([250000,25000,-10000,-285000],[0,45,69,90],90);
+	 * // 0.07692283872311274
+	 * ubique.irr([74.2,37.1,-104.4],[0,14,31],31);
+	 * // -0.07271456460699813
 	 */
 	 $u.irr = function(cf,cfd,cd,guess) {
 	   if (arguments.length < 1) {
@@ -6641,8 +7026,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Jensen alpha
 	 * @description  Ex-post alpha calculated with regression line. Free-risk is the avereage free-risk for the timeframe selected.
 	 *
-	 * @param  {array|matrix} x     asset/portfolio values
-	 * @param  {array} y     benchmark values
+	 * @param  {array|matrix} x asset/portfolio values
+	 * @param  {array} y benchmark values
 	 * @param  {number} frisk  free-risk (def: 0)
 	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
 	 * @return {number|matrix}      
@@ -6652,8 +7037,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 	 * var z = [0.04,-0.022,0.043,0.028,-0.078,-0.011,0.033,-0.049,0.09,0.087];
 	 *
-	 * ubique.jensenalpha(x,y); // 0.0176091
-	 * ubique.jensenalpha(ubique.cat(1,x,y),z); // [[0.0263019, -0.0597049]]
+	 * ubique.jensenalpha(x,y);
+	 * // 0.0176091
+	 * ubique.jensenalpha(ubique.cat(1,x,y),z);
+	 * // [[0.0263019, -0.0597049]]
 	 */
 	 $u.jensenalpha = function(x,y,frisk,dim) {
 	  if (arguments.length < 2) {
@@ -6694,19 +7081,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Historical performance of an investment portfolio with external cash flows
 	 * @description Historical performance of an investment portfolio with external cash flows
 	 * 
-	 * @param  {number} ev  ending value
-	 * @param  {number} bv  beginning market value
-	 * @param  {number|array} cf  external cashflows (inflows/outflows)
+	 * @param  {number} ev ending value
+	 * @param  {number} bv beginning market value
+	 * @param  {number|array} cf external cashflows (inflows/outflows)
 	 * @param  {number|array} cfd number of calendar days from the beginning of the period that cash flow occurs
-	 * @param  {number} cd  total number of calendar days in the measurement period
+	 * @param  {number} cd total number of calendar days in the measurement period
 	 * @return {number}
 	 *
 	 * @example
 	 * var ev = 104.4,bv = 74.2,cf = 37.1,cfd = 14, cd = 31;
-	 * ubique.mdietz(ev,bv,cf,cfd,cd); //  -0.07298099559862156
+	 * ubique.mdietz(ev,bv,cf,cfd,cd);
+	 * // -0.07298099559862156
 	 *
 	 * var ev = 1200,bv = 1000,cf = [10,50,35,20],cfd = [15,38,46,79],cd = 90;
-	 * ubique.mdietz(ev,bv,cf,cfd,cd); //  0.0804
+	 * ubique.mdietz(ev,bv,cf,cfd,cd);
+	 * // 0.0804
 	 */
 	 $u.mdietz = function(ev,bv,cf,cfd,cd) {
 	  if (arguments.length < 5) {
@@ -6753,8 +7142,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Modigliani index for risk-adjusted return
 	 * @description Modigliani index for risk-adjusted return
 	 *  
-	 * @param  {array|matrix} x     asset/portfolio values
-	 * @param  {array} y     benchmark values
+	 * @param  {array|matrix} x asset/portfolio values
+	 * @param  {array} y benchmark values
 	 * @param  {number} frisk free-risk rate (def: 0)
 	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
 	 * @return {number|matrix}       
@@ -6764,8 +7153,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 	 * var z = [0.04,-0.022,0.043,0.028,-0.078,-0.011,0.033,-0.049,0.09,0.087];
 	 *
-	 * ubique.modigliani(x,y); // 0.0406941
-	 * ubique.modigliani(ubique.cat(1,x,y),z); // [[0.0425846, 0.0131853]]
+	 * ubique.modigliani(x,y);
+	 * // 0.0406941
+	 * ubique.modigliani(ubique.cat(1,x,y),z);
+	 * // [[0.0425846, 0.0131853]]
 	 */
 	 $u.modigliani = function(x,y,frisk,dim) {
 	  if (arguments.length < 2) {
@@ -6805,22 +7196,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Montecarlo Value-at-Risk
 	 * @description Montecarlo VaR for single asset. Based on geometric Brownian motion.
 	 *
-	 * @param  {number|array} x  array of returns or standard deviation of returns
-	 * @param  {number} p  confidence level in the range [0,1] (def: 0.95)
-	 * @param  {number} t  holding period (def: 1)
+	 * @param  {number|array} x array of returns or standard deviation of returns
+	 * @param  {number} p confidence level in the range [0,1] (def: 0.95)
+	 * @param  {number} t holding period (def: 1)
 	 * @param  {number} fr free-risk rate (def: 0)
-	 * @param  {number} v  asset/portfolio start value (def: 1)
+	 * @param  {number} v asset/portfolio start value (def: 1)
 	 * @param  {number} iter number of iterations
-	 * @return {number}    
+	 * @return {number}  
 	 *
 	 * @example
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 *
 	 * // ex-ante simulated VaR at 95% confidence for t = 1, free risk zero, start capital one
-	 * ubique.montecarlovar(x,0.95,1,0,1,10000); // 0.0771
+	 * ubique.montecarlovar(x,0.95,1,0,1,10000);
+	 * // 0.0771
 	 * 
 	 * // historical simulated daily VaR at 1% for 100k GBP asset over 10 days 
-	 * ubique.montecarlovar(ubique.std(x),0.99,10,0,100000); // 23201.0819
+	 * ubique.montecarlovar(ubique.std(x),0.99,10,0,100000);
+	 * // 23201.0819
 	 */
 	 $u.montecarlovar = function(x) {
 	  if (arguments.length === 0) {
@@ -6866,7 +7259,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary omegaratio ratio
 	 * @description omegaratio ratio
 	 * 
-	 * @param  {array|matrix} x     asset/portfolio returns
+	 * @param  {array|matrix} x asset/portfolio returns
 	 * @param  {number} mar minimum acceptable return (def: 0)
 	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
 	 * @return {number|array}
@@ -6874,10 +7267,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
-	 * var z = ubique.cat(1,x,y);
 	 *
-	 * ubique.omegaratio(x); // 8.7826
-	 * ubique.omegaratio(z); // [ [ 8.7826, 1.7283 ] ]
+	 * ubique.omegaratio(x);
+	 * // 8.7826
+	 * ubique.omegaratio(ubique.cat(1,x,y));
+	 * // [ [ 8.7826, 1.7283 ] ]
 	 */
 	 $u.omegaratio = function(x,mar,dim) {
 	  if (arguments.length === 0) {
@@ -6918,9 +7312,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @description Parametric Conditional Value-At-Risk. More sensitive to the shape of the loss distribution in the tails
 	 * Also known as Expected Shortfall (ES), Expected Tail Loss (ETL).
 	 * 
-	 * @param  {number|array} mu    mean value (def: 0)
+	 * @param  {number|array} mu mean value (def: 0)
 	 * @param  {number|array} sigma standard deviation (def: 1)
-	 * @param  {number} p     cVaR confidende level in range [0,1] (def: 0.95)
+	 * @param  {number} p cVaR confidende level in range [0,1] (def: 0.95)
 	 * @param  {number} amount portfolio/asset amount (def: 1)
 	 * @param  {number} period time horizon (def: 1)
 	 * @return {number}       
@@ -6928,13 +7322,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
-	 * var z = ubique.cat(1,x,y);
 	 *
 	 * // parametric daily Var at 5% conf level
-	 * ubique.paramcondvar(ubique.mean(x),ubique.std(x)); // 0.0300178
+	 * ubique.paramcondvar(ubique.mean(x),ubique.std(x));
+	 * // 0.0300178
 	 *
 	 * //parametric daily VaR at 1% for 100k GBP asset over 10 days (two assets)
-	 * ubique.paramcondvar(ubique.mean(z),ubique.std(z),0.99,100000,10); // [19579, 44511.1]
+	 * ubique.paramcondvar(ubique.mean(ubique.cat(1,x,y)),ubique.std(ubique.cat(1,x,y)),0.99,100000,10);
+	 * // [19579, 44511.1]
 	 */
 	 $u.paramcondvar = function(mu,sigma,p,amount,period) {
 	  if (arguments.length < 2) {
@@ -6989,9 +7384,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Parametric Value-At-Risk
 	 * @description Parametric Value-At-Risk. Asset or portfolio returns are normally distributed.
 	 * 
-	 * @param  {number|array} mu    mean value (def: 0)
+	 * @param  {number|array} mu mean value (def: 0)
 	 * @param  {number|array} sigma standard deviation (def: 1)
-	 * @param  {number} p     VaR confidende level in range [0,1] (def: 0.95)
+	 * @param  {number} p VaR confidende level in range [0,1] (def: 0.95)
 	 * @param  {number} amount portfolio/asset amount (def: 1)
 	 * @param  {number} period time horizon (def: 1)
 	 * @return {number}       
@@ -6999,13 +7394,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
-	 * var z = ubique.cat(1,x,y);
 	 *
 	 * // parametric daily Var at 5% conf level
-	 * ubique.paramvar(ubique.mean(x),ubique.std(x)); // 0.0203108
+	 * ubique.paramvar(ubique.mean(x),ubique.std(x));
+	 * // 0.0203108
 	 *
 	 * //parametric daily VaR at 1% for 100k GBP asset over 10 days (two assets)
-	 * ubique.paramvar(ubique.mean(z),ubique.std(z),0.99,100000,10); // [11429.2, 34867.3]
+	 * ubique.paramvar(ubique.mean(ubique.cat(1,x,y)),ubique.std(ubique.cat(1,x,y)),0.99,100000,10);
+	 * // [11429.2, 34867.3]
 	 */
 	 $u.paramvar = function(mu,sigma,p,amount,period) {
 	 	if (arguments.length < 2) {
@@ -7068,11 +7464,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
-	 * var z = ubique.cat(1,x,y);
 	 *
-	 * ubique.percpos(x); // 0.8
-	 * ubique.percpos(z); // [[0.8, 0.5]]
-	 * ubique.percpos(z,0); // [0.5, 1, 1, 0, 0.5, 1, 0.5, 0.5, 0.5, 1]
+	 * ubique.percpos(x);
+	 * // 0.8
+	 * ubique.percpos(ubique.cat(1,x,y));
+	 * // [[0.8, 0.5]]
+	 * ubique.percpos(ubique.cat(1,x,y),0);
+	 * // [0.5, 1, 1, 0, 0.5, 1, 0.5, 0.5, 0.5, 1]
 	 */
 	 $u.percpos = function(x,dim) {
 	  if (arguments.length === 0) {
@@ -7114,18 +7512,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary  Convert a return series to a value series with a start value
 	 * @description  Convert a return series to a value series with a start value
 	 * 
-	 * @param  {array|matrix} x  array of elements
-	 * @param  {string} mode  method to compute returns. 'simple','continuous' (def: simple)
-	 * @param  {number} sval  start value (def: 1)
+	 * @param  {array|matrix} x array of elements
+	 * @param  {string} mode method to compute returns. 'simple','continuous' (def: simple)
+	 * @param  {number} sval start value (def: 1)
 	 * @return {array|matrix}     
 	 *
 	 * @example
 	 * var d = [0.5,-3,2.3];
 	 * var e = [[9, 5], [6, 1]];
 	 *
-	 * ubique.ret2tick(0.05); // [1, 1.05]
-	 * ubique.ret2tick(d,'simple',100); // [100, 150, -300, -990]
-	 * ubique.ret2tick(e,'simple',100,0); // [[100, 1000, 6000], [100, 700, 1400]]
+	 * ubique.ret2tick(0.05);
+	 * // [1, 1.05]
+	 * ubique.ret2tick(d,'simple',100);
+	 * // [100, 150, -300, -990]
+	 * ubique.ret2tick(e,'simple',100,0);
+	 * // [[100, 1000, 6000], [100, 700, 1400]]
 	 */
 	 $u.ret2tick = function(x,mode,sval,dim) {
 	   if (arguments.length === 0) {
@@ -7195,9 +7596,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * var q = [[89,23,12],[34,5,70]];
 	 * 
-	 * ubique.ror([100,112])); //  0.12
-	 * ubique.ror(q); // [[-0.617978, -0.782609, 4.83333]]
-	 * ubique.ror(q,0); // [-0.865169, 1.05882]
+	 * ubique.ror([100,112]);
+	 * // 0.12
+	 * ubique.ror(q);
+	 * // [[-0.617978, -0.782609, 4.83333]]
+	 * ubique.ror(q,0);
+	 * // [-0.865169, 1.05882]
 	 */
 	 $u.ror = function(x,dim) {
 	  if (arguments.length === 0) {
@@ -7233,7 +7637,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @description Sharpe Ratio.Compute Sharpe ratio for an array X of values (daily, weekly, etc) and
 	 * a free-risk rate. Annual free-risk must be divided to match the right timeframe.
 	 * 
-	 * @param  {array|matrix} x     array of value
+	 * @param  {array|matrix} x array of value
 	 * @param  {number} frisk annual free-risk rate (def: 0)
 	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
 	 * @return {number|arrray}       
@@ -7241,10 +7645,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
-	 * var z = ubique.cat(1,x,y);
 	 *
-	 * ubique.sharpe(x,0.02/12); // 0.698794
-	 * ubique.sharpe(z); // [[0.770539, 0.23858]]
+	 * ubique.sharpe(x,0.02/12);
+	 * // 0.698794
+	 * ubique.sharpe(ubique.cat(1,x,y));
+	 * // [[0.770539, 0.23858]]
 	 */
 	 $u.sharpe = function(x,frisk,dim) {
 	 	if (arguments.length === 0) {
@@ -7284,7 +7689,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Sortino ratio
 	 * @description  Sortino ratio
 	 * 
-	 * @param  {array|matrix} x     asset/portfolio returns
+	 * @param  {array|matrix} x asset/portfolio returns
 	 * @param  {number} frisk free-risk rate (def: 0)
 	 * @param  {number} mar minimum acceptable return (def: 0)
 	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
@@ -7293,10 +7698,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
-	 * var z = ubique.cat(1,x,y);
 	 *
-	 * ubique.sortino(x,0.02/12); // 3.0844
-	 * ubique.sortino(z,0.01/12,0.5); // [ [ 0.0354, 0.024 ] ]
+	 * ubique.sortino(x,0.02/12);
+	 * // 3.0844
+	 * ubique.sortino(ubique.cat(1,x,y),0.01/12,0.5);
+	 * // [ [ 0.0354, 0.024 ] ]
 	 */
 	 $u.sortino = function(x,frisk,mar,dim) {
 	  if (arguments.length === 0) {
@@ -7341,17 +7747,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary  Convert a value series to a return series
 	 * @description  Convert a value series to a return series. 'simple' (default) for simple returns, 'continuous' for continuously compounded
 	 * 
-	 * @param  {array|matrix} x  array of elements
-	 * @param  {string} mode  method to compute returns. 'simple','continuous' (def: simple)
-	 * @param  {number} sval  start value (def: 1)
+	 * @param  {array|matrix} x array of elements
+	 * @param  {string} mode method to compute returns. 'simple','continuous' (def: simple)
+	 * @param  {number} sval start value (def: 1)
 	 * @return {array|matrix}     
 	 *
 	 * @example
 	 * var d = [0.5,-3,2.3];
 	 * var e = [[9, 5], [6, 1]];
 	 *
-	 * ubique.tick2ret(d); // [-7, -1.76667]
-	 * ubique.tick2ret(e); // [[-0.333333, -0.8]]
+	 * ubique.tick2ret(d);
+	 * // [-7, -1.76667]
+	 * ubique.tick2ret(e);
+	 * // [[-0.333333, -0.8]]
 	 */
 	 $u.tick2ret = function(x,mode,dim) {
 	  if (arguments.length === 0) {
@@ -7521,11 +7929,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {number}   
 	 *
 	 * @example
-	 * @example
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 	 *
-	 * ubique.trackerr(x,y); // 0.0566
+	 * ubique.trackerr(x,y);
+	 * // 0.0566
 	 */
 	 $u.trackerr = function(x,y) {
 	  if (arguments.length < 2) {
@@ -7549,8 +7957,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @description Compute the Treynor ratio for an array X of values (daily, weekly, etc) and
 	 * a free-risk rate. Annual free-risk must be divided to match the right timeframe.
 	 * 
-	 * @param  {array} x     array of X values
-	 * @param  {array} y     array of Y values
+	 * @param  {array} x array of X values
+	 * @param  {array} y array of Y values
 	 * @param  {number} frisk  free-risk rate (def: 0)
 	 * @return {number}       
 	 *
@@ -7558,7 +7966,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var x = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 	 * 
-	 * ubique.treynor(x,y,0.01/12); // 0.7392
+	 * ubique.treynor(x,y,0.01/12);
+	 * // 0.7392
 	 */
 	 $u.treynor = function(x,y,frisk) {
 	  if (arguments.length < 2) {
@@ -7591,7 +8000,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * @example
 	 * var mv = [250000,255000,257000,288000,293000,285000], cf = [0,0,25000,0,-10000,0];
-	 * ubique.twr(mv,cf);  //  0.07564769566198049
+	 * ubique.twr(mv,cf);
+	 * // 0.07564769566198049
 	 */
 	 $u.twr = function(mv,cf) {
 	  if (arguments.length === 0) {
@@ -7626,7 +8036,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @description Ulcer Index of Peter G. Martin (1987). The impact of long, deep drawdowns will have significant
 	 * impact because the underperformance since the last peak is squared.
 	 *  
-	 * @param  {array|matrix} x    asset/portfolio matrix of equity time series with the oldest value in x[0] and the last one in x[N-1]
+	 * @param  {array|matrix} x asset/portfolio matrix of equity time series with the oldest value in x[0] and the last one in x[N-1]
 	 * @param  {string} mode drawdown calculation. 'return','geometric' (def: 'return')
 	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
 	 * @return {number|array} 
@@ -7634,12 +8044,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
-	 * var xx = $u.cumprod($u.plus(x,1));
-	 * var yy = $u.cumprod($u.plus(y,1));
+	 * var xx = ubique.cumprod(ubique.plus(x,1));
+	 * var yy = ubique.cumprod(ubique.plus(y,1));
 	 * var zz = ubique.cat(1,xx,yy);
 	 *
-	 * ubique.ulcerindex(xx); // 0.053
-	 * ubique.ulcerindex(zz,'return'); // [ [ 0.0053, 0.0595 ] ]
+	 * ubique.ulcerindex(xx);
+	 * // 0.053
+	 * ubique.ulcerindex(zz,'return');
+	 * // [ [ 0.0053, 0.0595 ] ]
 	 */
 	 $u.ulcerindex = function(x,mode,dim) {
 	  if (arguments.length === 0) {
@@ -7681,7 +8093,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Upside potential
 	 * @description Upside potential
 	 * 
-	 * @param  {array|matrix} x   array or matrix of values
+	 * @param  {array|matrix} x array or matrix of values
 	 * @param  {number} mar minimum acceptable return (def: 0)
 	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
 	 * @return {number|array}
@@ -7689,10 +8101,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
-	 * var z = ubique.cat(1,x,y);
 	 *
-	 * ubique.upsidepot(x,0.1/100); // 0.0194
-	 * ubique.upsidepot(z); // [[0.0202, 0.0299]]
+	 * ubique.upsidepot(x,0.1/100);
+	 * // 0.0194
+	 * ubique.upsidepot(ubique.cat(1,x,y));
+	 * // [[0.0202, 0.0299]]
 	 */
 	 $u.upsidepot = function(x,mar,dim) {
 	  if (arguments.length === 0) {
@@ -7744,8 +8157,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var x = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 	 * 
-	 * ubique.xreturn(x,y); // 0.0053
-	 * ubique.xreturn(0.05,0.015); // 0.035
+	 * ubique.xreturn(x,y);
+	 * // 0.0053
+	 * ubique.xreturn(0.05,0.015);
+	 * // 0.035
 	 */
 	 $u.xreturn = function(x,y) {
 	  if (arguments.length < 2) {
@@ -7997,7 +8412,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    if (arglen === 1 && ($u.isarray(x) || $u.isvector(x))) {
 	    	x = $u.flatten(x);
-	    	return $u.variance(x);
+	    	return $u.varc(x);
 	    }
 	 	if (arglen === 2) {
 	 		y = arguments[1];
@@ -12148,173 +12563,173 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	}).call(this);
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(263)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(183)(module)))
 
 /***/ },
 /* 182 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./af": 183,
-		"./af.js": 183,
-		"./ar": 187,
-		"./ar-ma": 184,
-		"./ar-ma.js": 184,
-		"./ar-sa": 185,
-		"./ar-sa.js": 185,
-		"./ar-tn": 186,
-		"./ar-tn.js": 186,
-		"./ar.js": 187,
-		"./az": 188,
-		"./az.js": 188,
-		"./be": 189,
-		"./be.js": 189,
-		"./bg": 190,
-		"./bg.js": 190,
-		"./bn": 191,
-		"./bn.js": 191,
-		"./bo": 192,
-		"./bo.js": 192,
-		"./br": 193,
-		"./br.js": 193,
-		"./bs": 194,
-		"./bs.js": 194,
-		"./ca": 195,
-		"./ca.js": 195,
-		"./cs": 196,
-		"./cs.js": 196,
-		"./cv": 197,
-		"./cv.js": 197,
-		"./cy": 198,
-		"./cy.js": 198,
-		"./da": 199,
-		"./da.js": 199,
-		"./de": 201,
-		"./de-at": 200,
-		"./de-at.js": 200,
-		"./de.js": 201,
-		"./el": 202,
-		"./el.js": 202,
-		"./en-au": 203,
-		"./en-au.js": 203,
-		"./en-ca": 204,
-		"./en-ca.js": 204,
-		"./en-gb": 205,
-		"./en-gb.js": 205,
-		"./eo": 206,
-		"./eo.js": 206,
-		"./es": 207,
-		"./es.js": 207,
-		"./et": 208,
-		"./et.js": 208,
-		"./eu": 209,
-		"./eu.js": 209,
-		"./fa": 210,
-		"./fa.js": 210,
-		"./fi": 211,
-		"./fi.js": 211,
-		"./fo": 212,
-		"./fo.js": 212,
-		"./fr": 214,
-		"./fr-ca": 213,
-		"./fr-ca.js": 213,
-		"./fr.js": 214,
-		"./fy": 215,
-		"./fy.js": 215,
-		"./gl": 216,
-		"./gl.js": 216,
-		"./he": 217,
-		"./he.js": 217,
-		"./hi": 218,
-		"./hi.js": 218,
-		"./hr": 219,
-		"./hr.js": 219,
-		"./hu": 220,
-		"./hu.js": 220,
-		"./hy-am": 221,
-		"./hy-am.js": 221,
-		"./id": 222,
-		"./id.js": 222,
-		"./is": 223,
-		"./is.js": 223,
-		"./it": 224,
-		"./it.js": 224,
-		"./ja": 225,
-		"./ja.js": 225,
-		"./ka": 226,
-		"./ka.js": 226,
-		"./km": 227,
-		"./km.js": 227,
-		"./ko": 228,
-		"./ko.js": 228,
-		"./lb": 229,
-		"./lb.js": 229,
-		"./lt": 230,
-		"./lt.js": 230,
-		"./lv": 231,
-		"./lv.js": 231,
-		"./mk": 232,
-		"./mk.js": 232,
-		"./ml": 233,
-		"./ml.js": 233,
-		"./mr": 234,
-		"./mr.js": 234,
-		"./ms-my": 235,
-		"./ms-my.js": 235,
-		"./my": 236,
-		"./my.js": 236,
-		"./nb": 237,
-		"./nb.js": 237,
-		"./ne": 238,
-		"./ne.js": 238,
-		"./nl": 239,
-		"./nl.js": 239,
-		"./nn": 240,
-		"./nn.js": 240,
-		"./pl": 241,
-		"./pl.js": 241,
-		"./pt": 243,
-		"./pt-br": 242,
-		"./pt-br.js": 242,
-		"./pt.js": 243,
-		"./ro": 244,
-		"./ro.js": 244,
-		"./ru": 245,
-		"./ru.js": 245,
-		"./sk": 246,
-		"./sk.js": 246,
-		"./sl": 247,
-		"./sl.js": 247,
-		"./sq": 248,
-		"./sq.js": 248,
-		"./sr": 250,
-		"./sr-cyrl": 249,
-		"./sr-cyrl.js": 249,
-		"./sr.js": 250,
-		"./sv": 251,
-		"./sv.js": 251,
-		"./ta": 252,
-		"./ta.js": 252,
-		"./th": 253,
-		"./th.js": 253,
-		"./tl-ph": 254,
-		"./tl-ph.js": 254,
-		"./tr": 255,
-		"./tr.js": 255,
-		"./tzm": 257,
-		"./tzm-latn": 256,
-		"./tzm-latn.js": 256,
-		"./tzm.js": 257,
-		"./uk": 258,
-		"./uk.js": 258,
-		"./uz": 259,
-		"./uz.js": 259,
-		"./vi": 260,
-		"./vi.js": 260,
-		"./zh-cn": 261,
-		"./zh-cn.js": 261,
-		"./zh-tw": 262,
-		"./zh-tw.js": 262
+		"./af": 184,
+		"./af.js": 184,
+		"./ar": 188,
+		"./ar-ma": 185,
+		"./ar-ma.js": 185,
+		"./ar-sa": 186,
+		"./ar-sa.js": 186,
+		"./ar-tn": 187,
+		"./ar-tn.js": 187,
+		"./ar.js": 188,
+		"./az": 189,
+		"./az.js": 189,
+		"./be": 190,
+		"./be.js": 190,
+		"./bg": 191,
+		"./bg.js": 191,
+		"./bn": 192,
+		"./bn.js": 192,
+		"./bo": 193,
+		"./bo.js": 193,
+		"./br": 194,
+		"./br.js": 194,
+		"./bs": 195,
+		"./bs.js": 195,
+		"./ca": 196,
+		"./ca.js": 196,
+		"./cs": 197,
+		"./cs.js": 197,
+		"./cv": 198,
+		"./cv.js": 198,
+		"./cy": 199,
+		"./cy.js": 199,
+		"./da": 200,
+		"./da.js": 200,
+		"./de": 202,
+		"./de-at": 201,
+		"./de-at.js": 201,
+		"./de.js": 202,
+		"./el": 203,
+		"./el.js": 203,
+		"./en-au": 204,
+		"./en-au.js": 204,
+		"./en-ca": 205,
+		"./en-ca.js": 205,
+		"./en-gb": 206,
+		"./en-gb.js": 206,
+		"./eo": 207,
+		"./eo.js": 207,
+		"./es": 208,
+		"./es.js": 208,
+		"./et": 209,
+		"./et.js": 209,
+		"./eu": 210,
+		"./eu.js": 210,
+		"./fa": 211,
+		"./fa.js": 211,
+		"./fi": 212,
+		"./fi.js": 212,
+		"./fo": 213,
+		"./fo.js": 213,
+		"./fr": 215,
+		"./fr-ca": 214,
+		"./fr-ca.js": 214,
+		"./fr.js": 215,
+		"./fy": 216,
+		"./fy.js": 216,
+		"./gl": 217,
+		"./gl.js": 217,
+		"./he": 218,
+		"./he.js": 218,
+		"./hi": 219,
+		"./hi.js": 219,
+		"./hr": 220,
+		"./hr.js": 220,
+		"./hu": 221,
+		"./hu.js": 221,
+		"./hy-am": 222,
+		"./hy-am.js": 222,
+		"./id": 223,
+		"./id.js": 223,
+		"./is": 224,
+		"./is.js": 224,
+		"./it": 225,
+		"./it.js": 225,
+		"./ja": 226,
+		"./ja.js": 226,
+		"./ka": 227,
+		"./ka.js": 227,
+		"./km": 228,
+		"./km.js": 228,
+		"./ko": 229,
+		"./ko.js": 229,
+		"./lb": 230,
+		"./lb.js": 230,
+		"./lt": 231,
+		"./lt.js": 231,
+		"./lv": 232,
+		"./lv.js": 232,
+		"./mk": 233,
+		"./mk.js": 233,
+		"./ml": 234,
+		"./ml.js": 234,
+		"./mr": 235,
+		"./mr.js": 235,
+		"./ms-my": 236,
+		"./ms-my.js": 236,
+		"./my": 237,
+		"./my.js": 237,
+		"./nb": 238,
+		"./nb.js": 238,
+		"./ne": 239,
+		"./ne.js": 239,
+		"./nl": 240,
+		"./nl.js": 240,
+		"./nn": 241,
+		"./nn.js": 241,
+		"./pl": 242,
+		"./pl.js": 242,
+		"./pt": 244,
+		"./pt-br": 243,
+		"./pt-br.js": 243,
+		"./pt.js": 244,
+		"./ro": 245,
+		"./ro.js": 245,
+		"./ru": 246,
+		"./ru.js": 246,
+		"./sk": 247,
+		"./sk.js": 247,
+		"./sl": 248,
+		"./sl.js": 248,
+		"./sq": 249,
+		"./sq.js": 249,
+		"./sr": 251,
+		"./sr-cyrl": 250,
+		"./sr-cyrl.js": 250,
+		"./sr.js": 251,
+		"./sv": 252,
+		"./sv.js": 252,
+		"./ta": 253,
+		"./ta.js": 253,
+		"./th": 254,
+		"./th.js": 254,
+		"./tl-ph": 255,
+		"./tl-ph.js": 255,
+		"./tr": 256,
+		"./tr.js": 256,
+		"./tzm": 258,
+		"./tzm-latn": 257,
+		"./tzm-latn.js": 257,
+		"./tzm.js": 258,
+		"./uk": 259,
+		"./uk.js": 259,
+		"./uz": 260,
+		"./uz.js": 260,
+		"./vi": 261,
+		"./vi.js": 261,
+		"./zh-cn": 262,
+		"./zh-cn.js": 262,
+		"./zh-tw": 263,
+		"./zh-tw.js": 263
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -12332,6 +12747,22 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 183 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function(module) {
+		if(!module.webpackPolyfill) {
+			module.deprecate = function() {};
+			module.paths = [];
+			// module.parent = undefined by default
+			module.children = [];
+			module.webpackPolyfill = 1;
+		}
+		return module;
+	}
+
+
+/***/ },
+/* 184 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -12408,7 +12839,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 184 */
+/* 185 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -12471,7 +12902,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 185 */
+/* 186 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -12578,7 +13009,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 186 */
+/* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -12639,7 +13070,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 187 */
+/* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -12779,7 +13210,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 188 */
+/* 189 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -12892,7 +13323,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 189 */
+/* 190 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -13052,7 +13483,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 190 */
+/* 191 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -13146,7 +13577,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 191 */
+/* 192 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -13263,7 +13694,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 192 */
+/* 193 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -13377,7 +13808,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 193 */
+/* 194 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -13492,7 +13923,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 194 */
+/* 195 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -13638,7 +14069,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 195 */
+/* 196 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -13721,7 +14152,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 196 */
+/* 197 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -13884,7 +14315,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 197 */
+/* 198 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -13951,7 +14382,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 198 */
+/* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -14036,7 +14467,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 199 */
+/* 200 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -14100,7 +14531,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 200 */
+/* 201 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -14180,7 +14611,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 201 */
+/* 202 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -14259,7 +14690,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 202 */
+/* 203 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -14359,7 +14790,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 203 */
+/* 204 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -14429,7 +14860,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 204 */
+/* 205 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -14496,7 +14927,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 205 */
+/* 206 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -14567,7 +14998,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 206 */
+/* 207 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -14644,7 +15075,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 207 */
+/* 208 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -14727,7 +15158,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 208 */
+/* 209 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -14811,7 +15242,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 209 */
+/* 210 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -14879,7 +15310,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 210 */
+/* 211 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -14988,7 +15419,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 211 */
+/* 212 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -15101,7 +15532,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 212 */
+/* 213 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -15165,7 +15596,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 213 */
+/* 214 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -15227,7 +15658,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 214 */
+/* 215 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -15293,7 +15724,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 215 */
+/* 216 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -15368,7 +15799,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 216 */
+/* 217 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -15447,7 +15878,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 217 */
+/* 218 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -15533,7 +15964,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 218 */
+/* 219 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -15660,7 +16091,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 219 */
+/* 220 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -15807,7 +16238,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 220 */
+/* 221 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -15924,7 +16355,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 221 */
+/* 222 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -16048,7 +16479,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 222 */
+/* 223 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -16135,7 +16566,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 223 */
+/* 224 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -16267,7 +16698,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 224 */
+/* 225 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -16341,7 +16772,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 225 */
+/* 226 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -16410,7 +16841,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 226 */
+/* 227 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -16525,7 +16956,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 227 */
+/* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -16587,7 +17018,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 228 */
+/* 229 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -16658,7 +17089,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 229 */
+/* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -16803,7 +17234,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 230 */
+/* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -16929,7 +17360,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 231 */
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -17014,7 +17445,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 232 */
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -17108,7 +17539,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 233 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -17183,7 +17614,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 234 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -17309,7 +17740,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 235 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -17395,7 +17826,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 236 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -17490,7 +17921,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 237 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -17555,7 +17986,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 238 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -17682,7 +18113,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 239 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -17757,7 +18188,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 240 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -17821,7 +18252,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 241 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -17927,7 +18358,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 242 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -17991,7 +18422,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 243 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -18059,7 +18490,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 244 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -18138,7 +18569,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 245 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -18320,7 +18751,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 246 */
+/* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -18484,7 +18915,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 247 */
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -18636,7 +19067,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 248 */
+/* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -18709,7 +19140,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 249 */
+/* 250 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -18822,7 +19253,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 250 */
+/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -18935,7 +19366,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 251 */
+/* 252 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -19006,7 +19437,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 252 */
+/* 253 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -19142,7 +19573,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 253 */
+/* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -19211,7 +19642,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 254 */
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -19277,7 +19708,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 255 */
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -19377,7 +19808,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 256 */
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -19439,7 +19870,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 257 */
+/* 258 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -19501,7 +19932,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 258 */
+/* 259 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -19670,7 +20101,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 259 */
+/* 260 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -19732,7 +20163,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 260 */
+/* 261 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -19802,7 +20233,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 261 */
+/* 262 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -19933,7 +20364,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 262 */
+/* 263 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -20035,22 +20466,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    });
 	}));
-
-
-/***/ },
-/* 263 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = function(module) {
-		if(!module.webpackPolyfill) {
-			module.deprecate = function() {};
-			module.paths = [];
-			// module.parent = undefined by default
-			module.children = [];
-			module.webpackPolyfill = 1;
-		}
-		return module;
-	}
 
 
 /***/ }

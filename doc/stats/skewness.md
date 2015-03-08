@@ -1,6 +1,11 @@
-### skewness(x,flag,dim)
+### skewness
 
 Skewness
+
+
+#### Syntax
+
+ubique.skewness(x,flag,dim)
 
 
 #### Description

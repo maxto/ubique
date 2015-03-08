@@ -1,6 +1,11 @@
-### prctile(x,p,dim)
+### prctile
 
 Percentiles of a sample
+
+
+#### Syntax
+
+ubique.prctile(x,p,dim)
 
 
 #### Description

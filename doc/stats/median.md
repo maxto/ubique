@@ -1,6 +1,11 @@
-### median(x,dim)
+### median
 
 Median value of array
+
+
+#### Syntax
+
+ubique.median(x,dim)
 
 
 #### Description

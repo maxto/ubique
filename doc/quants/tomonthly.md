@@ -1,6 +1,11 @@
-### tomonthly(nd,nv)
+### tomonthly
 
 Convert a time series to a monthly frequency
+
+
+#### Syntax
+
+ubique.tomonthly(nd,nv)
 
 
 #### Description

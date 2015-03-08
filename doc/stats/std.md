@@ -1,6 +1,11 @@
-### std(x,flag,dim)
+### std
 
 Standard deviation
+
+
+#### Syntax
+
+ubique.std(x,flag,dim)
 
 
 #### Description

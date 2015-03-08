@@ -1,6 +1,11 @@
-### format (x,k)
+### format
 
 Set display format for output (numbers)
+
+
+#### Syntax
+
+ubique.format (x,k)
 
 
 #### Description

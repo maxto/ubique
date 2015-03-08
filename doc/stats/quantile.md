@@ -1,6 +1,11 @@
-### quantile(x,p,dim)
+### quantile
 
 Quantilies of a sample
+
+
+#### Syntax
+
+ubique.quantile(x,p,dim)
 
 
 #### Description

@@ -1,6 +1,11 @@
-### annreturn(r,t,n)
+### annreturn
 
 Annualisation of return (1 + X) ^ (t / n)
+
+
+#### Syntax
+
+ubique.annreturn(r,t,n)
 
 
 #### Description
@@ -21,6 +26,7 @@ Annualisation of return (1 + X) ^ (t / n)
 #### Examples
 
 ```js
-ubique.annreturn([0.015,0.02],12,20); // [0.00897319, 0.0119524]
+ubique.annreturn([0.015,0.02],12,20);
+// [0.00897319, 0.0119524]
 ```
 

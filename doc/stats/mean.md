@@ -1,6 +1,11 @@
-### mean(x,dim)
+### mean
 
 Average value of array
+
+
+#### Syntax
+
+ubique.mean(x,dim)
 
 
 #### Description

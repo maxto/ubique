@@ -1,6 +1,11 @@
-### zscore(x,flag,dim)
+### zscore
 
 Standardized Z score
+
+
+#### Syntax
+
+ubique.zscore(x,flag,dim)
 
 
 #### Description

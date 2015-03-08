@@ -1,6 +1,11 @@
-### mode(x,dim)
+### mode
 
 Most frequent value in an array of elements
+
+
+#### Syntax
+
+ubique.mode(x,dim)
 
 
 #### Description

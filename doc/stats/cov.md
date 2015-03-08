@@ -1,6 +1,11 @@
-### cov(x)
+### cov
 
 Covariance matrix
+
+
+#### Syntax
+
+ubique.cov(x)
 
 
 #### Description
