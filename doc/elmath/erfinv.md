@@ -27,6 +27,6 @@ The inverse error function satisfies y = erf(x), for -1 <= y <= 1 and -inf <= x 
 
 ```js
 ubique.erfinv(0.1);
-// 0.08885596505119535
+// 0.08885596505119545
 ```
 

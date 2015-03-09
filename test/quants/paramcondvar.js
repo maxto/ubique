@@ -8,8 +8,12 @@ test('paramcondvar', function (done) {
 var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 
-assert.deepEqual(ubique.paramcondvar(ubique.mean(x),ubique.std(x)),0.030017825479120894);
-assert.deepEqual(ubique.paramcondvar(ubique.mean(ubique.cat(1,x,y)),ubique.std(ubique.cat(1,x,y)),0.99,100000,10),[19578.98084441689,44511.10721941871]);
+assert.deepEqual(ubique.format(ubique.paramcondvar(ubique.mean(x),ubique.std(x))),
+  0.030018);
+assert.deepEqual(
+  ubique.format(ubique.paramcondvar(ubique.mean(ubique.cat(1,x,y)),ubique.std(ubique.cat(1,x,y)),0.99,100000,10)),
+  [ 19578.980844, 44511.107219 ]);
+
 
 
 done();
