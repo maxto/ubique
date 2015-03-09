@@ -1,5 +1,10 @@
 # ChangeLog
 
+### 0.1.4 - 20150309
+
+- Added Unit Test for all functions with auto-code
+- Fixed bugs in documentation and functions
+
 ### 0.1.3 - 20150302
 
 - Added Relational Operators: `eq`,`ge`,`gt`,`le`,`lt`,`ne`
