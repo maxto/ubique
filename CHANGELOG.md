@@ -1,5 +1,9 @@
 # ChangeLog
 
+### 0.1.5 - xxxxxxxx
+
+- Modified: `paramvar` in _quants_
+
 ### 0.1.4 - 20150309
 
 - Added Unit Test for all functions with auto-code
