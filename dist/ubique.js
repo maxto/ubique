@@ -62,8 +62,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * name: ubique
-	 * version: 0.1.3
-	 * update date: 2015-03-02
+	 * version: 0.1.4
+	 * update date: 2015-03-09
 	 * 
 	 * author: Max Todaro <m.todaro.ge@gmail.com>
 	 * homepage: http://maxto.github.io/index.html
@@ -7259,8 +7259,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 module.exports = function($u) {
 	/**
 	 * @method omegaratio
-	 * @summary omegaratio ratio
-	 * @description omegaratio ratio
+	 * @summary Omega ratio
+	 * @description Omega ratio
 	 * 
 	 * @param  {array|matrix} x asset/portfolio returns
 	 * @param  {number} mar minimum acceptable return (def: 0)
@@ -7385,10 +7385,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * @method paramvar
 	 * @summary Parametric Value-At-Risk
-	 * @description Parametric Value-At-Risk. Asset or portfolio returns are normally distributed.
+	 * @description Parametric Value-At-Risk. Assets or portfolio returns are normally distributed.
+	 * It manages numbers, arrays, row vectors [[a,b,...,n]] and column vectors [[a],[b],...,[n]]
 	 * 
-	 * @param  {number|array} mu mean value (def: 0)
-	 * @param  {number|array} sigma standard deviation (def: 1)
+	 * @param  {number|array|matrix} mu mean value (def: 0)
+	 * @param  {number|array|matrix} sigma standard deviation (def: 1)
 	 * @param  {number} p VaR confidende level in range [0,1] (def: 0.95)
 	 * @param  {number} amount portfolio/asset amount (def: 1)
 	 * @param  {number} period time horizon (def: 1)
@@ -7398,13 +7399,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 	 *
-	 * // parametric daily Var at 5% conf level
-	 * ubique.paramvar(ubique.mean(x),ubique.std(x));
-	 * // 0.0203108
+	 * // VaR with numbers
+	 * ubique.paramvar(0,1);
+	 * // 1.644854
 	 *
-	 * //parametric daily VaR at 1% for 100k GBP asset over 10 days (two assets)
+	 * // VaR with arrays
+	 * ubique.paramvar([0,0,0],[1,2,3]);
+	 * [ 1.644854, 3.289707, 4.934561 ]
+	 *
+	 * // VaR with vectors
+	 * ubique.paramvar([[0,0]],[[1,2]]);
+	 * [ [ 1.644854, 3.289707 ] ]
+	 * ubique.paramvar([[0],[0]],[[1],[2]]);
+	 * [ [ 1.644854 ], [ 3.289707 ] ]
+	 * 
+	 * // parametric VaR at 5% conf level
+	 * ubique.paramvar(ubique.mean(x),ubique.std(x));
+	 * // 0.020311
+	 * ubique.paramvar(ubique.mean(y),ubique.std(y));
+	 * // 0.074269
+	 * ubique.paramvar(ubique.mean(ubique.cat(1,x,y)),ubique.std(ubique.cat(1,x,y)));
+	 * // [ [ 0.020311, 0.074269 ] ]
+	 *
+	 * //parametric VaR at 1% for 100k GBP asset over 10 days (two assets)
 	 * ubique.paramvar(ubique.mean(ubique.cat(1,x,y)),ubique.std(ubique.cat(1,x,y)),0.99,100000,10);
-	 * // [11429.2, 34867.3]
+	 * // [ [ 11429.165523, 34867.319072 ] ]
 	 */
 	 $u.paramvar = function(mu,sigma,p,amount,period) {
 	 	if (arguments.length < 2) {
@@ -7425,25 +7444,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	 	var _pvar = function(_mu,_sigma,p,amount,period) {
 	 		return (-$u.norminv(1 - p) * _sigma - _mu) * Math.sqrt(period) * amount; 
 	 	}
-	 	if ($u.isvector(mu) && $u.isvector(sigma)) {
-	 		mu = $u.flatten(mu);
-	 		sigma = $u.flatten(sigma);
-	 	}
-
 	 	if ($u.isnumber(mu) && $u.isnumber(sigma)) {
 	 		return _pvar(mu,sigma,p,amount,period);
 	 	} else 
 	 	if ($u.isarray(mu) && $u.isarray(sigma)) {
-	 		var out = new Array(mu.length);
-	 		for (var i = 0;i < mu.length; i++) {
-	 			out[i] = _pvar(mu[i],sigma[i],p,amount,period);
-	 		}
-	 		return out;
-	 	} else {
-	 		throw new Error('mu and sigma must be both numbers or arrays');
-	 	}
-	 }
+	 		return $u.arrayfun(mu,function(el,idx){ return _pvar(el,sigma[idx],p,amount,period);});
+	 	} else
+	  if ($u.ismatrix(mu) && $u.ismatrix(sigma)) {
+	    var out = $u.array($u.max($u.size(mu))),
+	    _mu = $u.flatten(mu),
+	    _sigma = $u.flatten(sigma);
+	    out = $u.arrayfun(out,function(el,idx){return _pvar(_mu[idx],_sigma[idx],p,amount,period)});
+	    if ($u.isrow(mu)) {
+	      return [out];
+	    } else
+	    if ($u.iscolumn(mu)) {
+	      return $u.tomat(out);
+	    } else {
+	      throw new Error('input must be a row or column vector');
+	    }
+	  }
 	}
+
+	}
+
 
 
 
@@ -8438,34 +8462,36 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Histogram count
 	 * @description  For array X counts the number of values in X that fall between the elements in the BINS array. Values outside the range in BINS are not counted.
 	 * 
+	 * Returns an object with:
+	 * 
+	 * bins(Number of bins)
+	 * count(number of elemnts in the bin)
+	 * freq(frequency) 
+	 * 
 	 * @param  {array|matrix} x array or matrix of values
 	 * @param  {number|array} bins number of bins (as NUMBER) or array of edges (as ARRAY) (def: 10)
 	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
 	 * @return {aray|matrix}       
 	 *
 	 * @example
-	 * var n = [87,27,45,62,3,52,20,43,74,61];
-	 * var q = [[89,23,12],[34,5,70]];
-	 * var bins = [0,20,40,60,80,100];
+	 * var A = [87,27,45,62,3,52,20,43,74,61];
+	 * var B = [12,34,57,43,88,75,89,2,27,29];
 	 * 
-	 * ubique.histc(n,bins);
-	 * // [ { bins: 0, freq: 1 },
-	 * // { bins: 20, freq: 2 },
-	 * // { bins: 40, freq: 3 },
-	 * // { bins: 60, freq: 3 },
-	 * // { bins: 80, freq: 1 },
-	 * // { bins: 100, freq: 0 } ]
+	 * ubique.histc(A,[0,20,40,60,80,100]);
+	 * // [ { bins: 0, count: 1, freq: 0.1 },
+	 * //   { bins: 20, count: 2, freq: 0.2 },
+	 * //   { bins: 40, count: 3, freq: 0.3 },
+	 * //   { bins: 60, count: 3, freq: 0.3 },
+	 * //   { bins: 80, count: 1, freq: 0.1 },
+	 * //   { bins: 100, count: 0, freq: 0 } ]
 	 *
-	 * ubique.histc(q,2,1);
-	 * // [ [ { bins: 34, freq: 1 },
-	 * //   { bins: 5, freq: 1 },
-	 * //  { bins: 12, freq: 1 } ],
-	 * // [ { bins: 61.5, freq: 0 },
-	 * //   { bins: 14, freq: 0 },
-	 * //   { bins: 41, freq: 0 } ],
-	 * // [ { bins: 89, freq: 1 },
-	 * //   { bins: 23, freq: 1 },
-	 * //  { bins: 70, freq: 1 } ] ]
+	 * ubique.histc(ubique.cat(1,A,B),[0,50,100]);
+	 * // [ [ { bins: 0, count: 5, freq: 0.5 },
+	 * //     { bins: 0, count: 6, freq: 0.6 } ],
+	 * //   [ { bins: 50, count: 5, freq: 0.5 },
+	 * //     { bins: 50, count: 4, freq: 0.4 } ],
+	 * //   [ { bins: 100, count: 0, freq: 0 },
+	 * //     { bins: 100, count: 0, freq: 0 } ] ]
 	 */
 	 $u.histc = function(x,bins,dim) {
 	  if (arguments.length === 0) {
@@ -8502,7 +8528,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          h[k] += 1;
 	        }
 	      }
-	      out.push({bins: y[k], freq: h[k]})
+	      out.push({bins: y[k], count: h[k], freq: h[k]/a.length})
 	    }
 	    return out;
 	  }

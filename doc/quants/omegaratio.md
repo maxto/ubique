@@ -1,6 +1,6 @@
 ### omegaratio
 
-omegaratio ratio
+Omega ratio
 
 
 #### Syntax
@@ -10,7 +10,7 @@ ubique.omegaratio(x,mar,dim)
 
 #### Description
 
-omegaratio ratio  
+Omega ratio  
 
 
 

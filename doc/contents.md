@@ -223,7 +223,7 @@
 - [jensenalpha](/doc/quants/jensenalpha.md) - Jensen alpha
 - [modigliani](/doc/quants/modigliani.md) - Modigliani index for risk-adjusted return
 - [montecarlovar](/doc/quants/montecarlovar.md) - Montecarlo Value-at-Risk
-- [omegaratio](/doc/quants/omegaratio.md) - omegaratio ratio
+- [omegaratio](/doc/quants/omegaratio.md) - Omega ratio
 - [paramcondvar](/doc/quants/paramcondvar.md) - Parametric Conditional Value-At-Risk
 - [paramvar](/doc/quants/paramvar.md) - Parametric Value-At-Risk
 - [sharpe](/doc/quants/sharpe.md) - Sharpe Ratio

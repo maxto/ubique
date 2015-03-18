@@ -10,7 +10,8 @@ ubique.paramvar(mu,sigma,p,amount,period)
 
 #### Description
 
-Parametric Value-At-Risk. Asset or portfolio returns are normally distributed.  
+Parametric Value-At-Risk. Assets or portfolio returns are normally distributed.  
+It manages numbers, arrays, row vectors [[a,b,...,n]] and column vectors [[a],[b],...,[n]]  
 
 
 
@@ -18,8 +19,8 @@ Parametric Value-At-Risk. Asset or portfolio returns are normally distributed.
 
 |Params|Type|Description
 |---------|----|-----------
-|`mu` | number/array | mean value (def: 0)
-|`sigma` | number/array | standard deviation (def: 1)
+|`mu` | number/array/matrix | mean value (def: 0)
+|`sigma` | number/array/matrix | standard deviation (def: 1)
 |`p` | number | VaR confidende level in range [0,1] (def: 0.95)
 |`amount` | number | portfolio/asset amount (def: 1)
 |`period` | number | time horizon (def: 1)
@@ -31,12 +32,30 @@ Parametric Value-At-Risk. Asset or portfolio returns are normally distributed.
 var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 
-// parametric daily Var at 5% conf level
-ubique.paramvar(ubique.mean(x),ubique.std(x));
-// 0.0203108
+// VaR with numbers
+ubique.paramvar(0,1);
+// 1.644854
 
-//parametric daily VaR at 1% for 100k GBP asset over 10 days (two assets)
+// VaR with arrays
+ubique.paramvar([0,0,0],[1,2,3]);
+[ 1.644854, 3.289707, 4.934561 ]
+
+// VaR with vectors
+ubique.paramvar([[0,0]],[[1,2]]);
+[ [ 1.644854, 3.289707 ] ]
+ubique.paramvar([[0],[0]],[[1],[2]]);
+[ [ 1.644854 ], [ 3.289707 ] ]
+
+// parametric VaR at 5% conf level
+ubique.paramvar(ubique.mean(x),ubique.std(x));
+// 0.020311
+ubique.paramvar(ubique.mean(y),ubique.std(y));
+// 0.074269
+ubique.paramvar(ubique.mean(ubique.cat(1,x,y)),ubique.std(ubique.cat(1,x,y)));
+// [ [ 0.020311, 0.074269 ] ]
+
+//parametric VaR at 1% for 100k GBP asset over 10 days (two assets)
 ubique.paramvar(ubique.mean(ubique.cat(1,x,y)),ubique.std(ubique.cat(1,x,y)),0.99,100000,10);
-// [11429.2, 34867.3]
+// [ [ 11429.165523, 34867.319072 ] ]
 ```
 

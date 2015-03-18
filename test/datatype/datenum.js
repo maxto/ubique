@@ -7,9 +7,9 @@ test('datenum', function (done) {
 
 
 
-assert.deepEqual(ubique.datenum('31-12-2014','DD-MM-YYYY'),1419984000);
-assert.deepEqual(ubique.datenum(['31-12-2014','31-01-2015'],'DD-MM-YYYY'),[1419984000,1422662400]);
-assert.deepEqual(ubique.datenum([['31-12-2014','31-01-2015'],['15-02-2015','01-03-2015']],'DD-MM-YYYY'),[[1419984000,1422662400],[1423958400,1425168000]]);
+assert.deepEqual(ubique.datenum('31-12-2014','DD-MM-YYYY'),1419980400);
+assert.deepEqual(ubique.datenum(['31-12-2014','31-01-2015'],'DD-MM-YYYY'),[1419980400,1422658800]);
+assert.deepEqual(ubique.datenum([['31-12-2014','31-01-2015'],['15-02-2015','01-03-2015']],'DD-MM-YYYY'),[[1419980400,1422658800],[1423954800,1425164400]]);
 
 
 done();

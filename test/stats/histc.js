@@ -5,12 +5,11 @@ suite('stats',function () {
 console.log('Testing stats/histc ...');
 test('histc', function (done) {
 
-var n = [87,27,45,62,3,52,20,43,74,61];
-var q = [[89,23,12],[34,5,70]];
-var bins = [0,20,40,60,80,100];
+var A = [87,27,45,62,3,52,20,43,74,61];
+var B = [12,34,57,43,88,75,89,2,27,29];
 
-assert.deepEqual(ubique.histc(n,bins),[{"bins":0,"freq":1},{"bins":20,"freq":2},{"bins":40,"freq":3},{"bins":60,"freq":3},{"bins":80,"freq":1},{"bins":100,"freq":0}]);
-assert.deepEqual(ubique.histc(q,2,1),[[{"bins":34,"freq":1},{"bins":5,"freq":1},{"bins":12,"freq":1}],[{"bins":61.5,"freq":0},{"bins":14,"freq":0},{"bins":41,"freq":0}],[{"bins":89,"freq":1},{"bins":23,"freq":1},{"bins":70,"freq":1}]]);
+assert.deepEqual(ubique.histc(A,[0,20,40,60,80,100]),[{"bins":0,"count":1,"freq":0.1},{"bins":20,"count":2,"freq":0.2},{"bins":40,"count":3,"freq":0.3},{"bins":60,"count":3,"freq":0.3},{"bins":80,"count":1,"freq":0.1},{"bins":100,"count":0,"freq":0}]);
+assert.deepEqual(ubique.histc(ubique.cat(1,A,B),[0,50,100]),[[{"bins":0,"count":5,"freq":0.5},{"bins":0,"count":6,"freq":0.6}],[{"bins":50,"count":5,"freq":0.5},{"bins":50,"count":4,"freq":0.4}],[{"bins":100,"count":0,"freq":0},{"bins":100,"count":0,"freq":0}]]);
 
 
 done();

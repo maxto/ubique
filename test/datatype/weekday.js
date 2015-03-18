@@ -8,8 +8,8 @@ test('weekday', function (done) {
 
 
 assert.deepEqual(ubique.weekday(1424708525),1);
-assert.deepEqual(ubique.weekday([1414886399,1414972799]),[6,7]);
-assert.deepEqual(ubique.weekday([[1414886399,1414972799],[1415059199,1415145599]]),[[6,7],[1,2]]);
+assert.deepEqual(ubique.weekday([1414886399,1414972799]),[7,1]);
+assert.deepEqual(ubique.weekday([[1414886399,1414972799],[1415059199,1415145599]]),[[7,1],[2,3]]);
 
 
 done();
