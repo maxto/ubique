@@ -440,7 +440,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    throw new Error('not enough input arguments');
 	  }
 	  var _datenum = function(a,fmt) {
-	    return $u.__moment(a,fmt).utc().unix();
+	    return $u.__moment.utc(a,fmt).unix();
 	  }
 	  if ($u.isstring(d)) {
 	   return _datenum(d,fmt);
@@ -518,7 +518,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    fmt = 'YYYY-MM-DD';
 	  }
 	  var _datestr = function(a,fmt) {
-	    return $u.__moment.unix(a).format(fmt)
+	    return $u.__moment.utc(a,'X').format(fmt)
 	  }
 	  if ($u.isnumber(d)) {
 	   return _datestr(d,fmt);

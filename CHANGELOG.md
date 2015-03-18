@@ -2,7 +2,7 @@
 
 ### 0.1.5 - xxxxxxxx
 
-- Modified: `paramvar`,`histc`
+- Modified: `paramvar`,`histc`,`datenum`,`datestr`
 
 ### 0.1.4 - 20150309
 
