@@ -1,8 +1,9 @@
 # ChangeLog
 
-### 0.1.5 - xxxxxxxx
+### 0.1.5 - 20150318
 
-- Modified: `paramvar`,`histc`,`datenum`,`datestr`
+- Modified: `paramvar`,`histc`,`datenum`,`datestr`,`weekday`
+- Bugfix
 
 ### 0.1.4 - 20150309
 

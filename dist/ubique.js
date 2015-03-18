@@ -129,7 +129,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	__webpack_require__(33)(ubique);
 	__webpack_require__(34)(ubique);
 	__webpack_require__(35)(ubique);
-	__webpack_require__(52)(ubique);
 	__webpack_require__(36)(ubique);
 	__webpack_require__(37)(ubique);
 	__webpack_require__(38)(ubique);
@@ -146,6 +145,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	__webpack_require__(49)(ubique);
 	__webpack_require__(50)(ubique);
 	__webpack_require__(51)(ubique);
+	__webpack_require__(52)(ubique);
 	__webpack_require__(53)(ubique);
 	__webpack_require__(54)(ubique);
 	__webpack_require__(55)(ubique);
@@ -1692,6 +1692,53 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
+	 * Relational Operations
+	 */
+	 module.exports = function($u) {
+	/**
+	 * @method gt
+	 * @summary Greater than X > Y
+	 * @description Greater than X > Y
+	 *
+	 * @param  {number|array|matrix} x left array
+	 * @param  {number|array|matrix} y right array
+	 * @return {number|array|matrix}
+	 *
+	 * @example
+	 * ubique.gt(5,5);
+	 * // false
+	 * ubique.gt(5,[5,6,3]);
+	 * // [ false, false, true ]
+	 * ubique.gt(5,[[5,6],[3,5]]);
+	 * // [ [ false, false ], [ true, false ] ]
+	 * ubique.gt([5,6,3],5);
+	 * // [ false, true, false ]
+	 * ubique.gt([[5,6],[3,5]],5);
+	 * // [ [ false, true ], [ false, false ] ]
+	 * ubique.gt([5,6,3],[2,6,0]);
+	 * // [ true, false, true ]
+	 * ubique.gt([[5,6],[-1,2]],[[5,6],[3,5]]);
+	 * // [ [ false, false ], [ false, false ] ]
+	 */
+	 $u.gt = function(x,y) {
+	  if (arguments.length < 2) {
+	    throw new Error('not enough input arguments');
+	  }
+	  var _gt = function(el){ return el > 0;};
+
+	  var d = $u.minus(x,y);
+	  if ($u.isnumber(d)) {
+	    return _gt(d);
+	  }
+	  return $u.arrayfun(d,_gt);
+	}
+	}
+
+/***/ },
+/* 37 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
 	 * Arithmetic Operations
 	 */
 	 module.exports = function($u) {
@@ -1775,7 +1822,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 37 */
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1822,7 +1869,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 38 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1869,7 +1916,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 39 */
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1952,7 +1999,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 40 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2006,7 +2053,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 41 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2044,7 +2091,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 42 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2087,7 +2134,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 43 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2146,7 +2193,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 44 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2204,7 +2251,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 45 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2251,7 +2298,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 46 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2334,7 +2381,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 47 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2421,7 +2468,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 48 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2467,7 +2514,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 49 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2552,7 +2599,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 50 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2590,7 +2637,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 51 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2630,53 +2677,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	 	return $u.arrayfun(x,function(val){return Math.round(val*p)/p;});
 	 }
 
-	}
-
-/***/ },
-/* 52 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Relational Operations
-	 */
-	 module.exports = function($u) {
-	/**
-	 * @method gt
-	 * @summary Greater than X > Y
-	 * @description Greater than X > Y
-	 *
-	 * @param  {number|array|matrix} x left array
-	 * @param  {number|array|matrix} y right array
-	 * @return {number|array|matrix}
-	 *
-	 * @example
-	 * ubique.gt(5,5);
-	 * // false
-	 * ubique.gt(5,[5,6,3]);
-	 * // [ false, false, true ]
-	 * ubique.gt(5,[[5,6],[3,5]]);
-	 * // [ [ false, false ], [ true, false ] ]
-	 * ubique.gt([5,6,3],5);
-	 * // [ false, true, false ]
-	 * ubique.gt([[5,6],[3,5]],5);
-	 * // [ [ false, true ], [ false, false ] ]
-	 * ubique.gt([5,6,3],[2,6,0]);
-	 * // [ true, false, true ]
-	 * ubique.gt([[5,6],[-1,2]],[[5,6],[3,5]]);
-	 * // [ [ false, false ], [ false, false ] ]
-	 */
-	 $u.gt = function(x,y) {
-	  if (arguments.length < 2) {
-	    throw new Error('not enough input arguments');
-	  }
-	  var _gt = function(el){ return el > 0;};
-
-	  var d = $u.minus(x,y);
-	  if ($u.isnumber(d)) {
-	    return _gt(d);
-	  }
-	  return $u.arrayfun(d,_gt);
-	}
 	}
 
 /***/ },
@@ -8464,9 +8464,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * 
 	 * Returns an object with:
 	 * 
-	 * bins(Number of bins)
-	 * count(number of elemnts in the bin)
-	 * freq(frequency) 
+	 * bins - number of bins
+	 * count - number of matched elements
+	 * freq - frequency 
 	 * 
 	 * @param  {array|matrix} x array or matrix of values
 	 * @param  {number|array} bins number of bins (as NUMBER) or array of edges (as ARRAY) (def: 10)

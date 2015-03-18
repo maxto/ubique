@@ -14,9 +14,9 @@ For array X counts the number of values in X that fall between the elements in t
   
 Returns an object with:  
   
-bins(Number of bins)  
-count(number of elemnts in the bin)  
-freq(frequency)  
+bins - number of bins  
+count - number of matched elements  
+freq - frequency  
 
 
 
