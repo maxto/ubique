@@ -129,6 +129,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	__webpack_require__(33)(ubique);
 	__webpack_require__(34)(ubique);
 	__webpack_require__(35)(ubique);
+	__webpack_require__(52)(ubique);
 	__webpack_require__(36)(ubique);
 	__webpack_require__(37)(ubique);
 	__webpack_require__(38)(ubique);
@@ -145,7 +146,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	__webpack_require__(49)(ubique);
 	__webpack_require__(50)(ubique);
 	__webpack_require__(51)(ubique);
-	__webpack_require__(52)(ubique);
 	__webpack_require__(53)(ubique);
 	__webpack_require__(54)(ubique);
 	__webpack_require__(55)(ubique);
@@ -1153,19 +1153,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {number|array|matrix}
 	 *
 	 * @example
-	 * ubique.weekday(1424708525);
-	 * // 1
-	 * ubique.weekday([1414886399,1414972799]);
-	 * // [ 7, 1 ]
-	 * ubique.weekday([[1414886399,1414972799],[1415059199,1415145599]]);
-	 * // [ [ 7, 1 ], [ 2, 3 ] ]
+	 * ubique.weekday(1426636800);
+	 * // 3
+	 * ubique.weekday([ 1424908800, 1426636800 ]);
+	 * // [ 4, 3 ]
+	 * ubique.weekday([ [ 1424908800, 1426636800 ], [ 1427328000, 1429315200 ] ]);
+	 * // [ [ 4, 3 ], [ 4, 6 ] ]
 	 */
 	 $u.weekday = function(x) {
 	  if (arguments.length === 0) {
 	    throw new Error('not enough input arguments');
 	  }
 	  var _weekday = function(a) {
-	    return $u.__moment.unix(a).isoWeekday();
+	    return $u.__moment.utc(a,'X').isoWeekday();
 	  }
 	  if ($u.isnumber(x)) {
 	    return _weekday(x);
@@ -1692,53 +1692,6 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * Relational Operations
-	 */
-	 module.exports = function($u) {
-	/**
-	 * @method gt
-	 * @summary Greater than X > Y
-	 * @description Greater than X > Y
-	 *
-	 * @param  {number|array|matrix} x left array
-	 * @param  {number|array|matrix} y right array
-	 * @return {number|array|matrix}
-	 *
-	 * @example
-	 * ubique.gt(5,5);
-	 * // false
-	 * ubique.gt(5,[5,6,3]);
-	 * // [ false, false, true ]
-	 * ubique.gt(5,[[5,6],[3,5]]);
-	 * // [ [ false, false ], [ true, false ] ]
-	 * ubique.gt([5,6,3],5);
-	 * // [ false, true, false ]
-	 * ubique.gt([[5,6],[3,5]],5);
-	 * // [ [ false, true ], [ false, false ] ]
-	 * ubique.gt([5,6,3],[2,6,0]);
-	 * // [ true, false, true ]
-	 * ubique.gt([[5,6],[-1,2]],[[5,6],[3,5]]);
-	 * // [ [ false, false ], [ false, false ] ]
-	 */
-	 $u.gt = function(x,y) {
-	  if (arguments.length < 2) {
-	    throw new Error('not enough input arguments');
-	  }
-	  var _gt = function(el){ return el > 0;};
-
-	  var d = $u.minus(x,y);
-	  if ($u.isnumber(d)) {
-	    return _gt(d);
-	  }
-	  return $u.arrayfun(d,_gt);
-	}
-	}
-
-/***/ },
-/* 37 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
 	 * Arithmetic Operations
 	 */
 	 module.exports = function($u) {
@@ -1822,7 +1775,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 38 */
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1869,7 +1822,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 39 */
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1916,7 +1869,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 40 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1999,7 +1952,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 41 */
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2053,7 +2006,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 42 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2091,7 +2044,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 43 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2134,7 +2087,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 44 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2193,7 +2146,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 45 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2251,7 +2204,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 46 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2298,7 +2251,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 47 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2381,7 +2334,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 48 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2468,7 +2421,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 49 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2514,7 +2467,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 50 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2599,7 +2552,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 51 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2637,7 +2590,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 52 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2677,6 +2630,53 @@ return /******/ (function(modules) { // webpackBootstrap
 	 	return $u.arrayfun(x,function(val){return Math.round(val*p)/p;});
 	 }
 
+	}
+
+/***/ },
+/* 52 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Relational Operations
+	 */
+	 module.exports = function($u) {
+	/**
+	 * @method gt
+	 * @summary Greater than X > Y
+	 * @description Greater than X > Y
+	 *
+	 * @param  {number|array|matrix} x left array
+	 * @param  {number|array|matrix} y right array
+	 * @return {number|array|matrix}
+	 *
+	 * @example
+	 * ubique.gt(5,5);
+	 * // false
+	 * ubique.gt(5,[5,6,3]);
+	 * // [ false, false, true ]
+	 * ubique.gt(5,[[5,6],[3,5]]);
+	 * // [ [ false, false ], [ true, false ] ]
+	 * ubique.gt([5,6,3],5);
+	 * // [ false, true, false ]
+	 * ubique.gt([[5,6],[3,5]],5);
+	 * // [ [ false, true ], [ false, false ] ]
+	 * ubique.gt([5,6,3],[2,6,0]);
+	 * // [ true, false, true ]
+	 * ubique.gt([[5,6],[-1,2]],[[5,6],[3,5]]);
+	 * // [ [ false, false ], [ false, false ] ]
+	 */
+	 $u.gt = function(x,y) {
+	  if (arguments.length < 2) {
+	    throw new Error('not enough input arguments');
+	  }
+	  var _gt = function(el){ return el > 0;};
+
+	  var d = $u.minus(x,y);
+	  if ($u.isnumber(d)) {
+	    return _gt(d);
+	  }
+	  return $u.arrayfun(d,_gt);
+	}
 	}
 
 /***/ },
