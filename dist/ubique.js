@@ -429,11 +429,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * @example
 	 * ubique.datenum('31-12-2014','DD-MM-YYYY');
-	 * // 1419980400
+	 * // 1419984000
 	 * ubique.datenum(['31-12-2014','31-01-2015'],'DD-MM-YYYY');
-	 * // [ 1419980400, 1422658800 ]
+	 * // [ 1419984000, 1422662400 ]
 	 * ubique.datenum([['31-12-2014','31-01-2015'],['15-02-2015','01-03-2015']],'DD-MM-YYYY');
-	 * // [ [ 1419980400, 1422658800 ], [ 1423954800, 1425164400 ] ]
+	 * // [ [ 1419984000, 1422662400 ], [ 1423958400, 1425168000 ] ]
 	 */
 	 $u.datenum = function(d,fmt) {
 	  if (arguments.length < 2) {
@@ -504,9 +504,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * ubique.datestr(1419980400);
 	 * // 2014-12-31
-	 * ubique.datestr([1419984000,1422662400],'DD-MMM-YY');
+	 * ubique.datestr([ 1419984000, 1422662400 ],'DD-MMM-YY');
 	 * // [ '31-Dec-14', '31-Jan-15' ]
-	 * ubique.datestr([[1419980400,1422658800],[1423954800,1425164400]],'YY-MM-DD hh:mm:ss');
+	 * ubique.datestr([ [ 1419984000, 1422662400 ], [ 1423958400, 1425168000 ] ],'YY-MM-DD hh:mm:ss');
 	 * // [ [ '14-12-31 12:00:00', '15-01-31 12:00:00' ],
 	 * // [ '15-02-15 12:00:00', '15-03-01 12:00:00' ] ]
 	 */
@@ -1154,11 +1154,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * @example
 	 * ubique.weekday(1424708525);
-	 * // 9
+	 * // 1
 	 * ubique.weekday([1414886399,1414972799]);
-	 * // [ 6, 7 ]
+	 * // [ 7, 1 ]
 	 * ubique.weekday([[1414886399,1414972799],[1415059199,1415145599]]);
-	 * // [ [ 6, 7 ], [ 1, 2 ] ]
+	 * // [ [ 7, 1 ], [ 2, 3 ] ]
 	 */
 	 $u.weekday = function(x) {
 	  if (arguments.length === 0) {
