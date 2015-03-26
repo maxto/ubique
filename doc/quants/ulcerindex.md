@@ -19,7 +19,7 @@ impact because the underperformance since the last peak is squared.
 
 |Params|Type|Description
 |---------|----|-----------
-|`x` | array/matrix | asset/portfolio matrix of equity time series with the oldest value in x[0] and the last one in x[N-1]
+|`x` | array/matrix | asset/portfolio returns
 |`mode` | string | drawdown calculation. 'return','geometric' (def: 'return')
 |`dim` | number | dimension 0: row, 1: column (def: 1)
 
@@ -30,8 +30,8 @@ impact because the underperformance since the last peak is squared.
 var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 
 ubique.ulcerindex(x);
-// 0.6344798231002222
+// 0.005263
 ubique.ulcerindex([[0.003,0.026],[0.015,-0.009],[0.014,0.024],[0.015,0.066],[-0.014,0.039]],'return');
-// [ [ 0.8651268372004445, 0.6301432708803503 ] ]
+// [ [ 0.006261, 0.004025 ] ]
 ```
 

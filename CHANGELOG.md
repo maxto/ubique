@@ -1,5 +1,9 @@
 # ChangeLog
 
+### 0.1.6 - xxxxxxxx
+
+- Modified: `avgdrawdown`,`cdrawdown`,`drawdown`,`ulcerindex`
+
 ### 0.1.5 - 20150318
 
 - Modified: `paramvar`,`histc`,`datenum`,`datestr`,`weekday`

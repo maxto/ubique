@@ -62,8 +62,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * name: ubique
-	 * version: 0.1.4
-	 * update date: 2015-03-09
+	 * version: 0.1.5
+	 * update date: 2015-03-18
 	 * 
 	 * author: Max Todaro <m.todaro.ge@gmail.com>
 	 * homepage: http://maxto.github.io/index.html
@@ -312,7 +312,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * External Library
 	 */
 	module.exports = function($u) {
-
+	 //moment.js - Parse, validate, manipulate, and display dates in JavaScript (http://momentjs.com/)
 	 $u.__moment = __webpack_require__(181);
 
 	}
@@ -6295,9 +6295,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * @method avgdrawdown
 	 * @summary Average drawdown
-	 * @description Average drawdown. Only the three largest drawdowns selected.
+	 * @description Average drawdown or average K-largest drawdown
 	 * 
 	 * @param  {array|matrix} x asset/portfolio returns
+	 * @param  {number} k largest drawdown. k = 0 for all continuous drawdown (def: 0)
 	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
 	 * @return {object}
 	 *
@@ -6305,35 +6306,47 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 	 *
+	 * // average drawdown
 	 * ubique.avgdrawdown(x);
 	 * // 0.0115
+	 *
+	 * // 1-largest drawdown
+	 * ubique.avgdrawdown(x,1);
+	 * // 0.014
+	 * 
 	 * ubique.avgdrawdown(ubique.cat(1,x,y));
 	 * // [ [ 0.0115, 0.0566 ] ]
 	 */
-	 $u.avgdrawdown = function(x,dim) {
+	 $u.avgdrawdown = function(x,k,dim) {
 	  if (arguments.length === 0) {
 	    throw new Error('not enough input arguments');
 	  }
 	  if (arguments.length === 1) {
+	    k = 0;
 	    dim = 1;
 	  }
-	  var avgdd = function(a) {
+	  if (arguments.length === 2) {
+	    dim = 1;
+	  }
+	  var avgdd = function(a,k) {
 	    var cdd =  $u.cdrawdown(a);
-	    if (cdd.length >= 3) {
-	      var cdds = $u.sort(cdd,'descend');
-	      return (cdds[0] + cdds[1] + cdds[2])/3;
-	    } else {
+	    if (k === 0) {
 	      return $u.mean(cdd);
+	    } else
+	    if (k > 0 && k <= cdd.length) {
+	      var cdds = $u.sort(cdd,'descend');
+	      return $u.mean($u.subsetlin(cdds,$u.colon(0,k - 1)));
+	    } else {
+	      return NaN;
 	    }
-
 	  }
 	  if ($u.isnumber(x)) {
 	    return 0;
 	  }
 	  if ($u.isarray(x)) {
-	    return avgdd(x);
+	    return avgdd(x,k);
 	  }
-	  return $u.vectorfun(x,function(val){return avgdd(val);},dim);
+	  return $u.vectorfun(x,function(val){return avgdd(val,k);},dim);
 	}
 
 	}
@@ -6400,7 +6413,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Continuous Drawdown
 	 * @description Continuous Drawdown
 	 *  
-	 * @param  {array|matrix} x asset/portfolio values
+	 * @param  {array|matrix} x asset/portfolio returns
 	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
 	 * @return {array|matrix}
 	 * 
@@ -6411,7 +6424,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * ubique.cdrawdown(x);
 	 * // [ 0.009, 0.014 ]
 	 * ubique.cdrawdown(ubique.cat(1,x,y));
-	 * // [ [ 0.009, 0.005 ], [ 0.014, 0.0957 ] ]
+	 * // [ [ 0.009, 0.005 ], [ 0.014, 0.095743 ] ]
 	 */
 	 $u.cdrawdown = function(x,dim) {
 	  if (arguments.length === 0) {
@@ -6434,7 +6447,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            tmp = tmp * (1 + a[i]);
 	          }
 	        }
-	        if (a[i] >=0 ) {
+	        if (a[i] >=0) {
 	          if (tmp !== 0) {
 	            cdd[t] = 1 - tmp;
 	            t++;
@@ -6442,6 +6455,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	          }
 	        }
 	      }
+	    }
+	    if (tmp !== 0) {
+	      cdd.push(1 - tmp);
+	      tmp = 0;
 	    }
 	    return cdd;
 	  }
@@ -6580,7 +6597,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * @method drawdown
 	 * @summary Drawdown
-	 * @description Any continuous losing return period. Return drawdown from peak and time to recovery arrays
+	 * @description Drawdowon from Peak.Any continuous losing return period.
+	 * Return drawdown from peak and time to recovery array.
 	 *
 	 * Returns an object with:
 	 *
@@ -6589,30 +6607,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * maxdd (max drawdown)
 	 * maxddrecov (max drawdown recovery period): [start period, end period]
 	 * 
-	 * @param  {array|matrix} x asset/portfolio matrix of equity time series with the oldest value in x[0] and the last one in x[N-1]
+	 * @param  {array|matrix} x asset/portfolio returns
 	 * @param  {string} mode drawdown calculation. 'return','geometric' (def: 'return')
 	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
 	 * @return {object}  
 	 *
 	 * @example
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
-	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
-	 * 
-	 * ubique.drawdown(ubique.cumprod(ubique.plus(x,1)));
+	 *
+	 * ubique.drawdown(x);
 	 * // { dd: [ 0, 0, 0, 0.00900000000000004, 0, 0, 0, 0, 0.013999999999999995, 0 ],
 	 * //   ddrecov: [ 0, 0, 0, 4, 0, 0, 0, 0, 9, 0 ],
 	 * //   maxdd: 0.013999999999999995,
 	 * //   maxddrecov: [ 8, 9 ] }
-	 *
-	 * ubique.drawdown(ubique.cat(1,ubique.cumprod(ubique.plus(x,1)),ubique.cumprod(ubique.plus(y,1))));
-	 * // [ [ { dd: [Object],
-	 * //     ddrecov: [Object],
-	 * //     maxdd: 0.013999999999999995,
-	 * //     maxddrecov: [Object] },
-	 * //   { dd: [Object],
-	 * //     ddrecov: [Object],
-	 * //     maxdd: 0.1092809191007261,
-	 * //     maxddrecov: [Object] } ] ]
 	 */
 	 $u.drawdown = function(x,mode,dim) {
 	  if (arguments.length === 0) {
@@ -6627,10 +6634,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	  var ddown = function(a,mode) {
 	    if (mode === 'return') {
-	      _a = a;
+	      _a = $u.cumprod($u.plus(a,1));
 	    } else
 	    if (mode === 'geometric') {
-	      _a = $u.log(a);
+	      _a = $u.log($u.cumprod($u.plus(a,1)));
 	    } else {
 	      throw new Error('unknown drawdown mode');
 	    }
@@ -8047,7 +8054,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @description Ulcer Index of Peter G. Martin (1987). The impact of long, deep drawdowns will have significant
 	 * impact because the underperformance since the last peak is squared.
 	 *  
-	 * @param  {array|matrix} x asset/portfolio matrix of equity time series with the oldest value in x[0] and the last one in x[N-1]
+	 * @param  {array|matrix} x asset/portfolio returns
 	 * @param  {string} mode drawdown calculation. 'return','geometric' (def: 'return')
 	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
 	 * @return {number|array} 
@@ -8056,9 +8063,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * 
 	 * ubique.ulcerindex(x);
-	 * // 0.6344798231002222
+	 * // 0.005263
 	 * ubique.ulcerindex([[0.003,0.026],[0.015,-0.009],[0.014,0.024],[0.015,0.066],[-0.014,0.039]],'return');
-	 * // [ [ 0.8651268372004445, 0.6301432708803503 ] ]
+	 * // [ [ 0.006261, 0.004025 ] ]
 	 */
 	 $u.ulcerindex = function(x,mode,dim) {
 	  if (arguments.length === 0) {
@@ -8072,7 +8079,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    dim = 1;
 	  }
 	  var uidx = function(a,mode) {
-	    var dd = $u.drawdown(a,mode).dd,
+	    var eq = $u.cumprod($u.plus(a,1)),
+	    dd = $u.drawdown(eq,mode).dd,
 	    n = a.length;
 	    return $u.sqrt($u.sum($u.power(dd,2)) / n);
 	  }
