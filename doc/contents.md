@@ -189,8 +189,7 @@
 
 ### Performance metrics
 
-- [annavgreturn](/doc/quants/annavgreturn.md) - Annualized average return
-- [annreturn](/doc/quants/annreturn.md) - Annualisation of return (1 + X) ^ (t / n)
+- [annreturn](/doc/quants/annreturn.md) - Annualized Return
 - [cagr](/doc/quants/cagr.md) - Compound annual growth rate
 - [irr](/doc/quants/irr.md) - Internal rate of return on an investment based on a series of periodic cash flows
 - [mdietz](/doc/quants/mdietz.md) - Historical performance of an investment portfolio with external cash flows
@@ -213,6 +212,7 @@
 - [adjsharpe](/doc/quants/adjsharpe.md) - Adjusted Sharpe Ratio
 - [annavgrisk](/doc/quants/annavgrisk.md) - Annualized Average Risk
 - [avgdrawdown](/doc/quants/avgdrawdown.md) - Average drawdown
+- [calmarratio](/doc/quants/calmarratio.md) - Calmar Ratio
 - [cdrawdown](/doc/quants/cdrawdown.md) - Continuous Drawdown
 - [downsidepot](/doc/quants/downsidepot.md) - Downside potential
 - [downsiderisk](/doc/quants/downsiderisk.md) - Downside Risk

@@ -2,6 +2,8 @@
 
 ### 0.1.6 - xxxxxxxx
 
+- Added: `camlarratio`
+- Replaced: `annvgreturn` with `annreturn` for annualized return
 - Modified: `avgdrawdown`,`cdrawdown`,`drawdown`,`ulcerindex`
 
 ### 0.1.5 - 20150318

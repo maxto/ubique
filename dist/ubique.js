@@ -11,41 +11,41 @@
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-/******/
+
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-/******/
+
 /******/ 		// Check if module is in cache
 /******/ 		if(installedModules[moduleId])
 /******/ 			return installedModules[moduleId].exports;
-/******/
+
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			exports: {},
 /******/ 			id: moduleId,
 /******/ 			loaded: false
 /******/ 		};
-/******/
+
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
+
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-/******/
+
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/
-/******/
+
+
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
-/******/
+
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-/******/
+
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
-/******/
+
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
 /******/ })
@@ -246,8 +246,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	__webpack_require__(150)(ubique);
 	__webpack_require__(151)(ubique);
 	__webpack_require__(152)(ubique);
-	__webpack_require__(153)(ubique);
 	__webpack_require__(154)(ubique);
+	__webpack_require__(153)(ubique);
 	__webpack_require__(155)(ubique);
 	__webpack_require__(156)(ubique);
 	__webpack_require__(157)(ubique);
@@ -6148,57 +6148,6 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * Performance metrics
-	 */
-	 module.exports = function($u) {
-	/**
-	 * @method annavgreturn
-	 * @summary Annualized average return
-	 * @description Annualized average return
-	 * 
-	 * @param  {number|array|matrix} x rate or return 
-	 * @param  {number} t frequencey of data. 1: yearly, 4: quarterly, 12: monthly, 52: weekly, 252: daily (def: 252)
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
-	 * @return {number|array}   
-	 *
-	 * @example
-	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
-	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
-	 *
-	 * ubique.annavgreturn(ubique.cat(1,x,y),12);
-	 * // 0.237261
-	 * ubique.annavgreturn(ubique.cat(1,x,y),12);
-	 * // [[0.237261, 0.162131]]
-	 */
-	 $u.annavgreturn = function(x,t,dim) {
-	  if (arguments.length === 0) {
-	    throw new Error('not enough input arguments');
-	  }
-	  if (arguments.length === 1) {
-	    t = 252;
-	    dim = 1;
-	  }
-	  if (arguments.length === 2) {
-	    dim = 1;
-	  }
-	  var _aavgret = function(a,t) {
-	    return Math.pow(1 + $u.mean(a),t) - 1;
-	  }
-	  if ($u.isnumber(x)) {
-	   return Math.pow(1 + x,t) - 1;
-	  }
-	  if ($u.isarray(x)) {
-	   return  _aavgret(x,t);
-	  }
-	  return $u.vectorfun(x,function(val){return _aavgret(val,t);},dim);
-	 }
-	}
-
-/***/ },
-/* 122 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
 	 * Risk metrics
 	 */
 	 module.exports = function($u) {
@@ -6247,7 +6196,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 123 */
+/* 122 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6256,36 +6205,60 @@ return /******/ (function(modules) { // webpackBootstrap
 	 module.exports = function($u) {
 	/**
 	 * @method annreturn
-	 * @summary Annualisation of return (1 + X) ^ (t / n)
-	 * @description Annualisation of return (1 + X) ^ (t / n)
+	 * @summary Annualized Return
+	 * @description Average annualized returns over a period, convenient when comparing returns.
+	 * It can be an Arithmetic or Geometric (default) average return: if compounded with itself the
+	 * geometric average will be equal to the cumulative return
 	 * 
-	 * @param  {number} r rate of return
-	 * @param  {number} t frequencey of data. 1: yearly, 4: quarterly, 12: monthly, 52: weekly, 252: daily
-	 * @param  {number} n period of interest
-	 * @return {number}   
+	 * @param  {array|matrix} x asset/portfolio returns
+	 * @param  {number} scale frequencey of data. 1: yearly, 4: quarterly, 12: monthly, 52: weekly, 252: daily
+	 * @param  {string} type 'geometric' or 'simple' (def: 'geometric')
+	 * @return {number|array|matrix}   
 	 *
 	 * @example
-	 * ubique.annreturn([0.015,0.02],12,20);
-	 * // [0.00897319, 0.0119524]
+	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
+	 * var cat = ubique.cat;
+	 * 
+	 * ubique.annreturn(x,12);
+	 * // 0.233815
+	 *
+	 * ubique.annreturn(cat(1,x,y),12);
+	 * // [ [ 0.233815, 0.14509 ] ]
 	 */
-	 $u.annreturn = function(r,t,n) {
+	 $u.annreturn = function(x,scale,type,dim) {
 	 	if (arguments.length === 0) {
 	 		throw new Error('not enough input arguments');
 	 	}
-	 	if (arguments.length === 1) {
-	 		t = 252;
-	 		n = 1;
-	 	}
-	 	if (arguments.length === 2) {
-	 		n = 1;
-	 	}
-	 	return $u.minus($u.power($u.plus(1,r),(t / n)),1);
+	 	var scale = scale || 252,
+	  type = type || 'geometric',
+	  dim = dim || 1;
+
+	  var _annreturn = function(arr,scale,type) {
+	    var n = arr.length;
+	    if (type === 'geometric') {
+	      return $u.power($u.prod($u.plus(1,arr)),(scale/n)) - 1;
+	    } else
+	    if (type === 'simple') {
+	      return $u.mean(arr) * scale;
+	    } else {
+	      throw new Error('unknown type');
+	    }
+	  }
+	 	 if ($u.isnumber(x)) {
+	    return NaN;
+	  }
+	  if ($u.isarray(x)) {
+	    return  _annreturn(x,scale,type);
+	  }
+	  return $u.vectorfun(x,function(val){return _annreturn(val,scale,type);},dim);
 	 }
+
 	}
 
 
 /***/ },
-/* 124 */
+/* 123 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6352,7 +6325,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 125 */
+/* 124 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6398,6 +6371,55 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	  return $u.vectorfun(x,function(val){return _cagr(val,p);},dim);
 	 }
+	}
+
+/***/ },
+/* 125 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Risk metrics
+	 */
+	 module.exports = function($u) {
+	/**
+	 * @method calmarratio
+	 * @summary Calmar Ratio
+	 * @description A risk-adjusted measure like Sharpe ratio that uses maximum drawdown instead of
+	 * standard deviation for risk.
+	 *  
+	 * @param  {array|matrix} x asset/portfolio returns
+	 * @param  {number} frisk annual free-risk rate (def: 0)
+	 * @param  {number} t frequencey of data. 1: yearly, 4: quarterly, 12: monthly, 52: weekly, 252: daily (def: 252)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @return {number|arrray}       
+	 *
+	 * @example
+	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
+	 *
+	 */
+	 $u.calmarratio = function(x,frisk,t,dim) {
+	  if (arguments.length === 0) {
+	    throw new Error('not enough input arguments');
+	  }
+	  var frisk = frisk || 0,
+	  t = t || 252,
+	  dim = dim || 1;
+
+	  var _calmarratio = function(a,frisk,t) {
+	    var annret = $u.annavgreturn(a,t);
+	    console.log(annret)
+	    return (annret - frisk) / $u.drawdown(a).maxdd;
+	  }
+	  if ($u.isnumber(x)) {
+	    return _calmarratio(x,frisk,t);
+	  }
+	  if ($u.isarray(x)) {
+	    return  _calmarratio(x,frisk,t);
+	  }
+	  return $u.vectorfun(x,function(val){return _calmarratio(val,frisk,t);},dim);
+	 }
+
 	}
 
 /***/ },
@@ -8049,61 +8071,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	 module.exports = function($u) {
 	/**
-	 * @method ulcerindex
-	 * @summary Ulcer Index
-	 * @description Ulcer Index of Peter G. Martin (1987). The impact of long, deep drawdowns will have significant
-	 * impact because the underperformance since the last peak is squared.
-	 *  
-	 * @param  {array|matrix} x asset/portfolio returns
-	 * @param  {string} mode drawdown calculation. 'return','geometric' (def: 'return')
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
-	 * @return {number|array} 
-	 *
-	 * @example
-	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
-	 * 
-	 * ubique.ulcerindex(x);
-	 * // 0.005263
-	 * ubique.ulcerindex([[0.003,0.026],[0.015,-0.009],[0.014,0.024],[0.015,0.066],[-0.014,0.039]],'return');
-	 * // [ [ 0.006261, 0.004025 ] ]
-	 */
-	 $u.ulcerindex = function(x,mode,dim) {
-	  if (arguments.length === 0) {
-	    throw new Error('not enough input arguments');
-	  }
-	  if (arguments.length === 1) {
-	    mode = 'return';
-	    dim = 1;
-	  }
-	  if (arguments.length === 2) {
-	    dim = 1;
-	  }
-	  var uidx = function(a,mode) {
-	    var eq = $u.cumprod($u.plus(a,1)),
-	    dd = $u.drawdown(eq,mode).dd,
-	    n = a.length;
-	    return $u.sqrt($u.sum($u.power(dd,2)) / n);
-	  }
-	  if ($u.isnumber(x)) {
-	    return 0;
-	  }
-	  if ($u.isarray(x)) {
-	    return uidx(x,mode);
-	  }
-	  return $u.vectorfun(x,function(val){return uidx(val,mode);},dim);
-	}
-
-	}
-
-/***/ },
-/* 154 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Risk metrics
-	 */
-	 module.exports = function($u) {
-	/**
 	 * @method upsidepot
 	 * @summary Upside potential
 	 * @description Upside potential
@@ -8149,6 +8116,61 @@ return /******/ (function(modules) { // webpackBootstrap
 	} 
 	return $u.vectorfun(x,function(val){return _usp(val,mar);},dim);
 	}
+	}
+
+/***/ },
+/* 154 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Risk metrics
+	 */
+	 module.exports = function($u) {
+	/**
+	 * @method ulcerindex
+	 * @summary Ulcer Index
+	 * @description Ulcer Index of Peter G. Martin (1987). The impact of long, deep drawdowns will have significant
+	 * impact because the underperformance since the last peak is squared.
+	 *  
+	 * @param  {array|matrix} x asset/portfolio returns
+	 * @param  {string} mode drawdown calculation. 'return','geometric' (def: 'return')
+	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @return {number|array} 
+	 *
+	 * @example
+	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+	 * 
+	 * ubique.ulcerindex(x);
+	 * // 0.005263
+	 * ubique.ulcerindex([[0.003,0.026],[0.015,-0.009],[0.014,0.024],[0.015,0.066],[-0.014,0.039]],'return');
+	 * // [ [ 0.006261, 0.004025 ] ]
+	 */
+	 $u.ulcerindex = function(x,mode,dim) {
+	  if (arguments.length === 0) {
+	    throw new Error('not enough input arguments');
+	  }
+	  if (arguments.length === 1) {
+	    mode = 'return';
+	    dim = 1;
+	  }
+	  if (arguments.length === 2) {
+	    dim = 1;
+	  }
+	  var uidx = function(a,mode) {
+	    var eq = $u.cumprod($u.plus(a,1)),
+	    dd = $u.drawdown(eq,mode).dd,
+	    n = a.length;
+	    return $u.sqrt($u.sum($u.power(dd,2)) / n);
+	  }
+	  if ($u.isnumber(x)) {
+	    return 0;
+	  }
+	  if ($u.isarray(x)) {
+	    return uidx(x,mode);
+	  }
+	  return $u.vectorfun(x,function(val){return uidx(val,mode);},dim);
+	}
+
 	}
 
 /***/ },
@@ -12639,7 +12661,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        makeGlobal();
 	    }
 	}).call(this);
-	
+
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(263)(module)))
 
 /***/ },
@@ -20548,3 +20570,4 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ }
 /******/ ])
 });
+;

@@ -2,14 +2,12 @@ var assert = require('assert');
 var ubique = require('../../index.js');
 
 suite('quants',function () {
-console.log('Testing quants/annavgreturn ...');
-test('annavgreturn', function (done) {
+console.log('Testing quants/calmarratio ...');
+test('calmarratio', function (done) {
 
 var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 
-assert.deepEqual(ubique.annavgreturn(ubique.cat(1,x,y),12),[[0.23726113884365874,0.1621309743258661]]);
-assert.deepEqual(ubique.annavgreturn(ubique.cat(1,x,y),12),[[0.23726113884365874,0.1621309743258661]]);
 
 
 done();
