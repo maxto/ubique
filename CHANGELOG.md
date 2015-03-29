@@ -1,8 +1,8 @@
 # ChangeLog
 
-### 0.1.6 - xxxxxxxx
+### 0.1.6 - 20150329
 
-- Added: `camlarratio`
+- Added: `camlarratio`,`burkeratio`
 - Replaced: `annvgreturn` with `annreturn` for annualized return
 - Modified: `avgdrawdown`,`cdrawdown`,`drawdown`,`ulcerindex`
 

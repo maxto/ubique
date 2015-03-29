@@ -212,6 +212,7 @@
 - [adjsharpe](/doc/quants/adjsharpe.md) - Adjusted Sharpe Ratio
 - [annavgrisk](/doc/quants/annavgrisk.md) - Annualized Average Risk
 - [avgdrawdown](/doc/quants/avgdrawdown.md) - Average drawdown
+- [burkeratio](/doc/quants/burkeratio.md) - Burke Ratio
 - [calmarratio](/doc/quants/calmarratio.md) - Calmar Ratio
 - [cdrawdown](/doc/quants/cdrawdown.md) - Continuous Drawdown
 - [downsidepot](/doc/quants/downsidepot.md) - Downside potential

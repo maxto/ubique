@@ -2,15 +2,16 @@ var assert = require('assert');
 var ubique = require('../../index.js');
 
 suite('quants',function () {
-console.log('Testing quants/calmarratio ...');
-test('calmarratio', function (done) {
+console.log('Testing quants/burkeratio ...');
+test('burkeratio', function (done) {
 
 var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 var cat = ubique.cat;
 
-assert.deepEqual(ubique.calmarratio(x,0,12),16.70104871897814);
-assert.deepEqual(ubique.calmarratio(cat(1,x,y),0,12),[[16.70104871897814,1.327680210393435]]);
+assert.deepEqual(ubique.burkeratio(x,0,12),14.048562698619559);
+assert.deepEqual(ubique.burkeratio(x,0,12,'modified'),44.42545597931944);
+assert.deepEqual(ubique.burkeratio(cat(1,x,y),0,12),[[14.048562698619559,1.228487180255289]]);
 
 
 done();
