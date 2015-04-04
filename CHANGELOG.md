@@ -1,5 +1,10 @@
 # ChangeLog
 
+### 0.1.7 - xxxxxxxx
+
+- Added: `martinratio`, `painindex`, `painratio`,`sterlingratio`
+- Modified: `ulcerindex`
+
 ### 0.1.6 - 20150329
 
 - Added: `camlarratio`,`burkeratio`

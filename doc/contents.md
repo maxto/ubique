@@ -222,13 +222,17 @@
 - [histvar](/doc/quants/histvar.md) - Historical Value-At-Risk
 - [inforatio](/doc/quants/inforatio.md) - Information Ratio
 - [jensenalpha](/doc/quants/jensenalpha.md) - Jensen alpha
+- [martinratio](/doc/quants/martinratio.md) - Martin Ratio
 - [modigliani](/doc/quants/modigliani.md) - Modigliani index for risk-adjusted return
 - [montecarlovar](/doc/quants/montecarlovar.md) - Montecarlo Value-at-Risk
 - [omegaratio](/doc/quants/omegaratio.md) - Omega ratio
+- [painindex](/doc/quants/painindex.md) - Pain Index
+- [painratio](/doc/quants/painratio.md) - Pain Ratio
 - [paramcondvar](/doc/quants/paramcondvar.md) - Parametric Conditional Value-At-Risk
 - [paramvar](/doc/quants/paramvar.md) - Parametric Value-At-Risk
 - [sharpe](/doc/quants/sharpe.md) - Sharpe Ratio
 - [sortino](/doc/quants/sortino.md) - Sortino ratio
+- [sterlingratio](/doc/quants/sterlingratio.md) - Sterling Ratio
 - [trackerr](/doc/quants/trackerr.md) - Tracking Error (ex-post)
 - [treynor](/doc/quants/treynor.md) - Treynor Ratio
 - [ulcerindex](/doc/quants/ulcerindex.md) - Ulcer Index
