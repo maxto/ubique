@@ -222,6 +222,7 @@
 - [histvar](/doc/quants/histvar.md) - Historical Value-At-Risk
 - [inforatio](/doc/quants/inforatio.md) - Information Ratio
 - [jensenalpha](/doc/quants/jensenalpha.md) - Jensen alpha
+- [m2sortino](/doc/quants/m2sortino.md) - M-squared for Sortino
 - [martinratio](/doc/quants/martinratio.md) - Martin Ratio
 - [modigliani](/doc/quants/modigliani.md) - Modigliani index for risk-adjusted return
 - [montecarlovar](/doc/quants/montecarlovar.md) - Montecarlo Value-at-Risk

@@ -1,9 +1,9 @@
 # ChangeLog
 
-### 0.1.7 - xxxxxxxx
+### 0.1.7 - 20150406
 
-- Added: `martinratio`, `painindex`, `painratio`,`sterlingratio`
-- Modified: `ulcerindex`
+- Added in _quants_ `martinratio`, `painindex`, `painratio`,`sterlingratio`,`m2sortino`
+- Modified: `ulcerindex`,`sortino`
 
 ### 0.1.6 - 20150329
 
