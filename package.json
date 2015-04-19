@@ -1,7 +1,7 @@
 {
   "name": "ubique",
-  "version": "0.1.7",
-  "date": "2015-04-06",
+  "version": "0.1.8",
+  "date": "2015-04-19",
   "author": "Max Todaro <m.todaro.ge@gmail.com>",
   "description": "An extensive scientific computing library for JavaScript and Node.js",
   "main": "./index",

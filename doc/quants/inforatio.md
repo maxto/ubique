@@ -18,8 +18,8 @@ Information Ratio
 
 |Params|Type|Description
 |---------|----|-----------
-|`x` | array/matrix | asset/portfolio values
-|`y` | array | benchmark values
+|`x` | array/matrix | asset/portfolio returns
+|`y` | array | benchmark returns
 |`dim` | number | dimension 0: row, 1: column (def: 1)
 
 

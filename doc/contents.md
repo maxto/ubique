@@ -189,6 +189,7 @@
 
 ### Performance metrics
 
+- [activereturn](/doc/quants/activereturn.md) - Active return
 - [annreturn](/doc/quants/annreturn.md) - Annualized Return
 - [cagr](/doc/quants/cagr.md) - Compound annual growth rate
 - [irr](/doc/quants/irr.md) - Internal rate of return on an investment based on a series of periodic cash flows
@@ -196,7 +197,6 @@
 - [percpos](/doc/quants/percpos.md) - Percentage of positive values in array or matrix
 - [ror](/doc/quants/ror.md) - Simple rate of return
 - [twr](/doc/quants/twr.md) - True Time-weighted return measures the returns of the assets irrespective of the amount invested
-- [xreturn](/doc/quants/xreturn.md) - Excess return
 
 ### Relational Operations
 
@@ -210,7 +210,8 @@
 ### Risk metrics
 
 - [adjsharpe](/doc/quants/adjsharpe.md) - Adjusted Sharpe Ratio
-- [annavgrisk](/doc/quants/annavgrisk.md) - Annualized Average Risk
+- [annadjsharpe](/doc/quants/annadjsharpe.md) - Annualized Adjusted Sharpe Ratio
+- [annarisk](/doc/quants/annarisk.md) - Annualized Risk
 - [avgdrawdown](/doc/quants/avgdrawdown.md) - Average drawdown
 - [burkeratio](/doc/quants/burkeratio.md) - Burke Ratio
 - [calmarratio](/doc/quants/calmarratio.md) - Calmar Ratio

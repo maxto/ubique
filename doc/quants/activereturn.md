@@ -1,18 +1,16 @@
-### annreturn
+### activereturn
 
-Annualized Return
+Active return
 
 
 #### Syntax
 
-ubique.annreturn(x,t,type,dim)
+ubique.activereturn(x,y,t,type,dim)
 
 
 #### Description
 
-Average annualized returns over a period, convenient when comparing returns.  
-It can be an Arithmetic or Geometric (default) average return: if compounded with itself the  
-geometric average will be equal to the cumulative return  
+Asset/Portfolio annualized return minus Benchmark annualized return  
 
 
 
@@ -21,6 +19,7 @@ geometric average will be equal to the cumulative return
 |Params|Type|Description
 |---------|----|-----------
 |`x` | array/matrix | asset/portfolio returns
+|`y` | array | benchmark returns
 |`t` | number | frequencey of data. 1: yearly, 4: quarterly, 12: monthly, 52: weekly, 252: daily
 |`type` | string | 'geometric' or 'simple' (def: 'geometric')
 |`dim` | number | dimension 0: row, 1: column (def: 1)
@@ -29,14 +28,15 @@ geometric average will be equal to the cumulative return
 #### Examples
 
 ```js
-var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+var x = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
+var z = [0.04,-0.022,0.043,0.028,-0.078,-0.011,0.033,-0.049,0.09,0.087];
 var cat = ubique.cat;
 
-ubique.annreturn(x,12);
-// 0.233815
+ubique.activereturn(x,z,12);
+// 0.041979
 
-ubique.annreturn(cat(1,x,y),12);
-// [ [ 0.233815, 0.14509 ] ]
+ubique.activereturn(cat(1,x,y),z,12);
+// [ [ 0.041979, -0.046746 ] ]
 ```
 

@@ -96,11 +96,11 @@ var descStat = {
 
 finMetrics = {
 
-  annualizedReturn: ubique.annavgreturn(xy),
-  excessReturn: ubique.xreturn(x,y),
+  annualizedReturn: ubique.annreturn(xy),
+  excessReturn: ubique.activereturn(x,y),
   sharpe: ubique.sharpe(xy),
   sortino: ubique.sortino(xy),
-  annualizedRisk: ubique.annavgrisk(xy),
+  annualizedRisk: ubique.annrisk(xy),
   downsideRisk: ubique.downsiderisk(xy),
   maxdrawdown: [ubique.drawdown(x).maxdd,ubique.drawdown(y).maxdd],
   ulcerindex: ubique.ulcerindex(xy),

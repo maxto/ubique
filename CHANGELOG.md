@@ -1,5 +1,11 @@
 # ChangeLog
 
+### 0.1.8 - 20150417
+
+- Replaced: `xreturn` with `activereturn` in _quants_
+- Added: `annadjsharpe` in _quants_
+- Modified: `annavgrisk` with `annrisk` in _quants_
+
 ### 0.1.7 - 20150406
 
 - Added in _quants_ `martinratio`, `painindex`, `painratio`,`sterlingratio`,`m2sortino`
