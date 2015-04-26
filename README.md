@@ -13,6 +13,8 @@ Ubique supports arrays, vectors and matrices, providing MATLAB-like functionalit
 
 Easy to use, Ubique runs both in Node.js/Io.js and in the Browser.
 
+You can use directly in the browser console from the Website pages [Ubique](http://maxto.github.io/)
+
 For further details see the [API Documentation](/doc/contents.md)
 
 ## Key Features
@@ -29,72 +31,99 @@ For further details see the [API Documentation](/doc/contents.md)
 ## Usage
 
 ```js
-// load ubique
+// Load Ubique
 var ubique = require('ubique');
+
+// EXAMPLE 1 - BASIC STATISTICS
 
 // set variables
 var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
+var z = [0.04,-0.022,0.043,0.028,-0.078,-0.011,0.033,-0.049,0.09,0.087];
 
-// concatenate X and Y along column
-var xy = ubique.cat(1,x,y);
+// Concatenate X,Y and Z along columns
+var xyz = ubique.cat(1,x,y,z);
 
-// [ [ 0.003, -0.005 ],
-//   [ 0.026, 0.081 ],
-//   [ 0.015, 0.04 ],
-//   [ -0.009, -0.037 ],
-//   [ 0.014, -0.061 ],
-//   [ 0.024, 0.058 ],
-//   [ 0.015, -0.049 ],
-//   [ 0.066, -0.021 ],
-//   [ -0.014, 0.062 ],
-//   [ 0.039, 0.058 ] ]
+// [ [ 0.003, -0.005, 0.04 ],
+//   [ 0.026, 0.081, -0.022 ],
+//   [ 0.015, 0.04, 0.043 ],
+//   [ -0.009, -0.037, 0.028 ],
+//   [ 0.014, -0.061, -0.078 ],
+//   [ 0.024, 0.058, -0.011 ],
+//   [ 0.015, -0.049, 0.033 ],
+//   [ 0.066, -0.021, -0.049 ],
+//   [ -0.014, 0.062, 0.09 ],
+//   [ 0.039, 0.058, 0.087 ] ]
 
-// get some descriptive statistics for X and Y along column
+// Get statistics for matrix W along column (default)
 
-var descStat = {
+var myStats = {
 
-  numel: ubique.nrows(xy),
-  mean: ubique.mean(xy),
-  stdev: ubique.std(xy),
-  variance: ubique.varc(xy),
-  max: ubique.max(xy),
-  min: ubique.min(xy),
-  mode: ubique.mode(xy),
-  median: ubique.median(xy),
-  iqr: ubique.iqr(xy),
-  kurtosis: ubique.kurtosis(xy),
-  skewness: ubique.skewness(xy),
-  pdist: ubique.pdist(x,y,'euclidean'),
-  sum: ubique.sum(xy),
-  alpha: ubique.linearreg(x,y).alpha,
-  beta: ubique.linearreg(x,y).beta,
-  r2: ubique.linearreg(x,y).rsq
+  ArrayDimension: ubique.size(W), // size of the matrix
+  NumRows:        ubique.nrows(W), // number of rows
+  NumColumns:     ubique.ncols(W), // numnber of columns
+  Mean:           ubique.mean(W), // average value for columns
+  StandardDev:    ubique.std(W), // standard deviation (sample)
+  Variance:       ubique.varc(W), // variance
+  Mode:           ubique.mode(W), // mode
+  Median:         ubique.median(W), // median
+  Max:            ubique.max(W), // max
+  Min:            ubique.min(W), //  min
+  Kurtosis:       ubique.kurtosis(W), // kurtosis
+  Skewness:       ubique.skewness(W), // skewness
+  Interquartile:  ubique.iqr(W), //interquartile range
+  MeanAbsDev:     ubique.mad(W), // mean absolute deviation
+  Range:          ubique.range(W), // range
+  Moment:         ubique.moment(W,2), // second moment
+  Percentile:     ubique.prctile(W,5), // 5-th percentile
+  Quantile:       ubique.quantile(W,0.05), // quantile at 5%
+  Quartile:       ubique.quartile(W), // quartile
+  ExcessKurtosis: ubique.xkurtosis(W), //excess kurtosis
+  Zscore:         ubique.zscore(W) // Z-score
 
-};
+}
 
-// {
-// numel: 10,
-// mean: [ [ 0.0179, 0.0125 ] ],
-// stdev: [ [ 0.0232, 0.0528 ] ],
-// variance: [ [ 0.000539, 0.002789 ] ],
-// max: [ [ 0.066, 0.081 ] ],
-// min: [ [ -0.014, -0.061 ] ],
-// mode: [ [ 0.015, 0.058 ] ],
-// median: [ [ -0.0115, -0.055 ] ],
-// iqr: [ [ 0.023, 0.095 ] ],
-// kurtosis: [ [ 3.037, 1.397 ] ],
-// skewness: [ [ 0.617, -0.118 ] ],
-// pdist: 0.17053,
-// sum: [ [ 0.179, 0.125 ] ],
-// alpha: 0.0176,
-// beta: 0.023,
-// r2: 0.0027
-// }
+//  { ArrayDimension: [ 10, 3 ],
+//    NumRows: 10,
+//    NumColumns: 3,
+//    Mean: [ [ 0.0179, 0.0126, 0.0161 ] ],
+//    StandardDev: [ [ 0.02323, 0.052812, 0.055266 ] ],
+//    Variance: [ [ 0.00054, 0.002789, 0.003054 ] ],
+//    Mode: [ [ 0.015, 0.058, -0.078 ] ],
+//    Median: [ [ -0.0115, -0.055, -0.0635 ] ],
+//    Max: [ [ 0.066, 0.081, 0.09 ] ],
+//    Min: [ [ -0.014, -0.061, -0.078 ] ],
+//    Kurtosis: [ [ 3.037581, 1.397642, 2.052037 ] ],
+//    Skewness: [ [ 0.617481, -0.118909, -0.266942 ] ],
+//    Interquartile: [ [ 0.023, 0.095, 0.065 ] ],
+//    MeanAbsDev: [ [ 0.01668, 0.0472, 0.04488 ] ],
+//    Range: [ [ 0.08, 0.142, 0.168 ] ],
+//    Moment: [ [ 0.000486, 0.00251, 0.002749 ] ],
+//    Percentile: [ [ -0.014, -0.061, -0.078 ] ],
+//    Quantile: [ [ -0.014, -0.061, -0.078 ] ],
+//    Quartile: 
+//    [ [ 0.003, -0.037, -0.022 ],
+//      [ 0.015, 0.0175, 0.0305 ],
+//      [ 0.026, 0.058, 0.043 ] ],
+//    ExcessKurtosis: [ [ 0.037581, -1.602358, -0.947963 ] ],
+//    Zscore: 
+//    [ [ -0.641399, -0.333255, 0.432455 ],
+//      [ 0.34868, 1.295149, -0.689394 ],
+//      [ -0.124836, 0.518817, 0.486738 ],
+//      [ -1.157961, -0.939172, 0.215323 ],
+//      [ -0.167883, -1.393611, -1.702677 ],
+//      [ 0.262586, 0.859646, -0.490356 ],
+//      [ -0.124836, -1.166391, 0.305794 ],
+//      [ 2.070555, -0.636214, -1.177941 ],
+//      [ -1.373195, 0.935385, 1.337171 ],
+//      [ 0.908289, 0.859646, 1.282888 ] ] }
 
-// get some financial metrics
 
-finMetrics = {
+// EXMPLE 2 - QUANTITATIVE METRICS FOR FINANCE
+
+// Get some financial metrics
+
+var myFinMetrics = {
 
   annualizedReturn: ubique.annreturn(xy),
   excessReturn: ubique.activereturn(x,y),
