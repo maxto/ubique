@@ -157,8 +157,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	__webpack_require__(61)(ubique);
 	__webpack_require__(62)(ubique);
 	__webpack_require__(63)(ubique);
-	__webpack_require__(65)(ubique);
 	__webpack_require__(64)(ubique);
+	__webpack_require__(65)(ubique);
 	__webpack_require__(66)(ubique);
 	__webpack_require__(67)(ubique);
 	__webpack_require__(68)(ubique);
@@ -3210,6 +3210,46 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
+	 * Exponents and Logarithms
+	 */
+	 module.exports = function($u) {
+	/**
+	 * @method log
+	 * @summary Natural logarithm
+	 * @description Natural logarithm
+	 * 
+	 * @param  {number|array|matrix} x element
+	 * @return {number|array|matrix}   
+	 *
+	 * @example  
+	 * var a = [[5,6,5],[7,8,2]];
+	 * var c = [5,6,3];
+	 *
+	 * ubique.log(6);
+	 * // 1.79176
+	 * ubique.log(c);
+	 * // [ 1.60944, 1.79176, 1.09861 ]
+	 * ubique.log([[5,6,5],[7,8,2]]);
+	 * // [ [ 1.6094, 1.7918, 1.6094 ], [ 1.9459, 2.0794, 0.6931 ] ]
+	 */
+	 $u.log = function(x) {
+	 	if (arguments.length === 0) {
+	 		throw new Error('not enough input arguments');
+	 	}
+	 	var fun = Math.log;
+	 	if ($u.isnumber(x)) {
+	 		return fun(x);
+	 	}
+	 	return $u.arrayfun(x,fun)
+	 }
+
+	}
+
+/***/ },
+/* 65 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
 	 * Complex Numbers
 	 */
 	 module.exports = function($u) {
@@ -3250,46 +3290,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	 		return _sign(x);
 	 	}
 	 	return $u.arrayfun(x,_sign)
-	 }
-
-	}
-
-/***/ },
-/* 65 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Exponents and Logarithms
-	 */
-	 module.exports = function($u) {
-	/**
-	 * @method log
-	 * @summary Natural logarithm
-	 * @description Natural logarithm
-	 * 
-	 * @param  {number|array|matrix} x element
-	 * @return {number|array|matrix}   
-	 *
-	 * @example  
-	 * var a = [[5,6,5],[7,8,2]];
-	 * var c = [5,6,3];
-	 *
-	 * ubique.log(6);
-	 * // 1.79176
-	 * ubique.log(c);
-	 * // [ 1.60944, 1.79176, 1.09861 ]
-	 * ubique.log([[5,6,5],[7,8,2]]);
-	 * // [ [ 1.6094, 1.7918, 1.6094 ], [ 1.9459, 2.0794, 0.6931 ] ]
-	 */
-	 $u.log = function(x) {
-	 	if (arguments.length === 0) {
-	 		throw new Error('not enough input arguments');
-	 	}
-	 	var fun = Math.log;
-	 	if ($u.isnumber(x)) {
-	 		return fun(x);
-	 	}
-	 	return $u.arrayfun(x,fun)
 	 }
 
 	}
@@ -6195,7 +6195,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	   return sr * (1 + (sk/6) * sr - ((ku - 3)/24) * Math.sqrt(sr));
 	 }
 	 if ($u.isnumber(x)) {
-	   throw new Error('input must be an array or matrix');
+	   return NaN;
 	 }
 	 if ($u.isarray(x)) {
 	   return  _asharpe(x,frisk);
@@ -6226,7 +6226,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * 
 	 * @param  {array|matrix} x array of value
 	 * @param  {number} frisk annual free-risk rate (def: 0)
-	 * @param  {number} t frequencey of data. 1: yearly, 4: quarterly, 12: monthly, 52: weekly, 252: daily
+	 * @param  {number} t frequency 252: daily (default), 52: weekly, 12: monthly, 4: quarterly
 	 * @param  {string} type 'geometric' or 'simple' (def: 'geometric')
 	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
 	 * @return {number|array|matrix}       
@@ -6342,7 +6342,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	 module.exports = function($u) {
 	/**
-	 * @method annarisk
+	 * @method annrisk
 	 * @summary Annualized Risk
 	 * @description Annualized standard deviation of asset/portfolio returns
 	 * 
@@ -6532,34 +6532,36 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Compound annual growth rate
 	 * @description Compound annual growth rate
 	 * 
-	 * @param  {number|array|matrix} x rate or return 
-	 * @param  {number} p period (def: 1)
+	 * @param  {number|array|matrix} x portfolio/assets returns 
+	 * @param  {number} p number of years (def: 1)
 	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
 	 * @return {number|array}   
 	 *
 	 * @example
-	 * var x = [100,98,101.5,103];
-	 * var y = [99.8,96.5,101.1,95.8];
+	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
+	 * var cat = ubique.cat;
+	 * var nrows = ubique.nrows;
 	 *
-	 * ubique.cagr(x,4);
-	 * // 0.00741707
-	 * ubique.cagr(ubique.cat(1,x,y),4);
-	 * // [[0.00741707, -0.0101743]]
-	 * ubique.cagr(ubique.cat(1,x,y),2,0);
-	 * // [-5.00375e-4, -0.00384869, -9.86681e-4, -0.0179535]
+	 * // CAGR for 10 months on 12 or 0.83 years
+	 * ubique.cagr(x,nrows(x)/12);
+	 * // 0.229388
+	 *
+	 * ubique.cagr(cat(1,x,y),nrows(x)/12);
+	 * // [ [ 0.229388, 0.151999 ] ]
 	 */
 	 $u.cagr = function(x,p,dim) {
-	  if (arguments.length < 2) {
+	  if (arguments.length === 0) {
 	    throw new Error('not enough input arguments');
 	  }
-	  if (arguments.length === 2) {
-	    dim = 1;
-	  }
+	  x = x || null;
+	  p = p || 1;
+	  dim = dim || 1;
 	  var _cagr = function(a,p) {
-	    return $u.power(1 + $u.ror(a),(1 / p)) - 1;
+	    return $u.power(1 + $u.ror(a,'ret'),(1 / p)) - 1;
 	  }
 	  if ($u.isnumber(x)) {
-	   return 0;
+	   return $u.power(a,(1 / p)) - 1;
 	  }
 	  if ($u.isarray(x)) {
 	   return  _cagr(x,p);
@@ -8066,37 +8068,51 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @description Simple rate of return calculated from the last and the first value of 
 	 * an array of numbers.
 	 * 
-	 * @param  {array!matrix} x array or matrix of values
+	 * @param  {array|matrix} x array or matrix of returns or values
+	 * @param  {string} type type of values, 'ret' for returns, 'cum' for cumulative (def: 'ret')
 	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
 	 * @return {number|array}   
 	 *
 	 * @example
-	 * var q = [[89,23,12],[34,5,70]];
+	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
+	 * var z = [100,101,99,98,97,102,103,104];
+	 * var cat = ubique.cat;
 	 * 
-	 * ubique.ror([100,112]);
-	 * // 0.12
-	 * ubique.ror(q);
-	 * // [[-0.617978, -0.782609, 4.83333]]
-	 * ubique.ror(q,0);
-	 * // [-0.865169, 1.05882]
+	 * ubique.ror(x);
+	 * // 0.187793
+	 * 
+	 * ubique.ror(z,'cum');
+	 * // 0.04
+	 * 
+	 * ubique.ror(cat(1,x,y),'ret');
+	 * // [ [ 0.187793, 0.125149 ] ]
 	 */
-	 $u.ror = function(x,dim) {
+	 $u.ror = function(x,type,dim) {
 	  if (arguments.length === 0) {
 	    throw new Error('not enough input arguments');
 	  }
-	  if (arguments.length === 1) {
-	    dim = 1;
-	  }
-	  var _ror = function(a) {
-	    return a[a.length - 1] / a[0] - 1;
+	  x = x || null;
+	  type = type || 'ret';
+	  dim = dim || 1;
+	  var _ror = function(a,type) {
+	    if (type === 'ret') {
+	      var eq = $u.cumprod($u.plus(1,a));
+	    } else
+	    if (type === 'cum') {
+	      var eq = $u.clone(a);
+	    } else {
+	      throw  new Error('unknown value');
+	    }
+	    return eq[eq.length - 1] / eq[0] - 1;
 	  }
 	  if ($u.isnumber(x)) {
-	    return 0;
+	    return NaN;
 	  }
 	  if ($u.isarray(x)) {
-	    return  _ror(x);
+	    return  _ror(x,type);
 	  }
-	  return $u.vectorfun(x,function(val){return _ror(val);},dim);
+	  return $u.vectorfun(x,function(val){return _ror(val,type);},dim);
 	}
 	}
 
@@ -8790,7 +8806,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param  {array|matrix} x array or matrix of elemnts X
 	 * @param  {array|matrix} y array or matrix of elements Y
 	 * @param  {number} flag Bessel's correction 0: population, 1: sample (def: 1)
-	 * @return {number|array}
+	 * @return {matrix}
 	 *
 	 * @example
 	 * var c = [5,6,3];

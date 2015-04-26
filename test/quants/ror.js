@@ -5,11 +5,14 @@ suite('quants',function () {
 console.log('Testing quants/ror ...');
 test('ror', function (done) {
 
-var q = [[89,23,12],[34,5,70]];
+var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
+var z = [100,101,99,98,97,102,103,104];
+var cat = ubique.cat;
 
-assert.deepEqual(ubique.ror([100,112]),0.1200000000000001);
-assert.deepEqual(ubique.ror(q),[[-0.6179775280898876,-0.782608695652174,4.833333333333333]]);
-assert.deepEqual(ubique.ror(q,0),[-0.8651685393258427,1.0588235294117645]);
+assert.deepEqual(ubique.ror(x),0.18779277315203946);
+assert.deepEqual(ubique.ror(z,'cum'),0.040000000000000036);
+assert.deepEqual(ubique.ror(cat(1,x,y),'ret'),[[0.18779277315203946,0.12514883159358225]]);
 
 
 done();

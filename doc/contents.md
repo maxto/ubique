@@ -211,7 +211,7 @@
 
 - [adjsharpe](/doc/quants/adjsharpe.md) - Adjusted Sharpe Ratio
 - [annadjsharpe](/doc/quants/annadjsharpe.md) - Annualized Adjusted Sharpe Ratio
-- [annarisk](/doc/quants/annarisk.md) - Annualized Risk
+- [annrisk](/doc/quants/annrisk.md) - Annualized Risk
 - [avgdrawdown](/doc/quants/avgdrawdown.md) - Average drawdown
 - [burkeratio](/doc/quants/burkeratio.md) - Burke Ratio
 - [calmarratio](/doc/quants/calmarratio.md) - Calmar Ratio

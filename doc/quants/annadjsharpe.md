@@ -26,7 +26,7 @@ S = skewness
 |---------|----|-----------
 |`x` | array/matrix | array of value
 |`frisk` | number | annual free-risk rate (def: 0)
-|`t` | number | frequencey of data. 1: yearly, 4: quarterly, 12: monthly, 52: weekly, 252: daily
+|`t` | number | frequency 252: daily (default), 52: weekly, 12: monthly, 4: quarterly
 |`type` | string | 'geometric' or 'simple' (def: 'geometric')
 |`dim` | number | dimension 0: row, 1: column (def: 1)
 

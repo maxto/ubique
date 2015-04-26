@@ -1,16 +1,16 @@
-### cagr
+### annrisk
 
-Compound annual growth rate
+Annualized Risk
 
 
 #### Syntax
 
-ubique.cagr(x,p,dim)
+ubique.annrisk(x,t,dim)
 
 
 #### Description
 
-Compound annual growth rate  
+Annualized standard deviation of asset/portfolio returns  
 
 
 
@@ -18,8 +18,8 @@ Compound annual growth rate
 
 |Params|Type|Description
 |---------|----|-----------
-|`x` | number/array/matrix | portfolio/assets returns
-|`p` | number | number of years (def: 1)
+|`x` | array/matrix | asset/portfolio returns
+|`t` | number | frequencey of data. 1: yearly, 4: quarterly, 12: monthly, 52: weekly, 252: daily
 |`dim` | number | dimension 0: row, 1: column (def: 1)
 
 
@@ -29,13 +29,11 @@ Compound annual growth rate
 var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 var cat = ubique.cat;
-var nrows = ubique.nrows;
 
-// CAGR for 10 months on 12 or 0.83 years
-ubique.cagr(x,nrows(x)/12);
-// 0.229388
+ubique.annrisk(x,12);
+// 0.233815
 
-ubique.cagr(cat(1,x,y),nrows(x)/12);
-// [ [ 0.229388, 0.151999 ] ]
+ubique.annrisk(cat(1,x,y),12);
+// [ [ 0.233815, 0.14509 ] ]
 ```
 

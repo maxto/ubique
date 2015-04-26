@@ -5,12 +5,13 @@ suite('quants',function () {
 console.log('Testing quants/cagr ...');
 test('cagr', function (done) {
 
-var x = [100,98,101.5,103];
-var y = [99.8,96.5,101.1,95.8];
+var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
+var cat = ubique.cat;
+var nrows = ubique.nrows;
 
-assert.deepEqual(ubique.cagr(x,4),0.007417071777732875);
-assert.deepEqual(ubique.cagr(ubique.cat(1,x,y),4),[[0.007417071777732875,-0.010174263005363726]]);
-assert.deepEqual(ubique.cagr(ubique.cat(1,x,y),2,0),[-0.0010005005006258338,-0.007682572182156844,-0.0019723885079668824,-0.03558458775347195]);
+assert.deepEqual(ubique.cagr(x,nrows(x)/12),0.22938756017127182);
+assert.deepEqual(ubique.cagr(cat(1,x,y),nrows(x)/12),[[0.22938756017127182,0.15199864491882642]]);
 
 
 done();
