@@ -121,11 +121,15 @@ var myStats = {
 
 // EXMPLE 2 - QUANTITATIVE METRICS FOR FINANCE
 
+var mean = ubique.mean,
+std = ubique.std,
+cat = ubique.cat;
+
 var myFinMetrics = {
 
   ActiveReturn:        ubique.activereturn(W,z), // active or excess return ober Z
   AnnualizedReturn:    ubique.annreturn(W,12), // annualized return (monthly)
-  Cagr:                ubique.cagr(W,ubique.nrows(W)/12), // compound annual growth rate
+  Cagr:                ubique.cagr(W,10/12), // compound annual growth rate
   Percpos:             ubique.percpos(W), // percentage of positive values
   Ror:                 ubique.ror(W),// simple rate of return
   AdjSharpeRatio:      ubique.adjsharpe(W), // adjusted sharpe ratio
@@ -133,7 +137,7 @@ var myFinMetrics = {
   AnnualizedRisk:      ubique.annrisk(W), // annualized risk
   AverageDrawdown:     ubique.avgdrawdown(W), // average drawdown
   ContinuousDrawdow:   ubique.cdrawdown(W), // continuous drawdown
-  Drawdown:            ubique.drawdown(x), // drawdown, maximum drawdown and recovery period
+  Drawdown:            ubique.drawdown(x), // drawdown, maxdrawdown, recovery period
   BurkeRatio:          ubique.burkeratio(W), // burke ratio
   CalmarRatio:         ubique.calmarratio(W), // calmar ratio
   InformationRatio:    ubique.inforatio(cat(1,x,y),z), // information ratio
@@ -151,11 +155,11 @@ var myFinMetrics = {
   TreynorRatio:        ubique.treynor(x,z), // treynor ratio
   UlcerIndex:          ubique.ulcerindex(W), // ulcer index
   UpsidePotential:     ubique.upsidepot(W), // upside potential
-  HistoricalVaR:       ubique.histvar(W), // historical VaR at 95% conf level
-  ParametricVaR:       ubique.paramvar(ubique.mean(W),ubique.std(W)), // parametric VaR at 95% conf level
-  MontecarloVaR:       ubique.montecarlovar(x), // montecarlo VaR at 95% conf level
-  HistConditionalVaR:  ubique.histcondvar(W,0.95), // historical conditional VaR at 95% conf level
-  ParamConditionalVaR: ubique.paramcondvar(ubique.mean(W),ubique.std(W)), // parametric conditional VaR at 95% conf level
+  HistoricalVaR:       ubique.histvar(W), // historical VaR
+  ParametricVaR:       ubique.paramvar(mean(W),std(W)), // parametric VaR
+  MontecarloVaR:       ubique.montecarlovar(x), // montecarlo VaR
+  HistConditionalVaR:  ubique.histcondvar(W,0.95), // historical conditional VaR 
+  ParamConditionalVaR: ubique.paramcondvar(mean(W),std(W)), // param conditional VaR
 
 }
 
@@ -197,6 +201,68 @@ var myFinMetrics = {
 //  HistoricalConditionalVaR: [ [ 0.014, 0.061, 0.078 ] ],
 //  ParametricConditionalVaR: [ 0.030018, 0.096337, 0.097898 ] }
 
+// EXAMPLE 3 - ARRAY, VECTOR AND MATRIX
+
+var A = [[5,6,5],[7,8,-1]],
+B = [[-1,3,-1],[4,5,9]],
+C = [5,6,3],
+D = [[1,1,-1],[1,-2,3],[2,3,1]],
+E = [[3, 2], [5, 2]];
+
+var myData = {
+
+  sizeA:     ubique.size(A), // 2x3 matrix
+  sizeB:     ubique.size(B), // 2x3 matrix
+  sizeC:     ubique.size(C), // 3x1 vector (= array)
+  sizeD:     ubique.size(D), // 3x3 matrix
+  sizeE:     ubique.size(E), // 2x2 matrix
+
+  'A+B':     ubique.plus(A,B), // A + B -> 2x3 matrix
+  'A-B':     ubique.minus(A,B), // A - B -> 2x3 matrix
+  'A.*B':    ubique.times(A,B), // A * B element-wise -> 2x3 matrix
+  'A*C':     ubique.mtimes(A,C), // A * C -> 2x1 vector
+  'A./B':    ubique.rdivide(A,B), // A / B element-wise -> 2x3 matrix
+  'A/D':     ubique.mrdivide(A,D), // A / D -> 2x3 matrix
+  'A.\\B':   ubique.ldivide(A,B), // A \ B element-wise -> 2x3 matrix
+  'E\\B':    ubique.mldivide(E,B), // A \ E -> 2x2 matrix 
+  'det(D)':  ubique.det(D), // determinant -> 1x1 array
+  'inv(D)':  ubique.inv(D), // inverse -> 3x3 matrix
+  'Dx=C':    ubique.linsolve(D,C), // linear solver -> 3x1 vector
+
+   reshapeD: ubique.reshape(D,1,9), // reshape matrix -> 1x9 vector
+   repmatC:  ubique.repmat(C,1,4), // replicate matrix -> 3x4 matrix
+   matrixX:  ubique.matrix(2,4,NaN), // new matrix -> 2x4 matrix
+   zerosX:   ubique.zeros(2,4), // zeros matrix-> 2x4 matrix
+   eyeX:     ubique.eye(2), // identity matrix -> 2x2 matrix
+   
+}
+
+//  { sizeA: [ 2, 3 ],
+//  sizeB: [ 2, 3 ],
+//  sizeC: [ 3, 1 ],
+//  sizeD: [ 3, 3 ],
+//  sizeE: [ 2, 2 ],
+//  'A+B': [ [ 4, 9, 4 ], [ 11, 13, 8 ] ],
+//  'A-B': [ [ 6, 3, 6 ], [ 3, 3, -10 ] ],
+//  'A.*B': [ [ -5, 18, -5 ], [ 28, 40, -9 ] ],
+//  'A*C': [ [ 76 ], [ 80 ] ],
+//  'A./B': [ [ -5, 2, -5 ], [ 1.75, 1.6, -0.111111 ] ],
+//  'A/D': 
+//   [ [ -0.769231, 0.538462, 2.615385 ],
+//     [ 3.384615, 0.230769, 1.692308 ] ],
+//  'A.\B': [ [ -0.2, 0.5, -0.2 ], [ 0.571429, 0.625, -9 ] ],
+//  'E\B': [ [ 2.5, 1, 5 ], [ -4.25, 0, -8 ] ],
+//  'det(D)': -13,
+//  'inv(D)': 
+//   [ [ 0.846154, 0.307692, -0.076923 ],
+//     [ -0.384615, -0.230769, 0.307692 ],
+//     [ -0.538462, 0.076923, 0.230769 ] ],
+//  'Dx=C': [ 5.846154, -2.384615, -1.538462 ],
+//  reshapeD: [ [ 1, 1, 2, 1, -2, 3, -1, 3, 1 ] ],
+//  repmatC: [ [ 5, 5, 5, 5 ], [ 6, 6, 6, 6 ], [ 3, 3, 3, 3 ] ],
+//  matrixX: [ [ NaN, NaN, NaN, NaN ], [ NaN, NaN, NaN, NaN ] ],
+//  zerosX: [ [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ] ],
+//  eyeX: [ [ 1, 0 ], [ 0, 1 ] ] }
 
 ```
 
