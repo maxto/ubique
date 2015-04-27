@@ -1,5 +1,10 @@
 # ChangeLog
 
+### 0.1.9 - 20150427
+
+- Updated README
+- Bugfix
+
 ### 0.1.8 - 20150417
 
 - Replaced: `xreturn` with `activereturn` in _quants_

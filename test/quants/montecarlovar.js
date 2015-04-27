@@ -6,7 +6,7 @@ console.log('Testing quants/montecarlovar ...');
 test('montecarlovar', function (done) {
 
 
-assert.deepEqual(ubique.montecarlovar(),[]);
+assert.deepEqual(ubique.montecarlovar(),null);
 
 done();
 });

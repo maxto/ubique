@@ -35,7 +35,7 @@ var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 ubique.montecarlovar(x,0.95,1,0,1,10000);
 // 0.0771
 
-// historical simulated daily VaR at 1% for 100k GBP asset over 10 days
+// historical simulated daily VaR at 99% for 100k GBP asset over 10 days
 ubique.montecarlovar(ubique.std(x),0.99,10,0,100000);
 // 23201.0819
 ```

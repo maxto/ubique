@@ -23,7 +23,7 @@ by the square root of the number of datas.
 |---------|----|-----------
 |`x` | array/matrix | asset/portfolio returns
 |`frisk` | number | annual free-risk rate (def: 0)
-|`t` | number | frequencey of data. 1: yearly, 4: quarterly, 12: monthly, 52: weekly, 252: daily (def: 252)
+|`t` | number | frequency 252: daily (default), 52: weekly, 12: monthly, 4: quarterly
 |`mode` | string | 'simple' or 'modified' (def: 'simple')
 |`dim` | number | dimension 0: row, 1: column (def: 1)
 

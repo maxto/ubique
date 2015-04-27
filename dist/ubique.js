@@ -62,8 +62,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * name: ubique
-	 * version: 0.1.8
-	 * update date: 2015-04-19
+	 * version: 0.1.9
+	 * update date: 2015-04-27
 	 * 
 	 * author: Max Todaro <m.todaro.ge@gmail.com>
 	 * homepage: http://maxto.github.io/index.html
@@ -3450,8 +3450,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  * 
 	  * ubique.linsolve(l,m);
 	  * // [1, 2, -1]
+	  * 
 	  * ubique.linsolve(g,m);
 	  * // [-68.5, 59, -1.5]
+	  * 
 	  * ubique.linsolve(l,ubique.eye(3));
 	  * // [[0.846154, 0.307692, -0.0769231], [-0.384615, -0.230769, 0.307692], [-0.538462, 0.0769231, 0.230769]]
 	  */
@@ -6468,7 +6470,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *  
 	 * @param  {array|matrix} x asset/portfolio returns
 	 * @param  {number} frisk annual free-risk rate (def: 0)
-	 * @param  {number} t frequencey of data. 1: yearly, 4: quarterly, 12: monthly, 52: weekly, 252: daily (def: 252)
+	 * @param  {number} t frequency 252: daily (default), 52: weekly, 12: monthly, 4: quarterly
 	 * @param  {string} mode 'simple' or 'modified' (def: 'simple')
 	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
 	 * @return {number|arrray}       
@@ -6491,9 +6493,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if (arguments.length === 0) {
 	    throw new Error('not enough input arguments');
 	  }
-	  var frisk = frisk || 0,
-	  t = t || 252,
-	  mode = mode || 'simple',
+	  frisk = frisk || 0;
+	  t = t || 252;
+	  mode = mode || 'simple';
 	  dim = dim || 1;
 
 	  var _burkeratio = function(a,frisk,t,mode) {
@@ -6932,11 +6934,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 	 * 
-	 * // historical daily conditional VaR at 5% conf level
+	 * // historical daily conditional VaR at 95% conf level
 	 * ubique.histcondvar(ubique.cat(1,x,y),0.95);
 	 * // [[0.014, 0.061]]
 	 *
-	 * // historical daily conditional VaR at 1% for 100k GBP asset over 10 days 
+	 * // historical daily conditional VaR at 99% for 100k GBP asset over 10 days 
 	 * ubique.histcondvar(ubique.cat(1,x,y),0.99,100000,10);
 	 * // [[4427.19, 19289.9]]
 	 */
@@ -6944,24 +6946,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if (arguments.length === 0) {
 	    throw new Error('not enough input arguments');
 	  }
-	  if (arguments.length === 1) {
-	    p = 0.95;
-	    amount = 1;
-	    period = 1;
-	    dim = 1;
-	  }
-	  if (arguments.length === 2) {
-	    amount = 1;
-	    period = 1;
-	    dim = 1;
-	  }
-	  if (arguments.length === 3) {
-	    period = 1;
-	    dim = 1;
-	  }
-	  if (arguments.length === 4) {
-	    dim = 1;
-	  }
+	  p = p || 0.95;
+	  amount = amount || 1;
+	  period = period || 1;
+	  dim = dim || 1;
+
 	  var _hcvar = function(a,p,amount,period) {
 	    var _VaR = -$u.histvar(a,p),
 	    z = [],
@@ -7272,6 +7261,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * ubique.jensenalpha(x,y);
 	 * // 0.0176091
+	 * 
 	 * ubique.jensenalpha(ubique.cat(1,x,y),z);
 	 * // [[0.0263019, -0.0597049]]
 	 */
@@ -7279,13 +7269,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if (arguments.length < 2) {
 	    throw new Error('not enough input arguments');
 	  }
-	  if (arguments.length === 2) {
-	    frisk = 0;
-	    dim = 1;
-	  }
-	  if (arguments.length === 3) {
-	    dim = 1;
-	  }
+	  frisk = frisk || 0;
+	  dim = dim || 1;
+
 	  var _ja = function(a,b,frisk) {
 	    var beta = $u.linearreg(a,b).beta;
 	    return $u.mean(a) - frisk - beta * ($u.mean(b) - frisk);
@@ -7557,13 +7543,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * ubique.montecarlovar(x,0.95,1,0,1,10000);
 	 * // 0.0771
 	 * 
-	 * // historical simulated daily VaR at 1% for 100k GBP asset over 10 days 
+	 * // historical simulated daily VaR at 99% for 100k GBP asset over 10 days 
 	 * ubique.montecarlovar(ubique.std(x),0.99,10,0,100000);
 	 * // 23201.0819
 	 */
 	 $u.montecarlovar = function(x) {
-	  if (arguments.length === 0) {
-	    return [];
+	   if (arguments.length === 0) {
+	    return null;
 	  }
 	  if ($u.isnumber(x)) {
 	    s = $u.clone(x);
@@ -8498,9 +8484,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if (arguments.length < 2) {
 	    throw new Error('not enough input arguments');
 	  }
-	  if (arguments.length === 2) {
-	    frisk = 0;
-	  }
+	  frisk = frisk || 0;
 	  var beta = $u.linearreg(x,y).beta;
 	  return ($u.mean(x) - frisk) / beta;
 	}
