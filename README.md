@@ -41,8 +41,8 @@ var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 var z = [0.04,-0.022,0.043,0.028,-0.078,-0.011,0.033,-0.049,0.09,0.087];
 
-// Concatenate X,Y and Z along columns
-var xyz = ubique.cat(1,x,y,z);
+// Concatenate X,Y and Z along columns, returns a matrix W with size 10x3
+var W = ubique.cat(1,x,y,z);
 
 // [ [ 0.003, -0.005, 0.04 ],
 //   [ 0.026, 0.081, -0.022 ],
@@ -61,7 +61,7 @@ var myStats = {
 
   ArrayDimension: ubique.size(W), // size of the matrix
   NumRows:        ubique.nrows(W), // number of rows
-  NumColumns:     ubique.ncols(W), // numnber of columns
+  NumColumns:     ubique.ncols(W), // number of columns
   Mean:           ubique.mean(W), // average value for columns
   StandardDev:    ubique.std(W), // standard deviation (sample)
   Variance:       ubique.varc(W), // variance
@@ -121,33 +121,83 @@ var myStats = {
 
 // EXMPLE 2 - QUANTITATIVE METRICS FOR FINANCE
 
-// Get some financial metrics
-
 var myFinMetrics = {
 
-  annualizedReturn: ubique.annreturn(xy),
-  excessReturn: ubique.activereturn(x,y),
-  sharpe: ubique.sharpe(xy),
-  sortino: ubique.sortino(xy),
-  annualizedRisk: ubique.annrisk(xy),
-  downsideRisk: ubique.downsiderisk(xy),
-  maxdrawdown: [ubique.drawdown(x).maxdd,ubique.drawdown(y).maxdd],
-  ulcerindex: ubique.ulcerindex(xy),
-  hurst: ubique.hurst(xy),
+  ActiveReturn:        ubique.activereturn(W,z), // active or excess return ober Z
+  AnnualizedReturn:    ubique.annreturn(W,12), // annualized return (monthly)
+  Cagr:                ubique.cagr(W,ubique.nrows(W)/12), // compound annual growth rate
+  Percpos:             ubique.percpos(W), // percentage of positive values
+  Ror:                 ubique.ror(W),// simple rate of return
+  AdjSharpeRatio:      ubique.adjsharpe(W), // adjusted sharpe ratio
+  AnnuaAdjSharpeRatio: ubique.annadjsharpe(W,0,12), // annualized sharpe ratio
+  AnnualizedRisk:      ubique.annrisk(W), // annualized risk
+  AverageDrawdown:     ubique.avgdrawdown(W), // average drawdown
+  ContinuousDrawdow:   ubique.cdrawdown(W), // continuous drawdown
+  Drawdown:            ubique.drawdown(x), // drawdown, maximum drawdown and recovery period
+  BurkeRatio:          ubique.burkeratio(W), // burke ratio
+  CalmarRatio:         ubique.calmarratio(W), // calmar ratio
+  InformationRatio:    ubique.inforatio(cat(1,x,y),z), // information ratio
+  JensenAlpha:         ubique.jensenalpha(cat(1,x,y),z), // jensen-Alpha
+  M2Sortino:           ubique.m2sortino(cat(1,x,y),z), // m2-Sortino
+  MartinRatio:         ubique.martinratio(W), // martin ratio
+  Modigliani:          ubique.modigliani(cat(1,x,y),z), // modigliani
+  OmegaRatio:          ubique.omegaratio(W), // omega ratio
+  PainIndex:           ubique.painindex(W), // pain index
+  PainRatio:           ubique.painratio(W), // pain ratio
+  SharpeRatio:         ubique.sharpe(W), // sharpe ratio
+  Sortino:             ubique.sortino(W), // sortino
+  SterlingRatio:       ubique.sterlingratio(W), // sterling ratio
+  TrackingError:       ubique.trackerr(x,z), // tracking error
+  TreynorRatio:        ubique.treynor(x,z), // treynor ratio
+  UlcerIndex:          ubique.ulcerindex(W), // ulcer index
+  UpsidePotential:     ubique.upsidepot(W), // upside potential
+  HistoricalVaR:       ubique.histvar(W), // historical VaR at 95% conf level
+  ParametricVaR:       ubique.paramvar(ubique.mean(W),ubique.std(W)), // parametric VaR at 95% conf level
+  MontecarloVaR:       ubique.montecarlovar(x), // montecarlo VaR at 95% conf level
+  HistConditionalVaR:  ubique.histcondvar(W,0.95), // historical conditional VaR at 95% conf level
+  ParamConditionalVaR: ubique.paramcondvar(ubique.mean(W),ubique.std(W)), // parametric conditional VaR at 95% conf level
 
-};
+}
 
-// {
-// annualizedReturn: [ [ 86.43, 22.46 ] ],
-// excessReturn: 0.0052,
-// sharpe: [ [ 0.77, 0.23 ] ],
-// sortino: [ [ 3.40, 0.44 ] ],
-// annualizedRisk: [ [ 0.36, 0.83 ] ],
-// downsideRisk: [ [ 0.005, 0.028 ] ],
-// maxdrawdown: [ 1.346, 1.753 ],
-// ulcerindex: [ [ 0.634, 0.991 ] ],
-// hurst: [ [ 0.344, 0.515 ] ]
-// }
+//  { ActiveReturn: [ [ 42.60025, -22.656613, 0 ] ],
+//  AnnualizedReturn: [ [ 0.233815, 0.14509, 0.191836 ] ],
+//  Cagr: [ [ 0.229388, 0.151999, 0.137042 ] ],
+//  Percpos: [ [ 0.8, 0.5, 0.6 ] ],
+//  Ror: [ [ 0.187793, 0.125149, 0.112962 ] ],
+//  AdjSharpeRatio: [ [ 0.830583, 0.245232, 0.293754 ] ],
+//  AnnualizedAdjSharpeRatio: [ [ 3.766555, 0.827757, 0.99698 ] ],
+//  AnnualizedRisk: [ [ 0.368773, 0.838372, 0.877319 ] ],
+//  AverageDrawdown: [ [ 0.0115, 0.056571, 0.053047 ] ],
+//  ContinuousDrawdow: [ [ 0.009, 0.005, 0.022 ], [ 0.014, 0.095743, 0.088142 ] ],
+//  Drawdown: 
+//   { dd: [ 0, 0, 0, 0.009, 0, 0, 0, 0, 0.01399, 0 ],
+//     ddrecov: [ 0, 0, 0, 4, 0, 0, 0, 0, 9, 0 ],
+//     maxdd: 0.01399,
+//     maxddrecov: [ 8, 9 ] },
+//  BurkeRatio: [ [ 4894.517302, 137.201479, 376.491017 ] ],
+//  CalmarRatio: [ [ 5818.643065, 148.279682, 372.92169 ] ],
+//  InformationRatio: [ [ 0.026302, -0.059705 ] ],
+//  JensenAlpha: [ [ 0.020772, 0.006256 ] ],
+//  M2Sortino: [ [ 82.804628, 16.217907 ] ],
+//  MartinRatio: [ [ 15477.822721, 272.324501, 720.112099 ] ],
+//  Modigliani: [ [ 0.042585, 0.013185 ] ],
+//  OmegaRatio: [ [ 8.782609, 1.728324, 2.00625 ] ],
+//  PainIndex: [ [ 0.0023, 0.042955, 0.037398 ] ],
+//  PainRatio: [ [ 35417.827351, 377.234425, 1039.102998 ] ],
+//  SharpeRatio: [ [ 0.770539, 0.23858, 0.291319 ] ],
+//  Sortino: [ [ 3.401051, 0.446679, 0.534003 ] ],
+//  SterlingRatio: [ [ 5818.643065, 169.246211, 440.888034 ] ],
+//  TrackingError: 0.068436,
+//  TreynorRatio: -0.100359,
+//  UlcerIndex: [ [ 0.005263, 0.059503, 0.053965 ] ],
+//  UpsidePotential: [ [ 0.0202, 0.0299, 0.0321 ] ],
+//  HistoricalVaR: [ [ 0.014, 0.061, 0.078 ] ],
+//  ParametricVaR: [ [ 0.020311, 0.074269, 0.074804 ] ],
+//  MontecarloVaR: 0.075047,
+//  HistoricalConditionalVaR: [ [ 0.014, 0.061, 0.078 ] ],
+//  ParametricConditionalVaR: [ 0.030018, 0.096337, 0.097898 ] }
+
+
 ```
 
 ## For MATLAB Users
