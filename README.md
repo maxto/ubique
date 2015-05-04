@@ -7,7 +7,7 @@ http://maxto.github.io/
 [![NPM version](http://img.shields.io/npm/v/ubique.svg?style=flat)](https://www.npmjs.com/package/ubique)
 [![Bower](https://img.shields.io/bower/v/bootstrap.svg?style=flat)](http://bower.io/search/?q=ubique)
 
-An extensive scientific computing library for JavaScript and Node.js/Io.js
+An extensive scientific library for JavaScript and Node.js/Io.js
  
 Ubique supports arrays, vectors and matrices, providing MATLAB-like functionalities. It includes functions for quantitative analysis and advanced statistics. 
 
@@ -25,7 +25,7 @@ For further details see the [API Documentation](/doc/contents.md)
 - Browser compatibility ECMAScript 5
 - Server-side development with Node.js/Io.js
 - Easily extensible with user-defines functions or libraries
-- API documentation and Tutorials
+- API documentation
 - Free and Open Source (MIT License)
 
 ## Usage
@@ -263,6 +263,20 @@ var myData = {
 //  matrixX: [ [ NaN, NaN, NaN, NaN ], [ NaN, NaN, NaN, NaN ] ],
 //  zerosX: [ [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ] ],
 //  eyeX: [ [ 1, 0 ], [ 0, 1 ] ] }
+
+// EXAMPLE 4 - RETRIEVE FINANCIAL TIMESERIES FROM FREE RESOURCES
+
+// Yahoo Historical Data
+var options = {
+'symbol': 'AAPL',
+'from': '2015-01-01',
+'to': '2015-05-01',
+'period': 'd',
+'fmt': 'YYYY-MM-DD'};
+
+ ubique.yahoo.historical(options,function(err,data){
+ // console.log(data)
+ });
 
 ```
 

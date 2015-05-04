@@ -10,6 +10,8 @@ test('datenum', function (done) {
 assert.deepEqual(ubique.datenum('31-12-2014','DD-MM-YYYY'),1419984000);
 assert.deepEqual(ubique.datenum(['31-12-2014','31-01-2015'],'DD-MM-YYYY'),[1419984000,1422662400]);
 assert.deepEqual(ubique.datenum([['31-12-2014','31-01-2015'],['15-02-2015','01-03-2015']],'DD-MM-YYYY'),[[1419984000,1422662400],[1423958400,1425168000]]);
+assert.deepEqual(ubique.datenum([ 2015, 4, 5, 12, 20, 30, 0 ]),1428236430);
+assert.deepEqual(ubique.datenum([ [ 2013, 1, 31, 0, 0, 0, 0 ],[ 2014, 2, 28, 0, 0, 0, 0 ],[ 2015, 4, 30, 0, 0, 0, 0 ] ]),[1359590400,1393545600,1430352000]);
 
 
 done();

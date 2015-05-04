@@ -1,9 +1,9 @@
 {
   "name": "ubique",
-  "version": "0.1.9",
-  "date": "2015-04-27",
+  "version": "0.2.0",
+  "date": "2015-05-05",
   "author": "Max Todaro <m.todaro.ge@gmail.com>",
-  "description": "An extensive scientific computing library for JavaScript and Node.js",
+  "description": "An extensive scientific library for JavaScript and Node.js",
   "main": "./index",
   "contributors": [],
   "homepage": "http://maxto.github.io/index.html",
@@ -31,15 +31,19 @@
   "devDependencies": {
     "gulp": "^3.8.11",
     "gulp-util": "^3.0.4",
-    "mocha": "^2.1.0",
-    "uglify-js": "^2.4.16",
-    "webpack": "^1.7.2"
+    "mocha": "^2.2.4",
+    "uglify-js": "^2.4.21",
+    "webpack": "^1.8.11"
   },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/maxto/ubique/issues"
   },
   "dependencies": {
-    "moment": "^2.9.0"
+    "moment": "^2.10.2",
+    "request": "^2.55.0"
+  },
+  "browser": {
+    "request": false
   }
 }

@@ -1,5 +1,11 @@
 # ChangeLog
 
+### 0.2.0 - 20150504
+
+- Added new folder _datafeed_ with `yahoo` function to download historical stock data
+- Added: `clock`, `today`, `datevec`
+- Modified: `datenum`, `datestr`
+
 ### 0.1.9 - 20150427
 
 - Updated README

@@ -95,11 +95,19 @@
 - [isstring](/doc/datatype/isstring.md) - True for string values
 - [isundefined](/doc/datatype/isundefined.md) - True for undefined values
 
+### Datafeed
+
+- [yahoo](/doc/datafeed/yahoo.md) - Yahoo Finance historical
+
 ### Dates and Time
 
+- [clock](/doc/datatype/clock.md) - Current date and time as date vector
 - [datenum](/doc/datatype/datenum.md) - Convert date and time to serial date number (Unix)
 - [datestr](/doc/datatype/datestr.md) - Convert serial date number (Unix) to string format
+- [datevec](/doc/datatype/datevec.md) - Convert date and time to vector of components
 - [month](/doc/datatype/month.md) - Month of date
+- [now](/doc/datatype/now.md) - Current date and time as date number (unix)
+- [today](/doc/datatype/today.md) - Current date
 - [weekday](/doc/datatype/weekday.md) - Day of week
 
 ### Descriptive Statistic

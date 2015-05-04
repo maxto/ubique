@@ -1,16 +1,16 @@
-### datestr
+### datevec
 
-Convert serial date number (Unix) to string format
+Convert date and time to vector of components
 
 
 #### Syntax
 
-ubique.datestr(d,fmt)
+ubique.datevec(d,fmt)
 
 
 #### Description
 
-Convert serial date number (Unix) to string format. Based on [moment.js](http://momentjs.com)  
+Convert date and time to vector of components. Based on [moment.js](http://momentjs.com)  
   
 |Identifier| Example          | Description |  
 | ----------- | ---------------- | ----------- |  
@@ -50,21 +50,25 @@ Convert serial date number (Unix) to string format. Based on [moment.js](http://
 
 |Params|Type|Description
 |---------|----|-----------
-|`d` | number/array/matrix | ISO Unix datetime
-|`fmt` | string | format string (def: 'YYYY-MM-DD')
+|`d` | string/number/array/matrix | string or number (unix)
+|`fmt` | string | format string
 
 
 #### Examples
 
 ```js
-ubique.datestr(1419984000);
-// 2014-12-31
+ubique.datevec('2015-01-01 03:34:05','YYYY-MM-DD HH:mm:ss');
+// [ 2015, 1, 1, 3, 34, 5, 0 ]
 
-ubique.datestr([ 1419984000, 1422662400 ],'DD-MMM-YY');
-// [ '31-Dec-14', '31-Jan-15' ]
+ubique.datevec(['31-12-2014','31-01-2015'],'DD-MM-YYYY');
+// [ [ 2014, 12, 31, 0, 0, 0, 0 ], [ 2015, 1, 31, 0, 0, 0, 0 ] ]
 
-ubique.datestr([ [ 1419984000, 1422662400 ], [ 1423958400, 1425168000 ] ],'YY-MM-DD hh:mm:ss');
-// [ [ '14-12-31 12:00:00', '15-01-31 12:00:00' ],
-// [ '15-02-15 12:00:00', '15-03-01 12:00:00' ] ]
+ubique.datevec([['31-12-2014','31-01-2015'],['15-02-2015','01-03-2015']],'DD-MM-YYYY');
+// [ [ [ 2014, 12, 31, 0, 0, 0, 0 ], [ 2015, 1, 31, 0, 0, 0, 0 ] ],
+//   [ [ 2015, 2, 15, 0, 0, 0, 0 ], [ 2015, 3, 1, 0, 0, 0, 0 ] ] ]
+
+// from '2015-04-05 12:20:30' to Unix 1428236430
+ubique.datevec(1428236430);
+// [ 2015, 4, 5, 12, 20, 30, 0 ]
 ```
 
