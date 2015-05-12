@@ -1,11 +1,11 @@
-### yahoo
+### yahooSync
 
-Download CSV Yahoo Finance historical (async request)
+Download CSV Yahoo Finance historical (sync request)
 
 
 #### Syntax
 
-ubique.yahooundefined
+ubique.yahooSyncundefined
 
 
 #### Description
@@ -38,10 +38,9 @@ Download CSV Yahoo Finance historical. Returns an object:
 #### Examples
 
 ```js
-// var options = {'symbol': 'AAPL','from': '2015-01-02','to': '2015-01-08','period': 'd'};
-// ubique.yahoo.historical(options,function(err,data) {
-// console.log(data)
-// });
+var options = { 'symbol': 'AAPL', 'from': '2015-01-02', 'to': '2015-01-08', 'period': 'd', 'fmt': 'YYYY-MM-DD' };
+
+ubique.yahooSync.historical(options);
 //
 // { symbol: 'AAPL',
 //     from: '2015-01-02',

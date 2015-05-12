@@ -97,7 +97,8 @@
 
 ### Datafeed
 
-- [yahoo](/doc/datafeed/yahoo.md) - Yahoo Finance historical
+- [yahoo](/doc/datafeed/yahoo.md) - Download CSV Yahoo Finance historical (async request)
+- [yahooSync](/doc/datafeed/yahooSync.md) - Download CSV Yahoo Finance historical (sync request)
 
 ### Dates and Time
 
