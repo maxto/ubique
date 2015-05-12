@@ -1,5 +1,9 @@
 # ChangeLog
 
+### 0.2.1 - xxxxxxxx
+
+- Modified: `yahoo`, added `yahooSync`
+
 ### 0.2.0 - 20150504
 
 - Added new folder _datafeed_ with `yahoo` function to download historical stock data
