@@ -1307,7 +1307,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    return posidx;
 	  } else {
-	    throw new Error('unkwon arguments');
+	    throw new Error('unknown arguments');
 	  }
 	}
 	}
