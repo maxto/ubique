@@ -64,8 +64,8 @@
 - [length](/doc/matarrs/length.md) - length of vector or largest array dimension
 - [ncols](/doc/matarrs/ncols.md) - Number of columns in vector|matrix
 - [ndims](/doc/matarrs/ndims.md) - Number of array dimensions
+- [nrows](/doc/matarrs/nrows.md) - Number of rows in vector|matrix
 - [numel](/doc/matarrs/numel.md) - Number of elements in an array
-- [rows](/doc/matarrs/rows.md) - Number of rows in vector|matrix
 - [size](/doc/matarrs/size.md) - Size of N-D array
 
 ### Basic Statistic

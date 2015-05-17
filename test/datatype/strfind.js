@@ -1,14 +1,13 @@
 var assert = require('assert');
 var ubique = require('../../index.js');
 
-suite('matarrs',function () {
-console.log('Testing matarrs/nrows ...');
-test('nrows', function (done) {
+suite('datatype',function () {
+console.log('Testing datatype/format ...');
+test('format', function (done) {
 
+var mystr = 'find indices in the string';
 
-
-assert.deepEqual(ubique.nrows([5,6,7]),3);
-assert.deepEqual(ubique.nrows([[3,2,7],[4,5,6]]),2);
+assert.deepEqual(ubique.strfind(mystr,'in'),[1,5,13,23]);
 
 
 done();
