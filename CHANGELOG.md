@@ -2,6 +2,7 @@
 
 ### 0.2.1 - xxxxxxxx
 
+- Added: `strfind`
 - Modified: `yahoo`, added `yahooSync`
 
 ### 0.2.0 - 20150504
