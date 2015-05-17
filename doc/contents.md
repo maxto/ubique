@@ -196,6 +196,10 @@
 
 - [nan](/doc/datatype/nan.md) - Create array of all NaN
 
+### Parse Strings
+
+- [strfind](/doc/datatype/strfind.md) - Find one string within another
+
 ### Performance metrics
 
 - [activereturn](/doc/quants/activereturn.md) - Active return

@@ -1280,7 +1280,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	 module.exports = function ($u) {
 	/**
-	 * @method format
+	 * @method strfind
 	 * @summary Find one string within another
 	 * @description Find one string within another. If pattern length > text length returns null.
 	 * 

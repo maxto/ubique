@@ -2,8 +2,8 @@ var assert = require('assert');
 var ubique = require('../../index.js');
 
 suite('datatype',function () {
-console.log('Testing datatype/format ...');
-test('format', function (done) {
+console.log('Testing datatype/strfind ...');
+test('strfind', function (done) {
 
 var mystr = 'find indices in the string';
 
