@@ -22,7 +22,7 @@ standard deviation for risk.
 |`x` | array/matrix | asset/portfolio returns
 |`frisk` | number | annual free-risk rate (def: 0)
 |`t` | number | frequencey of data. 1: yearly, 4: quarterly, 12: monthly, 52: weekly, 252: daily (def: 252)
-|`dim` | number | dimension 0: row, 1: column (def: 1)
+|`dim` | number | dimension 0: row, 1: column (def: 0)
 
 
 #### Examples
@@ -35,7 +35,7 @@ var cat = ubique.cat;
 ubique.calmarratio(x,0,12);
 // 16.701049
 
-ubique.calmarratio(cat(1,x,y),0,12);
-// [ [ 16.701049, 1.32768 ] ]
+ubique.calmarratio(cat(0,x,y),0,12);
+// [ [ 16.701049 ], [ 1.32768 ] ]
 ```
 

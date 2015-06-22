@@ -17,6 +17,8 @@ A merge sort works as follows:
 2 - Repeatedly merge sublists to produce new sorted sublists until there is only 1 sublist remaining. This will be the sorted list.  
   
 Source: [Merge sort](http://en.wikipedia.org/wiki/Merge_sort)  
+  
+Returns sorted values with sorted indexes as array of array (matrix)  
 
 
 
@@ -31,11 +33,15 @@ Source: [Merge sort](http://en.wikipedia.org/wiki/Merge_sort)
 #### Examples
 
 ```js
-var x = [3,1,-1,0,5];
+// mergesort with input values and indexes
+ubique.mergesort([[9,-3,2,-12,0,1],[0,1,2,3,4,5]]);
+// [ [ -12, -3, 0, 1, 2, 9 ], [ 3, 1, 4, 5, 2, 0 ] ]
 
-ubique.mergesort([3,1,-1,5],"ascend");
-// [-1, 1, 3, 5]
-ubique.mergesort(x,"descend");
-// [5, 3, 1, 0, -1]
+// with only an array of input values
+ubique.mergesort([9,-3,2,-12,0,1]);
+// [ [ -12, -3, 0, 1, 2, 9 ], [ 3, 1, 4, 5, 2, 0 ] ]
+
+ubique.mergesort([9,-3,2,-12,0,1],'descend');
+// [ [ 9, 2, 1, 0, -3, -12 ], [ 0, 2, 5, 4, 1, 3 ] ]
 ```
 

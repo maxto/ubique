@@ -1,16 +1,17 @@
 ### arrayfun
 
-Apply function to each element of array or matrix
+Apply function to each element of an array or matrix
 
 
 #### Syntax
 
-ubique.arrayfun(x,fun,dim)
+ubique.arrayfun()
 
 
 #### Description
 
-Apply function to each element of array or matrix  
+Apply function to each element of an array or matrix. First arg is input element, the second one the function to apply,  
+then the parameters of the function.  
 
 
 
@@ -18,25 +19,37 @@ Apply function to each element of array or matrix
 
 |Params|Type|Description
 |---------|----|-----------
-|`x` | array/matrix |  array elements
-|`fun` | function | function to apply
-|`dim` | number | dimension selected, 0: row, 1: column (def: 0)
+|`args` | number/string/boolean/... | variable input arguments
 
 
 #### Examples
 
 ```js
-var x = [1.4,2.3,3];
+ubique.arrayfun([1.4,2.3,3],Math.log);
+// [ 0.336472, 0.832909, 1.098612 ]
 
-ubique.arrayfun(x,Math.log);
-// [ 0.3364722366212129, 0.8329091229351039, 1.0986122886681098 ]
-ubique.arrayfun([1.4,0,-10],function(a) {return ubique.sign(a);});
+ubique.arrayfun([1.4,0,-10],ubique.sign);
 // [ 1, 0, -1 ]
-ubique.arrayfun([[5,6],[1,3]],Math.log);
-// [[1.60944, 1.79176], [0, 1.09861]]
-ubique.arrayfun([[5,6,5],[7,8,-1]],function(value) {return ubique.sign(value);});
-// [[1, 1, 1], [1, 1, -1]]
-ubique.arrayfun([[5,6,5],[7,8,-1]],function(value) {return ubique.sign(value);},1);
-// [[1, 1], [1, 1], [1, -1]]
+
+ubique.arrayfun([[5,6],[1,3]],Math.pow,3);
+// [ [ 125, 216 ], [ 1, 27 ] ]
+
+ubique.arrayfun([['cat','concat'],['cattle','catch the catfish']],ubique.strfind,'cat');
+// [ [ [ 0 ], [ 3 ] ], [ [ 0 ], [ 0, 10 ] ] ]
+
+ubique.arrayfun([null,true,'hello',5,NaN],ubique.isnull);
+// [ true, false, false, false, false ]
+
+ubique.arrayfun([null,true,'hello',5,NaN],ubique.islogical);
+// [ false, true, false, false, false ]
+
+ubique.arrayfun([null,true,'hello',5,NaN],ubique.isstring);
+// [ false, false, true, false, false ]
+
+ubique.arrayfun([null,true,'hello',5,NaN],ubique.isnumber);
+// [ false, false, false, true, true ]
+
+ubique.arrayfun([null,true,'hello',5,{},undefined,'NaN',NaN],ubique.isnan);
+// [ false, false, false, false, false, false, false, true ]
 ```
 

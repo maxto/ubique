@@ -9,7 +9,7 @@ test('size', function (done) {
 
 assert.deepEqual(ubique.size([[[[5,6,5],[7,8,-1]]]]),[1,1,2,3]);
 assert.deepEqual(ubique.size([[3,2,7],[4,5,6]]),[2,3]);
-assert.deepEqual(ubique.size([5,4,4]),[3,1]);
+assert.deepEqual(ubique.size([5,4,4]),[1,3]);
 assert.deepEqual(ubique.size(5),[1,1]);
 assert.deepEqual(ubique.size('ubique'),[1,6]);
 assert.deepEqual(ubique.size([['first','second']]),[1,2]);

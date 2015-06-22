@@ -7,10 +7,10 @@ test('array', function (done) {
 
 
 
-assert.deepEqual(ubique.array(),[]);
+assert.deepEqual(ubique.array(3),[null,null,null]);
 assert.deepEqual(ubique.array(3,-1),[-1,-1,-1]);
 assert.deepEqual(ubique.array(3,'y'),["y","y","y"]);
-assert.deepEqual(ubique.array(3,true),[true,true,true]);
+assert.deepEqual(ubique.array(4,true),[true,true,true,true]);
 
 
 done();

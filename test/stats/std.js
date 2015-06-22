@@ -9,9 +9,9 @@ var a = [[5,6,5],[7,8,-1]];
 var c = [5,6,3];
 
 assert.deepEqual(ubique.std(c),1.5275252316519465);
-assert.deepEqual(ubique.std(c,0),1.5275252316519465);
-assert.deepEqual(ubique.std(a,0),[[1.4142135623730951,1.4142135623730951,4.242640687119285]]);
-assert.deepEqual(ubique.std(a,0,0),[[1.4142135623730951,1.4142135623730951,4.242640687119285]]);
+assert.deepEqual(ubique.std(c,0),1.247219128924647);
+assert.deepEqual(ubique.std(a,0),[[0.4714045207910317],[4.0276819911981905]]);
+assert.deepEqual(ubique.std(a,0,1),[[1,1,3]]);
 
 
 done();

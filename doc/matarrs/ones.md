@@ -24,19 +24,19 @@ Create array of all ones
 #### Examples
 
 ```js
-ubique.ones();
-// 1
 ubique.ones(0);
 // []
+
 ubique.ones(1);
-// [[1]]
+// [ [ 1 ] ]
+
 ubique.ones(2);
-// [[1, 1], [1, 1]]
+// [ [ 1, 1 ], [ 1, 1 ] ]
+
 ubique.ones([2,1]);
-// [[1], [1]]
-ubique.ones(1,2);
-// [[1, 1]]
+// [ [ 1 ], [ 1 ] ]
+
 ubique.ones(2,3);
-// [[1, 1, 1], [1, 1, 1]]
+// [ [ 1, 1, 1 ], [ 1, 1, 1 ] ]
 ```
 

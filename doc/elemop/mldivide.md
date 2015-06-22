@@ -26,17 +26,16 @@ returns a matrix NxM. Y is multiplied with the inverse of X. X must be square.
 #### Examples
 
 ```js
-var a = [[5,6,5],[7,8,-1]];
-var e = [[9, 5],[6, 1]];
-var f = [[3, 2],[5, 2]];
-
 ubique.mldivide(5,6);
 // 1.2
-ubique.mldivide(e,f);
-// [ [ 1.0476, 0.381 ], [ -1.2857, -0.2857 ] ]
-ubique.mldivide(5,e);
+
+ubique.mldivide([[9, 5],[6, 1]],[[3, 2],[5, 2]]);
+// [ [ 1.047619, 0.380952 ], [ -1.285714, -0.285714 ] ]
+
+ubique.mldivide(5,[[9, 5],[6, 1]]);
 // [ [ 1.8, 1 ], [ 1.2, 0.2 ] ]
-ubique.mldivide(e,a);
-// [ [ 1.4286, 1.619, -0.4762 ], [ -1.5714, -1.7143, 1.8571 ] ]
+
+ubique.mldivide([[9, 5],[6, 1]],[[5,6,5],[7,8,-1]]);
+// [ [ 1.428571, 1.619048, -0.47619 ],[ -1.571429, -1.714286, 1.857143 ] ]
 ```
 

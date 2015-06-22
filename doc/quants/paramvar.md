@@ -19,8 +19,8 @@ It manages numbers, arrays, row vectors [[a,b,...,n]] and column vectors [[a],[b
 
 |Params|Type|Description
 |---------|----|-----------
-|`mu` | number/array/matrix | mean value (def: 0)
-|`sigma` | number/array/matrix | standard deviation (def: 1)
+|`mu` | number/array | mean value (def: 0)
+|`sigma` | number/array | standard deviation (def: 1)
 |`p` | number | VaR confidende level in range [0,1] (def: 0.95)
 |`amount` | number | portfolio/asset amount (def: 1)
 |`period` | number | time horizon (def: 1)
@@ -40,22 +40,15 @@ ubique.paramvar(0,1);
 ubique.paramvar([0,0,0],[1,2,3]);
 [ 1.644854, 3.289707, 4.934561 ]
 
-// VaR with vectors
-ubique.paramvar([[0,0]],[[1,2]]);
-[ [ 1.644854, 3.289707 ] ]
-ubique.paramvar([[0],[0]],[[1],[2]]);
-[ [ 1.644854 ], [ 3.289707 ] ]
-
-// parametric VaR at 5% conf level
+// parametric VaR at 95% conf level
 ubique.paramvar(ubique.mean(x),ubique.std(x));
 // 0.020311
-ubique.paramvar(ubique.mean(y),ubique.std(y));
-// 0.074269
-ubique.paramvar(ubique.mean(ubique.cat(1,x,y)),ubique.std(ubique.cat(1,x,y)));
-// [ [ 0.020311, 0.074269 ] ]
 
-//parametric VaR at 1% for 100k GBP asset over 10 days (two assets)
-ubique.paramvar(ubique.mean(ubique.cat(1,x,y)),ubique.std(ubique.cat(1,x,y)),0.99,100000,10);
-// [ [ 11429.165523, 34867.319072 ] ]
+ubique.paramvar(ubique.mean(ubique.cat(0,x,y)),ubique.std(ubique.cat(0,x,y)));
+// [ [ 0.020311 ], [ 0.074269 ] ]
+
+//parametric VaR at 99% for 100k GBP asset over 10 days (two assets)
+ubique.paramvar(ubique.mean(ubique.cat(0,x,y)),ubique.std(ubique.cat(0,x,y)),0.99,100000,10);
+// [ [ 11429.165523 ], [ 34867.319072 ] ]
 ```
 

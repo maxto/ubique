@@ -25,13 +25,16 @@ Create an array with custom elements
 #### Examples
 
 ```js
-ubique.array();
-// []
+ubique.array(3);
+// [ null, null, null ]
+
 ubique.array(3,-1);
 // [-1, -1, -1]
+
 ubique.array(3,'y');
 // [ 'y', 'y', 'y' ]
-ubique.array(3,true);
-// [ true, true, true ]
+
+ubique.array(4,true);
+// [ true, true, true, true ]
 ```
 

@@ -32,10 +32,13 @@ var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 
 ubique.pdist(x,y,'euclidean');
 // 0.170532
+
 ubique.pdist(x,y,'manhattan');
 // 0.471
+
 ubique.pdist(x,y,'chebychev');
 // 0.087
+
 ubique.pdist(x,y,'hamming');
 // 10
 ```

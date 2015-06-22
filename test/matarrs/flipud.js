@@ -7,7 +7,7 @@ test('flipud', function (done) {
 
 
 
-assert.deepEqual(ubique.fliplr([[1,4],[2,5],[3,6]]),[[1,4],[2,5],[3,6]]);
+assert.deepEqual(ubique.flipud([[1,4],[2,5],[3,6]]),[[3,6],[2,5],[1,4]]);
 
 
 done();

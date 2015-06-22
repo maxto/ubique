@@ -19,7 +19,7 @@ Return the interquartile (Q3 - Q1 quartiles)
 |Params|Type|Description
 |---------|----|-----------
 |`x` | array/matrix | array of values
-|`dim` | number | dimension 0: row, 1: column (def: 1)
+|`dim` | number | dimension 0: row, 1: column (def: 0)
 
 
 #### Examples
@@ -30,7 +30,8 @@ var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 
 ubique.iqr(x);
 // 0.023
-ubique.iqr(ubique.cat(1,x,y));
-// [[0.023, 0.095]]
+
+ubique.iqr(ubique.cat(0,x,y));
+// [ [ 0.023 ], [ 0.095 ] ]
 ```
 

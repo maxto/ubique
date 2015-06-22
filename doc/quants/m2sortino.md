@@ -23,7 +23,7 @@ M2 calculated for Downside risk instead of Total Risk
 |`frisk` | number | free-risk rate (def: 0)
 |`mar` | number | minimum acceptable return (def: 0)
 |`t` | number | frequencey of data. 1: yearly, 4: quarterly, 12: monthly, 52: weekly, 252: daily (def: 252)
-|`dim` | number | dimension 0: row, 1: column (def: 1)
+|`dim` | number | dimension 0: row, 1: column (def: 0)
 
 
 #### Examples
@@ -36,7 +36,8 @@ var cat = ubique.cat;
 
 ubique.m2sortino(x,y,0,0,12);
 // 0.103486
-ubique.m2sortino(cat(1,x,y),z,0,0,12);
-// [ [ 0.527018, 0.148094 ] ]
+
+ubique.m2sortino(cat(0,x,y),z,0,0,12);
+// [ [ 0.527018 ], [ 0.148094 ] ]
 ```
 

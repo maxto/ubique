@@ -8,8 +8,8 @@ test('diag', function (done) {
 
 
 assert.deepEqual(ubique.diag([5,6,-3]),[[5,0,0],[0,6,0],[0,0,-3]]);
-assert.deepEqual(ubique.diag([5,6,-3,1]),[[5,0,0,0],[0,6,0,0],[0,0,-3,0],[0,0,0,1]]);
-assert.deepEqual(ubique.diag([5,6,-3,-1]),[[5,0,0,0],[0,6,0,0],[0,0,-3,0],[0,0,0,-1]]);
+assert.deepEqual(ubique.diag([5,6,-3],1),[[0,5,0,0],[0,0,6,0],[0,0,0,-3],[0,0,0,0]]);
+assert.deepEqual(ubique.diag([5,6,-3],-1),[[0,0,0,0],[5,0,0,0],[0,6,0,0],[0,0,-3,0]]);
 assert.deepEqual(ubique.diag([[5, 0, 0], [0, 6, 0], [0, 0, -3]]),[5,6,-3]);
 assert.deepEqual(ubique.diag([[0, 5, 0, 0], [0, 0, 6, 0], [0, 0, 0, -3], [0, 0, 0, 0]],1),[5,6,-3]);
 assert.deepEqual(ubique.diag([[0, 0, 0, 0], [5, 0, 0, 0], [0, 6, 0, 0], [0, 0, -3, 0]],-1),[5,6,-3]);

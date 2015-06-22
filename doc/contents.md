@@ -28,7 +28,6 @@
 - [sum](/doc/elemop/sum.md) - Sum of array elements
 - [times](/doc/elemop/times.md) - Array multiply X. * Y
 - [uminus](/doc/elemop/uminus.md) - Unary minus -X
-- [uplus](/doc/elemop/uplus.md) - Unary plus +X
 
 ### Array Creation and Concatenation
 
@@ -62,9 +61,9 @@
 - [issquare](/doc/matarrs/issquare.md) - True for square matrix
 - [isvector](/doc/datatype/isvector.md) - True for vector input
 - [length](/doc/matarrs/length.md) - length of vector or largest array dimension
-- [ncols](/doc/matarrs/ncols.md) - Number of columns in vector|matrix
+- [ncols](/doc/matarrs/ncols.md) - Number of columns in vector|matrix MxN
 - [ndims](/doc/matarrs/ndims.md) - Number of array dimensions
-- [nrows](/doc/matarrs/nrows.md) - Number of rows in vector|matrix
+- [nrows](/doc/matarrs/nrows.md) - Number of rows in vector|matrix MxN
 - [numel](/doc/matarrs/numel.md) - Number of elements in an array
 - [size](/doc/matarrs/size.md) - Size of N-D array
 
@@ -149,12 +148,14 @@
 
 ### Indexing
 
-- [col](/doc/matarrs/col.md) - Get a column of a matrix
 - [colon](/doc/matarrs/colon.md) - Array of numbers from L to U with step S
 - [end](/doc/matarrs/end.md) - Last index in array or matrix
 - [find](/doc/matarrs/find.md) - Find indices of nonzero elements
+- [getcol](/doc/matarrs/getcol.md) - Get a column of a matrix
+- [getrow](/doc/matarrs/getrow.md) - Get a row of matrix
 - [ind2sub](/doc/matarrs/ind2sub.md) - Multiple subscripts from linear index
-- [row](/doc/matarrs/row.md) - Get a row of matrix
+- [setcol](/doc/matarrs/setcol.md) - Set a column of a matrix
+- [setrow](/doc/matarrs/setrow.md) - Set a row of matrix
 - [sub2ind](/doc/matarrs/sub2ind.md) - Subscripts to linear indices
 
 ### Interpolation
@@ -194,7 +195,7 @@
 
 ### Numeric Types
 
-- [nan](/doc/datatype/nan.md) - Create array of all NaN
+- [isnan](/doc/datatype/isnan.md) - True only for NaN input
 
 ### Parse Strings
 
@@ -279,7 +280,7 @@
 
 ### Structures
 
-- [arrayfun](/doc/datatype/arrayfun.md) - Apply function to each element of array or matrix
+- [arrayfun](/doc/datatype/arrayfun.md) - Apply function to each element of an array or matrix
 - [vectorfun](/doc/datatype/vectorfun.md) - Apply a function to each vector column or row of a matrix
 
 ### Time Series Analysis
@@ -290,4 +291,5 @@
 
 ### Utility
 
+- [argsarray](/doc/util/argsarray.md) - Converting arguments to an array
 - [format](/doc/util/format.md) - Set display format for output (numbers)

@@ -27,9 +27,11 @@ Differences between adjacent elements in array or matrix
 ```js
 ubique.diff([5,6,3]);
 // [1, -3]
+
 ubique.diff([[5,6,5],[7,8,-1]]);
-// [[2, 2, -6]]
+// [ [ 2, 2, -6 ] ]
+
 ubique.diff([[5,6,5],[7,8,-1]],0);
-// [[1, -1], [1, -9]]
+// [ [ 1, -1 ], [ 1, -9 ] ]
 ```
 

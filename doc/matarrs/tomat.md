@@ -25,10 +25,10 @@ Convert number or array to matrix
 
 ```js
 ubique.tomat(5);
-// [[5]]
+// [ [ 5 ] ]
+
 ubique.tomat([5,6,3]);
-// [[5], [6], [3]]
-ubique.tomat(true);
-// [[true]]
+// [ [ 5, 6, 3 ] ]
+
 ```
 

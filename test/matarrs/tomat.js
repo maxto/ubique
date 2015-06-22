@@ -8,8 +8,7 @@ test('tomat', function (done) {
 
 
 assert.deepEqual(ubique.tomat(5),[[5]]);
-assert.deepEqual(ubique.tomat([5,6,3]),[[5],[6],[3]]);
-assert.deepEqual(ubique.tomat(true),[[true]]);
+assert.deepEqual(ubique.tomat([5,6,3]),[[5,6,3]]);
 
 
 done();

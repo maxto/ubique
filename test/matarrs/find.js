@@ -8,7 +8,7 @@ test('find', function (done) {
 
 
 assert.deepEqual(ubique.find([0.3,-0.4,0.5,0.9].map(function(a){return a > 0})),[0,2,3]);
-assert.deepEqual(ubique.find([[true,true],[false,true]]),[0,2,3]);
+assert.deepEqual(ubique.find([[true,true],[false,true]]),[0,1,3]);
 
 
 done();

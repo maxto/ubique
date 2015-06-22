@@ -7,12 +7,11 @@ test('ror', function (done) {
 
 var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
-var z = [100,101,99,98,97,102,103,104];
 var cat = ubique.cat;
 
 assert.deepEqual(ubique.ror(x),0.18779277315203946);
-assert.deepEqual(ubique.ror(z,'cum'),0.040000000000000036);
-assert.deepEqual(ubique.ror(cat(1,x,y),'ret'),[[0.18779277315203946,0.12514883159358225]]);
+assert.deepEqual(ubique.ror([100,101,99,98,97,102,103,104],'cum'),0.040000000000000036);
+assert.deepEqual(ubique.ror(cat(0,x,y),'ret'),[[0.18779277315203946],[0.12514883159358225]]);
 
 
 done();

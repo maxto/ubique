@@ -24,7 +24,7 @@ Martin Ratio = (Portfolio Return - RiskFree) / Ulcer Index
 |`frisk` | number | annual free-risk rate (def: 0)
 |`t` | number | frequencey of data. 1: yearly, 4: quarterly, 12: monthly, 52: weekly, 252: daily (def: 252)
 |`mode` | string | drawdown calculation. 'return','geometric' (def: 'return')
-|`dim` | number | dimension 0: row, 1: column (def: 1)
+|`dim` | number | dimension 0: row, 1: column (def: 0)
 
 
 #### Examples
@@ -37,7 +37,7 @@ var cat = ubique.cat;
 ubique.martinratio(x,0,12);
 // 44.425456
 
-ubique.martinratio(cat(1,x,y),0,12,'return',1);
-// [ [ 44.425456, 2.438364 ] ]
+ubique.martinratio(cat(0,x,y),0,12);
+// [ [ 44.425456 ], [ 2.438364 ] ]
 ```
 

@@ -10,7 +10,7 @@ var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 var cat = ubique.cat;
 
 assert.deepEqual(ubique.sterlingratio(x,0,12),16.70104871897812);
-assert.deepEqual(ubique.sterlingratio(cat(1,x,y),0,12),[[16.70104871897812,1.5154122355017072]]);
+assert.deepEqual(ubique.sterlingratio(cat(0,x,y),0,12),[[16.70104871897812],[1.5154122355017072]]);
 
 
 done();

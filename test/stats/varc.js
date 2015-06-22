@@ -10,8 +10,8 @@ var c = [5,6,3];
 
 assert.deepEqual(ubique.varc(c),2.333333333333333);
 assert.deepEqual(ubique.varc(c,0),1.5555555555555554);
-assert.deepEqual(ubique.varc(a,0),[[1,1,9]]);
-assert.deepEqual(ubique.varc(a,0,0),[0.22222222222222224,16.22222222222222]);
+assert.deepEqual(ubique.varc(a,0),[[0.22222222222222224],[16.22222222222222]]);
+assert.deepEqual(ubique.varc(a,0,1),[[1,1,9]]);
 
 
 done();

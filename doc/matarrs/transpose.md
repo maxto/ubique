@@ -10,8 +10,8 @@ ubique.transpose(x)
 
 #### Description
 
-Transpose of matrix X. Array is Nx1 as default.  
-Transpose of Array is 1xN matrix.  
+Transpose of matrix X. Array is 1xN as default.  
+Transpose of Array is Nx1 matrix.  
 
 
 
@@ -25,12 +25,10 @@ Transpose of Array is 1xN matrix.
 #### Examples
 
 ```js
-var a = [[5,6,5],[7,8,-1]];
-var c = [5,6,3];
-
-ubique.transpose(a);
+ubique.transpose([[5,6,5],[7,8,-1]]);
 // [ [ 5, 7 ], [ 6, 8 ], [ 5, -1 ] ]
-ubique.transpose(c);
+
+ubique.transpose([5,6,3]);
 // [ [ 5 ], [ 6 ], [ 3 ] ]
 ```
 

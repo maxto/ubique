@@ -26,6 +26,7 @@ Matrix determinant with LU decomposition method
 ```js
 ubique.det([[1,5],[6,2]]);
 // -28
+
 ubique.det([[2,2],[2,3]]);
 // 2
 ```

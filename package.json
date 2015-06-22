@@ -1,9 +1,9 @@
 {
   "name": "ubique",
-  "version": "0.2.0",
-  "date": "2015-05-05",
+  "version": "0.5.0",
+  "date": "2015-06-22",
   "author": "Max Todaro <m.todaro.ge@gmail.com>",
-  "description": "An extensive scientific library for JavaScript and Node.js",
+  "description": "A mathematical and quantitative library for Javascript and Node.js",
   "main": "./index",
   "contributors": [],
   "homepage": "http://maxto.github.io/index.html",

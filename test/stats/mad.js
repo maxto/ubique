@@ -9,8 +9,8 @@ var a = [[5,6,5],[7,8,-1]];
 var c = [5,6,3];
 
 assert.deepEqual(ubique.mad(c),1.111111111111111);
-assert.deepEqual(ubique.mad(a,0),[0.44444444444444436,3.7777777777777772]);
-assert.deepEqual(ubique.mad(a),[[1,1,3]]);
+assert.deepEqual(ubique.mad(a,1),[[1,1,3]]);
+assert.deepEqual(ubique.mad(a),[[0.44444444444444436],[3.7777777777777772]]);
 
 
 done();

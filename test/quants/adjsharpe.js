@@ -7,9 +7,10 @@ test('adjsharpe', function (done) {
 
 var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
+var cat = ubique.cat;
 
 assert.deepEqual(ubique.adjsharpe(x,0.02/12),0.7481337144481773);
-assert.deepEqual(ubique.adjsharpe(ubique.cat(1,x,y)),[[0.8305829300873673,0.24523237448344062]]);
+assert.deepEqual(ubique.adjsharpe(cat(0,x,y)),[[0.8305829300873673],[0.24523237448344062]]);
 
 
 done();

@@ -20,7 +20,7 @@ Skewness
 |---------|----|-----------
 |`x` | array/matrix | array or matrix of elements
 |`flag` | number | 0: bias correction, 1: simple (def: 1)
-|`dim` | number | dimension 0: row, 1: column (def: 1)
+|`dim` | number | dimension 0: row, 1: column (def: 0)
 
 
 #### Examples
@@ -31,9 +31,8 @@ var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 
 ubique.skewness(x);
 // 0.617481
-ubique.skewness(x,1);
-// 0.732243
-ubique.skewness(ubique.cat(1,x,y));
-// [[0.617481, -0.118909]]
+
+ubique.skewness(ubique.cat(0,x,y));
+// [ [ 0.617481 ], [ -0.118909 ] ]
 ```
 

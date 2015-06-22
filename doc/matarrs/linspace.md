@@ -27,6 +27,6 @@ Create linearly spaced arrays
 
 ```js
 ubique.linspace(1,10,5);
-// [1, 3.25, 5.5, 7.75, 10]
+// [ 1, 3.25, 5.5, 7.75, 10 ]
 ```
 

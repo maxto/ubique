@@ -25,7 +25,7 @@ by the square root of the number of datas.
 |`frisk` | number | annual free-risk rate (def: 0)
 |`t` | number | frequency 252: daily (default), 52: weekly, 12: monthly, 4: quarterly
 |`mode` | string | 'simple' or 'modified' (def: 'simple')
-|`dim` | number | dimension 0: row, 1: column (def: 1)
+|`dim` | number | dimension 0: row, 1: column (def: 0)
 
 
 #### Examples
@@ -41,7 +41,7 @@ ubique.burkeratio(x,0,12);
 ubique.burkeratio(x,0,12,'modified');
 // 44.425456
 
-ubique.burkeratio(cat(1,x,y),0,12);
-// [ [ 14.048563, 1.228487 ] ]
+ubique.burkeratio(cat(0,x,y),0,12);
+// [ [ 14.048563 ], [ 1.228487 ] ]
 ```
 

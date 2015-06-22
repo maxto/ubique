@@ -26,6 +26,7 @@ True for array of array (matrix)
 ```js
 ubique.ismatrix([[1,3,4]]);
 // true
+
 ubique.ismatrix([[1],[3],[4]]);
 // true
 ```

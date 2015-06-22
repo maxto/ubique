@@ -20,7 +20,7 @@ Mean value of the drawdowns, similar to Ulcer Index.
 |---------|----|-----------
 |`x` | array/matrix | asset/portfolio returns
 |`mode` | string | drawdown calculation. 'return','geometric' (def: 'return')
-|`dim` | number | dimension 0: row, 1: column (def: 1)
+|`dim` | number | dimension 0: row, 1: column (def: 0)
 
 
 #### Examples
@@ -33,7 +33,7 @@ var cat = ubique.cat;
 ubique.painindex(x);
 // 0.0023
 
-ubique.painindex(cat(1,x,y));
-// [ [ 0.0023, 0.042955 ] ]
+ubique.painindex(cat(0,x,y));
+// [ [ 0.0023 ], [ 0.042955 ] ]
 ```
 

@@ -1,6 +1,6 @@
 ### nrows
 
-Number of rows in vector|matrix
+Number of rows in vector|matrix MxN
 
 
 #### Syntax
@@ -10,7 +10,7 @@ ubique.nrows(x)
 
 #### Description
 
-Number of rows in vector|matrix  
+Number of rows in vector|matrix. Array ~ Row vector, returns 1.  
 
 
 
@@ -25,7 +25,8 @@ Number of rows in vector|matrix
 
 ```js
 ubique.nrows([5,6,7]);
-// 3
+// 1
+
 ubique.nrows([[3,2,7],[4,5,6]]);
 // 2
 ```

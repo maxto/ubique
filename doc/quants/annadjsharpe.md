@@ -5,7 +5,7 @@ Annualized Adjusted Sharpe Ratio
 
 #### Syntax
 
-ubique.annadjsharpe(x,frisk,t,type,dim)
+ubique.annadjsharpe(x,frisk,t,mode,dim)
 
 
 #### Description
@@ -27,8 +27,8 @@ S = skewness
 |`x` | array/matrix | array of value
 |`frisk` | number | annual free-risk rate (def: 0)
 |`t` | number | frequency 252: daily (default), 52: weekly, 12: monthly, 4: quarterly
-|`type` | string | 'geometric' or 'simple' (def: 'geometric')
-|`dim` | number | dimension 0: row, 1: column (def: 1)
+|`mode` | string | 'geometric' or 'simple' (def: 'geometric')
+|`dim` | number | dimension 0: row, 1: column (def: 0)
 
 
 #### Examples
@@ -41,7 +41,7 @@ var cat = ubique.cat;
 ubique.annadjsharpe(x,0.02,12,'geometric');
 // 3.376724
 
-ubique.annadjsharpe(cat(1,x,y),0,12);
+ubique.annadjsharpe(cat(0,x,y),0,12);
 // [ [ 3.766555, 0.827757 ] ]
 ```
 

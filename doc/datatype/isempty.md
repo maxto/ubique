@@ -26,6 +26,7 @@ True for empty array or matrix
 ```js
 ubique.isempty([]);
 // true
+
 ubique.isempty([[]]);
 // true
 ```

@@ -1,11 +1,11 @@
-### col
+### getcol
 
 Get a column of a matrix
 
 
 #### Syntax
 
-ubique.col(x,n)
+ubique.getcol(x,n)
 
 
 #### Description
@@ -18,14 +18,17 @@ Get a column of a matrix
 
 |Params|Type|Description
 |---------|----|-----------
-|`x` | array/matrix | matrix of elements
+|`x` | matrix | matrix of elements
 |`n` | number | column number (indexing from 0 to n - 1)
 
 
 #### Examples
 
 ```js
-ubique.col([[5,6,5],[7,8,-1]],0);
-// [5, 7]
+ubique.getcol([[5,6,5],[7,8,-1]],0);
+// [ 5, 7 ]
+
+ubique.getcol([[5,6,5],[7,8,-1]],2);
+// [ 5, -1 ]
 ```
 

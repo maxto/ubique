@@ -1,6 +1,6 @@
 ### ncols
 
-Number of columns in vector|matrix
+Number of columns in vector|matrix MxN
 
 
 #### Syntax
@@ -10,7 +10,7 @@ ubique.ncols(x)
 
 #### Description
 
-Number of columns in vector|matrix  
+Number of columns in vector|matrix. Array ~ Row vector, returns N.  
 
 
 
@@ -25,7 +25,8 @@ Number of columns in vector|matrix
 
 ```js
 ubique.ncols([5,6,7]);
-// 1
+// 3
+
 ubique.ncols([[3,2,7],[4,5,6]]);
 //  3
 ```

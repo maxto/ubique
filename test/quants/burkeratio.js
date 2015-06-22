@@ -11,7 +11,7 @@ var cat = ubique.cat;
 
 assert.deepEqual(ubique.burkeratio(x,0,12),14.048562698619559);
 assert.deepEqual(ubique.burkeratio(x,0,12,'modified'),44.42545597931944);
-assert.deepEqual(ubique.burkeratio(cat(1,x,y),0,12),[[14.048562698619559,1.228487180255289]]);
+assert.deepEqual(ubique.burkeratio(cat(0,x,y),0,12),[[14.048562698619559],[1.228487180255289]]);
 
 
 done();

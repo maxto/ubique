@@ -7,12 +7,10 @@ test('ones', function (done) {
 
 
 
-assert.deepEqual(ubique.ones(),1);
 assert.deepEqual(ubique.ones(0),[]);
 assert.deepEqual(ubique.ones(1),[[1]]);
 assert.deepEqual(ubique.ones(2),[[1,1],[1,1]]);
 assert.deepEqual(ubique.ones([2,1]),[[1],[1]]);
-assert.deepEqual(ubique.ones(1,2),[[1,1]]);
 assert.deepEqual(ubique.ones(2,3),[[1,1,1],[1,1,1]]);
 
 

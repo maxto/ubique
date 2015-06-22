@@ -7,10 +7,10 @@ test('floor', function (done) {
 
 
 
-assert.deepEqual(ubique.floor(Math.PI,12),3.141592653589);
-assert.deepEqual(ubique.floor(3.78),3);
-assert.deepEqual(ubique.floor([4.51,-1.4]),[4,-2]);
-assert.deepEqual(ubique.floor([[4.5134,-1.4345],[3.7809,0.0134]],2),[[4.51,-1.44],[3.78,0.01]]);
+assert.deepEqual(ubique.floor(Math.PI,12),3.14159265359);
+assert.deepEqual(ubique.floor(3.78),4);
+assert.deepEqual(ubique.floor([4.51,-1.4]),[5,-1]);
+assert.deepEqual(ubique.floor([[4.5134,-1.4345],[3.7809,0.0134]],2),[[4.51,-1.43],[3.78,0.01]]);
 
 
 done();

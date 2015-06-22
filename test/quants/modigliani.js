@@ -8,9 +8,10 @@ test('modigliani', function (done) {
 var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 var z = [0.04,-0.022,0.043,0.028,-0.078,-0.011,0.033,-0.049,0.09,0.087];
+var cat = ubique.cat;
 
 assert.deepEqual(ubique.modigliani(x,y),0.040694064858387835);
-assert.deepEqual(ubique.modigliani(ubique.cat(1,x,y),z),[[0.04258455671422513,0.01318534819429915]]);
+assert.deepEqual(ubique.modigliani(cat(0,x,y),z),[[0.04258455671422513],[0.01318534819429915]]);
 
 
 done();

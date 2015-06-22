@@ -28,8 +28,10 @@ Based on [moment.js](http://momentjs.com)
 ```js
 ubique.weekday(1426636800);
 // 3
+
 ubique.weekday([ 1424908800, 1426636800 ]);
 // [ 4, 3 ]
+
 ubique.weekday([ [ 1424908800, 1426636800 ], [ 1427328000, 1429315200 ] ]);
 // [ [ 4, 3 ], [ 4, 6 ] ]
 ```

@@ -1,15 +1,16 @@
 ![Ubique](http://maxto.github.io/ubique-logo.jpg)
 
-# Ubique
+# Ubique 0.5 (See [ChangeLog](CHANGELOG.md))
+
 http://maxto.github.io/
 
 [![Travis Build Status](https://travis-ci.org/maxto/ubique.svg?style=flat)](https://travis-ci.org/maxto/ubique)
 [![NPM version](http://img.shields.io/npm/v/ubique.svg?style=flat)](https://www.npmjs.com/package/ubique)
 [![Bower](https://img.shields.io/bower/v/bootstrap.svg?style=flat)](http://bower.io/search/?q=ubique)
 
-An extensive scientific library for JavaScript and Node.js/Io.js
- 
-Ubique supports arrays, vectors and matrices, providing MATLAB-like functionalities. It includes functions for quantitative analysis and advanced statistics. 
+A mathematical and quantitative library for Javascript and Node.js.
+
+Ubique supports vectors and matrices, providing a lot of functionalities for elementary operations, linear algebra, statistics, time series analysis and computational finance.
 
 Easy to use, Ubique runs both in Node.js/Io.js and in the Browser.
 
@@ -21,7 +22,6 @@ For further details see the [API Documentation](/doc/contents.md)
 
 - Numerical computations in pure Javascript
 - Vectors and Matrices manipulation
-- Mathematical functions for elementary operations, linear algebra, statistics, time series analysis and computational finance
 - Browser compatibility ECMAScript 5
 - Server-side development with Node.js/Io.js
 - Easily extensible with user-defines functions or libraries
@@ -266,7 +266,7 @@ var myData = {
 
 // EXAMPLE 4 - RETRIEVE FINANCIAL TIMESERIES FROM FREE RESOURCES
 
-// Yahoo Historical Data
+// Yahoo Historical Data (Async mode)
 var options = {
 'symbol': 'AAPL',
 'from': '2015-01-01',
@@ -282,7 +282,7 @@ var options = {
 
 ## For MATLAB Users
 
-Ubique doesn't clone MATLAB, it mimics some functionalities and applications in the matrix environment. Ubique is not a language, but a natural Javascript library.
+Ubique mimics some basic MATLAB functionalities and applications in the matrix environment.
 
 For some comparative code see [For Matlab Users](/doc/formatlabusers.md)
 

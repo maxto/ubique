@@ -6,9 +6,10 @@ console.log('Testing quants/ulcerindex ...');
 test('ulcerindex', function (done) {
 
 var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+var xt = [[0.003,0.026],[0.015,-0.009],[0.014,0.024],[0.015,0.066],[-0.014,0.039]];
 
 assert.deepEqual(ubique.ulcerindex(x),0.005263078946776312);
-assert.deepEqual(ubique.ulcerindex([[0.003,0.026],[0.015,-0.009],[0.014,0.024],[0.015,0.066],[-0.014,0.039]],'return'),[[0.006260990336999415,0.004024922359499606]]);
+assert.deepEqual(ubique.ulcerindex(xt,'return',1),[[0.006260990336999415,0.004024922359499606]]);
 
 
 done();

@@ -26,6 +26,7 @@ true for function
 ```js
 ubique.isfunction(function(a){return console.log(a);});
 // true
+
 ubique.isfunction(Math.log);
 // true
 ```

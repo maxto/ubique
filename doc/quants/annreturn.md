@@ -5,7 +5,7 @@ Annualized Return
 
 #### Syntax
 
-ubique.annreturn(x,t,type,dim)
+ubique.annreturn(x,t,mode,dim)
 
 
 #### Description
@@ -22,8 +22,8 @@ geometric average will be equal to the cumulative return
 |---------|----|-----------
 |`x` | array/matrix | asset/portfolio returns
 |`t` | number | frequencey of data. 1: yearly, 4: quarterly, 12: monthly, 52: weekly, 252: daily
-|`type` | string | 'geometric' or 'simple' (def: 'geometric')
-|`dim` | number | dimension 0: row, 1: column (def: 1)
+|`mode` | string | 'geometric' or 'simple' (def: 'geometric')
+|`dim` | number | dimension 0: row, 1: column (def: 0)
 
 
 #### Examples
@@ -36,7 +36,7 @@ var cat = ubique.cat;
 ubique.annreturn(x,12);
 // 0.233815
 
-ubique.annreturn(cat(1,x,y),12);
-// [ [ 0.233815, 0.14509 ] ]
+ubique.annreturn(cat(0,x,y),12);
+// [ [ 0.233815 ], [ 0.14509 ] ]
 ```
 

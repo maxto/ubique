@@ -5,11 +5,10 @@ suite('quants',function () {
 console.log('Testing quants/tick2ret ...');
 test('tick2ret', function (done) {
 
-var d = [0.5,-3,2.3];
-var e = [[9, 5], [6, 1]];
 
-assert.deepEqual(ubique.tick2ret(d),[-7,-1.7666666666666666]);
-assert.deepEqual(ubique.tick2ret(e),[[-0.33333333333333337,-0.8]]);
+
+assert.deepEqual(ubique.tick2ret([0.5,-3,2.3]),[-7,-1.7666666666666666]);
+assert.deepEqual(ubique.tick2ret([[9, 5], [6, 1]]),[[-0.4444444444444444],[-0.8333333333333334]]);
 
 
 done();

@@ -2,13 +2,13 @@ var assert = require('assert');
 var ubique = require('../../index.js');
 
 suite('matarrs',function () {
-console.log('Testing matarrs/row ...');
-test('row', function (done) {
+console.log('Testing matarrs/setcol ...');
+test('setcol', function (done) {
 
 
 
-assert.deepEqual(ubique.row([[5,6,5],[7,8,-1]],0),[5,6,5]);
-assert.deepEqual(ubique.row([5,6,5]),5);
+assert.deepEqual(ubique.setcol([2,0],[[5,6,5],[7,8,-1]],0),[[2,6,5],[0,8,-1]]);
+assert.deepEqual(ubique.setcol([9,21],[[5,6,5],[7,8,-1]],2),[[5,6,9],[7,8,21]]);
 
 
 done();

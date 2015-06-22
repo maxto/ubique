@@ -10,7 +10,8 @@ ubique.isvector(x)
 
 #### Description
 
-True for vector input  
+True for vector input. Vector can have the same dimension of array but array is array and vector  
+is an array of array (= matrix with 1 column or row)  
 
 
 
@@ -18,7 +19,7 @@ True for vector input
 
 |Params|Type|Description
 |---------|----|-----------
-|`x` | matrix | matrix Nx1 or 1xN
+|`x` | matrix | matrix with dimension Mx1 or 1xN
 
 
 #### Examples
@@ -26,6 +27,7 @@ True for vector input
 ```js
 ubique.isvector([[5,6,7]]);
 // true
+
 ubique.isvector([[5],[6],[7]]);
 // true
 ```

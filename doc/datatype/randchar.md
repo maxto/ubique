@@ -27,6 +27,7 @@ Generate a random alpha-numeric string
 ```js
 ubique.randchar(12,'ABCD!-|/%&$\1234567890');
 // D&80%BB/C%B
+
 ubique.randchar(16,'ABCDEFGHILMNOPQRSTUVZ-1234567890');
 // U68MP-U7ZI26T2HS
 ```

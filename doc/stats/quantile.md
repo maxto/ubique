@@ -20,7 +20,7 @@ Quantilies of a sample
 |---------|----|-----------
 |`x` | array/matrix | array or matrix of elements
 |`p` | number | p-th quantile in the range [0,1]
-|`dim` | number | dimension 0: row, 1: column (def: 1)
+|`dim` | number | dimension 0: row, 1: column (def: 0)
 
 
 #### Examples
@@ -31,7 +31,8 @@ var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 
 ubique.quantile(x,0.25);
 // 0.003
-ubique.quantile(ubique.cat(1,x,y),0.33);
-// [[0.0118, -0.0242]]
+
+ubique.quantile(ubique.cat(0,x,y),0.33);
+// [ [ 0.0118, -0.0242 ] ]
 ```
 

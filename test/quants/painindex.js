@@ -10,7 +10,7 @@ var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 var cat = ubique.cat;
 
 assert.deepEqual(ubique.painindex(x),0.0023000000000000034);
-assert.deepEqual(ubique.painindex(cat(1,x,y)),[[0.0023000000000000034,0.042955093457969766]]);
+assert.deepEqual(ubique.painindex(cat(0,x,y)),[[0.0023000000000000034],[0.042955093457969766]]);
 
 
 done();

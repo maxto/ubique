@@ -9,8 +9,8 @@ var a = [[5,6,5],[7,8,-1]];
 var c = [5,6,3];
 
 assert.deepEqual(ubique.mean(c),4.666666666666667);
-assert.deepEqual(ubique.mean(a,0),[5.333333333333333,4.666666666666667]);
-assert.deepEqual(ubique.mean(a),[[6,7,2]]);
+assert.deepEqual(ubique.mean([[5,6,5],[7,8,-1]]),[[5.333333333333333],[4.666666666666667]]);
+assert.deepEqual(ubique.mean([[5,6,5],[7,8,-1]],1),[[6,7,2]]);
 
 
 done();

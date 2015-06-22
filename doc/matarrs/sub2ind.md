@@ -29,8 +29,10 @@ var a = [[5,6,5],[7,8,-1]];
 
 ubique.sub2ind(ubique.size(a),[1, 2]);
 // 5
+
 ubique.sub2ind(ubique.size(a),[[0, 0], [1, 0], [0, 1]]);
 // [0, 1, 2]
+
 ubique.sub2ind(ubique.size([5,6,3]),[2, 0]);
 // 2
 ```

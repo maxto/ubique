@@ -5,13 +5,12 @@ suite('matarrs',function () {
 console.log('Testing matarrs/flipdim ...');
 test('flipdim', function (done) {
 
-var a = [[5,6,5],[7,8,-1]];
-var c = [5,6,3];
 
-assert.deepEqual(ubique.flipdim(c),[5,6,3]);
-assert.deepEqual(ubique.flipdim(c,1),[5,6,3]);
-assert.deepEqual(ubique.flipdim(a),[[5,6,5],[7,8,-1]]);
-assert.deepEqual(ubique.flipdim(a,1),[[5,6,5],[7,8,-1]]);
+
+assert.deepEqual(ubique.flipdim([5,6,3],1),[3,6,5]);
+assert.deepEqual(ubique.flipdim([5,6,3],0),[5,6,3]);
+assert.deepEqual(ubique.flipdim([[5,6,5],[7,8,-1]]),[[5,6,5],[-1,8,7]]);
+assert.deepEqual(ubique.flipdim([[5,6,5],[7,8,-1]],0),[[7,8,-1],[5,6,5]]);
 
 
 done();

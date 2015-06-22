@@ -8,10 +8,9 @@ test('cagr', function (done) {
 var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 var cat = ubique.cat;
-var nrows = ubique.nrows;
 
-assert.deepEqual(ubique.cagr(x,nrows(x)/12),0.22938756017127182);
-assert.deepEqual(ubique.cagr(cat(1,x,y),nrows(x)/12),[[0.22938756017127182,0.15199864491882642]]);
+assert.deepEqual(ubique.cagr(x,x.length/12),0.22938756017127182);
+assert.deepEqual(ubique.cagr(cat(0,x,y),x.length/12),[[0.22938756017127182],[0.15199864491882642]]);
 
 
 done();

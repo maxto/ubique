@@ -5,10 +5,9 @@ suite('elemop',function () {
 console.log('Testing elemop/dot ...');
 test('dot', function (done) {
 
-var c = [5,6,3];
-var d = [0.5,-3,2.3];
 
-assert.deepEqual(ubique.dot(c,d),-8.600000000000001);
+
+assert.deepEqual(ubique.dot([5,6,3],[0.5,-3,2.3]),-8.600000000000001);
 
 
 done();

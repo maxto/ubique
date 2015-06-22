@@ -5,10 +5,10 @@ suite('datatype',function () {
 console.log('Testing datatype/vectorfun ...');
 test('vectorfun', function (done) {
 
-var d = [[5,6,5],[7,8,-1]];
+var testfun = function(a,b,c){return ubique.mean(a)*b+c;};
 
-assert.deepEqual(ubique.vectorfun(d,function(val){return ubique.mean(val)},0),[5.333333333333333,4.666666666666667]);
-assert.deepEqual(ubique.vectorfun(d,function(val){return ubique.mean(val)},1),[[6,7,2]]);
+assert.deepEqual(ubique.vectorfun(0,[[5,6,5],[7,8,-1]],testfun,5,10),[[36.666666666666664],[33.333333333333336]]);
+assert.deepEqual(ubique.vectorfun(1,[[5,6,5],[7,8,-1]],testfun,5,10),[[40,45,20]]);
 
 
 done();

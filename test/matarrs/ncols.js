@@ -7,7 +7,7 @@ test('ncols', function (done) {
 
 
 
-assert.deepEqual(ubique.ncols([5,6,7]),1);
+assert.deepEqual(ubique.ncols([5,6,7]),3);
 assert.deepEqual(ubique.ncols([[3,2,7],[4,5,6]]),3);
 
 

@@ -28,7 +28,7 @@ maxddrecov (max drawdown recovery period): [start period, end period]
 |---------|----|-----------
 |`x` | array/matrix | asset/portfolio returns
 |`mode` | string | drawdown calculation. 'return','geometric' (def: 'return')
-|`dim` | number | dimension 0: row, 1: column (def: 1)
+|`dim` | number | dimension 0: row, 1: column (def: 0)
 
 
 #### Examples
@@ -37,9 +37,7 @@ maxddrecov (max drawdown recovery period): [start period, end period]
 var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 
 ubique.drawdown(x);
-// { dd: [ 0, 0, 0, 0.00900000000000004, 0, 0, 0, 0, 0.013999999999999995, 0 ],
-//   ddrecov: [ 0, 0, 0, 4, 0, 0, 0, 0, 9, 0 ],
-//   maxdd: 0.013999999999999995,
-//   maxddrecov: [ 8, 9 ] }
+// { dd: [ 0, 0, 0, 0.009, 0, 0, 0, 0, 0.014, 0 ], ddrecov: [ 0, 0, 0, 4, 0, 0, 0, 0, 9, 0 ],
+//   maxdd: 0.014, maxddrecov: [ 8, 9 ] }
 ```
 

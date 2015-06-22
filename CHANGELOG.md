@@ -1,8 +1,11 @@
 # ChangeLog
 
-### 0.2.1 - xxxxxxxx
+### 0.5.0 - 20150622
 
-- Added: `strfind`
+- MAJOR UPDATE: changed some basic structure, now `Array` follows the natural `1xN` dimension (row-major). `Arrayfun` and `Vectorfun` are optimized to managed variabile inputs arguments for both arrays and matrices. 
+- Matrices: removed `row` and `col`. Now it's possible to get values with `getrow` and `getvalue` and set values with `setrow` and `setcol`.
+- Removed: `NaN`, `uplus`
+- Added: `strfind`,`argsarray`
 - Modified: `yahoo`, added `yahooSync`
 
 ### 0.2.0 - 20150504

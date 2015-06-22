@@ -26,8 +26,10 @@ True for scalar input
 ```js
 ubique.isscalar(2);
 // true
+
 ubique.isscalar([2]);
 // true
+
 ubique.isscalar([[2]]);
 // true
 ```

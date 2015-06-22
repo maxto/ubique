@@ -20,7 +20,7 @@ Downside potential
 |---------|----|-----------
 |`x` | array/matrix | array or matrix of values
 |`mar` | number | minimum acceptable return (def: 0)
-|`dim` | number | dimension 0: row, 1: column (def: 1)
+|`dim` | number | dimension 0: row, 1: column (def: 0)
 
 
 #### Examples
@@ -31,7 +31,8 @@ var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 
 ubique.downsidepot(x,0.1/100);
 // 0.0025
-ubique.downsidepot(ubique.cat(1,x,y));
-// [[0.0023, 0.0173]]
+
+ubique.downsidepot(ubique.cat(0,x,y));
+// [ [ 0.0023 ], [ 0.0173 ] ]
 ```
 

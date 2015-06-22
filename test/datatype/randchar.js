@@ -7,7 +7,7 @@ test('randchar', function (done) {
 
 
 
-assert.deepEqual(ubique.randchar(),[]);
+assert.deepEqual(ubique.randchar(),'');
 
 
 done();

@@ -5,9 +5,9 @@ suite('elemop',function () {
 console.log('Testing elemop/mpower ...');
 test('mpower', function (done) {
 
-var l = [[1,1,-1],[1,-2,3],[2,3,1]];
 
-assert.deepEqual(ubique.mpower(l,3),[[-2,11,-11],[11,-35,33],[22,33,-2]]);
+
+assert.deepEqual(ubique.mpower([[1,1,-1],[1,-2,3],[2,3,1]],3),[[-2,11,-11],[11,-35,33],[22,33,-2]]);
 
 
 done();

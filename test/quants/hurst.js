@@ -10,7 +10,7 @@ var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 
 assert.deepEqual(ubique.hurst(x),0.3440590389509703);
 assert.deepEqual(ubique.hurst(x,1),0.3440590389509703);
-assert.deepEqual(ubique.hurst(ubique.cat(1,x,y)),[[0.3440590389509703,0.5153097350177327]]);
+assert.deepEqual(ubique.hurst(ubique.cat(0,x,y)),[[0.3440590389509703],[0.5153097350177327]]);
 
 
 done();

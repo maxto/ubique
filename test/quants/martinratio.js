@@ -10,7 +10,7 @@ var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 var cat = ubique.cat;
 
 assert.deepEqual(ubique.martinratio(x,0,12),44.42545597931942);
-assert.deepEqual(ubique.martinratio(cat(1,x,y),0,12,'return',1),[[44.42545597931942,2.438364078885411]]);
+assert.deepEqual(ubique.martinratio(cat(0,x,y),0,12),[[44.42545597931942],[2.438364078885411]]);
 
 
 done();

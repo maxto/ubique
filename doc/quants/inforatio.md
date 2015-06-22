@@ -20,7 +20,7 @@ Information Ratio
 |---------|----|-----------
 |`x` | array/matrix | asset/portfolio returns
 |`y` | array | benchmark returns
-|`dim` | number | dimension 0: row, 1: column (def: 1)
+|`dim` | number | dimension 0: row, 1: column (def: 0)
 
 
 #### Examples
@@ -32,7 +32,8 @@ var z = [0.04,-0.022,0.043,0.028,-0.078,-0.011,0.033,-0.049,0.09,0.087];
 
 ubique.inforatio(x,y);
 // 0.0936915
-ubique.inforatio(ubique.cat(1,x,y),z);
-// [[0.0263019, -0.0597049]]
+
+ubique.inforatio(ubique.cat(0,x,y),z);
+// [ [ 0.026302 ], [ -0.059705 ] ]
 ```
 

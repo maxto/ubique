@@ -5,12 +5,11 @@ suite('stats',function () {
 console.log('Testing stats/mode ...');
 test('mode', function (done) {
 
-var a = [[5,6,5],[7,8,-1]];
-var c = [5,6,3];
 
-assert.deepEqual(ubique.mode(c),3);
-assert.deepEqual(ubique.mode(a,0),[5,-1]);
-assert.deepEqual(ubique.mode(a),[[5,6,-1]]);
+
+assert.deepEqual(ubique.mode([5,6,3]),3);
+assert.deepEqual(ubique.mode([[5,6,5],[7,8,-1]]),[[5],[-1]]);
+assert.deepEqual(ubique.mode([[5,6,5],[7,8,-1]],1),[[5,6,-1]]);
 
 
 done();

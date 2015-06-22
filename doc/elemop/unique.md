@@ -5,12 +5,13 @@ Unique values in array or matrix
 
 #### Syntax
 
-ubique.unique(x,dim)
+ubique.unique(x,flag)
 
 
 #### Description
 
-Unique values in array or matrix  
+Unique values in array or matrix. Use mergsort to sort values, returns  
+a matrix with 2 array, the unique values and the unique indexes.  
 
 
 
@@ -19,15 +20,22 @@ Unique values in array or matrix
 |Params|Type|Description
 |---------|----|-----------
 |`x` | array/matrix | array or matrix of values
-|`dim` | number | dimension 0: row, 1: column (def: 1)
+|`flag` | boolean | flag 0: export unique values, 1: export values and indexes(def: 0)
 
 
 #### Examples
 
 ```js
-ubique.unique([5,5,6,6,7]);
-// [ 5, 6, 7 ]
+ubique.unique([9,-3,2,-12,0,1,0,1,2,3,4,5]);
+// [ -3, -3, 0, 1, 2, 3, 4, 5, 9 ]
+
+ubique.unique([9,-3,2,-12,0,1,0,1,2,3,4,5],1);
+// [ [ -3, -3, 0, 1, 2, 3, 4, 5, 9 ], [ 3, 1, 4, 5, 2, 9, 10, 11, 0 ] ]
+
 ubique.unique([[5,4],[5,3],[6,3]]);
-// [ [ 5, 3 ], [ 6, 4 ] ]
+// [ 3, 4, 5, 6 ]
+
+ubique.unique([[5,4],[5,3],[6,3]],1);
+// [ [ 3, 4, 5, 6 ], [ 3, 1, 0, 4 ] ]
 ```
 

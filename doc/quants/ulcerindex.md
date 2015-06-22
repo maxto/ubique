@@ -21,17 +21,18 @@ impact because the underperformance since the last peak is squared.
 |---------|----|-----------
 |`x` | array/matrix | asset/portfolio returns
 |`mode` | string | drawdown calculation. 'return','geometric' (def: 'return')
-|`dim` | number | dimension 0: row, 1: column (def: 1)
+|`dim` | number | dimension 0: row, 1: column (def: 0)
 
 
 #### Examples
 
 ```js
 var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
-
+var xt = [[0.003,0.026],[0.015,-0.009],[0.014,0.024],[0.015,0.066],[-0.014,0.039]];
 ubique.ulcerindex(x);
 // 0.005263
-ubique.ulcerindex([[0.003,0.026],[0.015,-0.009],[0.014,0.024],[0.015,0.066],[-0.014,0.039]],'return');
+
+ubique.ulcerindex(xt,'return',1);
 // [ [ 0.006261, 0.004025 ] ]
 ```
 

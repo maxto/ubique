@@ -7,8 +7,10 @@ test('unique', function (done) {
 
 
 
-assert.deepEqual(ubique.unique([5,5,6,6,7]),[5,6,7]);
-assert.deepEqual(ubique.unique([[5,4],[5,3],[6,3]]),[[5,3],[6,4]]);
+assert.deepEqual(ubique.unique([9,-3,2,-12,0,1,0,1,2,3,4,5]),[-3,-3,0,1,2,3,4,5,9]);
+assert.deepEqual(ubique.unique([9,-3,2,-12,0,1,0,1,2,3,4,5],1),[[-3,-3,0,1,2,3,4,5,9],[3,1,4,5,2,9,10,11,0]]);
+assert.deepEqual(ubique.unique([[5,4],[5,3],[6,3]]),[3,4,5,6]);
+assert.deepEqual(ubique.unique([[5,4],[5,3],[6,3]],1),[[3,4,5,6],[3,1,0,4]]);
 
 
 done();

@@ -8,7 +8,7 @@ test('sum', function (done) {
 
 
 assert.deepEqual(ubique.sum([5,6,3]),14);
-assert.deepEqual(ubique.sum([[5,6,5],[7,8,-1]],0),[16,14]);
+assert.deepEqual(ubique.sum([[5,6,5],[7,8,-1]],0),[[16],[14]]);
 assert.deepEqual(ubique.sum([[5,6,5],[7,8,-1]],1),[[12,14,4]]);
 
 

@@ -7,12 +7,14 @@ test('matrix', function (done) {
 
 
 
-assert.deepEqual(ubique.matrix(0),[]);
-assert.deepEqual(ubique.matrix(2),[[0,0],[0,0]]);
-assert.deepEqual(ubique.matrix([2,3]),[[0,0,0],[0,0,0]]);
-assert.deepEqual(ubique.matrix(2,3),[[0,0,0],[0,0,0]]);
-assert.deepEqual(ubique.matrix([2,3],5),[[5,5,5],[5,5,5]]);
-assert.deepEqual(ubique.matrix(2,3),[[0,0,0],[0,0,0]]);
+assert.deepEqual(ubique.matrix(0),[[]]);
+assert.deepEqual(ubique.matrix([0,0]),[[]]);
+assert.deepEqual(ubique.matrix(2),[[null,null],[null,null]]);
+assert.deepEqual(ubique.matrix([2,3]),[[null,null,null],[null,null,null]]);
+assert.deepEqual(ubique.matrix(2,3),[[null,null,null],[null,null,null]]);
+assert.deepEqual(ubique.matrix([2,3],-1),[[-1,-1,-1],[-1,-1,-1]]);
+assert.deepEqual(ubique.matrix(3,1,'matrix'),[["matrix"],["matrix"],["matrix"]]);
+assert.deepEqual(ubique.matrix(0,5,true),[[]]);
 
 
 done();

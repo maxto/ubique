@@ -8,9 +8,9 @@ test('range', function (done) {
 var a = [[5,6,5],[7,8,-1]];
 var c = [5,6,3];
 
-assert.deepEqual(ubique.range(c),3);
-assert.deepEqual(ubique.range(a,0),[1,9]);
-assert.deepEqual(ubique.range(a),[[2,2,6]]);
+assert.deepEqual(ubique.range([5,6,3]),3);
+assert.deepEqual(ubique.range([[5,6,5],[7,8,-1]]),[[1],[9]]);
+assert.deepEqual(ubique.range([[5,6,5],[7,8,-1]],1),[[2,2,6]]);
 
 
 done();

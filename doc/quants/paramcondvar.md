@@ -32,12 +32,12 @@ Also known as Expected Shortfall (ES), Expected Tail Loss (ETL).
 var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 
-// parametric daily Var at 5% conf level
+// parametric daily Var at 95% conf level
 ubique.paramcondvar(ubique.mean(x),ubique.std(x));
-// 0.0300178
+// 0.030018
 
-//parametric daily VaR at 1% for 100k GBP asset over 10 days (two assets)
-ubique.paramcondvar(ubique.mean(ubique.cat(1,x,y)),ubique.std(ubique.cat(1,x,y)),0.99,100000,10);
-// [19579, 44511.1]
+//parametric daily VaR at 99% for 100k GBP asset over 10 days (two assets)
+ubique.paramcondvar(ubique.mean(ubique.cat(0,x,y)),ubique.std(ubique.cat(0,x,y)),0.99,100000,10);
+// [ [ 19578.980844 ], [ 44511.107219 ] ]
 ```
 

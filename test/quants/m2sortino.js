@@ -11,7 +11,7 @@ var z = [0.04,-0.022,0.043,0.028,-0.078,-0.011,0.033,-0.049,0.09,0.087];
 var cat = ubique.cat;
 
 assert.deepEqual(ubique.m2sortino(x,y,0,0,12),0.504144074388577);
-assert.deepEqual(ubique.m2sortino(cat(1,x,y),z,0,0,12),[[0.5270176945070691,0.14809423606491556]]);
+assert.deepEqual(ubique.m2sortino(cat(0,x,y),z,0,0,12),[[0.5270176945070691],[0.14809423606491556]]);
 
 
 done();

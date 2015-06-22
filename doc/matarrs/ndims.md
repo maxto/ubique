@@ -26,6 +26,7 @@ Number of array dimensions
 ```js
 ubique.ndims([3,5,6]);
 // 2
+
 ubique.ndims([[3,2,7],[4,5,6]]);
 // 2
 ```
