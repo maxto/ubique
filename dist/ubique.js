@@ -62,13 +62,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * name: ubique
-	 * version: 0.2.0
-	 * update date: 2015-05-05
+	 * version: 0.5.0
+	 * update date: 2015-06-22
 	 * 
 	 * author: Max Todaro <m.todaro.ge@gmail.com>
 	 * homepage: http://maxto.github.io/index.html
 	 * 
-	 * description: An extensive scientific library for JavaScript and Node.js
+	 * description: A mathematical and quantitative library for Javascript and Node.js
 	 * 
 	 *
 	 * The MIT License (MIT)
@@ -288,6 +288,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	__webpack_require__(192)(ubique);
 	__webpack_require__(193)(ubique);
 	__webpack_require__(194)(ubique);
+	__webpack_require__(195)(ubique);
+	__webpack_require__(196)(ubique);
 	module.exports = ubique;
 
 /***/ },
@@ -327,11 +329,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	module.exports = function($u) {
 	 // moment.js - Parse, validate, manipulate, and display dates in JavaScript (http://momentjs.com/)
-	 $u.__moment = __webpack_require__(196);
+	 $u.__moment = __webpack_require__(198);
 	 // request.js - Simplified HTTP request client (https://github.com/request/request)
-	 $u.__request = __webpack_require__(195);
+	 $u.__request = __webpack_require__(197);
 	 // sync-request.js  - Make synchronous web requests with cross platform support (https://github.com/ForbesLindesay/sync-request)
-	 $u.__syncrequest = __webpack_require__(197);
+	 $u.__syncrequest = __webpack_require__(199);
 	}
 
 
@@ -1251,7 +1253,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	 $u.randchar = function(n,strset) {
 	  if (arguments.length === 0) {
-	    throw new Error('not enough input arguments');
+	    return '';
 	  }
 	  strset = strset == null ? 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789' : strset;
 	  return Array.apply(0, Array(n)).map(function() {
@@ -1349,13 +1351,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {number|string|boolean|...}  
 	 *
 	 * @example
-	 * var testfun = function(A,b,c){var i = 0,sum = 0;while (i < A.length){sum += A[i];i++;}return (sum/A.length) * b * c;} 
-	 *
-	 * ubique.vectorfun(0,[[5,6,5],[7,8,-1]],testfun,2,-1);
-	 * // [ [ -10.666667 ], [ -9.333333 ] ]
+	 * var testfun = function(a,b,c){return ubique.mean(a)*b+c;};
 	 * 
-	 * ubique.vectorfun(1,[[5,6,5],[7,8,-1]],testfun,4,-1);
-	 * // [ [ -24, -28, -8 ] ]
+	 * ubique.vectorfun(0,[[5,6,5],[7,8,-1]],testfun,5,10)
+	 * // [ [ 36.666667 ], [ 33.333333 ] ]
+	 * 
+	 * ubique.vectorfun(1,[[5,6,5],[7,8,-1]],testfun,5,10)
+	 * // [ [ 40, 45, 20 ] ]
 	 */
 	 $u.vectorfun = function() {
 	 	if (arguments.length < 3) {
@@ -1371,15 +1373,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    throw new Error('dimension must be 0 (rows) or 1 (columns)');
 	  }
 	  if (!$u.isfunction(fun)) {
-	    throw new Error('second input argument must be a function');
+	    throw new Error('third input argument must be a function');
 	  }
 	  if (dim === 1) {
 	    var ndim = $u.ncols(x);
-	    var narray = $u.col;
+	    var narray = $u.getcol;
 	  }
 	  if (dim === 0) {
 	    var ndim = $u.nrows(x);
-	    var narray = $u.row;
+	    var narray = $u.getrow;
 	  }
 	  if ($u.isarray(x)) {
 	    if ($u.isempty(varargin)) {
@@ -1399,11 +1401,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if ($u.isarray(v)) {
 	      return [v];
 	    }
-	    return  $u.squeeze($u.transpose(v));
+	    return $u.squeeze($u.transpose(v));
 	  }
 	  if (dim === 0) {
 	    if ($u.isarray(v)) {
-	      return $u.tomat(v);
+	      return $u.transpose(v);
 	    }
 	  }
 	  return $u.squeeze(v);
@@ -2498,8 +2500,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 		throw new Error('not enough input arguments');
 	 	}
 	 	if (!$u.isnumber(x) && !$u.isnumber(y)) {
-	 		var xsize = $u.size(x),
-	 		ysize = $u.size(y);
+	 		var xsize = $u.size(x);
+	 		var ysize = $u.size(y);
 	 		if (xsize[1] !== ysize[0]) {
 	 			throw new Error('inner dimension mismatch');
 	 		}
@@ -2976,7 +2978,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @description Sum of array elements
 	 * 
 	 * @param  {array|matrix} x array of values
-	 * @param  {number} dim dimension, 1: column 0: row (def: 1)
+	 * @param  {number} dim dimension, 1: column 0: row (def: 0)
 	 * @return {number|array}   
 	 *
 	 * @example
@@ -2993,7 +2995,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 	if (arguments.length === 0) {
 	 		throw new Error('not enough input arguments');
 	 	}
-	 	dim = dim == null ? 1 : dim;
+	 	dim = dim == null ? 0 : dim;
 	 	var _sum = function(a) {
 	 		var sum = 0;
 	 		for (var i = 0;i < a.length;i++) {
@@ -3137,7 +3139,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * a matrix with 2 array, the unique values and the unique indexes.
 	 * 
 	 * @param  {array|matrix} x array or matrix of values
-	 * @param  {boolean} flag flag 0 to export values-only, 1 to export values and indexes(def: 0)
+	 * @param  {boolean} flag flag 0: export unique values, 1: export values and indexes(def: 0)
 	 * @return {array|matrix}
 	 *
 	 * @example
@@ -3151,7 +3153,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * // [ 3, 4, 5, 6 ]
 	 *
 	 * ubique.unique([[5,4],[5,3],[6,3]],1);
-	 * // [ [ 3, 4, 5, 6 ], [ 4, 3, 0, 2 ] ]
+	 * // [ [ 3, 4, 5, 6 ], [ 3, 1, 0, 4 ] ]
 	 */
 	 $u.unique = function(x,flag) {
 	  if (arguments.length === 0) {
@@ -3159,7 +3161,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	  flag = flag == null ? 0 : flag;
 	  if ($u.ismatrix) {
-	    x = $u.flatten(x);
+	    x = $u.flatten(x); // flatten by rows
 	  }
 	  var sorted = $u.mergesort(x);
 	  var uvalue = [sorted[0][1]];
@@ -3601,6 +3603,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * ubique.det([[1,5],[6,2]]);
 	 * // -28
+	 * 
 	 * ubique.det([[2,2],[2,3]]);
 	 * // 2
 	 */
@@ -3645,13 +3648,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  * @return {number|array|matrix}   
 	  *
 	  * @example
-	  * var f = [[3, 2], [5, 2]]; // [[-0.5, 0.5], [1.25, -0.75]]
-	  * var l = [[1,1,-1],[1,-2,3],[2,3,1]];
-	  *
-	  * ubique.inv(f);
-	  * // [[-0.5, 0.5], [1.25, -0.75]]
-	  * ubique.inv(l);
-	  * // [[0.846154, 0.307692, -0.0769231], [-0.384615, -0.230769, 0.307692], [-0.538462, 0.0769231, 0.230769]]
+	  * ubique.inv([[3, 2], [5, 2]]);
+	  * // [ [ -0.5, 0.5 ], [ 1.25, -0.75 ] ]
+	  * 
+	  * ubique.inv([[1,1,-1],[1,-2,3],[2,3,1]]);
+	  * // [ [ 0.846154, 0.307692, -0.076923 ], [ -0.384615, -0.230769, 0.307692 ], [ -0.538462, 0.076923, 0.230769 ] ]
 	  */
 	  $u.inv = function(x) {
 	    if (arguments.length === 0) {
@@ -3663,8 +3664,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if ($u.isnumber(x)) {
 	      return 1/x;
 	    }
-	    var m = $u.nrows(x),
-	    I = $u.eye(m);
+	    var m = $u.nrows(x);
+	    var I = $u.eye(m);
 	    return $u.linsolve(x,I);
 
 	  }
@@ -3690,19 +3691,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	  * @return {array|matrix}   
 	  *
 	  * @example
-	  * var a = [[5,6,5],[7,8,-1]];
-	  * var c = [5,6,3];
-	  * var g = [[5,6,5],[7,8,-1],[5,6,3]];
-	  * var l = [[1,1,-1],[1,-2,3],[2,3,1]];
-	  * var m = [4,-6,7];
+	  * var transp = ubique.transpose;
+	  *
+	  * ubique.linsolve([[1,1,-1],[1,-2,3],[2,3,1]],transp([5,6,3]));
+	  * [ 5.846154, -2.384615, -1.538462 ]
 	  * 
-	  * ubique.linsolve(l,m);
+	  * ubique.linsolve([[1,1,-1],[1,-2,3],[2,3,1]],[[4],[-6],[7]]);
 	  * // [1, 2, -1]
 	  * 
-	  * ubique.linsolve(g,m);
-	  * // [-68.5, 59, -1.5]
-	  * 
-	  * ubique.linsolve(l,ubique.eye(3));
+	  * ubique.linsolve([[1,1,-1],[1,-2,3],[2,3,1]],ubique.eye(3));
 	  * // [[0.846154, 0.307692, -0.0769231], [-0.384615, -0.230769, 0.307692], [-0.538462, 0.0769231, 0.230769]]
 	  */
 	  $u.linsolve = function(A,b) {
@@ -3722,10 +3719,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if ($u.issingular(lud.LU)) {
 	    	throw new Error('matrix is singular');
 	    }
-	    var LU = lud.LU,
-	    m = $u.nrows(LU),
-	    bn = $u.ncols(b),
-	    bidx = $u.colon(0,bn - 1);
+	    var LU = lud.LU;
+	    var m = $u.nrows(LU);
+	    var bn = $u.ncols(b);
+	    var bidx = $u.colon(0,bn - 1);
 
 	    if ($u.isarray(b)) {
 	      x = $u.subset(b,lud.P);
@@ -3736,41 +3733,37 @@ return /******/ (function(modules) { // webpackBootstrap
 	    
 	    var solve = function(LU,m,x) {
 	      sum = 0;
-
-			// Solve Ly = b using forward substitution
-	    for (var i = 1;i < m;i++) {
-	      sum = x[i];
-	      for (var j = 0;j < i;j++){
-	        sum -= LU[i][j] * x[j];
+	      // Solve Ly = b using forward substitution
+	      for (var i = 1;i < m;i++) {
+	        sum = x[i];
+	        for (var j = 0;j < i;j++){
+	          sum -= LU[i][j] * x[j];
+	        }
+	        x[i] = sum;
 	      }
-	      x[i] = sum;
-	    }
 
-	    // Solve Ux = y using back substitution
-	    x[m-1] /= LU[m-1][m-1];
-	    for (var i = m-2;i >= 0;i--) {
-	      sum = x[i];
-	      for (var j = i+1;j < m;j++) {
-	        sum -= LU[i][j] * x[j];
+	      // Solve Ux = y using back substitution
+	      x[m-1] /= LU[m-1][m-1];
+	      for (var i = m-2;i >= 0;i--) {
+	        sum = x[i];
+	        for (var j = i+1;j < m;j++) {
+	          sum -= LU[i][j] * x[j];
+	        }
+	        x[i] = sum / LU[i][i];
 	      }
-	      x[i] = sum / LU[i][i];
+	      return x;
 	    }
-	    return x;
-	  }
-	  if ($u.isarray(b) ) {
-	    return solve(LU,m,x);
-	  } else {
+	    
 	    for (var h = 0;h < bn;h++) {
 	      var tcol = $u.getcol(x,h);
 	      if (h === 0) {
-	        out = solve(LU,m,tcol);
+	        out = $u.transpose(solve(LU,m,tcol));
 	      } else {
-	        out = $u.cat(1,out,solve(LU,m,tcol));
+	        out = $u.cat(1,out,$u.transpose(solve(LU,m,tcol)));
 	      }
 	    }
 	    return out;
 	  }
-	}
 	}
 
 /***/ },
@@ -3801,17 +3794,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *                     .S (pivot sign) +1 or -1
 	 *
 	 * @example
-	 * var a = [[5,6,5],[7,8,-1]];
-	 * var e = [[0, 5], [6, 0]];
-	 *
-	 * ubique.lu(a);
-	 * // { LU: [ [ 7, 8, -1 ], [ 0.7142857142857143, 0.2857142857142856, 5.714285714285714 ] ],
-	 * //    L: [ [ 1, 0 ], [ 0.7142857142857143, 1 ] ],
-	 * //    U: [ [ 7, 8, -1 ], [ 0, 0.2857142857142856, 5.714285714285714 ] ],
+	 * ubique.lu([[5,6,5],[7,8,-1]]);
+	 * // { LU: [ [ 7, 8, -1 ], [ 0.714286, 0.285714, 5.714286 ] ],
+	 * //    L: [ [ 1, 0 ], [ 0.714286, 1 ] ],
+	 * //    U: [ [ 7, 8, -1 ], [ 0, 0.285714, 5.714286 ] ],
 	 * //    P: [ 1, 0 ],
 	 * //    S: -1;}
 	 *
-	 * ubique.lu(e);
+	 * ubique.lu([[0, 5], [6, 0]]);
 	 * // { LU: [ [ 6, 0 ], [ 0, 5 ] ],
 	 * //    L: [ [ 1, 0 ], [ 0, 1 ] ],
 	 * //    U: [ [ 6, 0 ], [ 0, 5 ] ],
@@ -3826,12 +3816,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 	// LU decomposition
 	 	var lud = function(a) {
 	 		var _a = $u.clone(a);
-	 		m = $u.nrows(_a),
-	 		n = $u.ncols(_a),
-	 		piv = $u.colon(0,m - 1),
-	 		pivsign = 1,
-	 		_arow = [],
-	 		_acol = [];
+	 		var m = $u.nrows(_a);
+	 		var n = $u.ncols(_a);
+	 		var piv = $u.colon(0,m - 1);
+	 		var pivsign = 1;
+	 		var _arow = [];
+	 		var _acol = [];
 
 	 		for (var j = 0; j < n; j++) {
 
@@ -3848,7 +3838,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 				}
 	 				_arow[j] = _acol[i] -= s;
 	 			}
-	          
+
 	 			var p = j;
 	 			for (var i = j + 1; i < m; i++) {
 	 				if (Math.abs(_acol[i]) > Math.abs(_acol[p])) {
@@ -3983,7 +3973,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * @method cat
 	 * @summary Concatenate arrays and matrices
-	 * @description Concatenate arrays and matrices along specified dimension as first argument
+	 * @description Concatenate arrays and matrices along specified dimension as first argument.
+	 * Number size 1x1, Array size 1xN, Matrix size MxN
 	 *              
 	 * @param  {number|array|matrix...} args variable arguments (0:rows, 1:columns)
 	 * @return {array|matrix}     
@@ -3995,109 +3986,150 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var d = [0.5,-3,2.3];
 	 * var f = [[3, 2], [5, 2]];
 	 *
-	 * ubique.cat(0,a,b);
-	 * // [[5, 6, 5], [7, 8, -1], [-1, 3, -1], [4, 5, 9]]
-	 * ubique.cat(0,a,b,b);
-	 * // [[5, 6, 5], [7, 8, -1], [-1, 3, -1], [4, 5, 9], [-1, 3, -1], [4, 5, 9]]
+	 * // Vertical Concatenation (DIM = 0)
+	 * 
+	 * ubique.cat(0,1,2,3,4);
+	 * // [ [ 1 ], [ 2 ], [ 3 ], [ 4 ] ]
+	 *
+	 * ubique.cat(0,1,2,[3],4);
+	 * // [ [ 1 ], [ 2 ], [ 3 ], [ 4 ] ]
+	 *
+	 * ubique.cat(0,1,2,[[3],[4]]);
+	 * // [ [ 1 ], [ 2 ], [ 3 ], [ 4 ] ]
+	 *
+	 * ubique.cat(0,[1],2,3,[4]);
+	 * // [ [ 1 ], [ 2 ], [ 3 ], [ 4 ] ]
+	 *
 	 * ubique.cat(0,c,d);
-	 * // [5, 6, 3, 0.5, -3, 2.3]
-	 * ubique.cat(0,[1],[2]);
-	 * // [1, 2]
-	 * ubique.cat(0,5,7,9,8);
-	 * // [5,7,9,8]
-	 * ubique.cat(0,5,7,c);
-	 * // [5, 7, 5, 6, 3]
-	 * ubique.cat(1,a,b);
-	 * // [[5, 6, 5, -1, 3, -1], [7, 8, -1, 4, 5, 9]]
-	 * ubique.cat(1,a,b,f);
-	 * // [[5, 6, 5, -1, 3, -1, 3, 2], [7, 8, -1, 4, 5, 9, 5, 2]]
-	 * ubique.cat(1,a,[2,3]);
-	 * // [[5, 6, 5, 2], [7, 8, -1, 3]]
-	 * ubique.cat(1,5,6,7);
-	 * // [[5, 6, 7]]
+	 * // [ [ 5, 6, 3 ], [ 0.5, -3, 2.3 ] ]
+	 *
+	 * ubique.cat(0,c,d,a);
+	 * // [ [ 5, 6, 3 ], [ 0.5, -3, 2.3 ], [ 5, 6, 5 ], [ 7, 8, -1 ] ]
+	 *
+	 * ubique.cat(0,[[1]],[2],3,4);
+	 * // [ [ 1 ], [ 2 ], [ 3 ], [ 4 ] ]
+	 *
+	 * ubique.cat(0,a,c);
+	 * // [ [ 5, 6, 5 ], [ 7, 8, -1 ], [ 5, 6, 3 ] ]
+	 *
+	 * // Horizontal Concatenation (DIM = 1)
+	 *
+	 * ubique.cat(1,1,2,3,4);
+	 * // [ [ 1, 2, 3, 4 ] ]
+	 *
+	 * ubique.cat(1,1,2,[3],4);
+	 * // [ [ 1, 2, 3, 4 ] ]
+	 *
+	 * ubique.cat(1,1,2,[3,4]);
+	 * // [ [ 1 ], [ 2 ], [ 3 ], [ 4 ] ]
+	 *
+	 * ubique.cat(1,[1],2,3,4);
+	 * // [ [ 1 ], [ 2 ], [ 3 ], [ 4 ] ]
+	 * 
+	 * ubique.cat(1,[[1]],2,3,4);
+	 * // [ [ 1 ], [ 2 ], [ 3 ], [ 4 ] ]
+	 * 
+	 * ubique.cat(1,c,5);
+	 * // [ [ 5, 6, 3, 5 ] ]
+	 * 
+	 * ubique.cat(1,c,d);
+	 * // [ [ 5, 6, 3, 0.5, -3, 2.3 ] ]
+	 * 
+	 * ubique.cat(1,[[2,3,4,5]],c,d);
+	 * // [ [ 2, 3, 4, 5, 5, 6, 3, 0.5, -3, 2.3 ] ]
 	 */
 	 $u.cat = function() {
-	 	var _args = arguments,
-	 	nargs = arguments.length;
-	 	if (nargs === 0) {
-	 		throw new Error('not enough input arguments');
-	 	}
-	 	if (nargs === 1) {
-	 		return [];
-	 	}
-	 	if (nargs > 1) {
-	 		var dim = _args[0];
-	 		if (dim !== 0 && dim !== 1) {
-	 			throw new Error('dimension must be 0 (rows) or 1 (columns)');
-	 		}
-	 		if (dim === 0) {
-	 			for (var i = 1;i < nargs - 1;i++) {
-	 				var tmp = _args[i + 1];
-	 				if ($u.isnumber(_args[1])) {
-	 					if (i === 1) {
-	 						var out = [_args[1]];
-	 					}
-	 					if ($u.isnumber(tmp) || $u.isarray(tmp)) {
-	 						out = out.concat(tmp);
-	 					} else {
-	 						throw new Error('concatenation dimension mismatch');
-	 					}
-	 				} else 
-	 				if ($u.isarray(_args[1])) {
-	 					if (i === 1) {
-	 						var out = _args[1];
-	 					}
-	 					if ($u.isnumber(tmp) || $u.isarray(tmp)) {
-	 						out = out.concat(tmp);
-	 					} else {
-	 						throw new Error('concatenation dimension mismatch');
-	 					}
-	 				} else 
-	 				if ($u.ismatrix(_args[1])) {
-	 					if (i === 1) {
-	 						var out = _args[1];
-	 					}
-	 					if ($u.ismatrix(tmp)) {
-	 						if (i > 1 && ($u.ncols(tmp) !== $u.ncols(out))) {
-	 							throw new Error('concatenation dimension mismatch');
-	 						}
-	 						out = out.concat(tmp);
-	 					} else {
-	 						throw new Error('concatenation dimension mismatch');
-	 					}
-	 				} else {
-	 					throw new Error('unknown input arguments');
-	 				}
-	 			}
-	 			return out;
-	 		}
-	 		if (dim === 1) {
-	 			var out = [];
-	 			for (var i = 0;i < nargs - 1;i++) {
-	 				var tmp = _args[i + 1];
-	 				if ($u.isnumber(tmp)) {
-	 					tmp = [[tmp]];
-	 				}
-	 				if ($u.isarray(tmp)) {
-	 					tmp = $u.tomat(tmp);
-	 				}
-	 				if (i > 0 && ($u.nrows(tmp) !== $u.nrows(out))) {
-	 					throw new Error('concatenation dimension mismatch');
-	 				}
-	 				if (i === 0) {
-	 					out = $u.clone(tmp);
-	 				} else {
-	 					for (var j = 0;j < $u.nrows(out);j++) {
-	 						var row = out[j];
-	 						row = row.concat(tmp[j]);
-	 						out[j] = row;
-	 					}
-	 				}
-	 			}
-	 			return out;
-	 		}
-	 	}
-	 }
+	 	var _args = arguments;
+	 	var nargs = arguments.length;
+	  var out = [];
+	  if (nargs < 2) {
+	    throw new Error('not enough input arguments');
+	  }
+	  var dim = _args[0];
+	  if (dim !== 0 && dim !== 1) {
+	    throw new Error('dimension must be 0 (rows) or 1 (columns)');
+	  }
+
+	  if (dim === 0) {
+	    for (var i = 1;i < nargs - 1;i++) {
+	     var tmp = _args[i + 1];
+	     if ($u.isnumber(_args[1])) {  // number
+	      if (i === 1) {
+	        out = [[_args[1]]];
+	      }
+	      if ($u.isnumber(tmp)) {
+	        out.push([tmp]);
+	      } else
+	      if ($u.isarray(tmp) && $u.ncols(tmp) === 1) {
+	        out.push(tmp);
+	      } else
+	      if ($u.ismatrix(tmp) && $u.ncols(tmp) === 1) {
+	        out = out.concat(tmp);
+	      } else {
+	        throw new Error('concatenation dimension mismatch');
+	      }
+	    } else 
+	    if ($u.isarray(_args[1])) { // array
+	      if (i === 1) {
+	        out = [_args[1]]; 
+	      }
+	      if ($u.isnumber(tmp) && $u.ncols(out) === 1) {
+	        out.push([tmp]);
+	      } else
+	      if ($u.isarray(tmp) && $u.ncols(tmp) === $u.ncols(out)) {
+	        out.push(tmp);
+	      } else
+	      if ($u.ismatrix(tmp) && $u.ncols(tmp) === $u.ncols(out)) {
+	        out = out.concat(tmp);
+	      } else {
+	        throw new Error('concatenation dimension mismatch');
+	      }
+	    } else 
+	    if ($u.ismatrix(_args[1])) { // matrix
+	      if (i === 1) {
+	        out = _args[1]; 
+	      }
+	      if ($u.isnumber(tmp) && $u.ncols(out) === 1) {
+	        out.push([tmp]);
+	      } else
+	      if ($u.isarray(tmp) && $u.ncols(tmp) === $u.ncols(out)) {
+	        out.push(tmp);
+	      } else
+	      if ($u.ismatrix(tmp) && $u.ncols(tmp) === $u.ncols(out)) {
+	        out = out.concat(tmp);
+	      } else {
+	        throw new Error('concatenation dimension mismatch');
+	      }
+	    } else {
+	      throw new Error('unknown input arguments');
+	    }
+	  }
+	  return out;
+	}
+
+	if (dim === 1) {
+	  var out = [];
+	  for (var i = 0;i < nargs - 1;i++) {
+	    var tmp = _args[i + 1];
+	    if ($u.isnumber(tmp)) {
+	      tmp = [[tmp]];
+	    }
+	    if ($u.isarray(tmp)) {
+	      tmp = [tmp];
+	    }
+	    if (i === 0) {
+	      out = $u.clone(tmp);
+	    } else {
+	      for (var j = 0;j < $u.nrows(out);j++) {
+	        var row = out[j];
+	        row = row.concat(tmp[j]);
+	        out[j] = row;
+	      }
+	    }
+	  }
+	  return out;
+	}
+	}
 
 	}
 
@@ -4118,16 +4150,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {array|matrix}       
 	 *
 	 * @example
-	 * var b = [[-1,3,-1],[4,5,9]];
-	 * var c = [5,6,3];
-	 * var d = [[5]];
+	 * ubique.clone([[-1,3,-1],[4,5,9]]);
+	 * // [ [ -1, 3, -1 ], [ 4, 5, 9 ] ]
 	 * 
-	 * ubique.clone(b);
-	 * // [[-1,3,-1],[4,5,9]]
-	 * ubique.clone(c);
-	 * // [5,6,3]
-	 * ubique.clone(d);
-	 * // [[5]]
+	 * ubique.clone([5,6,3]);
+	 * // [ 5, 6, 3 ]
 	 */
 	 $u.clone = function(x) {
 	 	if (arguments.length === 0) {
@@ -4167,53 +4194,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	 module.exports = function($u) {
 	/**
-	 * @method col
-	 * @summary Get a column of a matrix
-	 * @description  Get a column of a matrix
-	 * 
-	 * @param  {matrix} x matrix of elements
-	 * @param  {number} n column number (indexing from 0 to n - 1)
-	 * @return {array}   
-	 *
-	 * @example
-	 * ubique.col([[5,6,5],[7,8,-1]],0);
-	 * // [ 5, 7 ]
-	 *
-	 * ubique.col([[5,6,5],[7,8,-1]],1);
-	 * // [ 6, 8 ]
-	 *
-	 * ubique.col([[5,6,5],[7,8,-1]],2);
-	 * // [ 5, -1 ]
-	 */
-	 $u.col = function(x,n) {
-	  if (arguments.length === 0) {
-	    throw new Error('not enough input arguments');
-	  }
-	  n = n == null ? 0 : n;
-	  if ($u.isarray(x)) {
-	    throw new Error('input must be a matrix');
-	  }
-	  if (!$u.isinteger(n) || n < 0 || n >= $u.ncols(x)) {
-	    throw new Error('col must be an integer between 0 and N - 1 columns');
-	  }
-	  var v = [];
-	  for (var i = 0;i < x.length;i++) {
-	    v[i] = x[i][n];
-	  }
-	  return v;
-	}
-
-	}
-
-/***/ },
-/* 79 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Indexing
-	 */
-	 module.exports = function($u) {
-	/**
 	 * @method colon
 	 * @summary Array of numbers from L to U with step S
 	 * @description Array of numbers from L to U with step S
@@ -4226,20 +4206,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * ubique.colon(1,10,1);
 	 * // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+	 * 
 	 * ubique.colon(10,1,1);
 	 * //  []
+	 * 
 	 * ubique.colon(-5,5,2);
 	 * // [-5, -3, -1, 1, 3, 5]
+	 * 
 	 * ubique.colon(-7,14,2);
 	 * // [-7, -5, -3, -1, 1, 3, 5, 7, 9, 11, 13]
 	 */
 	 $u.colon = function(l,u,s) {
-	 	if (arguments.length === 0) {
+	 	if (arguments.length < 2) {
 	 		throw new Error('not enough input arguments');
 	 	}
-	 	if (arguments.length === 2 || $u.isundefined(s)) {
-	 		s = 1;
-	 	}
+	 	s = s == null ? 1 : s;
 	 	if (s === 0 || (s > 0 && l > u) || (s < 0 && l < u)) {
 	 		return [];
 	 	}
@@ -4255,7 +4236,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 80 */
+/* 79 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4265,7 +4246,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 /**
 	 * @method diag
 	 * @summary Diagonal matrix and get diagonals of a matrix
-	 * @description  Diagonal matrix (if array) and get diagonals of a matrix (if matrix)
+	 * @description  Diagonal matrix (for array) and get diagonals of a matrix (for matrix)
 	 * 
 	 * @param  {array|matrix} x array or matrix values
 	 * @param  {number} k k-th diagonal. 0: main diagonal, k > 0 above, k < 0 below (def: 0)
@@ -4274,59 +4255,66 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * // build diag matrix
 	 * ubique.diag([5,6,-3]);
-	 * // [[5, 0, 0], [0, 6, 0], [0, 0, -3]]
-	 * ubique.diag([5,6,-3,1]);
-	 * // [[0, 5, 0, 0], [0, 0, 6, 0], [0, 0, 0, -3], [0, 0, 0, 0]]
-	 * ubique.diag([5,6,-3,-1]);
-	 * // [[0, 0, 0, 0], [5, 0, 0, 0], [0, 6, 0, 0], [0, 0, -3, 0]]
+	 * // [ [ 5, 0, 0 ], [ 0, 6, 0 ], [ 0, 0, -3 ] ]
+	 * 
+	 * ubique.diag([5,6,-3],1);
+	 * // [ [ 0, 5, 0, 0 ],[ 0, 0, 6, 0 ],[ 0, 0, 0, -3 ],[ 0, 0, 0, 0 ] ]
+	 * 
+	 * ubique.diag([5,6,-3],-1);
+	 * // [ [ 0, 0, 0, 0 ],[ 5, 0, 0, 0 ],[ 0, 6, 0, 0 ],[ 0, 0, -3, 0 ] ]
 	 *
 	 * // get diag values from matrix
 	 * ubique.diag([[5, 0, 0], [0, 6, 0], [0, 0, -3]]);
-	 * // [5,6,-3]
+	 * // [ 5, 6, -3 ]
+	 * 
 	 * ubique.diag([[0, 5, 0, 0], [0, 0, 6, 0], [0, 0, 0, -3], [0, 0, 0, 0]],1);
-	 * // [5,6,-3]
+	 * // [ 5, 6, -3 ]
+	 * 
 	 * ubique.diag([[0, 0, 0, 0], [5, 0, 0, 0], [0, 6, 0, 0], [0, 0, -3, 0]],-1);
-	 * // [5,6,-3]
+	 * // [ 5, 6, -3 ]
+	 * 
 	 * ubique.diag([[5, 0, 0], [0, 6, 0], [0, 0, -3]],2);
-	 * // [0, 0]
+	 * // [0]
 	 */
 	 $u.diag = function(x,k) {
-	 	if ($u.isundefined(k)) {k = 0;}
-	 	if ($u.isarray(x)) {
-	 		var n = x.length,
-	 		abs = Math.abs;
-	 		var matrix = $u.zeros(n + abs(k),n + abs(k));
-	 		for (var i = 0;i < n;i++) {
-	 			if (k >= 0) {
-	 				matrix[i][i + abs(k)] = x[i];
-	 			}
-	 			if (k < 0) {
-	 				matrix[i + abs(k)][i] = x[i];
-	 			}
-	 		}
-	 		return matrix;
-	 	} else 
-	 	if ($u.ismatrix(x)) {
-	 		var array = [],
-	 		abs = Math.abs;
-	 		for (var i = 0;i < $u.nrows(x) - abs(k);i++) {
-	 			if (k >= 0) {
-	 				array.push(x[i][i + abs(k)]);
-	 			}
-	 			if (k < 0) {
-	 				array.push(x[i + abs(k)][i]);
-	 			}
-	 		}
-	 		return array;
-	 	} else {
-	 		throw new Error('unknown input');
-	 	}
-	 }
+	  if (arguments.length < 1) {
+	    throw new Error('not enough input arguments');
+	  }
+	  k = k == null ? 0 : k;
+	  var abs = Math.abs;
+	  if ($u.isarray(x)) {
+	    var n = x.length;
+	    var out = $u.zeros(n + abs(k),n + abs(k));
+	    for (var i = 0;i < n;i++) {
+	      if (k >= 0) {
+	       out[i][i + abs(k)] = x[i];
+	     }
+	     if (k < 0) {
+	       out[i + abs(k)][i] = x[i];
+	     }
+	   }
+	   return out;
+	 } else
+	 if ($u.ismatrix(x)) {
+	  var out = [];
+	  for (var i = 0;i < $u.nrows(x) - abs(k);i++) {
+	    if (k >= 0) {
+	      out.push(x[i][i + abs(k)]);
+	    }
+	    if (k < 0) {
+	      out.push(x[i + abs(k)][i]);
+	    }
+	  }
+	  return out;
+	} else {
+	  throw new Error('unknown input');
+	}
+	}
 
 	}
 
 /***/ },
-/* 81 */
+/* 80 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4339,14 +4327,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @description Last index in array or matrix. Indexing is in the range [0...N-1]
 	 *  
 	 * @param  {array|matrix} x values
-	 * @param  {number} dim	(only for matrix) -1: rows and columns, 0: rows, 1: column (def: -1)
+	 * @param  {number} dim	(only for matrix) -1: [rows,columns], 0: rows, 1: column (def: -1)
 	 * @return {number|array}   
 	 * 
 	 * @example
 	 * ubique.end([5,6,3]);
 	 * // 2
+	 * 
 	 * ubique.end([[4,5,0],[-1,2,-3]]);
 	 * // [1, 2]
+	 * 
 	 * ubique.end([[4,5,0],[-1,2,-3]],0);
 	 * // 1
 	 */
@@ -4354,9 +4344,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 	if (arguments.length === 0) {
 	 		throw new Error('not enough input arguments');
 	 	}
-	 	if (arguments.length === 1) {
-	 		dim = -1;
-	 	}
+	 	dim = dim == null ? -1 : dim;
 	 	if ($u.isnumber(x)) {
 	 		return x;
 	 	} else 
@@ -4382,7 +4370,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 82 */
+/* 81 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4398,44 +4386,45 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {number|matrix}     
 	 *
 	 * @example
-	 * ubique.eye();
-	 * // 1
 	 * ubique.eye(0);
 	 * // []
+	 * 
 	 * ubique.eye(1);
-	 * // [[1]]
+	 * // [ [ 1 ] ]
+	 * 
 	 * ubique.eye(2);
-	 * // [[1, 0], [0, 1]]
+	 * // [ [ 1, 0 ], [ 0, 1 ] ]
+	 * 
 	 * ubique.eye([2,1]);
-	 * // [[1], [0]]
-	 * ubique.eye(1,2);
-	 * // [[1, 0]]
+	 * // [ [ 1 ], [ 0 ] ]
+	 * 
 	 * ubique.eye(2,3);
-	 * // [[1, 0, 0], [0, 1, 0]]
+	 * // [ [ 1, 0, 0 ], [ 0, 1, 0 ] ]
 	 */
 	 $u.eye = function() {
-	 	if ($u.isundefined(arguments[0]) || $u.isempty(arguments[0])) {
-	 		return 0;
-	 	}
-	 	var _args = [];
-	 	for (var i = 0;i < arguments.length; i++) {
-	 		_args.push(arguments[i]);
-	 	}
-	 	if ($u.ismatrix(_args)) {_args = _args[0];}
-	 	if (_args.length === 1) {_args = [_args[0],_args[0]];}
-	 	var matrix =  $u.matrix(_args,0);
-
-	 	if ($u.isnumber(matrix)) {return 1;}
-	 	if ($u.isempty(matrix)) {return [];}
-	 	for (var i = 0;i < Math.min.apply(Math,$u.size(matrix));i++) {
-	 		matrix[i][i] = 1;
-	 	}
-	 	return matrix;
+	  if (arguments.length === 0 ) {
+	    throw new Error('not enough input arguments');
+	  }
+	  var _args = $u.argsarray.apply(null,arguments);
+	  if ($u.ismatrix(_args)) {
+	    _args = _args[0];
+	  }
+	  if (_args.length === 1) {
+	    _args = [_args[0],_args[0]];
+	  }
+	  var matrix =  $u.matrix(_args,0);
+	  if ($u.isnumber(matrix)) {
+	    return 1;
+	  }
+	  for (var i = 0;i < Math.min.apply(Math,$u.size(matrix));i++) {
+	   matrix[i][i] = 1;
 	 }
+	 return matrix;
+	}
 	}
 
 /***/ },
-/* 83 */
+/* 82 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4451,38 +4440,39 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {number|matrix}     
 	 *
 	 * @example
-	 * ubique.falses();
-	 * // false
 	 * ubique.falses(0);
 	 * // []
+	 * 
 	 * ubique.falses(1);
-	 * // [[false]]
+	 * // [ [ false ] ]
+	 * 
 	 * ubique.falses(2);
-	 * // [[false, false], [false, false]]
+	 * // [ [ false, false ], [ false, false ] ]
+	 * 
 	 * ubique.falses([2,1]);
-	 * // [[false], [false]]
-	 * ubique.falses(1,2);
-	 * // [[false, false]]
+	 * // [ [ false ], [ false ] ]
+	 * 
 	 * ubique.falses(2,3);
-	 * // [[false, false, false], [false, false, false]]
+	 * // [ [ false, false, false ], [ false, false, false ] ]
 	 */
 	 $u.falses = function() {
-	  if ($u.isundefined(arguments[0]) || $u.isempty(arguments[0])) {
-	    return false;
+	  if (arguments.length === 0 ) {
+	    throw new Error('not enough input arguments');
 	  }
-	  var _args = [];
-	  for (var i = 0;i < arguments.length; i++) {
-	    _args.push(arguments[i]);
+	  var _args = $u.argsarray.apply(null,arguments);
+	  if ($u.ismatrix(_args)) {
+	    _args = _args[0];
 	  }
-	  if ($u.ismatrix(_args)) {_args = _args[0];}
-	  if (_args.length === 1) {_args = [_args[0],_args[0]];}
+	  if (_args.length === 1) {
+	    _args = [_args[0],_args[0]];
+	  }
 	  return $u.matrix(_args,false);
 	}
 
 	}
 
 /***/ },
-/* 84 */
+/* 83 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4500,18 +4490,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * ubique.find([0.3,-0.4,0.5,0.9].map(function(a){return a > 0}));
 	 * // [ 0, 2, 3 ]
+	 * 
 	 * ubique.find([[true,true],[false,true]]);
-	 * // [ 0, 2, 3 ]
+	 * // [ 0, 1, 3 ]
 	 */
 	 $u.find = function(x) {
 	  if (arguments.length === 0) {
 	    throw new Error('not enough input arguments');
 	  }
 	  if ($u.isnumber(x)) {
-	    return 0;
+	    throw Error('input must be an array or matrix');
 	  }
 	  if ($u.ismatrix(x)) {
-	    x = $u.flatten(x);
+	    x = $u.flatten(x); // flatten by rows
 	  }
 	  var dummy = $u.colon(0,x.length);
 	  return dummy.filter(function(el) {
@@ -4521,7 +4512,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 85 */
+/* 84 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4539,10 +4530,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * ubique.fix(3.78);
 	 * // 3
+	 * 
 	 * ubique.fix([4.51,-1.4]);
-	 * // [4, -1]
+	 * // [ 4, -1 ]
+	 * 
 	 * ubique.fix([[4.51,-1.4],[3.78,0.01]]);
-	 * // [[4, -1], [3, 0]]
+	 * // [ [ 4, -1 ], [ 3, 0 ] ]
 	 */
 	 $u.fix = function(x) {
 	 	if (arguments.length === 0) {
@@ -4551,16 +4544,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	 	var _fix = function(a) {
 	 		return a < 0 ? Math.ceil(a) : Math.floor(a);
 	 	}
-	 	if ($u.isnumber(x)) {
-	 		return _fix(x);
-	 	}
 	 	return $u.arrayfun(x,_fix);
 	 }
 
 	}
 
 /***/ },
-/* 86 */
+/* 85 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4570,29 +4560,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * @method flatten
 	 * @summary Flatten a matrix
-	 * @description Flatten a matrix and returns an array. The concatenation is made by columns.
+	 * @description Flatten a matrix and returns an array. The concatenation is made by columns (default)
 	 * 
 	 * @param  {matrix} x matrix of elements
-	 * @param  {number} dim dimension selected, 1: column 0: row (def: 1)
+	 * @param  {number} dim dimension selected, 1: column 0: row (def: 0)
 	 * @return {array}  
 	 *
 	 * @example
-	 * var l = [[1,1,-1],[1,-2,3],[2,3,1]];
-	 * 
 	 * ubique.flatten([[5,6],[7,8]]);
-	 * // [5, 7, 6, 8]
-	 * ubique.flatten([[5,6],[7,8]],1);
-	 * // [5, 6, 7, 8]
-	 * ubique.flatten(l);
-	 * // [1, 1, 2, 1, -2, 3, -1, 3, 1]
+	 * // [ 5, 7, 6, 8 ]
+	 *
+	 * // flatten by rows
+	 * ubique.flatten([[1,1,-1],[1,-2,3],[2,3,1]]);
+	 * // [ 1, 1, -1, 1, -2, 3, 2, 3, 1 ]
+	 *
+	 * // flatten by columns
+	 * ubique.flatten([[1,1,-1],[1,-2,3],[2,3,1]],1);
+	 * // [ 1, 1, 2, 1, -2, 3, -1, 3, 1 ]
+	 * 
 	 */
 	 $u.flatten = function(x,dim) {
 	 	if (arguments.length === 0) {
 	 		throw new Error('not enough input arguments');
 	 	}
-	 	if (arguments.length === 1) {
-	 		dim = 1;
-	 	}
+	 	dim = dim == null ? 0 : dim;
 	 	if ($u.isnumber(x) || $u.isarray(x)) {
 	 		return x;
 	 	}
@@ -4613,7 +4604,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 87 */
+/* 86 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4626,31 +4617,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @description Flip order of elements in array or matrix
 	 * 
 	 * @param  {array|matrix} x array or matrix of elements
-	 * @param  {number} dim dimension to apply reverse ordering 0: rows, 1: column (def: 0)
+	 * @param  {number} dim dimension to apply reverse ordering 0: rows, 1: column (def: 1)
 	 * @return {array|matrix}     
 	 * 
 	 * @example
-	 * var a = [[5,6,5],[7,8,-1]];
-	 * var c = [5,6,3];
-	 * 
-	 * ubique.flipdim(c);
+	 * ubique.flipdim([5,6,3],1);
 	 * // [3, 6, 5]
-	 * ubique.flipdim(c,1);
+	 * 
+	 * ubique.flipdim([5,6,3],0);
 	 * // [5, 6, 3]
-	 * ubique.flipdim(a);
-	 * // [[7, 8, -1], [5, 6, 5]]
-	 * ubique.flipdim(a,1);
-	 * // [[5, 6, 5], [-1, 8, 7]]
+	 * 
+	 * ubique.flipdim([[5,6,5],[7,8,-1]]);
+	 * // [ [ 5, 6, 5 ], [ -1, 8, 7 ] ]
+	 * 
+	 * ubique.flipdim([[5,6,5],[7,8,-1]],0);
+	 * // [ [ 7, 8, -1 ], [ 5, 6, 5 ] ]
 	 */
 	 $u.flipdim = function(x,dim) {
 	  if (arguments.length === 0) {
 	    throw new Error('not enough input arguments');
 	  }
-	  if (arguments.length === 1) {
-	    dim = 1;
-	  }
+	  dim = dim == null ? 1 : dim;
 	  var _flipdim = function(a) {
-	    var b = a.reverse();
 	    return $u.clone(a.reverse());
 	  }
 	  if ($u.isnumber(x)) {
@@ -4658,13 +4646,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  } else 
 	  if ($u.isarray(x)) {
 	    if (dim === 1) {
-	      return x
-	    } else {
 	      return _flipdim(x);
+	    } else {
+	      return x;
 	    }
 	  } else 
 	  if ($u.ismatrix(x)) {
-	    return $u.vectorfun(x,function(val){return _flipdim(val);},1 - dim);
+	    return $u.vectorfun(1-dim,x,_flipdim)
 	  } else {
 	    throw new Error('unknown input arguments');
 	  }
@@ -4673,7 +4661,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 88 */
+/* 87 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4690,7 +4678,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * @example
 	 * ubique.fliplr([[1,4],[2,5],[3,6]]);
-	 * // [[4, 1], [5, 2], [6, 3]]
+	 * // [ [ 4, 1 ], [ 5, 2 ], [ 6, 3 ] ]
 	 */
 	 $u.fliplr = function(x) {
 	 	if (arguments.length === 0) {
@@ -4703,7 +4691,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 89 */
+/* 88 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4719,20 +4707,104 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {array|matrix}   
 	 *
 	 * @example
-	 * ubique.fliplr([[1,4],[2,5],[3,6]]);
-	 * // [[3, 6], [2, 5], [1, 4]]
+	 * ubique.flipud([[1,4],[2,5],[3,6]]);
+	 * // [ [ 3, 6 ], [ 2, 5 ], [ 1, 4 ] ]
 	 */
 	 $u.flipud = function(x) {
-	 		if (arguments.length === 0) {
-	 		throw new Error('not enough input arguments');
-	 	}
-	 	return $u.flipdim(x,0);
+	  if (arguments.length === 0) {
+	   throw new Error('not enough input arguments');
 	 }
+	 return $u.flipdim(x,0);
+	}
+
+	}
+
+/***/ },
+/* 89 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Indexing
+	 */
+	 module.exports = function($u) {
+	/**
+	 * @method getcol
+	 * @summary Get a column of a matrix
+	 * @description Get a column of a matrix
+	 * 
+	 * @param  {matrix} x matrix of elements
+	 * @param  {number} n column number (indexing from 0 to n - 1)
+	 * @return {array}   
+	 *
+	 * @example
+	 * ubique.getcol([[5,6,5],[7,8,-1]],0);
+	 * // [ 5, 7 ]
+	 * 
+	 * ubique.getcol([[5,6,5],[7,8,-1]],2);
+	 * // [ 5, -1 ]
+	 */
+	 $u.getcol = function(x,n) {
+	  if (arguments.length === 0) {
+	    throw new Error('not enough input arguments');
+	  }
+	  n = n == null ? 0 : n;
+	  if ($u.isarray(x)) {
+	    throw new Error('input must be a matrix');
+	  }
+	  if (!$u.isinteger(n) || n < 0 || n >= $u.ncols(x)) {
+	    throw new Error('col must be an integer between 0 and N - 1 columns');
+	  }
+	  var v = [];
+	  for (var i = 0;i < x.length;i++) {
+	    v[i] = x[i][n];
+	  }
+	  return v;
+	}
 
 	}
 
 /***/ },
 /* 90 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Indexing
+	 */
+	 module.exports = function($u) {
+	/**
+	 * @method getrow
+	 * @summary Get a row of matrix
+	 * @description  Get a row of a matrix
+	 * 
+	 * @param  {matrix} x matrix of elements
+	 * @param  {number} n row number (indexing from 0 to n - 1)
+	 * @return {array}   
+	 *
+	 * @example
+	 * ubique.getrow([[5,6,5],[7,8,-1]],0);
+	 * // [ 5, 6, 5 ]
+	 * 
+	 * ubique.getrow([[5,6,5],[7,8,-1]],1);
+	 * // [ 7, 8, -1 ]
+	 */
+	 $u.getrow = function(x,n) {
+	  if (arguments.length === 0) {
+	    throw new Error('not enough input arguments');
+	  }
+	  n = n == null ? 0 : n;
+	  if ($u.isarray(x)) {
+	   throw new Error('input must be a matrix');
+	  }
+	  if (!$u.isinteger(n) || n < 0 || n >= $u.nrows(x)) {
+	    throw new Error('row must be an integer between 0 and N - 1 rows');
+	  }
+	  return x[n];
+	 }
+
+	}
+
+/***/ },
+/* 91 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4748,35 +4820,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {array|matrix}     
 	 *
 	 * @example
-	 * var a = [[5,6,5],[7,8,-1]];
-	 * var b = [[-1,3,-1],[4,5,9]];
-	 * var c = [5,6,3];
-	 * var d = [0.5,-3,2.3];
-	 * var f = [[3, 2], [5, 2]];
-	 *
-	 * ubique.horzcat(a,b);
-	 * // [[5, 6, 5, -1, 3, -1], [7, 8, -1, 4, 5, 9]]
-	 * ubique.horzcat(a,b,f);
-	 * // [[5, 6, 5, -1, 3, -1, 3, 2], [7, 8, -1, 4, 5, 9, 5, 2]]
-	 * ubique.horzcat(a,[2,3]);
-	 * // [[5, 6, 5, 2], [7, 8, -1, 3]]
+	 * ubique.horzcat([[5,6,5],[7,8,-1]],[[-1,3,-1],[4,5,9]]);
+	 * // [ [ 5, 6, 5, -1, 3, -1 ], [ 7, 8, -1, 4, 5, 9 ] ]
+	 * 
 	 * ubique.horzcat(5,6,7);
-	 * // [[5, 6, 7]]
-	 * ubique.horzcat(ubique.transpose(c));
-	 * // [[5, 5, 6, 3]]
+	 * // [ [ 5, 6, 7 ] ]
+	 * 
 	 */
 	 $u.horzcat = function() {
-	 	var _args = [1];
-	 	for (var i = 0; i < arguments.length; i++) {
-	 		_args.push(arguments[i]);
-	 	}
-	 	return $u.cat.apply(null,_args);
+	   var _args = $u.argsarray.apply(null,arguments);
+	   return $u.cat.apply(null,[].concat(1,_args));
 	 }
 
 	}
 
 /***/ },
-/* 91 */
+/* 92 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4798,8 +4857,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * 
 	 * ubique.ind2sub(ubique.size(a),5);
 	 * // [1, 2]
+	 * 
 	 * ubique.ind2sub(ubique.size(a),[0,1,2]);
 	 * // [[0, 0], [1, 0], [0, 1]]
+	 * 
 	 * ubique.ind2sub(ubique.size([5,6,3]),2);
 	 * // [2, 0]
 	 */
@@ -4824,7 +4885,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 92 */
+/* 93 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4856,7 +4917,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 93 */
+/* 94 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4888,7 +4949,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 94 */
+/* 95 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4920,7 +4981,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 95 */
+/* 96 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4938,8 +4999,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	* @example
 	* ubique.length([3,5,6]);
 	* // 3
+	* 
 	* ubique.length(5);
 	* // 1
+	* 
 	* ubique.length([[5,4],[-1,2]]);
 	* // 2
 	*/
@@ -4947,13 +5010,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if (arguments.length === 0) {
 	    throw new Error('not enough input arguments');
 	  }
-	  return Math.max.apply(Math,$u.size(x));
+	  return Math.max.apply(null,$u.size(x));
 	}
 
 	}
 
 /***/ },
-/* 96 */
+/* 97 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4972,17 +5035,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * @example
 	 * ubique.linspace(1,10,5);
-	 * // [1, 3.25, 5.5, 7.75, 10]
+	 * // [ 1, 3.25, 5.5, 7.75, 10 ]
 	 */
 	 $u.linspace = function(a,b,n) {
 	  if (arguments.length < 2) {
 	    throw new Error('not enough input arguments');
 	  }
-	  if (arguments.length === 2) {
-	    n = 10;
-	  }
-	  var v = new Array(n),
-	  step = (b - a) / (n - 1);
+	  n = n == null ? 10 : n;
+	  var v = [];
+	  var step = (b - a) / (n - 1);
 	  v[0] = a;
 	  v[n - 1] = b;
 	  for (var i = 0;i < n;i++) {
@@ -4994,7 +5055,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 97 */
+/* 98 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5013,22 +5074,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * @example
 	 * ubique.logspace(0,1,5);
-	 * // [1, 1.7782794100389228, 3.1622776601683795, 5.623413251903491, 10]
+	 * // [ 1, 1.778279, 3.162278, 5.623413, 10 ]
 	 */
 	 $u.logspace = function(a,b,n) {
 	  if (arguments.length < 2) {
 	    throw new Error('not enough input arguments');
 	  }
-	  if (arguments.length === 2) {
-	    n = 10;
-	  }
+	  n = n == null ? 10 : n;
 	  return $u.linspace(a,b,n).map(function(val){return Math.pow(10,val)});
 	}
 
 	}
 
 /***/ },
-/* 98 */
+/* 99 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5064,8 +5123,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * ubique.matrix([2,3],-1);
 	 * // [ [ -1, -1, -1 ], [ -1, -1, -1 ] ]
 	 * 
-	 * ubique.matrix(1,4,NaN);
-	 * // [ [ NaN, NaN, NaN, NaN ] ]
 	 *
 	 * ubique.matrix(3,1,'matrix');
 	 * // [ [ 'matrix' ], [ 'matrix' ], [ 'matrix' ] ]
@@ -5136,7 +5193,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 99 */
+/* 100 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5229,7 +5286,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 100 */
+/* 101 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5261,7 +5318,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 101 */
+/* 102 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5293,7 +5350,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 102 */
+/* 103 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5325,7 +5382,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 103 */
+/* 104 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5358,7 +5415,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 104 */
+/* 105 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5374,38 +5431,39 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {number|matrix}     
 	 *
 	 * @example
-	 * ubique.ones();
-	 * // 1
 	 * ubique.ones(0);
 	 * // []
+	 * 
 	 * ubique.ones(1);
-	 * // [[1]]
+	 * // [ [ 1 ] ]
+	 * 
 	 * ubique.ones(2);
-	 * // [[1, 1], [1, 1]]
+	 * // [ [ 1, 1 ], [ 1, 1 ] ]
+	 * 
 	 * ubique.ones([2,1]);
-	 * // [[1], [1]]
-	 * ubique.ones(1,2);
-	 * // [[1, 1]]
+	 * // [ [ 1 ], [ 1 ] ]
+	 * 
 	 * ubique.ones(2,3);
-	 * // [[1, 1, 1], [1, 1, 1]]
+	 * // [ [ 1, 1, 1 ], [ 1, 1, 1 ] ]
 	 */
 	 $u.ones = function() {
-	  if ($u.isundefined(arguments[0]) || $u.isempty(arguments[0])) {
-	    return 1;
+	 if (arguments.length === 0 ) {
+	    throw new Error('not enough input arguments');
 	  }
-	  var _args = [];
-	  for (var i = 0;i < arguments.length; i++) {
-	    _args.push(arguments[i]);
+	  var _args = $u.argsarray.apply(null,arguments);
+	  if ($u.ismatrix(_args)) {
+	    _args = _args[0];
 	  }
-	  if ($u.ismatrix(_args)) {_args = _args[0];}
-	  if (_args.length === 1) {_args = [_args[0],_args[0]];}
+	  if (_args.length === 1) {
+	    _args = [_args[0],_args[0]];
+	  }
 	  return $u.matrix(_args,1);
 	}
 
 	}
 
 /***/ },
-/* 105 */
+/* 106 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5476,7 +5534,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 106 */
+/* 107 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5497,17 +5555,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var l = [[1,1,-1],[1,-2,3],[2,3,1]];
 	 * 
 	 * ubique.repmat(10,3);
-	 * // [[10, 10, 10], [10, 10, 10], [10, 10, 10]]
+	 * // [ [ 10, 10, 10 ], [ 10, 10, 10 ], [ 10, 10, 10 ] ]
+	 * 
 	 * ubique.repmat(0.5,3,2);
-	 * // [[0.5, 0.5], [0.5, 0.5], [0.5, 0.5]]
-	 * ubique.repmat(0.5,1,4);
-	 * // [[ 0.5, 0.5, 0.5 ]]
-	 * ubique.repmat(true,4,1); 
-	 * // [[true], [true], [true], [true]]
+	 * // [ [ 0.5, 0.5 ], [ 0.5, 0.5 ], [ 0.5, 0.5 ] ]
+	 * 
 	 * ubique.repmat([5,6,3],1,2);
-	 * // [[5, 5], [6, 6], [3, 3]]
-	 * ubique.repmat(l,2);
-	 * // [[1, 1, -1, 1, 1, -1], [1, -2, 3, 1, -2, 3], [2, 3, 1, 2, 3, 1], [1, 1, -1, 1, 1, -1], [1, -2, 3, 1, -2, 3], [2, 3, 1, 2, 3, 1]]
+	 * // [ [ 5, 6, 3, 5, 6, 3 ] ]
+	 * 
+	 * ubique.repmat([[9, 5],[6, 1]],2);
+	 * // [ [ 9, 5, 9, 5 ], [ 6, 1, 6, 1 ], [ 9, 5, 9, 5 ], [ 6, 1, 6, 1 ] ]
 	 */
 	 $u.repmat = function(x,m,n) {
 	 	if (arguments.length < 2) {
@@ -5536,7 +5593,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 107 */
+/* 108 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5546,33 +5603,44 @@ return /******/ (function(modules) { // webpackBootstrap
 	 /**
 	 * @method  reshape
 	 * @summary Reshape array or matrix with custom values
-	 * @description  Reshape array or matrix with custom values
+	 * @description  Reshape array or matrix with custom values based on rows values of X
 	 *
 	 * @param  {array|matrix} x array or matrix of elements
 	 * @param  {number} m number of rows for the new matrix
 	 * @param  {number} n number of cols for the new matrix
+	 * @param  {number} flag flag 0: rowwise element, 1: columnwise (def: 0)
 	 * @return {matrix}     
 	 *
-	 * @example
-	 * var b = [[-1,3,-1],[4,5,9]];
-	 * 
+	 * @example 
+	 * ubique.reshape([5,6,3],3,1);
+	 * // [ [ 5 ], [ 6 ], [ 3 ] ]
+	 *
 	 * ubique.reshape([5,6,3],1,3);
-	 * // [[5, 6, 3]]
-	 * ubique.reshape(b,3,2);
-	 * // [[-1, 5], [4, -1], [3, 9]]
-	 * ubique.reshape(b,6,1);
-	 * // [[-1], [4], [3], [5], [-1], [9]]
+	 * // [ 5, 6, 3 ]
+	 * 
+	 * ubique.reshape([[-1,3,-1],[4,5,9]],3,2);
+	 * // [ [ -1, 4 ], [ 3, 5 ], [ -1, 9 ] ]
+	 *
+	 * ubique.reshape([[-1,3,-1],[4,5,9]],3,2,1);
+	 * // [ [ -1, 5 ], [ 4, -1 ], [ 3, 9 ] ]
+	 * 
+	 * ubique.reshape([[-1,3,-1],[4,5,9]],6,1);
+	 * // [ [ -1 ], [ 3 ], [ -1 ], [ 4 ], [ 5 ], [ 9 ] ]
+	 *
+	 * ubique.reshape([[-1,3,-1],[4,5,9]],6,1,1);
+	 * // [ [ -1 ], [ 4 ], [ 3 ], [ 5 ], [ -1 ], [ 9 ] ]
 	 */
-	 $u.reshape = function(x,m,n) {
+	 $u.reshape = function(x,m,n,flag) {
 	 	if (arguments.length < 3) {
 	 		throw new Error('not enough input arguments');
 	 	}
+	  flag = flag == null ? 0 : flag;
 	 	if (!$u.isinteger(m) || !$u.isinteger(n)) {
 	 		throw new Error('dimensions must be integer numbers');
 	 	}
-	 	var nrows = $u.nrows(x),
-	 	ncols = $u.ncols(x),
-	 	totsiz = nrows * ncols;
+	 	var nrows = $u.nrows(x);
+	 	var ncols = $u.ncols(x);
+	 	var totsiz = nrows * ncols;
 	 	if ((m * n) !== totsiz ) {
 	 		throw new Error('total number of elements must be the same');
 	 	}
@@ -5587,8 +5655,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 		}
 	 	} else 
 	 	if ($u.ismatrix(x)) {
-	 		var out = $u.matrix(m,n,NaN),
-	 		vec = $u.flatten(x);
+	 		var out = $u.matrix(m,n,NaN);
+	 		var vec = $u.flatten(x,flag); // flatten by rows
 	 		for (var i = 0;i < m * n;i++) {
 	 			var idx = $u.ind2sub([m,n],i);
 	 			out[idx[0]][idx[1]] = vec[i];
@@ -5602,7 +5670,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 108 */
+/* 109 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5610,39 +5678,89 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	 module.exports = function($u) {
 	/**
-	 * @method row
-	 * @summary Get a row of matrix
-	 * @description  Get a row of a matrix
+	 * @method setcol
+	 * @summary Set a column of a matrix
+	 * @description Set a column of a matrix. If X is an array, it is auto-converted to
+	 * a column vector.
 	 * 
-	 * @param  {matrix} x matrix of elements
-	 * @param  {number} n row number (indexing from 0 to n - 1)
-	 * @return {array}   
+	 * @param  {array|vector} x array or vector Mx1
+	 * @param  {matrix} mat matrix MxN of values
+	 * @param  {number} n column number (indexing from 0 to n - 1)
+	 * @return {matrix}   
 	 *
 	 * @example
-	 * ubique.row([[5,6,5],[7,8,-1]],0);
-	 * // [ 5, 6, 5 ]
-	 * 
-	 * ubique.row([[5,6,5],[7,8,-1]],0);
-	 * // [ 7, 8, -1 ]
+	 * ubique.setcol([2,0],[[5,6,5],[7,8,-1]],0);
+	 * // [ [ 2, 6, 5 ], [ 0, 8, -1 ] ]
+	 *
+	 * ubique.setcol([9,21],[[5,6,5],[7,8,-1]],2);
+	 * // [ [ 5, 6, 9 ], [ 7, 8, 21 ] ]
 	 */
-	 $u.row = function(x,n) {
-	  if (arguments.length === 0) {
+	 $u.setcol = function(x,mat,n) {
+	  if (arguments.length < 2) {
 	    throw new Error('not enough input arguments');
 	  }
 	  n = n == null ? 0 : n;
 	  if ($u.isarray(x)) {
-	   throw new Error('input must be a matrix');
+	    x = $u.transpose(x);
 	  }
-	  if (!$u.isinteger(n) || n < 0 || n >= $u.nrows(x)) {
+	  if (!$u.isinteger(n) || n < 0 || n >= $u.ncols(mat)) {
+	    throw new Error('col must be an integer between 0 and N - 1 columns');
+	  }
+	  for (var i = 0;i < $u.nrows(mat);i++) {
+	    mat[i][n] = x[i][0];
+	  }
+	  return mat;
+	}
+
+	}
+
+/***/ },
+/* 110 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Indexing
+	 */
+	 module.exports = function($u) {
+	/**
+	 * @method setrow
+	 * @summary Set a row of matrix
+	 * @description Set a row of a matrix.If X is an array, it is auto-converted to
+	 * a row vector.
+	 * 
+	 * @param  {array|vector} x array or vector 1xN
+	 * @param  {matrix} mat matrix MxN of values
+	 * @param  {number} n column number (indexing from 0 to n - 1)
+	 * @return {matrix}   
+	 *
+	 * @example
+	 * ubique.setrow([2,0,-2],[[5,6,5],[7,8,-1]],0);
+	 * // [ [ 2, 0, -2 ], [ 7, 8, -1 ] ]
+	 *
+	 * ubique.setrow([9,21,57],[[5,6,5],[7,8,-1]],1);
+	 * // [ [ 5, 6, 5 ], [ 9, 21, 57 ] ]
+	 */
+	 $u.setrow = function(x,mat,n) {
+	  if (arguments.length < 2) {
+	    throw new Error('not enough input arguments');
+	  }
+	  n = n == null ? 0 : n;
+	  if ($u.isarray(x)) {
+	   x = [x];
+	  }
+	  if (!$u.isinteger(n) || n < 0 || n >= $u.nrows(mat)) {
 	    throw new Error('row must be an integer between 0 and N - 1 rows');
 	  }
-	  return x[n];
+	  for (var i = 0;i < $u.ncols(mat);i++) {
+	    mat[n][i] = x[0][i];
+	  }
+	  return mat;
 	 }
 
 	}
 
 /***/ },
-/* 109 */
+/* 111 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5706,7 +5824,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 110 */
+/* 112 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5726,40 +5844,37 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * @example
 	 * ubique.sort([0,5,-1,3,-4,9,0],'ascend');
-	 * // [-4, -1, 0, 0, 3, 5, 9]
-	 * ubique.sort([0,5,-1,3,-4,9,0],'descend');
-	 * // [9, 5, 3, 0, 0, -1, -4]
-	 * ubique.sort([[-1,3,-1],[4,5,9]],'ascend');
-	 * // [[-1, 3, -1], [4, 5, 9]]
+	 * // [ -4, -1, 0, 0, 3, 5, 9 ]
+	 *
 	 * ubique.sort([[-1,3,-1],[4,5,9]],'descend');
-	 * // [[4, 5, 9], [-1, 3, -1]]
+	 * // [ [ 4, 5, 9 ], [ -1, 3, -1 ] ]
+	 * 
 	 * ubique.sort([[-1,3,-1],[4,5,9]],'descend',0);
-	 * // [[3, -1, -1], [9, 5, 4]]
+	 * // [ [ 3, -1, -1 ], [ 9, 5, 4 ] ]
 	 */
 	 $u.sort = function(x,mode,dim) {
 	 	if (arguments.length === 0) {
 	 		throw new Error('not enough input arguments');
 	 	}
-	 	if (arguments.length === 1) {
-	 		mode = 'ascend';
-	 		dim = 1;
-	 	}
-	 	if (arguments.length === 2) {
-	 		dim = 1;
-	 	}
-	 	if ($u.isnumber(x)) {
-	 		return x;
-	 	}
-	 	if ($u.isarray(x)) {
-	 		return $u.mergesort(x,mode);
-	 	}
-	 	return $u.vectorfun(x,function(val) {return $u.mergesort(val,mode);},dim);
+	  mode = mode == null ? 'ascend' : mode;
+	  dim = dim == null ? 1 : dim;
+	  var _sort = function(a,mode) {
+	    var out = $u.mergesort(a,mode);
+	    return out[0];
+	  }
+	  if ($u.isnumber(x)) {
+	    return x;
+	  }
+	  if ($u.isarray(x)) {
+	   return _sort(x,mode);
 	 }
+	 return $u.vectorfun(dim,x,_sort,mode);
+	}
 
 	}
 
 /***/ },
-/* 111 */
+/* 113 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5806,7 +5921,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 112 */
+/* 114 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5827,8 +5942,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * 
 	 * ubique.sub2ind(ubique.size(a),[1, 2]);
 	 * // 5
+	 * 
 	 * ubique.sub2ind(ubique.size(a),[[0, 0], [1, 0], [0, 1]]);
 	 * // [0, 1, 2]
+	 * 
 	 * ubique.sub2ind(ubique.size([5,6,3]),[2, 0]);
 	 * // 2
 	 */
@@ -5839,8 +5956,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 	if ($u.isarray(index)) {
 	 		index = [index];
 	 	}
-	 	var x = $u.getcol(index,0),
-	 	y = $u.getcol(index,1);
+	 	var x = $u.getcol(index,0);
+	 	var y = $u.getcol(index,1);
 	 	var v = [];
 	 	for (var i = 0;i < x.length;i++) {
 	 		v[i] = (x[i]) + (y[i]) * size[0];
@@ -5855,7 +5972,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 113 */
+/* 115 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5879,16 +5996,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	  *
 	  * ubique.subset(c,1);
 	  * // 6
+	  * 
 	  * ubique.subset(c,[1,2]);
 	  * // [ 6, 3 ]
+	  * 
 	  * ubique.subset(c,ubique.end(c));
 	  * // 3
+	  * 
 	  * ubique.subset(a,0,1); 
 	  * // [ [ 6 ] ]
+	  * 
 	  * ubique.subset(a,[0,1],[1,2]); 
 	  * // [ [ 6, 5 ], [ 8, -1 ] ]
+	  * 
 	  * ubique.subset(a,0,':');
 	  * [ [ 5, 6, 5 ] ]
+	  * 
 	  * ubique.subset(a,':',0);
 	  * [ [ 5 ], [ 7 ] ]
 	  */
@@ -5950,7 +6073,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 114 */
+/* 116 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5960,10 +6083,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  /**
 	   * @method  substelin
 	   * @summary Subset of array or matrix based on linear indexing
-	   * @description Subset of array or matrix based on linear indexing
+	   * @description Subset of array or matrix based on linear indexing by rows (default)
 	   *              
 	   * @param  {array|matrix} m   array or matrix of elements 
 	   * @param  {numer|array|matrix} idx linear indexing
+	   * @param  {number} flag flag 0: rowwise element, 1: columnwise (def: 0)
 	   * @return {numner|array|matrix}     
 	   *
 	   * @example
@@ -5971,38 +6095,43 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * var c = [5,6,3];
 	   *
 	   * ubique.subsetlin(a,1);
-	   * // [ 7 ]
+	   * // [ 6 ]
+	   *
+	   * // subset by rows
 	   * ubique.subsetlin(a,[0,1,2,3]);
+	   * // [ 5, 6, 5, 7 ]
+	   *
+	   * // subset by columns
+	   * ubique.subsetlin(a,[0,1,2,3],1);
 	   * // [ 5, 7, 6, 8 ]
-	   * ubique.subsetlin(a,[[0,1,2],[2,3,4]]);
+	   * 
+	   * ubique.subsetlin(a,[[0,1,2],[2,3,4]],1);
 	   *  // [ [ 5, 7, 6 ], [ 6, 8, 5 ] ]
+	   *  
 	   * ubique.subsetlin(c,[0,1]);
 	   * // [ 5, 6 ]
+	   * 
 	   * ubique.subsetlin(c,[[0,1],[1,2]]);
 	   * // [ [ 5, 6 ], [ 6, 3 ] ]
 	   */
-	   $u.subsetlin = function(m,idx) {
+	   $u.subsetlin = function(m,idx,flag) {
 	    if (arguments.length === 0) {
 	      throw new Error('not enough input arguments');
-	    } else 
+	    }
 	    if (arguments.length === 1 || $u.isnumber(m)) {
 	      return m;
-	    } else 
-	    if (arguments.length === 2) {
-	      if ($u.isnumber(idx)) {
-	        idx = [idx];
-	      }
-	      var _m = $u.flatten(m);
-	      return $u.squeeze($u.arrayfun(idx,function(val){return _m[val]}));
-	    } else {
-	      throw new Error('too many input arguments');
+	    } 
+	    flag = flag == null ? 0 : flag;
+	    if ($u.isnumber(idx)) {
+	      idx = [idx];
 	    }
+	    var _m = $u.flatten(m,flag);
+	    return $u.squeeze($u.arrayfun(idx,function(val){return _m[val]}));
 	  }
-
 	}
 
 /***/ },
-/* 115 */
+/* 117 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6019,11 +6148,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * @example
 	 * ubique.tomat(5);
-	 * // [[5]]
+	 * // [ [ 5 ] ]
+	 * 
 	 * ubique.tomat([5,6,3]);
-	 * // [[5], [6], [3]]
-	 * ubique.tomat(true);
-	 * // [[true]]
+	 * // [ [ 5, 6, 3 ] ]
+	 * 
 	 */
 	 $u.tomat = function(x) {
 	 	if (arguments.length === 0) {
@@ -6033,24 +6162,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	 		return [[x]];
 	 	} else
 	 	if ($u.isarray(x)) {
-	 		var out = $u.matrix(x.length,1);
-	 		for (var i = 0;i < x.length;i++) {
-	 			out[i][0] = x[i];
-	 		}
-	 		return out;
-	 	} else 
-	 	if ($u.ismatrix(x)) {
-	 		return x;
-	 	} else {
-	 		throw new Error('unknown input arguments');
-	 	}
-
+	    return [x];
+	  } else 
+	  if ($u.ismatrix(x)) {
+	   return x;
+	 } else {
+	   throw new Error('unknown input arguments');
 	 }
 
 	}
 
+	}
+
 /***/ },
-/* 116 */
+/* 118 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6060,8 +6185,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * @method transpose
 	 * @summary Transpose X.'
-	 * @description Transpose of matrix X. Array is Nx1 as default. 
-	 * Transpose of Array is 1xN matrix.
+	 * @description Transpose of matrix X. Array is 1xN as default. 
+	 * Transpose of Array is Nx1 matrix.
 	 * 
 	 * @param  {array|matrix} x array or matrix of elements
 	 * @return {matrix}
@@ -6077,25 +6202,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	 	if (arguments.length === 0) {
 	 		throw new Error('not enough input arguments');
 	 	}
-	 	if ($u.isnumber(x)) {
-	 		return x;
-	 	}
-	 	if ($u.isarray(x)) {
-	 		return $u.tomat(x);
-	 	}
-	 	var out = $u.matrix($u.ncols(x),$u.nrows(x),null);
-	 	for (var i = 0;i < $u.ncols(x); i++) {
-	 		for (var j = 0;j < $u.nrows(x); j++) {
-	 			out[i][j] = x[j][i];
-	 		}
-	 	}
-	 	return out;
-	 }
+	  var _transpose = function(a,acols,arows) {
+	    var out = $u.matrix(acols,arows);
+	    for (var i = 0;i < acols; i++) {
+	      for (var j = 0;j < arows; j++) {
+	        out[i][j] = a[j][i];
+	      }
+	    }
+	    return out;
+	  }
+	  if ($u.isnumber(x)) {
+	    return x;
+	  }
+	  if ($u.isarray(x)) {
+	    return _transpose([x],x.length,1);
+	  }
+	  return _transpose(x,$u.ncols(x),$u.nrows(x));
+	}
 
 	}
 
 /***/ },
-/* 117 */
+/* 119 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6111,38 +6239,39 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {number|matrix}     
 	 *
 	 * @example
-	 * ubique.trues();
-	 * // true
 	 * ubique.trues(0);
 	 * // []
+	 * 
 	 * ubique.trues(1);
-	 * // [[true]]
+	 * // [ [ true ] ]
+	 * 
 	 * ubique.trues(2);
-	 * // [[true, true], [true, true]]
+	 * // [ [ true, true ], [ true, true ] ]
+	 * 
 	 * ubique.trues([2,1]);
-	 * // [[true], [true]]
-	 * ubique.trues(1,2);
-	 * // [[true, true]]
+	 * // [ [ true ], [ true ] ]
+	 * 
 	 * ubique.trues(2,3);
-	 * // [[true, true, true], [true, true, true]]
+	 * // [ [ true, true, true ], [ true, true, true ] ]
 	 */
 	 $u.trues = function() {
-	  if ($u.isundefined(arguments[0]) || $u.isempty(arguments[0])) {
-	    return true;
+	  if (arguments.length === 0 ) {
+	    throw new Error('not enough input arguments');
 	  }
-	  var _args = [];
-	  for (var i = 0;i < arguments.length; i++) {
-	    _args.push(arguments[i]);
+	  var _args = $u.argsarray.apply(null,arguments);
+	  if ($u.ismatrix(_args)) {
+	    _args = _args[0];
 	  }
-	  if ($u.ismatrix(_args)) {_args = _args[0];}
-	  if (_args.length === 1) {_args = [_args[0],_args[0]];}
+	  if (_args.length === 1) {
+	    _args = [_args[0],_args[0]];
+	  }
 	  return $u.matrix(_args,true);
 	}
 
 	}
 
 /***/ },
-/* 118 */
+/* 120 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6158,37 +6287,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {array|matrix}     
 	 *
 	 * @example
-	 * var a = [[5,6,5],[7,8,-1]];
-	 * var b = [[-1,3,-1],[4,5,9]];
-	 * var c = [5,6,3];
-	 * var d = [0.5,-3,2.3];
-	 * var f = [[3, 2], [5, 2]];
-	 *
-	 * ubique.vertcat(a,b);
-	 * // [[5, 6, 5], [7, 8, -1], [-1, 3, -1], [4, 5, 9]]
-	 * ubique.vertcat(a,b,b);
-	 * // [[5, 6, 5], [7, 8, -1], [-1, 3, -1], [4, 5, 9], [-1, 3, -1], [4, 5, 9]]
-	 * ubique.vertcat(c,d);
-	 * // [5, 6, 3, 0.5, -3, 2.3]
-	 * ubique.vertcat([1],[2]);
-	 * // [1, 2]
+	 * ubique.vertcat([[5,6,5],[7,8,-1]],[[-1,3,-1],[4,5,9]]);
+	 * // [ [ 5, 6, 5 ], [ 7, 8, -1 ], [ -1, 3, -1 ], [ 4, 5, 9 ] ]
+	 * 
 	 * ubique.vertcat(5,7,9,8);
-	 * // [5,7,9,8]
-	 * ubique.vertcat(5,7,c);
-	 * // [5, 7, 5, 6, 3]
+	 * // [ 5, 7, 9, 8 ]
 	 */
 	 $u.vertcat = function() {
-	 	var _args = [0];
-	 	for (var i = 0; i < arguments.length; i++) {
-	 		_args.push(arguments[i]);
-	 	}
-	 	return $u.cat.apply(null,_args);
-	 }
+	  var _args = $u.argsarray.apply(null,arguments);
+	  return $u.cat.apply(null,[].concat(0,_args));
+	}
 
 	}
 
 /***/ },
-/* 119 */
+/* 121 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6203,39 +6316,40 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param  {number|array|...} args variable input arguments (max 2)
 	 * @return {number|matrix}     
 	 *
-	 * @example
-	 * ubique.zeros();
-	 * // 0
+	  * @example
 	 * ubique.zeros(0);
 	 * // []
+	 * 
 	 * ubique.zeros(1);
-	 * // [[0]]
+	 * // [ [ 0 ] ]
+	 * 
 	 * ubique.zeros(2);
-	 * // [[0, 0], [0, 0]]
+	 * // [ [ 0, 0 ], [ 0, 0 ] ]
+	 * 
 	 * ubique.zeros([2,1]);
-	 * // [[0], [0]]
-	 * ubique.zeros(1,2);
-	 * // [[0, 0]]
+	 * // [ [ 0 ], [ 0 ] ]
+	 * 
 	 * ubique.zeros(2,3);
-	 * // [[0, 0, 0], [0, 0, 0]]
+	 * // [ [ 0, 0, 0 ], [ 0, 0, 0 ] ]
 	 */
 	 $u.zeros = function() {
-	  if ($u.isundefined(arguments[0]) || $u.isempty(arguments[0])) {
-	    return 0;
+	 if (arguments.length === 0 ) {
+	    throw new Error('not enough input arguments');
 	  }
-	  var _args = [];
-	  for (var i = 0;i < arguments.length; i++) {
-	    _args.push(arguments[i]);
+	  var _args = $u.argsarray.apply(null,arguments);
+	  if ($u.ismatrix(_args)) {
+	    _args = _args[0];
 	  }
-	  if ($u.ismatrix(_args)) {_args = _args[0];}
-	  if (_args.length === 1) {_args = [_args[0],_args[0]];}
+	  if (_args.length === 1) {
+	    _args = [_args[0],_args[0]];
+	  }
 	  return $u.matrix(_args,0);
 	}
 
 	}
 
 /***/ },
-/* 120 */
+/* 122 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6261,16 +6375,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if (arguments.length === 0) {
 	    throw new Error('not enough input arguments');
 	  }
-	  var n = x.length,
-	  s = $u.skewness(x),
-	  xk = $u.xkurtosis(x);
+	  var n = x.length;
+	  var s = $u.skewness(x);
+	  var xk = $u.xkurtosis(x);
 	  return (n/6) * (Math.pow(s,2) + Math.pow(xk,2)/4);
 	}
 
 	}
 
 /***/ },
-/* 121 */
+/* 123 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6292,6 +6406,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * 
 	 * ubique.normcdf(2);
 	 * // 0.97725
+	 * 
 	 * ubique.normcdf(0,ubique.mean(x),ubique.std(x));
 	 * // 0.22049
 	 */
@@ -6299,20 +6414,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if (arguments.length === 0) {
 	    throw new Error('not enough input arguments');
 	  }
-	  if (arguments.length === 1) {
-	    mu = 0;
-	    sigma = 1;
-	  }
-	  if (arguments.length === 2) {
-	    sigma = 1;
-	  }
+	  mu = mu == null ? 0 : mu;
+	  sigma = sigma == null ? 1 : sigma;
 	  return 0.5 * (1 + $u.erf((x - mu) / Math.sqrt(2 * sigma * sigma)));
 	}
 
 	}
 
 /***/ },
-/* 122 */
+/* 124 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6337,6 +6447,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * ubique.norminv(0.05);
 	 * // -1.64485
+	 * 
 	 * ubique.norminv(0.01,ubique.mean(x),ubique.std(x));
 	 * // -0.0361422
 	 */
@@ -6344,13 +6455,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if (arguments.length === 0) {
 	    throw new Error('not enough input arguments');
 	  }
-	  if (arguments.length === 1) {
-	    mu = 0;
-	    sigma = 1;
-	  }
-	  if (arguments.length === 2) {
-	    sigma = 1;
-	  }
+	  mu = mu == null ? 0 : mu;
+	  sigma = sigma == null ? 1 : sigma;
 	  if (p <= 0 || p >= 1) {
 	    throw new Error('invalid input argument');
 	  }
@@ -6361,7 +6467,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 123 */
+/* 125 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6387,6 +6493,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * 
 	 * ubique.normpdf(1);
 	 * // 0.241971
+	 * 
 	 * ubique.normpdf(0,ubique.mean(x),ubique.std(x));
 	 * // 12.7622
 	 */
@@ -6394,20 +6501,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if (arguments.length === 0) {
 	    throw new Error('not enough input arguments');
 	  }
-	  if (arguments.length === 1) {
-	    mu = 0;
-	    sigma = 1;
-	  }
-	  if (arguments.length === 2) {
-	    sigma = 1;
-	  }
+	  mu = mu == null ? 0 : mu;
+	  sigma = sigma == null ? 1 : sigma;
 	  return Math.exp(-0.5 * Math.pow((x - mu)/sigma,2)) / (Math.sqrt(2 * Math.PI) * sigma);
 	}
 
 	}
 
 /***/ },
-/* 124 */
+/* 126 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6419,15 +6521,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Active return
 	 * @description Asset/Portfolio annualized return minus Benchmark annualized return
 	 * 
-	 * @param  {array|matrix} x asset/portfolio returns
+	 * @param  {array|matrix} x asset/portfolio returns 
 	 * @param  {array} y benchmark returns
 	 * @param  {number} t frequencey of data. 1: yearly, 4: quarterly, 12: monthly, 52: weekly, 252: daily
-	 * @param  {string} type 'geometric' or 'simple' (def: 'geometric')
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @param  {string} mode 'geometric' or 'simple' (def: 'geometric')
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {number|array|matrix}
 	 *
 	 * @example
-	 * var x = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 	 * var z = [0.04,-0.022,0.043,0.028,-0.078,-0.011,0.033,-0.049,0.09,0.087];
 	 * var cat = ubique.cat;
@@ -6435,33 +6537,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * ubique.activereturn(x,z,12);
 	 * // 0.041979
 	 *
-	 * ubique.activereturn(cat(1,x,y),z,12);
-	 * // [ [ 0.041979, -0.046746 ] ]
+	 * ubique.activereturn(cat(0,x,y),z,12);
+	 * // [ [ 0.041979], [ -0.046746 ] ]
 	 */
-	 $u.activereturn = function(x,y,t,type,dim) {
+	 $u.activereturn = function(x,y,t,mode,dim) {
 	  if (arguments.length < 2) {
 	    throw new Error('not enough input arguments');
 	  }
-	  t = t || 252;
-	  type = type || 'geometric';
-	  dim = dim || 1;
-
-	  var _activereturn = function(a,y,t,type) {
-	    return $u.annreturn(a,t,type) - $u.annreturn(y,t,type);
+	  t = t == null ? 252 : t;
+	  mode = mode == null ? 'geometric' : mode;
+	  dim = dim == null ? 0 : dim;
+	  
+	  var _activereturn = function(a,y,t,mode) {
+	    return $u.annreturn(a,t,mode) - $u.annreturn(y,t,mode);
 	  }
-	  if ($u.isnumber(x)) {
+	  if ($u.isnumber(x) || $u.isnumber(y)) {
 	    throw new Error('input must be an array or matrix');
 	  }
-	  if ($u.isarray(x)) {
-	    return  _activereturn(x,y,t,type);
-	  }
-	  return $u.vectorfun(x,function(val){return _activereturn(val,y,t,type);},dim);
+	  return $u.vectorfun(dim,x,_activereturn,y,t,mode);
 	}
 	}
 
 
 /***/ },
-/* 125 */
+/* 127 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6481,45 +6580,43 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * 
 	 * @param  {array|matrix} x array of value
 	 * @param  {number} frisk annual free-risk rate (def: 0)
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {number}       
 	 *
 	 * @example
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
+	 * var cat = ubique.cat;
 	 * 
 	 * ubique.adjsharpe(x,0.02/12);
 	 * // 0.748134
 	 * 
-	 * ubique.adjsharpe(ubique.cat(1,x,y));
-	 * // [[0.830583, 0.245232]]
+	 * ubique.adjsharpe(cat(0,x,y));
+	 * // [ [ 0.830583, 0.245232 ] ]
 	 */
 	 $u.adjsharpe = function(x,frisk,dim) {
-	 	if (arguments.length === 0) {
-	 		throw new Error('not enough input arguments');
-	 	}
-	 	frisk = frisk || 0;
-	  dim = dim || 1;
+	  if (arguments.length === 0) {
+	   throw new Error('not enough input arguments');
+	 }
+	 frisk = frisk == null ? 0 : frisk;
+	 dim = dim == null ? 0 : dim;
 
-	  var _asharpe = function(a,frisk) {
-	   var sr = $u.sharpe(a,frisk),
-	   sk = $u.skewness(a),
-	   ku = $u.kurtosis(a);
+	 var _asharpe = function(a,frisk) {
+	   var sr = $u.sharpe(a,frisk);
+	   var sk = $u.skewness(a);
+	   var ku = $u.kurtosis(a);
 	   return sr * (1 + (sk/6) * sr - ((ku - 3)/24) * Math.sqrt(sr));
 	 }
 	 if ($u.isnumber(x)) {
 	   return NaN;
 	 }
-	 if ($u.isarray(x)) {
-	   return  _asharpe(x,frisk);
-	 }
-	 return $u.vectorfun(x,function(val){return _asharpe(val,frisk);},dim);
+	 return $u.vectorfun(dim,x,_asharpe,frisk);
 	}
 	}
 
 
 /***/ },
-/* 126 */
+/* 128 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6540,8 +6637,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param  {array|matrix} x array of value
 	 * @param  {number} frisk annual free-risk rate (def: 0)
 	 * @param  {number} t frequency 252: daily (default), 52: weekly, 12: monthly, 4: quarterly
-	 * @param  {string} type 'geometric' or 'simple' (def: 'geometric')
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @param  {string} mode 'geometric' or 'simple' (def: 'geometric')
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {number|array|matrix}       
 	 *
 	 * @example
@@ -6552,20 +6649,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * ubique.annadjsharpe(x,0.02,12,'geometric');
 	 * // 3.376724
 	 * 
-	 * ubique.annadjsharpe(cat(1,x,y),0,12);
+	 * ubique.annadjsharpe(cat(0,x,y),0,12);
 	 * // [ [ 3.766555, 0.827757 ] ]
 	 */
-	 $u.annadjsharpe = function(x,frisk,t,type,dim) {
+	 $u.annadjsharpe = function(x,frisk,t,mode,dim) {
 	  if (arguments.length === 0) {
 	    throw new Error('not enough input arguments');
 	  }
-	  frisk = frisk || 0;
-	  t = t || 252;
-	  type = type || 'geometric';
-	  dim = dim || 1;
+	  frisk = frisk == null ? 0 : frisk;
+	  t = t == null ? 252 : t;
+	  mode = mode == null ? 'geometric' : mode;
+	  dim = dim == null ? 0 : dim;
 
-	  var _asharpe = function(a,frisk,t,type) {
-	   var aret = $u.annreturn(a,t,type),
+	  var _asharpe = function(a,frisk,t,mode) {
+	   var aret = $u.annreturn(a,t,mode),
 	   arisk = $u.annrisk(a,t),
 	   sr = (aret - frisk) / arisk,
 	   sk = $u.skewness(a),
@@ -6575,16 +6672,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	 if ($u.isnumber(x)) {
 	   throw NaN;
 	 }
-	 if ($u.isarray(x)) {
-	   return  _asharpe(x,frisk,t,type);
-	 }
-	 return $u.vectorfun(x,function(val){return _asharpe(val,frisk,t,type);},dim);
+	 return $u.vectorfun(dim,x,_asharpe,frisk,t,mode);
 	}
 	}
 
 
 /***/ },
-/* 127 */
+/* 129 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6600,8 +6694,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * 
 	 * @param  {array|matrix} x asset/portfolio returns
 	 * @param  {number} t frequencey of data. 1: yearly, 4: quarterly, 12: monthly, 52: weekly, 252: daily
-	 * @param  {string} type 'geometric' or 'simple' (def: 'geometric')
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @param  {string} mode 'geometric' or 'simple' (def: 'geometric')
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {number|array|matrix}   
 	 *
 	 * @example
@@ -6612,42 +6706,39 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * ubique.annreturn(x,12);
 	 * // 0.233815
 	 *
-	 * ubique.annreturn(cat(1,x,y),12);
-	 * // [ [ 0.233815, 0.14509 ] ]
+	 * ubique.annreturn(cat(0,x,y),12);
+	 * // [ [ 0.233815 ], [ 0.14509 ] ]
 	 */
-	 $u.annreturn = function(x,t,type,dim) {
+	 $u.annreturn = function(x,t,mode,dim) {
 	 	if (arguments.length === 0) {
 	 		throw new Error('not enough input arguments');
 	 	}
-	 	var t = t || 252,
-	  type = type || 'geometric',
-	  dim = dim || 1;
+	 	t = t == null ? 252 : t;
+	  mode = mode == null ? 'geometric' : mode;
+	  dim = dim == null ? 0 : dim;
 
-	  var _annreturn = function(arr,t,type) {
+	  var _annreturn = function(arr,t,mode) {
 	    var n = arr.length;
-	    if (type === 'geometric') {
+	    if (mode === 'geometric') {
 	      return $u.power($u.prod($u.plus(1,arr)),(t/n)) - 1;
 	    } else
-	    if (type === 'simple') {
+	    if (mode === 'simple') {
 	      return $u.mean(arr) * t;
 	    } else {
-	      throw new Error('unknown type');
+	      throw new Error('unknown mode');
 	    }
 	  }
 	 	 if ($u.isnumber(x)) {
 	    return NaN;
 	  }
-	  if ($u.isarray(x)) {
-	    return  _annreturn(x,t,type);
-	  }
-	  return $u.vectorfun(x,function(val){return _annreturn(val,t,type);},dim);
+	  return $u.vectorfun(dim,x,_annreturn,t,mode);
 	 }
 
 	}
 
 
 /***/ },
-/* 128 */
+/* 130 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6661,7 +6752,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * 
 	 * @param  {array|matrix} x asset/portfolio returns
 	 * @param  {number} t frequencey of data. 1: yearly, 4: quarterly, 12: monthly, 52: weekly, 252: daily
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {number|array|matrix}   
 	 *
 	 * @example
@@ -6670,17 +6761,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var cat = ubique.cat;
 	 * 
 	 * ubique.annrisk(x,12);
-	 * // 0.233815
+	 * // 0.080473
 	 *
-	 * ubique.annrisk(cat(1,x,y),12);
-	 * // [ [ 0.233815, 0.14509 ] ]
+	 * ubique.annrisk(cat(0,x,y),12);
+	 * // [ [ 0.080473 ], [ 0.182948 ] ]
 	 */
 	 $u.annrisk = function(x,t,dim) {
 	 	if (arguments.length === 0) {
 	 		throw new Error('not enough input arguments');
 	 	}
-	 	t = t || 252;
-	  dim = dim || 1;
+	 	t = t == null ? 252 : t;
+	  dim = dim == null ? 0 : dim;
 
 	 	var _annrisk = function(a,t) {
 	 		return Math.sqrt(t) * $u.std(a);
@@ -6688,16 +6779,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	 	if ($u.isnumber(x)) {
 	 		return NaN;
 	 	}
-	 	if ($u.isarray(x)) {
-	 		return  _annrisk(x,t);
-	 	}
-	 	return $u.vectorfun(x,function(val){return _annrisk(val,t);},dim);
+	 	return $u.vectorfun(dim,x,_annrisk,t);
 	 }
 	}
 
 
 /***/ },
-/* 129 */
+/* 131 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6711,13 +6799,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * 
 	 * @param  {array|matrix} x asset/portfolio returns
 	 * @param  {number} k largest drawdown. k = 0 for all continuous drawdown (def: 0)
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {object}
 	 *
 	 * @example
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
-	 *
+	 * var cat = ubique.cat;
+	 * 
 	 * // average drawdown
 	 * ubique.avgdrawdown(x);
 	 * // 0.0115
@@ -6726,20 +6815,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * ubique.avgdrawdown(x,1);
 	 * // 0.014
 	 * 
-	 * ubique.avgdrawdown(ubique.cat(1,x,y));
-	 * // [ [ 0.0115, 0.0566 ] ]
+	 * ubique.avgdrawdown(cat(0,x,y));
+	 * // [ [ 0.0115 ], [ 0.056571 ] ]
 	 */
 	 $u.avgdrawdown = function(x,k,dim) {
 	  if (arguments.length === 0) {
 	    throw new Error('not enough input arguments');
 	  }
-	  if (arguments.length === 1) {
-	    k = 0;
-	    dim = 1;
-	  }
-	  if (arguments.length === 2) {
-	    dim = 1;
-	  }
+	  k = k == null ? 0 : k;
+	  dim = dim == null ? 0 : dim;
+	  
 	  var avgdd = function(a,k) {
 	    var cdd =  $u.cdrawdown(a);
 	    if (k === 0) {
@@ -6755,16 +6840,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if ($u.isnumber(x)) {
 	    return 0;
 	  }
-	  if ($u.isarray(x)) {
-	    return avgdd(x,k);
-	  }
-	  return $u.vectorfun(x,function(val){return avgdd(val,k);},dim);
+	  return $u.vectorfun(dim,x,avgdd,k);
 	}
 
 	}
 
 /***/ },
-/* 130 */
+/* 132 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6783,7 +6865,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param  {number} frisk annual free-risk rate (def: 0)
 	 * @param  {number} t frequency 252: daily (default), 52: weekly, 12: monthly, 4: quarterly
 	 * @param  {string} mode 'simple' or 'modified' (def: 'simple')
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {number|arrray}       
 	 *
 	 * @example
@@ -6797,18 +6879,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * ubique.burkeratio(x,0,12,'modified');
 	 * // 44.425456
 	 *
-	 * ubique.burkeratio(cat(1,x,y),0,12);
-	 * // [ [ 14.048563, 1.228487 ] ]
+	 * ubique.burkeratio(cat(0,x,y),0,12);
+	 * // [ [ 14.048563 ], [ 1.228487 ] ]
 	 */
 	 $u.burkeratio = function(x,frisk,t,mode,dim) {
 	  if (arguments.length === 0) {
 	    throw new Error('not enough input arguments');
 	  }
-	  frisk = frisk || 0;
-	  t = t || 252;
-	  mode = mode || 'simple';
-	  dim = dim || 1;
-
+	  frisk = frisk == null ? 0 : frisk;
+	  t = t == null ? 252 : t;
+	  mode = mode == null ? 'simple' : mode;
+	  dim = dim == null ? 0 : dim;
+	  
 	  var _burkeratio = function(a,frisk,t,mode) {
 	    var annret = $u.annreturn(a,t),
 	    dd = $u.sqrt($u.sum($u.power($u.cdrawdown(a),2)));
@@ -6824,16 +6906,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if ($u.isnumber(x)) {
 	    throw new Error('input arguments must be an array or matrix');
 	  }
-	  if ($u.isarray(x)) {
-	    return  _burkeratio(x,frisk,t,mode);
-	  }
-	  return $u.vectorfun(x,function(val){return _burkeratio(val,frisk,t,mode);},dim);
+	  return $u.vectorfun(dim,x,_burkeratio,frisk,t,mode);
 	}
 
 	}
 
 /***/ },
-/* 131 */
+/* 133 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6847,44 +6926,40 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * 
 	 * @param  {number|array|matrix} x portfolio/assets returns 
 	 * @param  {number} p number of years (def: 1)
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {number|array}   
 	 *
 	 * @example
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 	 * var cat = ubique.cat;
-	 * var nrows = ubique.nrows;
 	 *
 	 * // CAGR for 10 months on 12 or 0.83 years
-	 * ubique.cagr(x,nrows(x)/12);
+	 * ubique.cagr(x,x.length/12);
 	 * // 0.229388
 	 *
-	 * ubique.cagr(cat(1,x,y),nrows(x)/12);
-	 * // [ [ 0.229388, 0.151999 ] ]
+	 * ubique.cagr(cat(0,x,y),x.length/12);
+	 * // [ [ 0.229388 ], [ 0.151999 ] ]
 	 */
 	 $u.cagr = function(x,p,dim) {
 	  if (arguments.length === 0) {
 	    throw new Error('not enough input arguments');
 	  }
-	  x = x || null;
-	  p = p || 1;
-	  dim = dim || 1;
+	  p = p == null ? 1 : p;
+	  dim = dim == null ? 0 : dim;
+
 	  var _cagr = function(a,p) {
 	    return $u.power(1 + $u.ror(a,'ret'),(1 / p)) - 1;
 	  }
 	  if ($u.isnumber(x)) {
 	   return $u.power(a,(1 / p)) - 1;
 	  }
-	  if ($u.isarray(x)) {
-	   return  _cagr(x,p);
-	  }
-	  return $u.vectorfun(x,function(val){return _cagr(val,p);},dim);
+	  return $u.vectorfun(dim,x,_cagr,p);
 	 }
 	}
 
 /***/ },
-/* 132 */
+/* 134 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6900,7 +6975,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param  {array|matrix} x asset/portfolio returns
 	 * @param  {number} frisk annual free-risk rate (def: 0)
 	 * @param  {number} t frequencey of data. 1: yearly, 4: quarterly, 12: monthly, 52: weekly, 252: daily (def: 252)
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {number|arrray}       
 	 *
 	 * @example
@@ -6911,16 +6986,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * ubique.calmarratio(x,0,12);
 	 * // 16.701049
 	 *
-	 * ubique.calmarratio(cat(1,x,y),0,12);
-	 * // [ [ 16.701049, 1.32768 ] ]
+	 * ubique.calmarratio(cat(0,x,y),0,12);
+	 * // [ [ 16.701049 ], [ 1.32768 ] ]
 	 */
 	 $u.calmarratio = function(x,frisk,t,dim) {
 	  if (arguments.length === 0) {
 	    throw new Error('not enough input arguments');
 	  }
-	  var frisk = frisk || 0,
-	  t = t || 252,
-	  dim = dim || 1;
+	  frisk = frisk == null ? 0 : frisk;
+	  t = t == null ? 252 : t;
+	  dim = dim == null ? 0 : dim;
 
 	  var _calmarratio = function(a,frisk,t) {
 	    var annret = $u.annreturn(a,t),
@@ -6930,16 +7005,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if ($u.isnumber(x)) {
 	    throw new Error('input arguments must be an array or matrix');
 	  }
-	  if ($u.isarray(x)) {
-	    return  _calmarratio(x,frisk,t);
-	  }
-	  return $u.vectorfun(x,function(val){return _calmarratio(val,frisk,t);},dim);
+	  return $u.vectorfun(dim,x,_calmarratio,frisk,t);
 	}
 
 	}
 
 /***/ },
-/* 133 */
+/* 135 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6952,7 +7024,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @description Continuous Drawdown
 	 *  
 	 * @param  {array|matrix} x asset/portfolio returns
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {array|matrix}
 	 * 
 	 * @example
@@ -6961,17 +7033,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * ubique.cdrawdown(x);
 	 * // [ 0.009, 0.014 ]
-	 * ubique.cdrawdown(ubique.cat(1,x,y));
-	 * // [ [ 0.009, 0.005 ], [ 0.014, 0.095743 ] ]
+	 * 
+	 * ubique.cdrawdown(ubique.cat(0,x,y));
+	 * // [ [ 0.009, 0.014 ], [ 0.005, 0.095743, 0.068971 ] ]
 	 */
 	 $u.cdrawdown = function(x,dim) {
 	  if (arguments.length === 0) {
 	    throw new Error('not enough input arguments');
 	  }
-	  if (arguments.length === 1) {
-	    dim = 1;
-	  }
-	  var cdown = function(a) {
+	  dim = dim == null ? 0 : dim;
+
+	  var _cdown = function(a) {
 	    var cdd = [], tmp = 0, t = 0;
 	    for (var i = 0; i < a.length; i++) {
 	      if (i === 0 && a[i] < 0) {
@@ -7003,16 +7075,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if ($u.isnumber(x)) {
 	    return 0;
 	  }
-	  if ($u.isarray(x)) {
-	    return cdown(x);
-	  }
-	  return $u.vectorfun(x,function(val){return cdown(val);},dim);
-	}
+	  return $u.vectorfun(dim,x,_cdown);
 
+	}
 	}
 
 /***/ },
-/* 134 */
+/* 136 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7026,7 +7095,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * 
 	 * @param  {array|matrix} x array or matrix of values
 	 * @param  {number} mar minimum acceptable return (def: 0)
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {number|array}
 	 *
 	 * @example
@@ -7035,21 +7104,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * ubique.downsidepot(x,0.1/100);
 	 * // 0.0025
-	 * ubique.downsidepot(ubique.cat(1,x,y));
-	 * // [[0.0023, 0.0173]]
+	 * 
+	 * ubique.downsidepot(ubique.cat(0,x,y));
+	 * // [ [ 0.0023 ], [ 0.0173 ] ]
 	 */
 	 $u.downsidepot = function(x,mar,dim) {
 	 	if (arguments.length === 0) {
 	 		throw new Error('not enough input arguments');
 	 	}
-	 	if (arguments.length === 1) {
-	 		mar = 0;
-	 		dim = 1;
-	 	}
-	 	if (arguments.length === 2) {
-	 		dim = 1;
-	 	}
-	 	var _ddp = function(a,mar) {
+	   mar = mar == null ? 0 : mar;
+	   dim = dim == null ? 0 : dim;
+	   
+	   var _ddp = function(a,mar) {
 	    var z = 0;
 	    for (var i = 0;i < a.length;i++) {
 	      z += Math.max(mar - a[i],0) / a.length;
@@ -7059,16 +7125,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if ($u.isnumber(x)) {
 	   return x;
 	 }
-	 if ($u.isarray(x)) {
-	   return _ddp(x,mar);
-	 } 
-	 return $u.vectorfun(x,function(val){return _ddp(val,mar);},dim);
+	 return $u.vectorfun(dim,x,_ddp,mar);
 	}
 	}
 
 
 /***/ },
-/* 135 */
+/* 137 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7083,7 +7146,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * 
 	 * @param  {array|matrix} x array or matrix of values
 	 * @param  {number} mar minimum acceptable return (def: 0)
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {number|array}
 	 *
 	 * @example
@@ -7092,40 +7155,34 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * ubique.downsiderisk(x,0.1/100);
 	 * // 0.00570088
-	 * ubique.downsiderisk(ubique.cat(1,x,y));
-	 * // [[0.00526308, 0.0282082]]
+	 * 
+	 * ubique.downsiderisk(ubique.cat(0,x,y));
+	 * // [ [ 0.005263 ], [ 0.028208 ] ]
 	 */
 	 $u.downsiderisk = function(x,mar,dim) {
-	 	if (arguments.length === 0) {
-	 		throw new Error('not enough input arguments');
-	 	}
-	 	if (arguments.length === 1) {
-	 		mar = 0;
-	 		dim = 1;
-	 	}
-	 	if (arguments.length === 2) {
-	 		dim = 1;
-	 	}
-	 	var _dsrisk = function(a,mar) {
-	 		var z = 0;
-	 		for (var i = 0; i < a.length; i++) {
-	 			z += Math.pow(Math.min(a[i] - mar,0),2) / a.length;
-	 		}
-	 		return Math.sqrt(z);
-	 	}
-	 	if ($u.isnumber(x)) {
-	 		return x;
-	 	}
-	 	if ($u.isarray(x)) {
-	 		return _dsrisk(x,mar);
-	 	} 
-	 	return $u.vectorfun(x,function(val){return _dsrisk(val,mar);},dim);
-	 }
+	  if (arguments.length === 0) {
+	    throw new Error('not enough input arguments');
+	  }
+	  mar = mar == null ? 0 : mar;
+	  dim = dim == null ? 0 : dim;
+	  
+	  var _dsrisk = function(a,mar) {
+	    var z = 0;
+	    for (var i = 0; i < a.length; i++) {
+	      z += Math.pow(Math.min(a[i] - mar,0),2) / a.length;
+	    }
+	    return Math.sqrt(z);
+	  }
+	  if ($u.isnumber(x)) {
+	    return x;
+	  }
+	  return $u.vectorfun(dim,x,_dsrisk,mar);
+	}
 	}
 
 
 /***/ },
-/* 136 */
+/* 138 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7147,29 +7204,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * 
 	 * @param  {array|matrix} x asset/portfolio returns
 	 * @param  {string} mode drawdown calculation. 'return','geometric' (def: 'return')
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {object}  
 	 *
 	 * @example
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 *
 	 * ubique.drawdown(x);
-	 * // { dd: [ 0, 0, 0, 0.00900000000000004, 0, 0, 0, 0, 0.013999999999999995, 0 ],
-	 * //   ddrecov: [ 0, 0, 0, 4, 0, 0, 0, 0, 9, 0 ],
-	 * //   maxdd: 0.013999999999999995,
-	 * //   maxddrecov: [ 8, 9 ] }
+	 * // { dd: [ 0, 0, 0, 0.009, 0, 0, 0, 0, 0.014, 0 ], ddrecov: [ 0, 0, 0, 4, 0, 0, 0, 0, 9, 0 ],
+	 * //   maxdd: 0.014, maxddrecov: [ 8, 9 ] }
 	 */
 	 $u.drawdown = function(x,mode,dim) {
 	  if (arguments.length === 0) {
 	    throw new Error('not enough input arguments');
 	  }
-	  if (arguments.length === 1) {
-	    mode = 'return';
-	    dim = 1;
-	  }
-	  if (arguments.length === 2) {
-	    dim = 1;
-	  }
+	  mode = mode == null ? 'return' : mode;
+	  dim = dim == null ? 0 : dim;
+	  
 	  var ddown = function(a,mode) {
 	    if (mode === 'return') {
 	      _a = $u.cumprod($u.plus(a,1));
@@ -7213,16 +7264,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if ($u.isnumber(x)) {
 	    return 0;
 	  }
-	  if ($u.isarray(x)) {
-	    return ddown(x,mode);
-	  }
-	  return $u.vectorfun(x,function(val){return ddown(val,mode);},dim);
+	  return $u.vectorfun(dim,x,ddown,mode);
 	}
 
 	}
 
 /***/ },
-/* 137 */
+/* 139 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7238,7 +7286,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param  {number} p confidence level in the range [0,1] (def: 0.95)
 	 * @param  {number} amount amount (def: 1)
 	 * @param  {period} period time horizon (def: 1)
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)    
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)    
 	 * @return {number|array}
 	 *
 	 * @example
@@ -7246,21 +7294,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 	 * 
 	 * // historical daily conditional VaR at 95% conf level
-	 * ubique.histcondvar(ubique.cat(1,x,y),0.95);
-	 * // [[0.014, 0.061]]
+	 * ubique.histcondvar(ubique.cat(0,x,y),0.95);
+	 * // [ [ 0.014 ], [ 0.061 ] ]
 	 *
 	 * // historical daily conditional VaR at 99% for 100k GBP asset over 10 days 
-	 * ubique.histcondvar(ubique.cat(1,x,y),0.99,100000,10);
-	 * // [[4427.19, 19289.9]]
+	 * ubique.histcondvar(ubique.cat(0,x,y),0.99,100000,10);
+	 * // [ [ 4427.188724 ], [ 19289.893727 ] ]
 	 */
 	 $u.histcondvar = function(x,p,amount,period,dim) {
 	  if (arguments.length === 0) {
 	    throw new Error('not enough input arguments');
 	  }
-	  p = p || 0.95;
-	  amount = amount || 1;
-	  period = period || 1;
-	  dim = dim || 1;
+	  p = p == null ? 0.95 : p;
+	  amount = amount == null ? 1 : amount;
+	  period = period == null ? 1 : period;
+	  dim = dim == null ? 0 : dim;
 
 	  var _hcvar = function(a,p,amount,period) {
 	    var _VaR = -$u.histvar(a,p),
@@ -7277,16 +7325,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if ($u.isnumber(x)) {
 	   return x;
 	 }
-	 if ($u.isarray(x)) {
-	   return _hcvar(x,p,amount,period);
-	 } 
-	 return $u.vectorfun(x,function(val){return _hcvar(val,p,amount,period);},dim);
+	 return $u.vectorfun(dim,x,_hcvar,p,amount,period);
 	}
 	}
 
 
 /***/ },
-/* 138 */
+/* 140 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7302,58 +7347,42 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param  {number} p confidence level in the range [0,1] (def: 0.95)
 	 * @param  {number} amount amount (def: 1)
 	 * @param  {period} period time horizon (def: 1)
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)    
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)    
 	 * @return {number|array}
 	 *
 	 * @example
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 	 * 
-	 * // historical daily VaR at 5% conf level
-	 * ubique.histvar(ubique.cat(1,x,y),0.95);
-	 * // [[0.014, 0.061]]
+	 * // historical daily VaR at 95% conf level
+	 * ubique.histvar(ubique.cat(0,x,y),0.95);
+	 * // [ [ 0.014 ], [ 0.061 ] ]
 	 *
-	 * // historical daily VaR at 1% for 100k GBP asset over 10 days 
-	 * ubique.histvar(ubique.cat(1,x,y),0.99,100000,10);
-	 * // [[4427.19, 19289.9]]
+	 * // historical daily VaR at 99% for 100k GBP asset over 10 days 
+	 * ubique.histvar(ubique.cat(0,x,y),0.99,100000,10);
+	 * // [ [ 4427.188724 ], [ 19289.893727 ] ]
 	 */
 	 $u.histvar = function(x,p,amount,period,dim) {
 	  if (arguments.length === 0) {
 	    throw new Error('not enough input arguments');
 	  }
-	  if (arguments.length === 1) {
-	    p = 0.95;
-	    amount = 1;
-	    period = 1;
-	    dim = 1;
-	  }
-	  if (arguments.length === 2) {
-	    amount = 1;
-	    period = 1;
-	    dim = 1;
-	  }
-	  if (arguments.length === 3) {
-	    period = 1;
-	    dim = 1;
-	  }
-	  if (arguments.length === 4) {
-	    dim = 1;
-	  }
+	  p = p == null ? 0.95 : p;
+	  amount = amount == null ? 1 : amount;
+	  period = period == null ? 1 : period;
+	  dim = dim == null ? 0 : dim;
+
 	  var _histvar = function(a,p,amount,period) {
 	    return -$u.quantile(a,1 - p) * Math.sqrt(period) * amount;
 	  }
 	  if ($u.isnumber(x)) {
 	   return x;
 	 }
-	 if ($u.isarray(x)) {
-	   return _histvar(x,p,amount,period);
-	 } 
-	 return $u.vectorfun(x,function(val){return _histvar(val,p,amount,period);},dim);
+	 return $u.vectorfun(dim,x,_histvar,p,amount,period);
 	}
 	}
 
 /***/ },
-/* 139 */
+/* 141 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7370,7 +7399,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * 
 	 * @param  {array|matrix} x array of values
 	 * @param  {number} flag normalization value 0: population, 1:sample (def: 1)
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {number|array|matrix}
 	 *
 	 * @example
@@ -7379,41 +7408,35 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * 
 	 * ubique.hurst(x);
 	 * // 0.344059
+	 * 
 	 * ubique.hurst(x,1);
 	 * // 0.3669383
-	 * ubique.hurst(ubique.cat(1,x,y));
-	 * // [[0.344059, 0.51531]]
+	 * 
+	 * ubique.hurst(ubique.cat(0,x,y));
+	 * // [ [ 0.344059 ], [ 0.51531 ] ]
 	 */
 	 $u.hurst = function(x,flag,dim) {
 	 	if (arguments.length === 0) {
 	 		throw new Error('not enough input arguments');
 	 	}
-	 	if (arguments.length === 1) {
-	 		flag = 1;
-	 		dim = 1;
-	 	}
-	 	if (arguments.length === 2) {
-	 		dim = 1;
-	 	}
-	 	var _hurst = function(a,flag) {
-	 		var cdev = $u.cumdev(a),
-	 		rs = ($u.max(cdev) - $u.min(cdev)) / $u.std(a,flag);
-	 		return Math.log(rs) / Math.log(a.length);
-	 	}
-	 	if ($u.isnumber(x)) {
-	 		return 0;
-	 	}
-	 	if ($u.isarray(x)) {
-	 		return _hurst(x,flag);
-	 	}
-	 	return $u.vectorfun(x,function(val){return _hurst(val,flag);},dim); 
-
+	  flag = flag == null ? 1 : flag;
+	  dim = dim == null ? 0 : dim;
+	  var _hurst = function(a,flag) {
+	    var cdev = $u.cumdev(a);
+	    var rs = ($u.max(cdev) - $u.min(cdev)) / $u.std(a,flag);
+	    return Math.log(rs) / Math.log(a.length);
+	  }
+	  if ($u.isnumber(x)) {
+	   return 0;
 	 }
+	 return $u.vectorfun(dim,x,_hurst,flag); 
+
+	}
 
 	}
 
 /***/ },
-/* 140 */
+/* 142 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7427,7 +7450,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * 
 	 * @param  {array|matrix} x asset/portfolio returns
 	 * @param  {array} y benchmark returns
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {number|matrix}      
 	 *
 	 * @example
@@ -7437,14 +7460,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * ubique.inforatio(x,y);
 	 * // 0.0936915
-	 * ubique.inforatio(ubique.cat(1,x,y),z);
-	 * // [[0.0263019, -0.0597049]]
+	 * 
+	 * ubique.inforatio(ubique.cat(0,x,y),z);
+	 * // [ [ 0.026302 ], [ -0.059705 ] ]
 	 */
 	 $u.inforatio = function(x,y,dim) {
 	   if (arguments.length < 2) {
 	    throw new Error('not enough input arguments');
 	  }
-	  dim = dim || 1;
+	  dim = dim == null ? 0 : dim;
 	  var _ir = function(a,b) {
 	    return $u.mean($u.minus(a,b)) / $u.std($u.minus(a,b));
 	  }
@@ -7452,7 +7476,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return  _ir(x,y);
 	  } else
 	  if ($u.ismatrix(x) && $u.isarray(y)) {
-	    return $u.vectorfun(x,function(val){return _ir(val,y);},dim);
+	    return $u.vectorfun(dim,x,_ir,y);
 	  } else {
 	   throw new Error('first input must be an array/matrix, the second one an array');
 	 }
@@ -7461,7 +7485,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 141 */
+/* 143 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7484,12 +7508,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * //Simple IRR
 	 * ubique.irr([250000,25000,-10000,-285000]);
 	 * // 0.024712563094781776
+	 * 
 	 * ubique.irr([74.2,37.1,-104.4],[0,1,2],2);
 	 * // -0.07410820570460687
 	 *
 	 * //Modified IRR
 	 * ubique.irr([250000,25000,-10000,-285000],[0,45,69,90],90);
 	 * // 0.07692283872311274
+	 * 
 	 * ubique.irr([74.2,37.1,-104.4],[0,14,31],31);
 	 * // -0.07271456460699813
 	 */
@@ -7547,7 +7573,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 142 */
+/* 144 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7562,26 +7588,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param  {array|matrix} x asset/portfolio values
 	 * @param  {array} y benchmark values
 	 * @param  {number} frisk  free-risk (def: 0)
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {number|matrix}      
 	 *
 	 * @example
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 	 * var z = [0.04,-0.022,0.043,0.028,-0.078,-0.011,0.033,-0.049,0.09,0.087];
-	 *
-	 * ubique.jensenalpha(x,y);
-	 * // 0.0176091
+	 * var cat = ubique.cat;
 	 * 
-	 * ubique.jensenalpha(ubique.cat(1,x,y),z);
-	 * // [[0.0263019, -0.0597049]]
+	 * ubique.jensenalpha(x,y);
+	 * // 0.017609
+	 * 
+	 * ubique.jensenalpha(cat(0,x,y),z);
+	 * // [ [ 0.020772 ], [ 0.006256 ] ]
 	 */
 	 $u.jensenalpha = function(x,y,frisk,dim) {
 	  if (arguments.length < 2) {
 	    throw new Error('not enough input arguments');
 	  }
-	  frisk = frisk || 0;
-	  dim = dim || 1;
+	  frisk = frisk == null ? 0 : frisk;
+	  dim = dim == null ? 0 : dim;
 
 	  var _ja = function(a,b,frisk) {
 	    var beta = $u.linearreg(a,b).beta;
@@ -7591,15 +7618,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return  _ja(x,y,frisk);
 	  } else
 	  if ($u.ismatrix(x) && $u.isarray(y)) {
-	    return $u.vectorfun(x,function(val){return _ja(val,y,frisk);},dim);
+	    return $u.vectorfun(dim,x,_ja,y,frisk);
 	  } else {
-	   throw new Error('first input must be an array/matrix, the second one an array');
-	 }
+	    throw new Error('first input must be an array/matrix, the second one an array');
+	  }
 	}
 	}
 
 /***/ },
-/* 143 */
+/* 145 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7616,7 +7643,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param  {number} frisk free-risk rate (def: 0)
 	 * @param  {number} mar minimum acceptable return (def: 0)
 	 * @param  {number} t frequencey of data. 1: yearly, 4: quarterly, 12: monthly, 52: weekly, 252: daily (def: 252)
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {number|matrix}       
 	 *
 	 * @example
@@ -7627,17 +7654,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * 
 	 * ubique.m2sortino(x,y,0,0,12);
 	 * // 0.103486
-	 * ubique.m2sortino(cat(1,x,y),z,0,0,12);
-	 * // [ [ 0.527018, 0.148094 ] ]
+	 * 
+	 * ubique.m2sortino(cat(0,x,y),z,0,0,12);
+	 * // [ [ 0.527018 ], [ 0.148094 ] ]
 	 */
 	 $u.m2sortino = function(x,y,frisk,mar,t,dim) {
 	  if (arguments.length < 2) {
 	    throw new Error('not enough input arguments');
 	  }
-	  frisk = frisk || 0;
-	  mar = mar || 0;
-	  t = t || 252;
-	  dim = dim || 1;
+	  frisk = frisk == null ? 0 : frisk;
+	  mar = mar == null ? 0 : mar;
+	  t = t == null ? 252 : t;
+	  dim = dim == null ? 0 : dim;
 
 	  var _m2sortino = function(a,b,frisk,mar,t) {
 	    return $u.annreturn(a,t) + $u.sortino(a,frisk,mar) * ($u.downsiderisk(b,mar) * $u.sqrt(t) - $u.downsiderisk(a,mar) * $u.sqrt(t));
@@ -7646,15 +7674,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return  _m2sortino(x,y,frisk,mar,t);
 	  } else
 	  if ($u.ismatrix(x) && $u.isarray(y)) {
-	   return $u.vectorfun(x,function(val){return _m2sortino(val,y,frisk,mar,t);},dim);
+	    return $u.vectorfun(dim,x,_m2sortino,y,frisk,mar,t);
 	  } else {
-	   throw new Error('first input must be an array/matrix, the second one an array');
+	    throw new Error('first input must be an array/matrix, the second one an array');
 	  }
-	 }
+	}
 	}
 
 /***/ },
-/* 144 */
+/* 146 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7672,7 +7700,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param  {number} frisk annual free-risk rate (def: 0)
 	 * @param  {number} t frequencey of data. 1: yearly, 4: quarterly, 12: monthly, 52: weekly, 252: daily (def: 252)
 	 * @param  {string} mode drawdown calculation. 'return','geometric' (def: 'return')
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {number|arrray}       
 	 *
 	 * @example
@@ -7683,17 +7711,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * ubique.martinratio(x,0,12);
 	 * // 44.425456
 	 *
-	 * ubique.martinratio(cat(1,x,y),0,12,'return',1);
-	 * // [ [ 44.425456, 2.438364 ] ]
+	 * ubique.martinratio(cat(0,x,y),0,12);
+	 * // [ [ 44.425456 ], [ 2.438364 ] ]
 	 */
 	 $u.martinratio = function(x,frisk,t,mode,dim) {
 	  if (arguments.length === 0) {
 	    throw new Error('not enough input arguments');
 	  }
-	  var frisk = frisk || 0,
-	  t = t || 252,
-	  mode = mode || 'return',
-	  dim = dim || 1;
+	  frisk = frisk == null ? 0 : frisk;
+	  t = t == null ? 252 : t;
+	  mode = mode == null ? 'return' : mode;
+	  dim = dim == null ? 0 : dim;
 
 	  var _martinratio = function(a,frisk,t,mode) {
 	    var annret = $u.annreturn(a,t),
@@ -7703,16 +7731,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if ($u.isnumber(x)) {
 	    throw new Error('input arguments must be an array or matrix');
 	  }
-	  if ($u.isarray(x)) {
-	    return _martinratio(x,frisk,t,mode);
-	  }
-	  return $u.vectorfun(x,function(val){return _martinratio(val,frisk,t,mode);},dim);
+	  return $u.vectorfun(dim,x,_martinratio,frisk,t,mode);
 	}
 
 	}
 
 /***/ },
-/* 145 */
+/* 147 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7744,8 +7769,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if (arguments.length < 5) {
 	    throw new Error('not enough input arguments');
 	  }
-	  var md = -99999,
-	  w = [];
+	  var md = -99999;
+	  var w = [];
 	  if ($u.isnumber(cf)) {
 	    md = (ev - bv - cf) / (bv + (cf * (1 - cfd / cd)));
 	  } else {
@@ -7773,7 +7798,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 146 */
+/* 148 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7788,30 +7813,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param  {array|matrix} x asset/portfolio values
 	 * @param  {array} y benchmark values
 	 * @param  {number} frisk free-risk rate (def: 0)
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {number|matrix}       
 	 *
 	 * @example
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 	 * var z = [0.04,-0.022,0.043,0.028,-0.078,-0.011,0.033,-0.049,0.09,0.087];
-	 *
+	 * var cat = ubique.cat;
+	 * 
 	 * ubique.modigliani(x,y);
 	 * // 0.0406941
-	 * ubique.modigliani(ubique.cat(1,x,y),z);
-	 * // [[0.0425846, 0.0131853]]
+	 * 
+	 * ubique.modigliani(cat(0,x,y),z);
+	 * // [ [ 0.042585 ], [ 0.013185 ] ]
 	 */
 	 $u.modigliani = function(x,y,frisk,dim) {
 	  if (arguments.length < 2) {
 	    throw new Error('not enough input arguments');
 	  }
-	  if (arguments.length === 2) {
-	    frisk = 0;
-	    dim = 1;
-	  }
-	  if (arguments.length === 3) {
-	    dim = 1;
-	  }
+	  frisk = frisk == null ? 0 : frisk;
+	  dim = dim == null ? 0 : dim;
+
 	  var _m2 = function(a,b,frisk) {
 	    return $u.mean(a) + $u.sharpe(a,frisk) * ($u.std(b) - $u.std(a));
 	  }
@@ -7819,15 +7842,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return  _m2(x,y,frisk);
 	  } else
 	  if ($u.ismatrix(x) && $u.isarray(y)) {
-	   return $u.vectorfun(x,function(val){return _m2(val,y,frisk);},dim);
+	    return $u.vectorfun(dim,x,_m2,y,frisk);
 	  } else {
-	   throw new Error('first input must be an array/matrix, the second one an array');
+	    throw new Error('first input must be an array/matrix, the second one an array');
 	  }
-	 }
+	}
 	}
 
 /***/ },
-/* 147 */
+/* 149 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7852,16 +7875,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * // ex-ante simulated VaR at 95% confidence for t = 1, free risk zero, start capital one
 	 * ubique.montecarlovar(x,0.95,1,0,1,10000);
-	 * // 0.0771
+	 * // 0.073219
 	 * 
 	 * // historical simulated daily VaR at 99% for 100k GBP asset over 10 days 
 	 * ubique.montecarlovar(ubique.std(x),0.99,10,0,100000);
-	 * // 23201.0819
+	 * // 25254.640005
 	 */
-	 $u.montecarlovar = function(x) {
+	 $u.montecarlovar = function(x,p,t,fr,v,iter) {
 	   if (arguments.length === 0) {
 	    return null;
 	  }
+	  p = p == null ? 0.95 : p;
+	  t = t == null ? 1 : t;
+	  fr = fr == null ? 0 : fr;
+	  v = v == null ? 1 : v;
+	  iter = iter == null ? 10000 : iter;
 	  if ($u.isnumber(x)) {
 	    s = $u.clone(x);
 	  } else 
@@ -7870,16 +7898,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  } else {
 	    throw new Error('first argument must be a number or array');
 	  }
-	  var defargs = {1: 0.95, 2: 1, 3: 0, 4: 1, 5: 10000};
-	  for (var j = 1; j < arguments.length; j++) {
-	    defargs[j] = arguments[j];
-	  }
-	  var p = defargs[1],
-	  t = defargs[2],
-	  fr = defargs[3],
-	  v = defargs[4],
-	  iter = defargs[5];
-
 	  var mcvar = [];
 	  for (var i = 0;i < iter;i++) {
 	    mcvar[i] = Math.exp((fr - 0.5 * Math.pow(s,2)) + s * $u.norminv(Math.random(),0,1)) - 1;
@@ -7890,7 +7908,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 148 */
+/* 150 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7904,7 +7922,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * 
 	 * @param  {array|matrix} x asset/portfolio returns
 	 * @param  {number} mar minimum acceptable return (def: 0)
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {number|array}
 	 *
 	 * @example
@@ -7912,37 +7930,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 	 *
 	 * ubique.omegaratio(x);
-	 * // 8.7826
-	 * ubique.omegaratio(ubique.cat(1,x,y));
-	 * // [ [ 8.7826, 1.7283 ] ]
+	 * // 8.782609
+	 * 
+	 * ubique.omegaratio(ubique.cat(0,x,y));
+	 * // [ [ 8.782609 ], [ 1.728324 ] ]
 	 */
 	 $u.omegaratio = function(x,mar,dim) {
 	  if (arguments.length === 0) {
 	    throw new Error('not enough input arguments');
 	  }
-	  if (arguments.length === 1) {
-	    mar = 0;
-	    dim = 1;
-	  }
-	  if (arguments.length === 2) {
-	    dim = 1;
-	  }
-	  var or = function(a,mar) {
+	  mar = mar == null ? 0 : dim;
+	  dim = dim == null ? 0 : dim;
+	  var _or = function(a,mar) {
 	    return $u.upsidepot(a,mar) / $u.downsidepot(a,mar);
 	  }
 	  if ($u.isnumber(x)) {
-	    return 0;
+	    return NaN;
 	  }
-	  if ($u.isarray(x)) {
-	    return or(x,mar);
-	  } 
-	  return $u.vectorfun(x,function(val){return or(val,mar);},dim);
+	  return $u.vectorfun(dim,x,_or,mar);
 	}
 	}
 
 
 /***/ },
-/* 149 */
+/* 151 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7956,7 +7967,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *  
 	 * @param  {array|matrix} x asset/portfolio returns
 	 * @param  {string} mode drawdown calculation. 'return','geometric' (def: 'return')
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {number|array} 
 	 *
 	 * @example
@@ -7967,15 +7978,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * ubique.painindex(x);
 	 * // 0.0023
 	 * 
-	 * ubique.painindex(cat(1,x,y));
-	 * // [ [ 0.0023, 0.042955 ] ]
+	 * ubique.painindex(cat(0,x,y));
+	 * // [ [ 0.0023 ], [ 0.042955 ] ]
 	 */
 	 $u.painindex = function(x,mode,dim) {
 	  if (arguments.length === 0) {
 	    throw new Error('not enough input arguments');
 	  }
-	  mode = mode || 'return';
-	  dim = dim || 1;
+	  mode = mode == null ? 'return' : mode;
+	  dim = dim == null ? 0 : dim;
 
 	  var _painindex = function(a,mode) {
 	    dd = $u.drawdown(a,mode).dd,
@@ -7983,18 +7994,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return $u.sum(dd) / n;
 	  }
 	  if ($u.isnumber(x)) {
-	    return 0;
+	    return NaN;
 	  }
-	  if ($u.isarray(x)) {
-	    return _painindex(x,mode);
-	  }
-	  return $u.vectorfun(x,function(val){return _painindex(val,mode);},dim);
+	  return $u.vectorfun(dim,x,_painindex,mode);
 	}
 
 	}
 
 /***/ },
-/* 150 */
+/* 152 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8012,7 +8020,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param  {number} frisk annual free-risk rate (def: 0)
 	 * @param  {number} t frequencey of data. 1: yearly, 4: quarterly, 12: monthly, 52: weekly, 252: daily (def: 252)
 	 * @param  {string} mode drawdown calculation. 'return','geometric' (def: 'return')
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {number|arrray}       
 	 *
 	 * @example
@@ -8021,38 +8029,35 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var cat = ubique.cat;
 	 *
 	 * ubique.painratio(x,0,12);
-	 * // 101.658557
+	 * // 101.044955
 	 *
-	 * ubique.painratio(cat(1,x,y),0,12,'return',1);
-	 * // [ [ 101.658557, 3.377716 ] ]
+	 * ubique.painratio(cat(0,x,y),0,12);
+	 * // [ [ 101.044955 ], [ 3.235687 ] ]
 	 */
 	 $u.painratio = function(x,frisk,t,mode,dim) {
 	  if (arguments.length === 0) {
 	    throw new Error('not enough input arguments');
 	  }
-	  var frisk = frisk || 0,
-	  t = t || 252,
-	  mode = mode || 'return',
-	  dim = dim || 1;
-
+	  frisk = frisk == null ? 0 : frisk;
+	  t = t == null ? 252 : t;
+	  mode = mode == null ? 'geometric' : mode;
+	  dim = dim == null ? 0 : dim;
+	 
 	  var _painratio = function(a,frisk,t,mode) {
-	    var annret = $u.annreturn(a,t),
-	    dd = $u.sqrt($u.sum($u.power($u.cdrawdown(a),2)));
+	    var annret = $u.annreturn(a,t);
+	    var dd = $u.sqrt($u.sum($u.power($u.cdrawdown(a),2)));
 	    return (annret - frisk) /$u.painindex(a,mode);
 	  }
 	  if ($u.isnumber(x)) {
 	    throw new Error('input arguments must be an array or matrix');
 	  }
-	  if ($u.isarray(x)) {
-	    return _painratio(x,frisk,t,mode);
-	  }
-	  return $u.vectorfun(x,function(val){return _painratio(val,frisk,t,mode);},dim);
+	  return $u.vectorfun(dim,x,_painratio,frisk,t,mode);
 	}
 
 	}
 
 /***/ },
-/* 151 */
+/* 153 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8076,56 +8081,45 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 	 *
-	 * // parametric daily Var at 5% conf level
+	 * // parametric daily Var at 95% conf level
 	 * ubique.paramcondvar(ubique.mean(x),ubique.std(x));
-	 * // 0.0300178
+	 * // 0.030018
 	 *
-	 * //parametric daily VaR at 1% for 100k GBP asset over 10 days (two assets)
-	 * ubique.paramcondvar(ubique.mean(ubique.cat(1,x,y)),ubique.std(ubique.cat(1,x,y)),0.99,100000,10);
-	 * // [19579, 44511.1]
+	 * //parametric daily VaR at 99% for 100k GBP asset over 10 days (two assets)
+	 * ubique.paramcondvar(ubique.mean(ubique.cat(0,x,y)),ubique.std(ubique.cat(0,x,y)),0.99,100000,10);
+	 * // [ [ 19578.980844 ], [ 44511.107219 ] ]
 	 */
 	 $u.paramcondvar = function(mu,sigma,p,amount,period) {
 	  if (arguments.length < 2) {
 	    throw new Error('not enough input arguments');
 	  }
-	  if (arguments.length === 2) {
-	    p = 0.95;
-	    amount = 1;
-	    period = 1;
-	  }
-	  if (arguments.length === 3) {
-	    amount = 1;
-	    period = 1;
-	  }
-	  if (arguments.length === 4) {
-	    period = 1;
-	  }
+	  p = p == null ? 0.95 : p;
+	  amount = amount == null ? 1 : amount;
+	  period = period == null ? 1 : period;
+	  
 	  var _pcvar = function(_mu,_sigma,p,amount,period) {
 	    return _sigma * $u.normpdf($u.norminv(1 - p))/(1 - p) * amount * Math.sqrt(period) - _mu;
 	  }
-	  if ($u.isvector(mu) && $u.isvector(sigma)) {
-	    mu = $u.flatten(mu);
-	    sigma = $u.flatten(sigma);
-	  }
-
-	  if ($u.isnumber(mu) && $u.isnumber(sigma)) {
+	  if ($u.isnumber(mu)) {
 	    return _pcvar(mu,sigma,p,amount,period);
-	  } else 
-	  if ($u.isarray(mu) && $u.isarray(sigma)) {
-	    var out = new Array(mu.length);
-	    for (var i = 0;i < mu.length; i++) {
-	      out[i] = _pcvar(mu[i],sigma[i],p,amount,period);
-	    }
-	    return out;
-	  } else {
-	    throw new Error('mu and sigma must be both numbers or arrays');
 	  }
-	 }
+	  var temp = $u.flatten(mu);
+	  var out = temp.map(function(el,idx) {
+	    return _pcvar(mu[idx],sigma[idx],p,amount,period);
+	  });
+	  if ($u.ismatrix(mu) && $u.isrow(mu)) {
+	    return [out];
+	  }
+	  if ($u.ismatrix(mu) && $u.iscolumn(mu)) {
+	    return $u.transpose(out);
+	  }
+	  return out;
+	}
 	}
 
 
 /***/ },
-/* 152 */
+/* 154 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8138,8 +8132,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @description Parametric Value-At-Risk. Assets or portfolio returns are normally distributed.
 	 * It manages numbers, arrays, row vectors [[a,b,...,n]] and column vectors [[a],[b],...,[n]]
 	 * 
-	 * @param  {number|array|matrix} mu mean value (def: 0)
-	 * @param  {number|array|matrix} sigma standard deviation (def: 1)
+	 * @param  {number|array} mu mean value (def: 0)
+	 * @param  {number|array} sigma standard deviation (def: 1)
 	 * @param  {number} p VaR confidende level in range [0,1] (def: 0.95)
 	 * @param  {number} amount portfolio/asset amount (def: 1)
 	 * @param  {number} period time horizon (def: 1)
@@ -8156,73 +8150,49 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * // VaR with arrays
 	 * ubique.paramvar([0,0,0],[1,2,3]);
 	 * [ 1.644854, 3.289707, 4.934561 ]
-	 *
-	 * // VaR with vectors
-	 * ubique.paramvar([[0,0]],[[1,2]]);
-	 * [ [ 1.644854, 3.289707 ] ]
-	 * ubique.paramvar([[0],[0]],[[1],[2]]);
-	 * [ [ 1.644854 ], [ 3.289707 ] ]
 	 * 
-	 * // parametric VaR at 5% conf level
+	 * // parametric VaR at 95% conf level
 	 * ubique.paramvar(ubique.mean(x),ubique.std(x));
 	 * // 0.020311
-	 * ubique.paramvar(ubique.mean(y),ubique.std(y));
-	 * // 0.074269
-	 * ubique.paramvar(ubique.mean(ubique.cat(1,x,y)),ubique.std(ubique.cat(1,x,y)));
-	 * // [ [ 0.020311, 0.074269 ] ]
+	 * 
+	 * ubique.paramvar(ubique.mean(ubique.cat(0,x,y)),ubique.std(ubique.cat(0,x,y)));
+	 * // [ [ 0.020311 ], [ 0.074269 ] ]
 	 *
-	 * //parametric VaR at 1% for 100k GBP asset over 10 days (two assets)
-	 * ubique.paramvar(ubique.mean(ubique.cat(1,x,y)),ubique.std(ubique.cat(1,x,y)),0.99,100000,10);
-	 * // [ [ 11429.165523, 34867.319072 ] ]
+	 * //parametric VaR at 99% for 100k GBP asset over 10 days (two assets)
+	 * ubique.paramvar(ubique.mean(ubique.cat(0,x,y)),ubique.std(ubique.cat(0,x,y)),0.99,100000,10);
+	 * // [ [ 11429.165523 ], [ 34867.319072 ] ]
 	 */
 	 $u.paramvar = function(mu,sigma,p,amount,period) {
 	 	if (arguments.length < 2) {
 	 		throw new Error('not enough input arguments');
 	 	}
-	 	if (arguments.length === 2) {
-	 		p = 0.95;
-	 		amount = 1;
-	 		period = 1;
-	 	}
-	 	if (arguments.length === 3) {
-	 		amount = 1;
-	 		period = 1;
-	 	}
-	 	if (arguments.length === 4) {
-	 		period = 1;
-	 	}
-	 	var _pvar = function(_mu,_sigma,p,amount,period) {
-	 		return (-$u.norminv(1 - p) * _sigma - _mu) * Math.sqrt(period) * amount; 
-	 	}
-	 	if ($u.isnumber(mu) && $u.isnumber(sigma)) {
-	 		return _pvar(mu,sigma,p,amount,period);
-	 	} else 
-	 	if ($u.isarray(mu) && $u.isarray(sigma)) {
-	 		return $u.arrayfun(mu,function(el,idx){ return _pvar(el,sigma[idx],p,amount,period);});
-	 	} else
-	  if ($u.ismatrix(mu) && $u.ismatrix(sigma)) {
-	    var out = $u.array($u.max($u.size(mu))),
-	    _mu = $u.flatten(mu),
-	    _sigma = $u.flatten(sigma);
-	    out = $u.arrayfun(out,function(el,idx){return _pvar(_mu[idx],_sigma[idx],p,amount,period)});
-	    if ($u.isrow(mu)) {
-	      return [out];
-	    } else
-	    if ($u.iscolumn(mu)) {
-	      return $u.tomat(out);
-	    } else {
-	      throw new Error('input must be a row or column vector');
-	    }
+	 	p = p == null ? 0.95 : p;
+	  amount = amount == null ? 1 : amount;
+	  period = period == null ? 1 : period;
+
+	  var _pvar = function(_mu,_sigma,p,amount,period) {
+	    return (-$u.norminv(1 - p) * _sigma - _mu) * Math.sqrt(period) * amount; 
 	  }
+	  if ($u.isnumber(mu)) {
+	    return _pvar(mu,sigma,p,amount,period);
+	  }
+	  var temp = $u.flatten(mu);
+	  var out = temp.map(function(el,idx) {
+	    return _pvar(mu[idx],sigma[idx],p,amount,period);
+	  });
+	  if ($u.ismatrix(mu) && $u.isrow(mu)) {
+	    return [out];
+	  }
+	  if ($u.ismatrix(mu) && $u.iscolumn(mu)) {
+	    return $u.transpose(out);
+	  }
+	  return out;
 	}
-
 	}
-
-
 
 
 /***/ },
-/* 153 */
+/* 155 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8235,7 +8205,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @description Percentage of positive values in array or matrix
 	 * 
 	 * @param  {array|matrix} x array of elements
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {number|array}
 	 *
 	 * @example
@@ -8244,18 +8214,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * ubique.percpos(x);
 	 * // 0.8
-	 * ubique.percpos(ubique.cat(1,x,y));
-	 * // [[0.8, 0.5]]
-	 * ubique.percpos(ubique.cat(1,x,y),0);
-	 * // [0.5, 1, 1, 0, 0.5, 1, 0.5, 0.5, 0.5, 1]
+	 * 
+	 * ubique.percpos(ubique.cat(0,x,y));
+	 * // [ [ 0.8 ], [ 0.5 ] ]
+	 * 
+	 * ubique.percpos(ubique.cat(0,x,y),1);
+	 * // [ [ 0.5, 1, 1, 0, 0.5, 1, 0.5, 0.5, 0.5, 1 ] ]
 	 */
 	 $u.percpos = function(x,dim) {
 	  if (arguments.length === 0) {
 	    throw new Error('not enough input arguments');
 	  }
-	  if (arguments.length === 1) {
-	    dim = 1;
-	  }
+	  dim = dim == null ? 0 : dim;
+
 	  var _percpos = function(a) {
 	    var count = 0;
 	    for (var i = 0;i < a.length;i++) {
@@ -8266,17 +8237,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return count / a.length;
 	  }
 	  if ($u.isnumber(x)) {
-	    return 1;
+	    return NaN;
 	  }
-	  if ($u.isarray(x)) {
-	    return  _percpos(x);
-	  }
-	  return $u.vectorfun(x,function(val){return _percpos(val);},dim);
+	  return $u.vectorfun(dim,x,_percpos);
 	}
 	}
 
 /***/ },
-/* 154 */
+/* 156 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8291,36 +8259,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param  {array|matrix} x array of elements
 	 * @param  {string} mode method to compute returns. 'simple','continuous' (def: simple)
 	 * @param  {number} sval start value (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {array|matrix}     
 	 *
 	 * @example
-	 * var d = [0.5,-3,2.3];
-	 * var e = [[9, 5], [6, 1]];
-	 *
-	 * ubique.ret2tick(0.05);
-	 * // [1, 1.05]
-	 * ubique.ret2tick(d,'simple',100);
-	 * // [100, 150, -300, -990]
-	 * ubique.ret2tick(e,'simple',100,0);
-	 * // [[100, 1000, 6000], [100, 700, 1400]]
+	 * ubique.ret2tick([0.5,-3,2.3],'simple',100);
+	 * // [ 100, 150, -300, -990 ]
+	 * 
+	 * ubique.ret2tick([[9, 5], [6, 1]],'simple',100);
+	 * // [ [ 100, 1000, 6000 ], [ 100, 700, 1400 ] ]
 	 */
 	 $u.ret2tick = function(x,mode,sval,dim) {
 	   if (arguments.length === 0) {
 	    throw new Error('not enough input arguments');
 	  }
-	  if (arguments.length === 1) {
-	    mode = 'simple';
-	    sval = 1;
-	    dim = 1;
-	  }
-	  if (arguments.length === 2) {
-	    sval = 1;
-	    dim = 1;
-	  }
-	  if (arguments.length === 3) {
-	    dim = 1;
-	  }
-
+	  mode = mode == null ? 'simple' : mode;
+	  sval = sval == null ? 1 : sval;
+	  dim = dim == null ? 0 : dim;
+	  
 	  var _ret2tick = function(a,mode,sval) {
 	    if ($u.isnumber(a)) {
 	      a = [a];
@@ -8341,18 +8297,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    return r;
 	  }
-
-	  if ($u.isnumber(x) || $u.isarray(x)) {
-	    return _ret2tick(x,mode,sval);
-	  }
-	  return $u.vectorfun(x,function(val){return _ret2tick(val,mode,sval);},dim);
+	  return $u.vectorfun(dim,x,_ret2tick,mode,sval);
 	  
 	}
 
 	}
 
 /***/ },
-/* 155 */
+/* 157 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8366,37 +8318,36 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * an array of numbers.
 	 * 
 	 * @param  {array|matrix} x array or matrix of returns or values
-	 * @param  {string} type type of values, 'ret' for returns, 'cum' for cumulative (def: 'ret')
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @param  {string} mode mode of values, 'ret' for returns, 'cum' for cumulative (def: 'ret')
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {number|array}   
 	 *
 	 * @example
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
-	 * var z = [100,101,99,98,97,102,103,104];
 	 * var cat = ubique.cat;
 	 * 
 	 * ubique.ror(x);
 	 * // 0.187793
 	 * 
-	 * ubique.ror(z,'cum');
+	 * ubique.ror([100,101,99,98,97,102,103,104],'cum');
 	 * // 0.04
 	 * 
-	 * ubique.ror(cat(1,x,y),'ret');
-	 * // [ [ 0.187793, 0.125149 ] ]
+	 * ubique.ror(cat(0,x,y),'ret');
+	 * // [ [ 0.187793 ], [ 0.125149 ] ]
 	 */
-	 $u.ror = function(x,type,dim) {
+	 $u.ror = function(x,mode,dim) {
 	  if (arguments.length === 0) {
 	    throw new Error('not enough input arguments');
 	  }
-	  x = x || null;
-	  type = type || 'ret';
-	  dim = dim || 1;
-	  var _ror = function(a,type) {
-	    if (type === 'ret') {
+	  mode = mode == null ? 'ret' : mode;
+	  dim = dim == null ? 0 : dim;
+
+	  var _ror = function(a,mode) {
+	    if (mode === 'ret') {
 	      var eq = $u.cumprod($u.plus(1,a));
 	    } else
-	    if (type === 'cum') {
+	    if (mode === 'cum') {
 	      var eq = $u.clone(a);
 	    } else {
 	      throw  new Error('unknown value');
@@ -8406,15 +8357,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if ($u.isnumber(x)) {
 	    return NaN;
 	  }
-	  if ($u.isarray(x)) {
-	    return  _ror(x,type);
-	  }
-	  return $u.vectorfun(x,function(val){return _ror(val,type);},dim);
+	  return $u.vectorfun(dim,x,_ror,mode);
 	}
 	}
 
 /***/ },
-/* 156 */
+/* 158 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8429,7 +8377,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * 
 	 * @param  {array|matrix} x array of value
 	 * @param  {number} frisk annual free-risk rate (def: 0)
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {number|arrray}       
 	 *
 	 * @example
@@ -8438,36 +8386,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * ubique.sharpe(x,0.02/12);
 	 * // 0.698794
-	 * ubique.sharpe(ubique.cat(1,x,y));
-	 * // [[0.770539, 0.23858]]
+	 * 
+	 * ubique.sharpe(ubique.cat(0,x,y));
+	 * // [ [ 0.770539 ], [ 0.23858 ] ]
 	 */
 	 $u.sharpe = function(x,frisk,dim) {
 	 	if (arguments.length === 0) {
 	 		throw new Error('not enough input arguments');
 	 	}
-	 	if (arguments.length === 1) {
-	 		frisk = 0;
-	 		dim = 1;
-	 	}
-	 	if (arguments.length === 2) {
-	 		dim = 1;
-	 	}
+	  frisk = frisk == null ? 0 : frisk;
+	  dim = dim == null ? 0 : dim;
+	 
 	 	var _sharpe = function(a,frisk) {
 	 		return ($u.mean(a) - frisk) / $u.std(a);
 	 	}
 	 	if ($u.isnumber(x)) {
-	 		throw new Error('input must be an array or matrix');
+	 		return NaN;
 	 	}
-	 	if ($u.isarray(x)) {
-	 		return  _sharpe(x,frisk);
-	 	}
-	 	return $u.vectorfun(x,function(val){return _sharpe(val,frisk);},dim);
+	 	return $u.vectorfun(dim,x,_sharpe,frisk);
 	 }
 
 	}
 
 /***/ },
-/* 157 */
+/* 159 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8490,35 +8432,32 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 	 *
 	 * ubique.sortino(x,0.02/12);
-	 * // 3.0844
+	 * // 3.08438
 	 * 
-	 * ubique.sortino(ubique.cat(1,x,y),0.01/12,0.5);
-	 * // [ [ 0.0354, 0.024 ] ]
+	 * ubique.sortino(ubique.cat(0,x,y),0.01/12,0.5);
+	 * // [ [ 0.035364 ], [ 0.024015 ] ]
 	 */
 	 $u.sortino = function(x,frisk,mar,dim) {
 	  if (arguments.length === 0) {
 	    throw new Error('not enough input arguments');
 	  }
-	  frisk = frisk || 0;
-	  mar = mar || 0;
-	  dim = dim || 1;
+	  frisk = frisk == null ? 0 : frisk;
+	  mar = mar == null ? 0 : mar;
+	  dim = dim == null ? 0 : dim;
 	  
-	  var sr = function(a,frisk,mar) {
+	  var _sr = function(a,frisk,mar) {
 	    return ($u.mean(a) - frisk) / $u.downsiderisk(a,mar);
 	  }
 	  if ($u.isnumber(x)) {
-	    return 0;
+	    return NaN;
 	  }
-	  if ($u.isarray(x)) {
-	    return sr(x,frisk,mar);
-	  } 
-	  return $u.vectorfun(x,function(val){return sr(val,frisk,mar);},dim);
+	  return $u.vectorfun(dim,x,_sr,frisk,mar);
 	}
 	}
 
 
 /***/ },
-/* 158 */
+/* 160 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8534,8 +8473,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param  {array|matrix} x asset/portfolio returns
 	 * @param  {number} frisk annual free-risk rate (def: 0)
 	 * @param  {number} t frequencey of data. 1: yearly, 4: quarterly, 12: monthly, 52: weekly, 252: daily (def: 252)
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
-	 * @return {number|arrray}       
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
+	 * @return {number|array}       
 	 *
 	 * @example
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
@@ -8545,35 +8484,32 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * ubique.sterlingratio(x,0,12);
 	 * // 16.701049
 	 *
-	 * ubique.sterlingratio(cat(1,x,y),0,12);
-	 * // [ [ 16.701049, 1.515412 ] ]
+	 * ubique.sterlingratio(cat(0,x,y),0,12);
+	 * // [ [ 16.701049 ], [ 1.515412 ] ]
 	 */
 	 $u.sterlingratio = function(x,frisk,t,dim) {
 	  if (arguments.length === 0) {
 	    throw new Error('not enough input arguments');
 	  }
-	  var frisk = frisk || 0,
-	  t = t || 252,
-	  dim = dim || 1;
+	  frisk = frisk == null ? 0 : frisk;
+	  t = t == null ? 252 : t;
+	  dim = dim == null ? 0 : dim;
 
 	  var _sterlingratio = function(a,frisk,t) {
-	    var annret = $u.annreturn(a,t),
-	    ldd = $u.max($u.cdrawdown(a));
+	    var annret = $u.annreturn(a,t);
+	    var ldd = $u.max($u.cdrawdown(a));
 	    return (annret - frisk) / ldd;
 	  }
 	  if ($u.isnumber(x)) {
-	    throw new Error('input arguments must be an array or matrix');
+	    return NaN;
 	  }
-	  if ($u.isarray(x)) {
-	    return  _sterlingratio(x,frisk,t);
-	  }
-	  return $u.vectorfun(x,function(val){return _sterlingratio(val,frisk,t);},dim);
+	  return $u.vectorfun(dim,x,_sterlingratio,frisk,t);
 	}
 
 	}
 
 /***/ },
-/* 159 */
+/* 161 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8587,33 +8523,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * 
 	 * @param  {array|matrix} x array of elements
 	 * @param  {string} mode method to compute returns. 'simple','continuous' (def: simple)
-	 * @param  {number} sval start value (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {array|matrix}     
 	 *
 	 * @example
-	 * var d = [0.5,-3,2.3];
-	 * var e = [[9, 5], [6, 1]];
-	 *
-	 * ubique.tick2ret(d);
-	 * // [-7, -1.76667]
-	 * ubique.tick2ret(e);
-	 * // [[-0.333333, -0.8]]
+	 * ubique.tick2ret([0.5,-3,2.3]);
+	 * // [ -7, -1.766667 ]
+	 * 
+	 * ubique.tick2ret([[9, 5], [6, 1]]);
+	 * // [ [ -0.444444 ], [ -0.833333 ] ]
 	 */
 	 $u.tick2ret = function(x,mode,dim) {
 	  if (arguments.length === 0) {
 	    throw new Error('not enough input arguments');
 	  }
-	  if (arguments.length === 1) {
-	    mode = 'simple';
-	    dim = 1;
-	  }
-	  if (arguments.length === 2) {
-	    dim = 1;
-	  }
+	  mode = mode == null ? 'simple' : mode;
+	  dim = dim == null ? 0 : dim;
+	  
 	  if ($u.numel(x) < 2) {
-	    throw new Error('insert minimum two elements');
+	    throw new Error('insert at least two values');
 	  }
-	  var _tick2ret = function(a,mode,sval) {
+	  var _tick2ret = function(a,mode) {
 	    var r = [];
 	    if (mode === 'simple') {
 	      for (var i = 1;i < a.length;i++) {
@@ -8629,10 +8559,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    return r;
 	  }
-	  if ($u.isarray(x)) {
-	    return _tick2ret(x,mode);
-	  }
-	  return $u.vectorfun(x,function(val){return _tick2ret(val,mode);},dim);
+	  return $u.vectorfun(dim,x,_tick2ret,mode);
 	  
 	}
 
@@ -8640,7 +8567,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 160 */
+/* 162 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8659,8 +8586,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * @example
 	 * ubique.tomonthly(ubique.datenum(['15-01-18','15-02-28','15-03-05','15-03-24','15-04-27'],'YY-MM-DD'),[100,99,102,103,98]);
-	 * // [ [ 1421535600, 1425078000, 1427151600, 1430085600 ],
-	 * // [ 100, 99, 103, 98 ] ]
+	 * // [ [ 1421539200, 1425081600, 1427155200, 1430092800 ], [ 100, 99, 103, 98 ] ]
 	 */
 	 $u.tomonthly = function(nd,nv) {
 	  if (arguments.length < 2) {
@@ -8670,8 +8596,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var md = $u.month(nd);
 	  var df = $u.diff(md);
 	  df[0] = 1;
-	  df = $u.cat(0,df,1);
-
+	  df = $u.cat(1,df,1)[0];
 	  var idx = $u.find(df.map(function(el){return el !== 0;}));
 	  if ($u.isarray(nv)) {
 	    var newv = $u.subset(nv,idx);
@@ -8685,7 +8610,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 161 */
+/* 163 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8705,8 +8630,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * @example
 	 * ubique.toweekly(ubique.datenum(['15-01-15','15-01-23','15-01-30','15-02-04'],'YY-MM-DD'),[100,99,102,103,98]);
-	 * // [ [ 1421276400, 1421967600, 1422572400, 1423004400 ],
-	 * // [ 100, 99, 102, 103 ] ]
+	 * // [ [ 1421280000, 1421971200, 1422576000, 1423008000 ],[ 100, 99, 102, 103 ] ]
 	 */
 	 $u.toweekly = function(nd,nv) {
 	  if (arguments.length < 2) {
@@ -8717,10 +8641,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  // basic mode: all data, exact on Friday
 	  var idx = $u.find(wd.map(function(a) {return a === 5;}));
 	  if (wd[0] !== 5) {
-	    idx = $u.cat(0,0,idx);
+	    idx = $u.cat(1,0,idx);
 	  }
 	  if (wd[wd.length - 1] !== 5) {
-	    idx = $u.cat(0,idx,nd.length - 1);
+	    idx = $u.cat(1,idx,nd.length - 1)[0];
 	  }
 	  if ($u.isarray(nv)) {
 	    var newv = $u.subset(nv,idx);
@@ -8734,7 +8658,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 162 */
+/* 164 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8746,27 +8670,40 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @summary Tracking Error (ex-post)
 	 * @description  Ex-post tracking error
 	 * 
-	 * @param  {array} x array of X values
+	 * @param  {array|matrix} x array or matrix of X values
 	 * @param  {array} y array of Y values
-	 * @return {number}   
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
+	 * @return {number|array|matrix}   
 	 *
 	 * @example
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
+	 * var z = [0.04,-0.022,0.043,0.028,-0.078,-0.011,0.033,-0.049,0.09,0.087];
+	 * var cat = ubique.cat;
+	 * 
+	 * ubique.trackerr(x,z);
+	 * // 0.068436
 	 *
-	 * ubique.trackerr(x,y);
-	 * // 0.0566
+	 * ubique.trackerr(cat(0,x,y),z);
+	 * // [ [ 0.068436 ], [ 0.058622 ] ]
 	 */
-	 $u.trackerr = function(x,y) {
+	 $u.trackerr = function(x,y,dim) {
 	  if (arguments.length < 2) {
 	    throw new Error('not enough input arguments');
 	  }
-	  return $u.std($u.minus(x,y));
+	  dim = dim == null ? 0 : dim;
+	  var _te = function(a,b) {
+	    return $u.std($u.minus(a,b));
+	  }
+	  if ($u.isnumber(x)) {
+	    return NaN;
+	  }
+	  return $u.vectorfun(dim,x,_te,y);
 	}
 	}
 
 /***/ },
-/* 163 */
+/* 165 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8782,27 +8719,41 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param  {array} x array of X values
 	 * @param  {array} y array of Y values
 	 * @param  {number} frisk  free-risk rate (def: 0)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {number}       
 	 *
 	 * @example
-	 * var x = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
+	 * var z = [0.04,-0.022,0.043,0.028,-0.078,-0.011,0.033,-0.049,0.09,0.087];
+	 * var cat = ubique.cat;
 	 * 
-	 * ubique.treynor(x,y,0.01/12);
-	 * // 0.7392
+	 * ubique.treynor(x,z,0.01/12);
+	 * // -0.095687
+	 *
+	 * ubique.treynor(cat(0,x,y),z,0.01/12);
+	 * // [ [ -0.095687 ], [ 0.029863 ] ]
 	 */
-	 $u.treynor = function(x,y,frisk) {
+	 $u.treynor = function(x,y,frisk,dim) {
 	  if (arguments.length < 2) {
 	    throw new Error('not enough input arguments');
 	  }
-	  frisk = frisk || 0;
-	  var beta = $u.linearreg(x,y).beta;
-	  return ($u.mean(x) - frisk) / beta;
+	  frisk = frisk == null ? 0 : frisk;
+	  dim = dim == null ? 0 : dim;
+	  var _treynor = function(a,b,frisk) {
+	    var beta = $u.linearreg(a,b).beta;
+	    return ($u.mean(a) - frisk) / beta;
+	  }
+	  if ($u.isnumber(x)) {
+	    return NaN;
+	  }
+	  return $u.vectorfun(dim,x,_treynor,y,frisk);
+
 	}
 	}
 
 /***/ },
-/* 164 */
+/* 166 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8844,7 +8795,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 165 */
+/* 167 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8859,42 +8810,40 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *  
 	 * @param  {array|matrix} x asset/portfolio returns
 	 * @param  {string} mode drawdown calculation. 'return','geometric' (def: 'return')
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {number|array} 
 	 *
 	 * @example
 	 * var x = [0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
-	 * 
+	 * var xt = [[0.003,0.026],[0.015,-0.009],[0.014,0.024],[0.015,0.066],[-0.014,0.039]];
 	 * ubique.ulcerindex(x);
 	 * // 0.005263
-	 * ubique.ulcerindex([[0.003,0.026],[0.015,-0.009],[0.014,0.024],[0.015,0.066],[-0.014,0.039]],'return');
+	 * 
+	 * ubique.ulcerindex(xt,'return',1);
 	 * // [ [ 0.006261, 0.004025 ] ]
 	 */
 	 $u.ulcerindex = function(x,mode,dim) {
 	  if (arguments.length === 0) {
 	    throw new Error('not enough input arguments');
 	  }
-	  mode = mode || 'return';
-	  dim = dim || 1;
+	  mode = mode == null ? 'return' : mode;
+	  dim = dim == null ? 0 : dim;
 
-	  var uidx = function(a,mode) {
-	    dd = $u.drawdown(a,mode).dd,
-	    n = a.length;
+	  var _uidx = function(a,mode) {
+	    var dd = $u.drawdown(a,mode).dd;
+	    var n = a.length;
 	    return $u.sqrt($u.sum($u.power(dd,2)) / n);
 	  }
 	  if ($u.isnumber(x)) {
-	    return 0;
+	    return NaN;
 	  }
-	  if ($u.isarray(x)) {
-	    return uidx(x,mode);
-	  }
-	  return $u.vectorfun(x,function(val){return uidx(val,mode);},dim);
+	  return $u.vectorfun(dim,x,_uidx,mode);
 	}
 
 	}
 
 /***/ },
-/* 166 */
+/* 168 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8917,40 +8866,33 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * ubique.upsidepot(x,0.1/100);
 	 * // 0.0194
-	 * ubique.upsidepot(ubique.cat(1,x,y));
-	 * // [[0.0202, 0.0299]]
+	 * 
+	 * ubique.upsidepot(ubique.cat(0,x,y));
+	 * // [ [ 0.0202 ], [ 0.0299 ] ]
 	 */
 	 $u.upsidepot = function(x,mar,dim) {
 	  if (arguments.length === 0) {
 	    throw new Error('not enough input arguments');
 	  }
-	  if (arguments.length === 1) {
-	   mar = 0;
-	   dim = 1;
-	 }
-	 if (arguments.length === 2) {
-	  dim = 1;
-	}
+	  mar = mar == null ? 0 : mar;
+	  dim = dim == null ? 0 : dim;
 
-	var _usp = function(a,mar) {
-	 var z = 0;
-	 for (var i = 0;i < a.length;i++) {
-	  z += Math.max(a[i] - mar,0) / a.length;
-	}
-	return z;
-	}
-	if ($u.isnumber(x)) {
-	 return x;
-	}
-	if ($u.isarray(x)) {
-	 return _usp(x,mar);
-	} 
-	return $u.vectorfun(x,function(val){return _usp(val,mar);},dim);
+	  var _usp = function(a,mar) {
+	    var z = 0;
+	    for (var i = 0;i < a.length;i++) {
+	      z += Math.max(a[i] - mar,0) / a.length;
+	    }
+	    return z;
+	  }
+	  if ($u.isnumber(x)) {
+	    return NaN;
+	  }
+	  return $u.vectorfun(dim,x,_usp,mar);
 	}
 	}
 
 /***/ },
-/* 167 */
+/* 169 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -9037,7 +8979,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 168 */
+/* 170 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -9086,7 +9028,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 169 */
+/* 171 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -9109,9 +9051,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var l = [[1,1,-1],[1,-2,3],[2,3,1]];
 	 *
 	 * ubique.corrcoef(l);
-	 * // [[1, 0.802955, 0], [0.802955, 1, -0.59604], [0, -0.59604, 1]]
+	 * // [ [ 1, 0.802955, 0 ],[ 0.802955, 1, -0.59604 ],[ 0, -0.59604, 1 ] ]
+	 * 
 	 * ubique.corrcoef(c,d);
-	 * // [[1, -0.931151], [-0.931151, 1]]
+	 * // [ [ 1, -0.931151 ], [ -0.931151, 1 ] ]
 	 */
 	 $u.corrcoef = function(x) {
 	 	if (arguments.length === 0) {
@@ -9121,10 +9064,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	 	for (var i = 1; i < arguments.length; i++) {
 	 		_args.push(arguments[i]);
 	 	}
-	 	var covm = $u.cov.apply(null,_args),
-	 	sigma = $u.sqrt($u.diag(covm)),
-	 	m = sigma.length,
-	 	covm = $u.rdivide(covm,$u.repmat(sigma,1,m)),
+	 	var covm = $u.cov.apply(null,_args);
+	 	var sigma = $u.transpose($u.sqrt($u.diag(covm)));
+	 	var m = sigma.length;
+	 	covm = $u.rdivide(covm,$u.repmat(sigma,1,m));
 	 	covm = $u.rdivide(covm,$u.repmat($u.transpose(sigma),m,1));
 	 	return covm;
 	 }
@@ -9133,7 +9076,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 170 */
+/* 172 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -9159,17 +9102,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * ubique.cov(c);
 	 * // 2.33333
+	 * 
 	 * ubique.cov(c,d);
-	 * // [[2.33333, -3.83333], [-3.83333, 7.26333]]
+	 * // [ [ 2.333333, -3.833333 ], [ -3.833333, 7.263333 ] ]
+	 * 
 	 * ubique.cov(c,d,0);
-	 * // [[1.55556, -2.55556], [-2.55556, 4.84222]]
+	 * // [ [ 1.555556, -2.555556 ], [ -2.555556, 4.842222 ] ]
+
 	 * ubique.cov(e,f);
-	 * // [[10.9167, 2], [2, 2]]
+	 * // [ [ 10.916667, 2 ], [ 2, 2 ] ]
+	 * 
 	 * ubique.cov(l);
-	 * // [[0.333333, 1.16667, 0], [1.16667, 6.33333, -3], [0, -3, 4]]
+	 * // [ [ 0.333333, 1.166667, 0 ],[ 1.166667, 6.333333, -3 ],[ 0, -3, 4 ] ]
 	 */
 	 $u.cov = function(x) {
-	 	var arglen = arguments.length;
+	  var arglen = arguments.length;
 	 	if (arglen === 0) {
 	 		throw new Error('not enough input arguments');
 	 	}
@@ -9197,16 +9144,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	 	if (arglen === 2) {
 	 		y = arguments[1];
-	 		x = $u.flatten(x);
-	 		y = $u.flatten(y);
+	 		x = $u.transpose($u.flatten(x));
+	 		y = $u.transpose($u.flatten(y));
 	 		if (x.length !== y.length) {
 	 			throw new Error('input dimension must agree');
 	 		}
 	 		x = $u.cat(1,x,y);
 	 	}
-	 	var m = $u.nrows(x),
-	 	mu = $u.mean(x),
-	 	z = $u.minus(x,$u.repmat(mu,m,1));
+	 	var m = $u.nrows(x);
+	 	var mu = $u.mean(x,1);
+	 	var z = $u.minus(x,$u.repmat(mu,m,1));
 	 	return $u.rdivide($u.mtimes($u.transpose(z),z), m - flag);
 	 }
 
@@ -9215,7 +9162,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 171 */
+/* 173 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -9235,7 +9182,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * 
 	 * @param  {array|matrix} x array or matrix of values
 	 * @param  {number|array} bins number of bins (as NUMBER) or array of edges (as ARRAY) (def: 10)
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {aray|matrix}       
 	 *
 	 * @example
@@ -9250,29 +9197,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * //   { bins: 80, count: 1, freq: 0.1 },
 	 * //   { bins: 100, count: 0, freq: 0 } ]
 	 *
-	 * ubique.histc(ubique.cat(1,A,B),[0,50,100]);
+	 * ubique.histc(ubique.cat(0,A,B),[0,50,100]);
 	 * // [ [ { bins: 0, count: 5, freq: 0.5 },
-	 * //     { bins: 0, count: 6, freq: 0.6 } ],
-	 * //   [ { bins: 50, count: 5, freq: 0.5 },
-	 * //     { bins: 50, count: 4, freq: 0.4 } ],
-	 * //   [ { bins: 100, count: 0, freq: 0 },
+	 * //     { bins: 50, count: 5, freq: 0.5 },
+	 * //     { bins: 100, count: 0, freq: 0 } ],
+	 * //   [ { bins: 0, count: 6, freq: 0.6 },
+	 * //     { bins: 50, count: 4, freq: 0.4 },
 	 * //     { bins: 100, count: 0, freq: 0 } ] ]
 	 */
 	 $u.histc = function(x,bins,dim) {
 	  if (arguments.length === 0) {
 	    throw new Error('not enough input arguments');
 	  }
-	  if (arguments.length === 1) {
-	    bins = 10;
-	    dim = 1;
-	  }
-	  if (arguments.length === 2) {
-	    dim = 1;
-	  }
+	  bins = bins == null ? 10 : bins;
+	  dim  = dim == null ? 0 : dim;
+
 	  var _histc = function(a,bins) {
-	    var y = [],
-	    h = [], 
-	    out = [];
+	    var y = [];
+	    var h = []; 
+	    var out = [];
 	    if ($u.isnumber(bins)) {
 	      var xmin = $u.min(a),
 	      xmax = $u.max(a),
@@ -9299,17 +9242,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  if ($u.isnumber(x)) {
-	    return 0;
+	    return NaN;
 	  }
-	  if ($u.isarray(x)) {
-	    return _histc(x,bins);
-	  }
-	  return $u.vectorfun(x,function(val){ return _histc(val,bins);},dim);
+	  return $u.vectorfun(dim,x,_histc,bins);
 	}
 	}
 
 /***/ },
-/* 172 */
+/* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -9322,7 +9262,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @description Return the interquartile (Q3 - Q1 quartiles)
 	 * 
 	 * @param  {array|matrix} x array of values
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {number|array}   
 	 *
 	 * @example
@@ -9331,32 +9271,29 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * ubique.iqr(x);
 	 * // 0.023
-	 * ubique.iqr(ubique.cat(1,x,y));
-	 * // [[0.023, 0.095]]
+	 * 
+	 * ubique.iqr(ubique.cat(0,x,y));
+	 * // [ [ 0.023 ], [ 0.095 ] ]
 	 */
 	 $u.iqr = function(x,dim) {
 	 	if (arguments.length === 0) {
 	 		throw new Error('not enough input arguments');
 	 	}
-	 	if (arguments.length === 1) {
-	 		dim = 1;
-	 	}
+	 	dim  = dim == null ? 0 : dim;
+
 	 	var _iqr = function(a) {
 	 		return $u.prctile(a,75) - $u.prctile(a,25);
 	 	}
 	 	if ($u.isnumber(x)) {
-	 		return 0;
+	 		return NaN;
 	 	}
-	 	if ($u.isarray(x)) {
-	 		return _iqr(x);
-	 	}
-	 	return $u.vectorfun(x,function(val){return _iqr(val);},dim);
+	 	return $u.vectorfun(dim,x,_iqr);
 	 }
 
 	}
 
 /***/ },
-/* 173 */
+/* 175 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -9370,7 +9307,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * 
 	 * @param  {array|matrix} x array or matrix of elements
 	 * @param  {number} flag 0: bias correction, 1: simple (def: 1)
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {number|array|matrix}
 	 *
 	 * @example
@@ -9378,41 +9315,33 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 	 * 
 	 * ubique.kurtosis(x);
-	 * // 3.03758
-	 * ubique.kurtosis(x,0);
-	 * // 4.03072
-	 * ubique.kurtosis(ubique.cat(1,x,y));
-	 * // [[3.03758, 1.39764]]
+	 * // 3.037581
+	 * 
+	 * ubique.kurtosis(ubique.cat(0,x,y));
+	 * // [ [ 3.037581 ], [ 1.397642 ] ]
 	 */
 	 $u.kurtosis = function(x,flag,dim) {
 	 	if (arguments.length === 0) {
 	 		throw new Error('not enough input arguments');
 	 	}
-	 	if (arguments.length === 1) {
-	 		flag = 1;
-	 		dim = 1;
-	 	}
-	 	if (arguments.length === 2) {
-	 		dim = 1;
-	 	}
-	 	var _kurtosis = function(a,flag) {
-	 		var n = a.length,
-	 		mom4 = $u.moment(a,4) / Math.pow($u.moment(a,2),2);
-	 		return flag === 1 ? mom4: ((n + 1) * mom4 - 3 * (n - 1)) * (n - 1) / ((n - 2) *(n - 3)) + 3;
-	 	}
-	 	if ($u.isnumber(x)) {
-	 		return NaN;
-	 	}
-	 	if ($u.isarray(x)) {
-	 		return _kurtosis(x,flag);
-	 	}
-	 	return $u.vectorfun(x,function(val){return _kurtosis(val,flag);},dim); 
+	  flag = flag == null ? 1 : flag;
+	  dim  = dim == null ? 0 : dim;
+
+	  var _kurtosis = function(a,flag) {
+	    var n = a.length;
+	    var mom4 = $u.moment(a,4) / Math.pow($u.moment(a,2),2);
+	    return flag === 1 ? mom4: ((n + 1) * mom4 - 3 * (n - 1)) * (n - 1) / ((n - 2) *(n - 3)) + 3;
+	  }
+	  if ($u.isnumber(x)) {
+	   return NaN;
 	 }
+	 return $u.vectorfun(dim,x,_kurtosis,flag);
+	}
 
 	}
 
 /***/ },
-/* 174 */
+/* 176 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -9425,7 +9354,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @description Mean absolute deviation
 	 * 
 	 * @param  {array|matrix} x array of values
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {number|array}   
 	 *
 	 * @example
@@ -9434,34 +9363,32 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * ubique.mad(c);
 	 * // 1.11111
-	 * ubique.mad(a,0);
-	 * // [0.444444, 3.77778]
+	 * 
+	 * ubique.mad(a,1);
+	 * // [ [ 1, 1, 3 ] ]
+	 * 
 	 * ubique.mad(a);
-	 * // [[1, 1, 3]]
+	 * // [ [ 0.444444 ], [ 3.777778 ] ]
 	 */
 	 $u.mad = function(x,dim) {
 	 	if (arguments.length === 0) {
 	 		throw new Error('not enough input arguments');
 	 	}
-	 	if (arguments.length === 1) {
-	 		dim = 1;
-	 	}
-	 	var _mad = function(a) {
-	 		return $u.mean($u.arrayfun($u.minus(a,$u.mean(a)),Math.abs));
-	 	}
-	 	if ($u.isnumber(x)) {
-	 		return 0;
-	 	}
-	 	if ($u.isarray(x)) {
-	 		return _mad(x);
-	 	}
-	 	return $u.vectorfun(x,function(val){return _mad(val);},dim);
+	  dim  = dim == null ? 0 : dim;
+
+	  var _mad = function(a) {
+	   return $u.mean($u.arrayfun($u.minus(a,$u.mean(a)),Math.abs));
 	 }
+	 if ($u.isnumber(x)) {
+	   return 0;
+	 }
+	 return $u.vectorfun(dim,x,_mad);
+	}
 
 	}
 
 /***/ },
-/* 175 */
+/* 177 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -9477,36 +9404,34 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param  {number} dim dimension selected, 1: column 0: row (def: 1)
 	 * @return {number|array|matrix}
 	 *
-	 * @example
-	 * var b = [[-1,3,-1],[4,5,9]];
-	 * 
+	 * @example 
 	 * ubique.max([5,6,-1]);
 	 * // 6
-	 * ubique.max(b,0);
-	 * // [3, 9]
-	 * ubique.max(b);
-	 * // [[4, 5, 9]]
+	 * 
+	 * ubique.max([[-1,3,-1],[4,5,9]]);
+	 * // [ [ 3 ], [ 9 ] ]
+	 * 
+	 * ubique.max([[-1,3,-1],[4,5,9]],1);
+	 * // [ [ 4, 5, 9 ] ]
 	 */
 	 $u.max = function(x,dim) {
 	 	if (arguments.length === 0) {
 	 		throw new Error('not enough input arguments');
 	 	}
-	 	if (arguments.length === 1) {
-	 		dim = 1;
-	 	}
-	 	if ($u.isnumber(x)) {
-	 		return x;
-	 	} else
-	 	if ($u.isarray(x)) {
-	 		return  Math.max.apply(Math,x);
-	 	}
-	 	return $u.vectorfun(x,function(val){return Math.max.apply(Math,val);},dim);
+	  dim  = dim == null ? 0 : dim;
+	  var _max = function(a) {
+	    return Math.max.apply(null,a);
+	  }
+	  if ($u.isnumber(x)) {
+	   return x;
 	 }
+	 return $u.vectorfun(dim,x,_max);
+	}
 	}
 
 
 /***/ },
-/* 176 */
+/* 178 */
 /***/ function(module, exports, __webpack_require__) {
 
 	 /**
@@ -9519,7 +9444,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @description Average value of array
 	 * 
 	 * @param  {array|matrix} x array of values
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {number|array}   
 	 *
 	 * @example
@@ -9529,17 +9454,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * ubique.mean(c);
 	 * // 4.66667
 	 * 
-	 * ubique.mean(a,0);
-	 * // [5.33333, 4.66667]
+	 * ubique.mean([[5,6,5],[7,8,-1]]);
+	 * // [ [ 5.333333 ], [ 4.666667 ] ]
 	 * 
-	 * ubique.mean(a);
-	 * // [6, 7, 2]
+	 * ubique.mean([[5,6,5],[7,8,-1]],1);
+	 * // [ [ 6, 7, 2 ] ]
 	 */
 	 $u.mean = function(x,dim) {
 	 	if (arguments.length === 0) {
 	 		throw new Error('not enough input arguments');
 	 	}
-	  dim = dim == null ? 1 : dim;
+	  dim = dim == null ? 0 : dim;
 	 	if ($u.isnumber(x)) {
 	 		return x;
 	 	}
@@ -9552,7 +9477,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 177 */
+/* 179 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -9565,31 +9490,29 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @description Median value of array
 	 * 
 	 * @param  {array|matrix} x array of values
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {number|array}   
 	 *
 	 * @example
-	 * var a = [[5,6,5],[7,8,-1]];
-	 * var c = [5,6,3];
-	 *
-	 * ubique.median(c);
+	 * ubique.median([5,6,3]);
 	 * // 4.66667
-	 * ubique.median(a,0);
-	 * // [5.33333, 4.66667]
-	 * ubique.median(a);
-	 * // [6, 7, 2]
+	 * 
+	 * ubique.median([[5,6,5],[7,8,-1]]);
+	 * // [ [ 5 ], [ 7 ] ]
+	 * 
+	 * ubique.median([[5,6,5],[7,8,-1]],1);
+	 * // [ [ 6, 7, 2 ] ]
 	 */
 	 $u.median = function(x,dim) {
 	 	if (arguments.length === 0) {
 	 		throw new Error('not enough input arguments');
 	 	}
-	 	if (arguments.length === 1) {
-	 		dim = 1;
-	 	}
+	 	dim  = dim == null ? 0 : dim;
+
 	 	var _median = function(a) {
-	 		var n = a.length - 1,
-	 		idx = $u.max(1,Math.floor(n / 2)),
-	 		_a = $u.sort(a);
+	 		var n = a.length - 1;
+	 		var idx = $u.max(1,Math.floor(n / 2));
+	 		var _a = $u.sort(a);
 	 		if( n % 2 === 0 ) {
 	 			return _a[idx];
 	 		} else {
@@ -9599,17 +9522,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	 	if ($u.isnumber(x)) {
 	 		return x;
 	 	}
-	 	if ($u.isarray(x)) {
-	 		return  _median(x);
-	 	}
-	 	return $u.vectorfun(x,function(val){return _median(val);},dim);
+	 	return $u.vectorfun(dim,x,_median);
 	 }
 
 	}
 
 
 /***/ },
-/* 178 */
+/* 180 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -9622,39 +9542,37 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @description Smallest element in array
 	 *
 	 * @param  {array|matrix} x array or matrix of values
-	 * @param  {number} dim dimension selected, 1: column 0: row (def: 1)
+	 * @param  {number} dim dimension selected, 1: column 0: row (def: 0)
 	 * @return {number|array|matrix}
 	 *
-	 * @example
-	 * var b = [[-1,3,-1],[4,5,9]];
-	 *
+	 * @example 
 	 * ubique.min([5,6,-1]);
 	 * // -1
-	 * ubique.min(b,0);
-	 * // [-1, 4]
-	 * ubique.min(b);
-	 * // [[-1, 3, -1]]
+	 * 
+	 * ubique.min([[-1,3,-1],[4,5,9]]);
+	 * // [ [ -1 ], [ 4 ] ]
+	 * 
+	 * ubique.min([[-1,3,-1],[4,5,9]],1);
+	 * // [ [ -1, 3, -1 ] ]
 	 */
 	 $u.min = function(x,dim) {
-	 	if (arguments.length === 0) {
-	 		throw new Error('not enough input arguments');
-	 	}
-	 	if (arguments.length === 1) {
-	 		dim = 1;
-	 	}
-	 	if ($u.isnumber(x)) {
-	 		return x;
-	 	} 
-	 	if ($u.isarray(x)) {
-	 		return  Math.min.apply(Math,x);
-	 	}
-	 	return $u.vectorfun(x,function(val){return Math.min.apply(Math,val);},dim);
+	  if (arguments.length === 0) {
+	    throw new Error('not enough input arguments');
+	  }
+	  dim  = dim == null ? 0 : dim;
+	  var _min = function(a) {
+	    return Math.min.apply(null,a);
+	  }
+	  if ($u.isnumber(x)) {
+	   return 0;
 	 }
+	 return $u.vectorfun(dim,x,_min);
+	}
 	}
 
 
 /***/ },
-/* 179 */
+/* 181 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -9667,32 +9585,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @description Most frequent value in an array of elements (Unimodal)
 	 * 
 	 * @param  {array|matrix} x array of values
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {number|array}   
 	 *
 	 * @example
-	 * var a = [[5,6,5],[7,8,-1]];
-	 * var c = [5,6,3];
-	 *
-	 * ubique.mode(c);
+	 * ubique.mode([5,6,3]);
 	 * // 3
-	 * ubique.mode(a,0);
-	 * // [5, -1]
-	 * ubique.mode(a);
-	 * // [[5, 6, -1]]
+	 * 
+	 * ubique.mode([[5,6,5],[7,8,-1]]);
+	 * // [ [ 5 ], [ -1 ] ]
+	 * 
+	 * ubique.mode([[5,6,5],[7,8,-1]],1);
+	 * // [ [ 5, 6, -1 ] ]
 	 */
 	 $u.mode = function(x,dim) {
 	  if (arguments.length === 0) {
 	    throw new Error('not enough input arguments');
 	  }
-	  if (arguments.length === 1) {
-	    dim = 1;
-	  }
+	  dim  = dim == null ? 0 : dim;
+
 	  var _mode = function(a) {
-	    var counter = {},
-	    mode = [],
-	    max = 0,
-	    _a = $u.sort(a);
+	    var counter = {};
+	    var mode = [];
+	    var max = 0;
+	    var _a = $u.sort(a);
 	    for (var i = 0; i < x.length; i++) {
 	      if (!(_a[i] in counter)) {
 	        counter[_a[i]] = 0;
@@ -9712,17 +9628,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if ($u.isnumber(x)) {
 	    return x;
 	  }
-	  if ($u.isarray(x)) {
-	    return  _mode(x);
-	  }
-	  return $u.vectorfun(x,function(val){return _mode(val);},dim);
+	  return $u.vectorfun(dim,x,_mode);
 
 	}
 
 	}
 
 /***/ },
-/* 180 */
+/* 182 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -9736,7 +9649,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * 
 	 * @param  {array|matrix} x array or amatrix of elements
 	 * @param  {number} k k-th central sample moment
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {number|array|matrix}
 	 *
 	 * @example
@@ -9744,37 +9657,35 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 	 * 
 	 * ubique.moment(x,3);
-	 * // 6.60941e-6
+	 * // 0.000007
+	 * 
 	 * ubique.moment(x,1);
 	 * // 0
-	 * ubique.moment(ubique.cat(1,x,y),2);
-	 * // [[4.8569e-4, 0.00251024]]
+	 * 
+	 * ubique.moment(ubique.cat(0,x,y),2);
+	 * // [ [ 0.000486 ], [ 0.00251 ] 
 	 */
 	 $u.moment = function(x,k,dim) {
 	 	if (arguments.length < 2) {
 	 		throw new Error('not enough input arguments');
 	 	}
-	 	if (arguments.length === 2) {
-	 		dim = 1;
-	 	}
-	 	var _moment = function(a,k) {
-	 		var mu = $u.mean(a);
-	 		return $u.mean(a.map(function(b) {return Math.pow(b - mu,k)}));
-	 	}
-	 	if ($u.isnumber(x)) {
-	 		return 0;
-	 	}
-	 	if ($u.isarray(x)) {
-	 		return _moment(x,k);
-	 	}
-	 	return $u.vectorfun(x,function(val){return _moment(val,k);},dim); 
+	   dim  = dim == null ? 0 : dim;
+
+	   var _moment = function(a,k) {
+	     var mu = $u.mean(a);
+	     return $u.mean(a.map(function(b) {return Math.pow(b - mu,k)}));
+	   }
+	   if ($u.isnumber(x)) {
+	     return NaN;
+	   }
+	   return $u.vectorfun(dim,x,_moment,k);
 
 	 }
 
 	}
 
 /***/ },
-/* 181 */
+/* 183 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -9798,10 +9709,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * 
 	 * ubique.pdist(x,y,'euclidean');
 	 * // 0.170532
+	 * 
 	 * ubique.pdist(x,y,'manhattan');
 	 * // 0.471
+	 * 
 	 * ubique.pdist(x,y,'chebychev');
 	 * // 0.087
+	 * 
 	 * ubique.pdist(x,y,'hamming');
 	 * // 10
 	 */
@@ -9809,7 +9723,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if (arguments.length < 2) {
 	    throw new Error('not enough input arguments');
 	  }
-	  mode = mode || 'euclidean';
+	  mode = mode == null ? 'euclidean' : mode;
 	  var len = x.length;
 	  var out = 0;
 	  switch (mode) {
@@ -9841,7 +9755,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 182 */
+/* 184 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -9855,7 +9769,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * 
 	 * @param  {array|matrix} x array of emlements
 	 * @param  {number} p p-th percentile in the range [0,100]
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {number|array}   
 	 *
 	 * @example
@@ -9864,10 +9778,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * 
 	 * ubique.prctile(x,5);
 	 * // -0.014
+	 * 
 	 * ubique.prctile(x,33);
 	 * // 0.0118
-	 * ubique.prctile(ubique.cat(1,x,y),5,0);
-	 * // [-0.005, 0.026, 0.015, -0.037, -0.061, 0.024, -0.049, -0.021, -0.014, 0.039]
+	 * 
+	 * ubique.prctile(ubique.cat(0,x,y),5);
+	 * // [ [ -0.014, -0.061 ] ]
 	 */
 	 $u.prctile = function(x,p,dim) {
 	  if (arguments.length < 2) {
@@ -9876,31 +9792,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if (p < 0 || p > 100) {
 	    throw new Error('p-th percentile must be a real value between 0 and 100 inclusive');
 	  }
-	  if (arguments.length === 2) {
-	    dim = 1;
-	  }
+	  dim = dim == null ? 0 : dim;
 	  var _prctile = function(a,pr) {
-	   var arrnum= $u.colon(0.5,a.length - 0.5),
-	   _a = $u.sort(a),
-	   pq = $u.rdivide($u.times(arrnum,100),a.length);
-
-	   pq = $u.cat(0,0,pq,100);
-	   _a = $u.cat(0,_a[0],_a,_a[_a.length - 1]);
-	   return $u.interp1(pq,_a,pr);
-	 }
-	 if ($u.isnumber(x)) {
-	  return x;
-	}
-	if ($u.isarray(x)) {
-	  return _prctile(x,p);
-	}
-	return $u.vectorfun(x,function(val){return _prctile(val,p);},dim);
+	    var arrnum= $u.colon(0.5,a.length - 0.5);
+	    var _a = $u.sort(a);
+	    var pq = $u.rdivide($u.times(arrnum,100),a.length);
+	    
+	    pq = pq.concat(0,pq,100);
+	    _a = _a.concat(_a[0],_a,_a[_a.length - 1]);
+	    return $u.interp1(pq,_a,pr);
+	  }
+	  if ($u.isnumber(x)) {
+	    return x;
+	  }
+	  return $u.vectorfun(dim,x,_prctile,p);
 	}
 
 	}
 
 /***/ },
-/* 183 */
+/* 185 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -9914,7 +9825,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * 
 	 * @param  {array|matrix} x array or matrix of elements
 	 * @param  {number} p p-th quantile in the range [0,1]
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {number|array}   
 	 *
 	 * @example
@@ -9923,8 +9834,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * 
 	 * ubique.quantile(x,0.25);
 	 * // 0.003
-	 * ubique.quantile(ubique.cat(1,x,y),0.33);
-	 * // [[0.0118, -0.0242]]
+	 * 
+	 * ubique.quantile(ubique.cat(0,x,y),0.33);
+	 * // [ [ 0.0118, -0.0242 ] ]
 	 */
 	 $u.quantile = function(x,p,dim) {
 	 	if (arguments.length < 2) {
@@ -9933,106 +9845,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 	if (p < 0 || p > 1) {
 	 		throw new Error('p-th percentile must be a real value between 0 and 1 inclusive');
 	 	}
-	 	if (arguments.length === 2) {
-	 		dim = 1;
-	 	}
+	 	dim = dim == null ? 0 : dim;
 	 	return $u.prctile(x,p*100,dim);
-	 }
-
-	}
-
-/***/ },
-/* 184 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Descriptive Statistic
-	 */
-	 module.exports = function($u) {
-	/**
-	 * @method quartile
-	 * @summary Quartilies of a sample
-	 * @description Quartilies of a sample
-	 *
-	 * @param  {array|matrix} x array of values
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
-	 * @return {number|array}   
-	 *
-	 * @example
-	 * var x = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
-	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
-	 *
-	 * ubique.quartile(x);
-	 * // [0.003, 0.015, 0.026]
-	 * ubique.quartile(ubique.cat(1,x,y));
-	 * // [[0.003, -0.037], [0.015, 0.0175], [0.026, 0.058]]
-	 */
-	 $u.quartile = function(x,dim) {
-	 	if (arguments.length === 0) {
-	 		throw new Error('not enough input arguments');
-	 	}
-	 	if (arguments.length === 1) {
-	 		dim = 1;
-	 	}
-	 	var _quartile = function(a) {
-	 		return [$u.prctile(a,25),$u.prctile(a,50),$u.prctile(a,75)];
-	 	}
-	 	if ($u.isnumber(x)) {
-	 		return 0;
-	 	}
-	 	if ($u.isarray(x)) {
-	 		return _quartile(x);
-	 	}
-	 	return $u.vectorfun(x,function(val){return _quartile(val);},dim);
-	 }
-
-	}
-
-/***/ },
-/* 185 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Descriptive Statistic
-	 */
-	 module.exports = function($u) {
-	/**
-	 * @method range
-	 * @summary Range of values
-	 * @description Range of values
-	 * 
-	 * @param  {array|matrix} x array of values
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
-	 * @return {number|array}   
-	 *
-	 * @example
-	 * var a = [[5,6,5],[7,8,-1]];
-	 * var c = [5,6,3];
-	 *
-	 * ubique.range(c);
-	 * // 3
-	 * ubique.range(a,0);
-	 * // [1,9]
-	 * ubique.range(a);
-	 * // [[2, 2, 6]]
-	 */
-	 $u.range = function(x,dim) {
-	 	if (arguments.length === 0) {
-	 		throw new Error('not enough input arguments');
-	 	}
-	 	if (arguments.length === 1) {
-	 		dim = 1;
-	 	}
-	 	var _range = function(a) {
-	 		return $u.max(a) - $u.min(a);
-	 	}
-	 	if ($u.isnumber(x)) {
-	 		return 0;
-	 	}
-	 	if ($u.isarray(x)) {
-	 		return _range(x);
-	 	}
-	 	return $u.vectorfun(x,function(val){return _range(val);},dim);
 	 }
 
 	}
@@ -10046,13 +9860,104 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	 module.exports = function($u) {
 	/**
+	 * @method quartile
+	 * @summary Quartilies of a sample
+	 * @description Quartilies of a sample
+	 *
+	 * @param  {array|matrix} x array of values
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
+	 * @return {number|array}   
+	 *
+	 * @example
+	 * var x = [ 0.003,0.026,0.015,-0.009,0.014,0.024,0.015,0.066,-0.014,0.039];
+	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
+	 *
+	 * ubique.quartile(x);
+	 * // [ 0.003, 0.015, 0.026 ]
+	 * 
+	 * ubique.quartile(ubique.cat(0,x,y));
+	 * // [ [ 0.003, 0.015, 0.026 ], [ -0.037, 0.0175, 0.058 ] ]
+	 */
+	 $u.quartile = function(x,dim) {
+	 	if (arguments.length === 0) {
+	 		throw new Error('not enough input arguments');
+	 	}
+	  dim = dim == null ? 0 : dim;
+
+	  var _quartile = function(a) {
+	    return [$u.prctile(a,25),$u.prctile(a,50),$u.prctile(a,75)];
+	  }
+	  if ($u.isnumber(x)) {
+	    return NaN;
+	  }
+	  return $u.vectorfun(dim,x,_quartile);
+	}
+
+	}
+
+/***/ },
+/* 187 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Descriptive Statistic
+	 */
+	 module.exports = function($u) {
+	/**
+	 * @method range
+	 * @summary Range of values
+	 * @description Range of values
+	 * 
+	 * @param  {array|matrix} x array of values
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
+	 * @return {number|array}   
+	 *
+	 * @example
+	 * var a = [[5,6,5],[7,8,-1]];
+	 * var c = [5,6,3];
+	 *
+	 * ubique.range([5,6,3]);
+	 * // 3
+	 * 
+	 * ubique.range([[5,6,5],[7,8,-1]]);
+	 * // [ [ 1 ], [ 9 ] ]
+	 * 
+	 * ubique.range([[5,6,5],[7,8,-1]],1);
+	 * // [ [ 2, 2, 6 ] ]
+	 */
+	 $u.range = function(x,dim) {
+	 	if (arguments.length === 0) {
+	 		throw new Error('not enough input arguments');
+	 	}
+	 	dim = dim == null ? 0 : dim;
+
+	 	var _range = function(a) {
+	 		return $u.max(a) - $u.min(a);
+	 	}
+	 	if ($u.isnumber(x)) {
+	 		return 0;
+	 	}
+	 	return $u.vectorfun(dim,x,_range);
+	 }
+
+	}
+
+/***/ },
+/* 188 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Descriptive Statistic
+	 */
+	 module.exports = function($u) {
+	/**
 	 * @method skewness
 	 * @summary Skewness
 	 * @description Skewness
 	 * 
 	 * @param  {array|matrix} x array or matrix of elements
 	 * @param  {number} flag 0: bias correction, 1: simple (def: 1)
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {number|array|matrix}
 	 *
 	 * @example
@@ -10061,40 +9966,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * 
 	 * ubique.skewness(x);
 	 * // 0.617481
-	 * ubique.skewness(x,1);
-	 * // 0.732243
-	 * ubique.skewness(ubique.cat(1,x,y));
-	 * // [[0.617481, -0.118909]]
+	 * 
+	 * ubique.skewness(ubique.cat(0,x,y));
+	 * // [ [ 0.617481 ], [ -0.118909 ] ]
 	 */
 	 $u.skewness = function(x,flag,dim) {
 	 	if (arguments.length === 0) {
 	 		throw new Error('not enough input arguments');
 	 	}
-	 	if (arguments.length === 1) {
-	 		flag = 1;
-	 		dim = 1;
-	 	}
-	 	if (arguments.length === 2) {
-	 		dim = 1;
-	 	}
-	 	var _skewness = function(a,flag) {
-	 		var n = a.length,
-	 		mom3 = $u.moment(a,3) / Math.pow($u.moment(a,2),1.5);
-	 		return flag === 1 ? mom3: Math.sqrt((n - 1) / n) * (n / (n - 2)) * mom3;
-	 	}
-	 	if ($u.isnumber(x)) {
-	 		return NaN;
-	 	}
-	 	if ($u.isarray(x)) {
-	 		return _skewness(x,flag);
-	 	}
-	 	return $u.vectorfun(x,function(val){return _skewness(val,flag);},dim); 
-	 }
+	 	flag = flag == null ? 1 : flag;
+	  dim  = dim == null ? 0 : dim;
 
+	  var _skewness = function(a,flag) {
+	    var n = a.length;
+	    var mom3 = $u.moment(a,3) / Math.pow($u.moment(a,2),1.5);
+	    return flag === 1 ? mom3: Math.sqrt((n - 1) / n) * (n / (n - 2)) * mom3;
+	  }
+	  if ($u.isnumber(x)) {
+	    return NaN;
+	  }
+	  return $u.vectorfun(dim,x,_skewness,flag);
+	}
 	}
 
 /***/ },
-/* 187 */
+/* 189 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -10108,7 +10004,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * 
 	 * @param  {array|matrix} x array of values
 	 * @param  {number} flag normalization value 0: population, 1:sample (def: 1)
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {number|array|matrix}   
 	 *
 	 * @example
@@ -10117,19 +10013,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * ubique.std(c);
 	 * // 1.52753
+	 * 
 	 * ubique.std(c,0);
 	 * // 1.24722 
+	 * 
 	 * ubique.std(a,0);
-	 * // [[1, 1, 3]]
-	 * ubique.std(a,0,0);
-	 * // [0.471405, 4.02768]
+	 * // [ [ 0.471405 ], [ 4.027682 ] ]
+	 * 
+	 * ubique.std(a,0,1);
+	 * // [ [ 1, 1, 3 ] ]
 	 */
 	 $u.std = function(x,flag,dim) {
 	 	if (arguments.length === 0) {
 	 		throw new Error('not enough input arguments');
 	 	}
-	 	flag = flag || 1;
-	  dim = dim || 1;
+	 	flag = flag == null ? 1 : flag;
+	  dim = dim == null ? 0 : dim;
+
 	 	var variance = $u.varc(x,flag,dim);
 	 	return $u.sqrt(variance);
 	 }
@@ -10138,7 +10038,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 188 */
+/* 190 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -10152,7 +10052,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * 
 	 * @param  {array|matrix} x array of values
 	 * @param  {number} flag normalization value 0: population, 1:sample (def: 1)
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {number|array}   
 	 *
 	 * @example
@@ -10161,43 +10061,38 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * ubique.varc(c);
 	 * // 2.33333
+	 * 
 	 * ubique.varc(c,0);
 	 * // 1.55556 
+	 * 
 	 * ubique.varc(a,0);
-	 * // [[2, 2, 18]]
-	 * ubique.varc(a,0,0);
-	 * // [0.222222, 16.2222]
+	 * // [ [ 0.222222 ], [ 16.222222 ] ]
+	 * 
+	 * ubique.varc(a,0,1);
+	 * // [ [ 1, 1, 9 ] ]
 	 */
 	 $u.varc = function(x,flag,dim) {
 	 	if (arguments.length === 0) {
 	 		throw new Error('not enough input arguments');
 	 	}
-	 	if (arguments.length === 1) {
-	 		flag = 1;
-	 		dim = 1;
-	 	}
-	 	if (arguments.length === 2) {
-	 		dim = 1;
-	 	}
-	 	var _varc = function(a,flag) {
-	 		var mu = $u.mean(a);
-	 		return ($u.sum($u.power($u.abs($u.minus(a,mu)),2))) / (a.length - flag);
-	 	}
-	 	
-	 	if ($u.isnumber(x)) {
-	 		return 0;
-	 	}
-	 	if ($u.isarray(x)) {
-	 		return  _varc(x,flag);
-	 	}
-	 	return $u.vectorfun(x,function(val){return _varc(val,flag);},dim);
-	 }
+	  flag = flag == null ? 1 : flag;
+	  dim = dim == null ? 0 : dim;
+
+	  var _varc = function(a,flag) {
+	    var mu = $u.mean(a);
+	    return ($u.sum($u.power($u.abs($u.minus(a,mu)),2))) / (a.length - flag);
+	  }
+	  if ($u.isnumber(x)) {
+	    return NaN;
+	  }
+	  return $u.vectorfun(dim,x,_varc,flag);
+	}
 
 	}
 
 
 /***/ },
-/* 189 */
+/* 191 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -10211,7 +10106,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * 
 	 * @param  {array|matrix} x array or matrix of elements
 	 * @param  {number} flag 0: bias correction, 1: simple (def: 1)
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {number|array|matrix}
 	 *
 	 * @example
@@ -10219,34 +10114,29 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * var y = [-0.005,0.081,0.04,-0.037,-0.061,0.058,-0.049,-0.021,0.062,0.058];
 	 * 
 	 * ubique.xkurtosis(x);
-	 * // 0.0375811
-	 * ubique.xkurtosis(x,0);
-	 * // 1.03072
-	 * ubique.xkurtosis( ubique.cat(1,x,y));
-	 * // [[0.0375811, -1.60236]]
+	 * // 0.037581
+	 * 
+	 * ubique.xkurtosis(ubique.cat(0,x,y));
+	 * // [ [ 0.037581 ], [ -1.602358 ] ]
 	 */
 	 $u.xkurtosis = function(x,flag,dim) {
 	 	if (arguments.length === 0) {
 	 		throw new Error('not enough input arguments');
 	 	}
-	 	if (arguments.length === 1) {
-	 		flag = 1;
-	 		dim = 1;
-	 	}
-	 	if (arguments.length === 2) {
-	 		dim = 1;
-	 	}
-	 	var kurt = $u.kurtosis(x,flag,dim);
-	 	if ($u.isnumber(kurt)) {
-	 		return kurt - 3;
-	 	}
-	 	return $u.arrayfun(kurt,function(a) {return a - 3;});
-	 }
+	 	flag = flag == null ? 1 : flag;
+	  dim  = dim == null ? 0 : dim;
+
+	  var kurt = $u.kurtosis(x,flag,dim);
+	  if ($u.isnumber(kurt)) {
+	    return kurt - 3;
+	  }
+	  return $u.arrayfun(kurt,function(a) {return a - 3;});
+	}
 
 	}
 
 /***/ },
-/* 190 */
+/* 192 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -10260,49 +10150,39 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * 
 	 * @param  {array|matrix} x array of values
 	 * @param  {number} flag normalization value 0: population, 1:sample (def: 1)
-	 * @param  {number} dim dimension 0: row, 1: column (def: 1)
+	 * @param  {number} dim dimension 0: row, 1: column (def: 0)
 	 * @return {number|array}   
 	 *
 	 * @example
-	 * var a = [[5,6,5],[7,8,-1]];
-	 * var c = [5,6,3];
-	 *
-	 * ubique.zscore(c);
-	 * // [0.218218, 0.872872, -1.09109]
-	 * ubique.zscore(c,0);
-	 * // [0.267261, 1.06904, -1.33631]
-	 * ubique.zscore(a,0);
-	 * // [[-1, -1, 1], [1, 1, -1]]
-	 * ubique.zscore(a,0,0);
-	 * // [[-0.707107, 1.41421, -0.707107], [0.579324, 0.827606, -1.40693]]
+	 * ubique.zscore([5,6,3]);
+	 * // [ 0.218218, 0.872872, -1.091089 ]
+	 * 
+	 * ubique.zscore([[5,6,5],[7,8,-1]]);
+	 * // [ [ -0.57735, 1.154701, -0.57735 ],[ 0.473016, 0.675737, -1.148754 ] ]
+	 * 
+	 * ubique.zscore([[5,6,5],[7,8,-1]],0,1);
+	 * // [ [ -1, -1, 1 ], [ 1, 1, -1 ] ]
 	 */
 	 $u.zscore = function(x,flag,dim) {
 	 	if (arguments.length === 0) {
 	 		throw new Error('not enough input arguments');
 	 	}
-	 	if (arguments.length === 1) {
-	 		flag = 1;
-	 		dim = 1;
-	 	}
-	 	if (arguments.length === 2) {
-	 		dim = 1;
-	 	}
-	 	var _zscore = function(a,flag) {
-	 		return $u.rdivide($u.minus(a,$u.mean(a)),$u.std(a,flag));
-	 	}
-	 	if ($u.isnumber(x)) {
-	 		return 0;
-	 	}
-	 	if ($u.isarray(x)) {
-	 		return  _zscore(x,flag);
-	 	}
-	 	return $u.vectorfun(x,function(val){return _zscore(val,flag);},dim);
-	 }
+	 	flag = flag == null ? 1 : flag;
+	  dim  = dim == null ? 0 : dim;
+
+	  var _zscore = function(a,flag) {
+	    return $u.rdivide($u.minus(a,$u.mean(a)),$u.std(a,flag));
+	  }
+	  if ($u.isnumber(x)) {
+	    return NaN;
+	  }
+	  return $u.vectorfun(dim,x,_zscore,flag);
+	}
 
 	}
 
 /***/ },
-/* 191 */
+/* 193 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -10318,8 +10198,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {array}
 	 *  
 	 * @example
-	 * ubique.argsarray(99,true,NaN,'test',null);
-	 * // [ 99, true, NaN, 'test', null ]
+	 * ubique.argsarray(99,true,'test',null);
+	 * // [ 99, true,'test', null ]
 	 */
 	 $u.argsarray = function() {
 	  var arr = [];
@@ -10331,7 +10211,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 192 */
+/* 194 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -10369,7 +10249,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 193 */
+/* 195 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -10499,7 +10379,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 194 */
+/* 196 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -10626,13 +10506,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 195 */
+/* 197 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* (ignored) */
 
 /***/ },
-/* 196 */
+/* 198 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global, module) {//! moment.js
@@ -11465,7 +11345,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (!locales[name] && hasModule) {
 	            try {
 	                oldLocale = moment.locale();
-	                __webpack_require__(198)("./" + name);
+	                __webpack_require__(200)("./" + name);
 	                // because defineLocale currently also sets the global locale, we want to undo that for lazy loaded locales
 	                moment.locale(oldLocale);
 	            } catch (e) { }
@@ -13679,16 +13559,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	}).call(this);
 
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(279)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(282)(module)))
 
 /***/ },
-/* 197 */
+/* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Response = __webpack_require__(280);
-	var handleQs = __webpack_require__(281);
+	var Response = __webpack_require__(281);
+	var handleQs = __webpack_require__(283);
 
 	module.exports = doRequest;
 	function doRequest(method, url, options, callback) {
@@ -13759,170 +13639,170 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 198 */
+/* 200 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./af": 199,
-		"./af.js": 199,
-		"./ar": 203,
-		"./ar-ma": 200,
-		"./ar-ma.js": 200,
-		"./ar-sa": 201,
-		"./ar-sa.js": 201,
-		"./ar-tn": 202,
-		"./ar-tn.js": 202,
-		"./ar.js": 203,
-		"./az": 204,
-		"./az.js": 204,
-		"./be": 205,
-		"./be.js": 205,
-		"./bg": 206,
-		"./bg.js": 206,
-		"./bn": 207,
-		"./bn.js": 207,
-		"./bo": 208,
-		"./bo.js": 208,
-		"./br": 209,
-		"./br.js": 209,
-		"./bs": 210,
-		"./bs.js": 210,
-		"./ca": 211,
-		"./ca.js": 211,
-		"./cs": 212,
-		"./cs.js": 212,
-		"./cv": 213,
-		"./cv.js": 213,
-		"./cy": 214,
-		"./cy.js": 214,
-		"./da": 215,
-		"./da.js": 215,
-		"./de": 217,
-		"./de-at": 216,
-		"./de-at.js": 216,
-		"./de.js": 217,
-		"./el": 218,
-		"./el.js": 218,
-		"./en-au": 219,
-		"./en-au.js": 219,
-		"./en-ca": 220,
-		"./en-ca.js": 220,
-		"./en-gb": 221,
-		"./en-gb.js": 221,
-		"./eo": 222,
-		"./eo.js": 222,
-		"./es": 223,
-		"./es.js": 223,
-		"./et": 224,
-		"./et.js": 224,
-		"./eu": 225,
-		"./eu.js": 225,
-		"./fa": 226,
-		"./fa.js": 226,
-		"./fi": 227,
-		"./fi.js": 227,
-		"./fo": 228,
-		"./fo.js": 228,
-		"./fr": 230,
-		"./fr-ca": 229,
-		"./fr-ca.js": 229,
-		"./fr.js": 230,
-		"./fy": 231,
-		"./fy.js": 231,
-		"./gl": 232,
-		"./gl.js": 232,
-		"./he": 233,
-		"./he.js": 233,
-		"./hi": 234,
-		"./hi.js": 234,
-		"./hr": 235,
-		"./hr.js": 235,
-		"./hu": 236,
-		"./hu.js": 236,
-		"./hy-am": 237,
-		"./hy-am.js": 237,
-		"./id": 238,
-		"./id.js": 238,
-		"./is": 239,
-		"./is.js": 239,
-		"./it": 240,
-		"./it.js": 240,
-		"./ja": 241,
-		"./ja.js": 241,
-		"./ka": 242,
-		"./ka.js": 242,
-		"./km": 243,
-		"./km.js": 243,
-		"./ko": 244,
-		"./ko.js": 244,
-		"./lb": 245,
-		"./lb.js": 245,
-		"./lt": 246,
-		"./lt.js": 246,
-		"./lv": 247,
-		"./lv.js": 247,
-		"./mk": 248,
-		"./mk.js": 248,
-		"./ml": 249,
-		"./ml.js": 249,
-		"./mr": 250,
-		"./mr.js": 250,
-		"./ms-my": 251,
-		"./ms-my.js": 251,
-		"./my": 252,
-		"./my.js": 252,
-		"./nb": 253,
-		"./nb.js": 253,
-		"./ne": 254,
-		"./ne.js": 254,
-		"./nl": 255,
-		"./nl.js": 255,
-		"./nn": 256,
-		"./nn.js": 256,
-		"./pl": 257,
-		"./pl.js": 257,
-		"./pt": 259,
-		"./pt-br": 258,
-		"./pt-br.js": 258,
-		"./pt.js": 259,
-		"./ro": 260,
-		"./ro.js": 260,
-		"./ru": 261,
-		"./ru.js": 261,
-		"./sk": 262,
-		"./sk.js": 262,
-		"./sl": 263,
-		"./sl.js": 263,
-		"./sq": 264,
-		"./sq.js": 264,
-		"./sr": 266,
-		"./sr-cyrl": 265,
-		"./sr-cyrl.js": 265,
-		"./sr.js": 266,
-		"./sv": 267,
-		"./sv.js": 267,
-		"./ta": 268,
-		"./ta.js": 268,
-		"./th": 269,
-		"./th.js": 269,
-		"./tl-ph": 270,
-		"./tl-ph.js": 270,
-		"./tr": 271,
-		"./tr.js": 271,
-		"./tzm": 273,
-		"./tzm-latn": 272,
-		"./tzm-latn.js": 272,
-		"./tzm.js": 273,
-		"./uk": 274,
-		"./uk.js": 274,
-		"./uz": 275,
-		"./uz.js": 275,
-		"./vi": 276,
-		"./vi.js": 276,
-		"./zh-cn": 277,
-		"./zh-cn.js": 277,
-		"./zh-tw": 278,
-		"./zh-tw.js": 278
+		"./af": 201,
+		"./af.js": 201,
+		"./ar": 205,
+		"./ar-ma": 202,
+		"./ar-ma.js": 202,
+		"./ar-sa": 203,
+		"./ar-sa.js": 203,
+		"./ar-tn": 204,
+		"./ar-tn.js": 204,
+		"./ar.js": 205,
+		"./az": 206,
+		"./az.js": 206,
+		"./be": 207,
+		"./be.js": 207,
+		"./bg": 208,
+		"./bg.js": 208,
+		"./bn": 209,
+		"./bn.js": 209,
+		"./bo": 210,
+		"./bo.js": 210,
+		"./br": 211,
+		"./br.js": 211,
+		"./bs": 212,
+		"./bs.js": 212,
+		"./ca": 213,
+		"./ca.js": 213,
+		"./cs": 214,
+		"./cs.js": 214,
+		"./cv": 215,
+		"./cv.js": 215,
+		"./cy": 216,
+		"./cy.js": 216,
+		"./da": 217,
+		"./da.js": 217,
+		"./de": 219,
+		"./de-at": 218,
+		"./de-at.js": 218,
+		"./de.js": 219,
+		"./el": 220,
+		"./el.js": 220,
+		"./en-au": 221,
+		"./en-au.js": 221,
+		"./en-ca": 222,
+		"./en-ca.js": 222,
+		"./en-gb": 223,
+		"./en-gb.js": 223,
+		"./eo": 224,
+		"./eo.js": 224,
+		"./es": 225,
+		"./es.js": 225,
+		"./et": 226,
+		"./et.js": 226,
+		"./eu": 227,
+		"./eu.js": 227,
+		"./fa": 228,
+		"./fa.js": 228,
+		"./fi": 229,
+		"./fi.js": 229,
+		"./fo": 230,
+		"./fo.js": 230,
+		"./fr": 232,
+		"./fr-ca": 231,
+		"./fr-ca.js": 231,
+		"./fr.js": 232,
+		"./fy": 233,
+		"./fy.js": 233,
+		"./gl": 234,
+		"./gl.js": 234,
+		"./he": 235,
+		"./he.js": 235,
+		"./hi": 236,
+		"./hi.js": 236,
+		"./hr": 237,
+		"./hr.js": 237,
+		"./hu": 238,
+		"./hu.js": 238,
+		"./hy-am": 239,
+		"./hy-am.js": 239,
+		"./id": 240,
+		"./id.js": 240,
+		"./is": 241,
+		"./is.js": 241,
+		"./it": 242,
+		"./it.js": 242,
+		"./ja": 243,
+		"./ja.js": 243,
+		"./ka": 244,
+		"./ka.js": 244,
+		"./km": 245,
+		"./km.js": 245,
+		"./ko": 246,
+		"./ko.js": 246,
+		"./lb": 247,
+		"./lb.js": 247,
+		"./lt": 248,
+		"./lt.js": 248,
+		"./lv": 249,
+		"./lv.js": 249,
+		"./mk": 250,
+		"./mk.js": 250,
+		"./ml": 251,
+		"./ml.js": 251,
+		"./mr": 252,
+		"./mr.js": 252,
+		"./ms-my": 253,
+		"./ms-my.js": 253,
+		"./my": 254,
+		"./my.js": 254,
+		"./nb": 255,
+		"./nb.js": 255,
+		"./ne": 256,
+		"./ne.js": 256,
+		"./nl": 257,
+		"./nl.js": 257,
+		"./nn": 258,
+		"./nn.js": 258,
+		"./pl": 259,
+		"./pl.js": 259,
+		"./pt": 261,
+		"./pt-br": 260,
+		"./pt-br.js": 260,
+		"./pt.js": 261,
+		"./ro": 262,
+		"./ro.js": 262,
+		"./ru": 263,
+		"./ru.js": 263,
+		"./sk": 264,
+		"./sk.js": 264,
+		"./sl": 265,
+		"./sl.js": 265,
+		"./sq": 266,
+		"./sq.js": 266,
+		"./sr": 268,
+		"./sr-cyrl": 267,
+		"./sr-cyrl.js": 267,
+		"./sr.js": 268,
+		"./sv": 269,
+		"./sv.js": 269,
+		"./ta": 270,
+		"./ta.js": 270,
+		"./th": 271,
+		"./th.js": 271,
+		"./tl-ph": 272,
+		"./tl-ph.js": 272,
+		"./tr": 273,
+		"./tr.js": 273,
+		"./tzm": 275,
+		"./tzm-latn": 274,
+		"./tzm-latn.js": 274,
+		"./tzm.js": 275,
+		"./uk": 276,
+		"./uk.js": 276,
+		"./uz": 277,
+		"./uz.js": 277,
+		"./vi": 278,
+		"./vi.js": 278,
+		"./zh-cn": 279,
+		"./zh-cn.js": 279,
+		"./zh-tw": 280,
+		"./zh-tw.js": 280
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -13935,11 +13815,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	webpackContext.resolve = webpackContextResolve;
 	module.exports = webpackContext;
-	webpackContext.id = 198;
+	webpackContext.id = 200;
 
 
 /***/ },
-/* 199 */
+/* 201 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -13948,7 +13828,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -14016,7 +13896,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 200 */
+/* 202 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -14026,7 +13906,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -14079,7 +13959,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 201 */
+/* 203 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -14088,7 +13968,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -14186,7 +14066,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 202 */
+/* 204 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -14194,7 +14074,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -14247,7 +14127,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 203 */
+/* 205 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -14258,7 +14138,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -14387,7 +14267,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 204 */
+/* 206 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -14396,7 +14276,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -14500,7 +14380,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 205 */
+/* 207 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -14511,7 +14391,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -14660,7 +14540,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 206 */
+/* 208 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -14669,7 +14549,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -14754,7 +14634,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 207 */
+/* 209 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -14763,7 +14643,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -14871,7 +14751,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 208 */
+/* 210 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -14880,7 +14760,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -14985,7 +14865,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 209 */
+/* 211 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -14994,7 +14874,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -15100,7 +14980,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 210 */
+/* 212 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -15110,7 +14990,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -15246,7 +15126,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 211 */
+/* 213 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -15255,7 +15135,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -15329,7 +15209,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 212 */
+/* 214 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -15338,7 +15218,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -15492,7 +15372,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 213 */
+/* 215 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -15501,7 +15381,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -15559,7 +15439,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 214 */
+/* 216 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -15568,7 +15448,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -15644,7 +15524,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 215 */
+/* 217 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -15653,7 +15533,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -15708,7 +15588,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 216 */
+/* 218 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -15719,7 +15599,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -15788,7 +15668,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 217 */
+/* 219 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -15798,7 +15678,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -15867,7 +15747,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 218 */
+/* 220 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -15876,7 +15756,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -15967,7 +15847,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 219 */
+/* 221 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -15975,7 +15855,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -16037,7 +15917,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 220 */
+/* 222 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -16046,7 +15926,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -16104,7 +15984,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 221 */
+/* 223 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -16113,7 +15993,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -16175,7 +16055,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 222 */
+/* 224 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -16186,7 +16066,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -16252,7 +16132,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 223 */
+/* 225 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -16261,7 +16141,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -16335,7 +16215,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 224 */
+/* 226 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -16345,7 +16225,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -16419,7 +16299,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 225 */
+/* 227 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -16428,7 +16308,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -16487,7 +16367,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 226 */
+/* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -16496,7 +16376,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -16596,7 +16476,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 227 */
+/* 229 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -16605,7 +16485,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -16709,7 +16589,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 228 */
+/* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -16718,7 +16598,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -16773,7 +16653,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 229 */
+/* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -16782,7 +16662,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -16835,7 +16715,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 230 */
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -16844,7 +16724,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -16901,7 +16781,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 231 */
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -16910,7 +16790,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -16976,7 +16856,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 232 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -16985,7 +16865,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -17055,7 +16935,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 233 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -17066,7 +16946,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -17141,7 +17021,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 234 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -17150,7 +17030,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -17268,7 +17148,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 235 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -17279,7 +17159,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -17415,7 +17295,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 236 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -17424,7 +17304,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -17532,7 +17412,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 237 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -17541,7 +17421,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -17656,7 +17536,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 238 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -17666,7 +17546,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -17743,7 +17623,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 239 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -17752,7 +17632,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -17875,7 +17755,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 240 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -17885,7 +17765,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -17949,7 +17829,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 241 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -17958,7 +17838,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -18018,7 +17898,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 242 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -18027,7 +17907,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -18133,7 +18013,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 243 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -18142,7 +18022,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -18195,7 +18075,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 244 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -18207,7 +18087,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	// - Jeeeyul Lee <jeeeyul@gmail.com>
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -18266,7 +18146,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 245 */
+/* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -18279,7 +18159,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -18411,7 +18291,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 246 */
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -18420,7 +18300,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -18537,7 +18417,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 247 */
+/* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -18546,7 +18426,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -18622,7 +18502,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 248 */
+/* 250 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -18631,7 +18511,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -18716,7 +18596,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 249 */
+/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -18725,7 +18605,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -18791,7 +18671,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 250 */
+/* 252 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -18800,7 +18680,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -18917,7 +18797,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 251 */
+/* 253 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -18926,7 +18806,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -19003,7 +18883,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 252 */
+/* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -19012,7 +18892,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -19098,7 +18978,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 253 */
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -19108,7 +18988,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -19163,7 +19043,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 254 */
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -19172,7 +19052,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -19290,7 +19170,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 255 */
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -19299,7 +19179,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -19365,7 +19245,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 256 */
+/* 258 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -19374,7 +19254,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -19429,7 +19309,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 257 */
+/* 259 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -19438,7 +19318,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -19535,7 +19415,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 258 */
+/* 260 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -19544,7 +19424,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -19599,7 +19479,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 259 */
+/* 261 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -19608,7 +19488,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -19667,7 +19547,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 260 */
+/* 262 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -19677,7 +19557,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -19746,7 +19626,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 261 */
+/* 263 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -19756,7 +19636,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -19928,7 +19808,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 262 */
+/* 264 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -19938,7 +19818,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -20092,7 +19972,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 263 */
+/* 265 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -20101,7 +19981,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -20244,7 +20124,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 264 */
+/* 266 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -20255,7 +20135,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -20317,7 +20197,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 265 */
+/* 267 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -20326,7 +20206,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -20430,7 +20310,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 266 */
+/* 268 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -20439,7 +20319,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -20543,7 +20423,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 267 */
+/* 269 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -20552,7 +20432,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -20614,7 +20494,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 268 */
+/* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -20623,7 +20503,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -20750,7 +20630,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 269 */
+/* 271 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -20759,7 +20639,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -20819,7 +20699,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 270 */
+/* 272 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -20828,7 +20708,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -20885,7 +20765,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 271 */
+/* 273 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -20895,7 +20775,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -20985,7 +20865,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 272 */
+/* 274 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -20994,7 +20874,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -21047,7 +20927,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 273 */
+/* 275 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -21056,7 +20936,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -21109,7 +20989,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 274 */
+/* 276 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -21119,7 +20999,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -21278,7 +21158,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 275 */
+/* 277 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -21287,7 +21167,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -21340,7 +21220,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 276 */
+/* 278 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -21349,7 +21229,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -21410,7 +21290,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 277 */
+/* 279 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -21420,7 +21300,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -21541,7 +21421,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 278 */
+/* 280 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -21550,7 +21430,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(196)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(198)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
@@ -21646,23 +21526,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 279 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = function(module) {
-		if(!module.webpackPolyfill) {
-			module.deprecate = function() {};
-			module.paths = [];
-			// module.parent = undefined by default
-			module.children = [];
-			module.webpackPolyfill = 1;
-		}
-		return module;
-	}
-
-
-/***/ },
-/* 280 */
+/* 281 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21708,13 +21572,29 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 281 */
+/* 282 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function(module) {
+		if(!module.webpackPolyfill) {
+			module.deprecate = function() {};
+			module.paths = [];
+			// module.parent = undefined by default
+			module.children = [];
+			module.webpackPolyfill = 1;
+		}
+		return module;
+	}
+
+
+/***/ },
+/* 283 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var parse = __webpack_require__(282).parse;
-	var stringify = __webpack_require__(282).stringify;
+	var parse = __webpack_require__(284).parse;
+	var stringify = __webpack_require__(284).stringify;
 
 	module.exports = handleQs;
 	function handleQs(url, query) {
@@ -21736,20 +21616,20 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 282 */
+/* 284 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(283);
+	module.exports = __webpack_require__(285);
 
 
 /***/ },
-/* 283 */
+/* 285 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Load modules
 
-	var Stringify = __webpack_require__(284);
-	var Parse = __webpack_require__(285);
+	var Stringify = __webpack_require__(286);
+	var Parse = __webpack_require__(287);
 
 
 	// Declare internals
@@ -21764,12 +21644,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 284 */
+/* 286 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Load modules
 
-	var Utils = __webpack_require__(286);
+	var Utils = __webpack_require__(288);
 
 
 	// Declare internals
@@ -21867,12 +21747,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 285 */
+/* 287 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Load modules
 
-	var Utils = __webpack_require__(286);
+	var Utils = __webpack_require__(288);
 
 
 	// Declare internals
@@ -22030,7 +21910,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 286 */
+/* 288 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Load modules
