@@ -62,8 +62,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * name: ubique
-	 * version: 0.5.0
-	 * update date: 2015-06-22
+	 * version: 0.5.1
+	 * update date: 2015-09-23
 	 * 
 	 * author: Max Todaro <m.todaro.ge@gmail.com>
 	 * homepage: http://maxto.github.io/index.html
@@ -13559,7 +13559,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	}).call(this);
 
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(282)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(281)(module)))
 
 /***/ },
 /* 199 */
@@ -13567,7 +13567,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	var Response = __webpack_require__(281);
+	var Response = __webpack_require__(282);
 	var handleQs = __webpack_require__(283);
 
 	module.exports = doRequest;
@@ -21529,6 +21529,22 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 281 */
 /***/ function(module, exports, __webpack_require__) {
 
+	module.exports = function(module) {
+		if(!module.webpackPolyfill) {
+			module.deprecate = function() {};
+			module.paths = [];
+			// module.parent = undefined by default
+			module.children = [];
+			module.webpackPolyfill = 1;
+		}
+		return module;
+	}
+
+
+/***/ },
+/* 282 */
+/***/ function(module, exports, __webpack_require__) {
+
 	'use strict';
 
 	module.exports = Response;
@@ -21569,22 +21585,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	  return encoding ? this.body.toString(encoding) : this.body;
 	};
-
-
-/***/ },
-/* 282 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = function(module) {
-		if(!module.webpackPolyfill) {
-			module.deprecate = function() {};
-			module.paths = [];
-			// module.parent = undefined by default
-			module.children = [];
-			module.webpackPolyfill = 1;
-		}
-		return module;
-	}
 
 
 /***/ },

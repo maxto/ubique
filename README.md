@@ -1,6 +1,6 @@
 ![Ubique](http://maxto.github.io/ubique-logo.jpg)
 
-# Ubique 0.5 (See [ChangeLog](CHANGELOG.md))
+# Ubique 0.5.1 (See [ChangeLog](CHANGELOG.md))
 
 http://maxto.github.io/
 

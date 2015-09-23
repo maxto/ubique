@@ -1,5 +1,9 @@
 # ChangeLog
 
+### 0.5.1 - 20150923
+
+- Bugfix
+
 ### 0.5.0 - 20150622
 
 - MAJOR UPDATE: changed some basic structure, now `Array` follows the natural `1xN` dimension (row-major). `Arrayfun` and `Vectorfun` are optimized to managed variabile inputs arguments for both arrays and matrices. 
