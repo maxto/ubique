@@ -5,6 +5,12 @@
 
 ## I cannot develop this lib in js anymore, but I added the js files to attach functions to main class ubique in the folder [Builder](/builder/)
 
+gulpile.js: create bundle, minification and docs
+compiler.js: load all functions attaching on main class ubique
+docgen.js: generate document object based on js filename and folder
+
+======================================================================================================================================
+
 [![Travis Build Status](https://travis-ci.org/maxto/ubique.svg?style=flat)](https://travis-ci.org/maxto/ubique)
 [![NPM version](http://img.shields.io/npm/v/ubique.svg?style=flat)](https://www.npmjs.com/package/ubique)
 [![Bower](https://img.shields.io/bower/v/bootstrap.svg?style=flat)](http://bower.io/search/?q=ubique)
