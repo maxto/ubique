@@ -1,8 +1,9 @@
 ![Ubique](http://maxto.github.io/ubique-logo.jpg)
 
+
 # Ubique 0.5.1 (See [ChangeLog](CHANGELOG.md))
 
-http://maxto.github.io/
+## I cannot develop this lib in js anymore, but I added the js files to attach functions to main class ubique in the folder [Builder](/builder/)
 
 [![Travis Build Status](https://travis-ci.org/maxto/ubique.svg?style=flat)](https://travis-ci.org/maxto/ubique)
 [![NPM version](http://img.shields.io/npm/v/ubique.svg?style=flat)](https://www.npmjs.com/package/ubique)
