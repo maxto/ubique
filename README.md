@@ -3,7 +3,9 @@
 
 # Ubique 0.5.1 (See [ChangeLog](CHANGELOG.md))
 
-## I cannot develop this lib in js anymore, but I added the js files to attach functions to main class ubique in the folder [Builder](/builder/)
+## CLOSED project
+
+See [Builder](/builder/) folder:
 
 - gulpile.js: create bundle, minification and docs
 - compiler.js: load all functions attaching on main class ubique
