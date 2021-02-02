@@ -23,8 +23,6 @@ Ubique supports vectors and matrices, providing a lot of functionalities for ele
 
 Easy to use, Ubique runs both in Node.js/Io.js and in the Browser.
 
-You can use directly in the browser console from the Website pages [Ubique](http://maxto.github.io/)
-
 For further details see the [API Documentation](/doc/contents.md)
 
 ## Key Features
