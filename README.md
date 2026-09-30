@@ -5,6 +5,10 @@
 
 ## CLOSED project
 
+> **This repository is no longer maintained.** Development continues at
+> [NodalStudio/Ubique](https://github.com/NodalStudio/Ubique) — the `ubique`
+> package on npm is published from there.
+
 See [Builder](/builder/) folder:
 
 - gulpile.js: create bundle, minification and docs
